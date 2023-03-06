@@ -1,0 +1,10 @@
+(** @canonical Dune__exe.Client *)
+module Client = Dune__exe__Client
+
+
+(** @canonical Dune__exe.Intf *)
+module Intf = Dune__exe__Intf
+
+
+(** @canonical Dune__exe.Server *)
+module Server = Dune__exe__Server

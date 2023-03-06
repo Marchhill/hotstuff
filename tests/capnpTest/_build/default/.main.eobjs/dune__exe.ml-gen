@@ -1,0 +1,10 @@
+(** @canonical Dune__exe.Echo *)
+module Echo = Dune__exe__Echo
+
+
+(** @canonical Dune__exe.Echo_api *)
+module Echo_api = Dune__exe__Echo_api
+
+
+(** @canonical Dune__exe.Main *)
+module Main = Dune__exe__Main

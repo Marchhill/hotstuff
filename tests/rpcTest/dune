@@ -1,0 +1,5 @@
+(executables
+ (names      client server)
+ (libraries core core_unix.command_unix async fmt)
+ (preprocess
+  (pps ppx_jane)))

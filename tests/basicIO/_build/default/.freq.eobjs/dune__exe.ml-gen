@@ -1,0 +1,6 @@
+(** @canonical Dune__exe.Counter *)
+module Counter = Dune__exe__Counter
+
+
+(** @canonical Dune__exe.Freq *)
+module Freq = Dune__exe__Freq

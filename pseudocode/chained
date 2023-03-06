@@ -1,0 +1,125 @@
+// ----- VARIABLES
+exec: command this node proposed that is currently in the pipeline
+C: set of complain messages received
+
+// ----- UTILS
+
+// extra functions for converting between and node_offset
+procedure QC_TO_JUSTIFY(qc, offset)
+	justify ← qc without node
+	justify.node_offset ← offset
+	return justify
+
+procedure NODE_JUSTIFY_TO_QC(node)
+	qc ← node.justify without node_offset
+	qc.node ← GET_NTH_PARENT(node, node.justify.node_offset)
+	return qc
+
+procedure ADD_DUMMY_NODES(node, x)
+	if x = 0 then
+		return node
+	else
+		dummy ← new node with parent = node
+		return ADD_DUMMY_NODES(dummy, x - 1) 
+
+// ----- ALGORITHM 4 (modified)
+
+//***
+procedure CREATE_LEAF(parent, cmd, qc, height)
+	offset ← curView - height + 1
+	b.parent ← ADD_DUMMY_NODES(parent, offset)
+	b.cmd ← cmd
+	b.justify ← QC_TO_JUSTIFY(qc, offset + 1)
+	b.height ← curView + 1
+	return b
+
+procedure UPDATE(b*)
+	b'' ← b*.justify.node
+	b' ← b''.justify.node
+	b ← b'.justify.node
+	UPDATE_QC_HIGH(NODE_JUSTIFY_TO_QC(b*)) //***
+	if b'.height > b_lock.height then
+		b_lock ← b' // COMMIT phase on b'
+	if (b''.parent = b') ∧ (b'.parent = b) then
+		ON_COMMIT(b)
+		b_exec = b // DECIDE phase on b
+
+procedure ON_COMMIT(b)
+	if (b is not dummy) ∧ (b_exec.height < b.height) then //***
+		ON_COMMIT(b.parent)
+		EXECUTE(b.cmd)
+		//***
+		if exec = b.cmd then
+			SEND(GET_CLIENT(), RES_MSG(b.cmd, true)) // respond to client that request was successful
+
+procedure ON_RECEIVE_PROPOSAL(m = MSG_v(GENERIC, b_new, ⊥))
+	if m.view = curView then //***
+		n = JUSTIFY_TO_QC(b_new.justify).node //***
+		if b_new.height > vheight ∧ (b_new extends b_lock ∨ n.height > b_lock.height) then
+			vheight = b_new.height
+			SEND(GET_LEADER(), VOTE_MSG_u(GENERIC_ACK, b_new, ⊥)) //*** add new message type
+		UPDATE(b_new)
+		//***
+		SEND(GET_NEXT_LEADER(), MSG(NEW-VIEW, ⊥, qc_high))
+		if not IS_LEADER(curView + 1) then
+			ON_NEXT_SYNC_VIEW(curView + 1)
+
+
+procedure ON_RECEIVE_VOTE(m = VOTE_MSG_v(GENERIC_ACK, b, ⊥))
+	if IS_LEADER(curView + 1) ∧ m.view = curView then //*** 
+		if ∃(v, σ') ∈ V[b] then return // avoid duplicates
+		V[b] ← V[b] ∪ {(v, m.partialSig)} // collect votes
+		if |V[b]| = n − f then //*** only do the first time we reach a quorum
+			qc ← QC({σ | (v', σ) ∈ V[b]})
+			UPDATE_QC_HIGH(qc)
+			ON_NEXT_SYNC_VIEW(curView + 1) //***
+
+function ON_PROPOSE(b_leaf, cmd, qc_high)
+	//...
+
+// ----- ALGORITHM 5 (modified)
+// We assume Pacemaker in all correct replicas will have synchronized leadership after GST.
+
+function GET_LEADER //*** we use a round robin system for selecting leaders
+
+procedure UPDATE_QC_HIGH(qc'_high)
+	//...
+
+procedure ON_BEAT(cmd)
+	//...
+
+//***
+procedure ON_NEXT_SYNC_VIEW(view)
+	// reset state for the next view
+	curView ← view
+	C ← {}
+	V ← {}
+	if IS_LEADER(curView)
+		exec ← cmds.take() //take next command in queue, or noop if empty
+		ON_BEAT(exec)
+	RESET_TIMER(curView)
+
+procedure ON_RECEIVE_NEW_VIEW(MSG(NEW-VIEW, ⊥, qc'_high))
+	//...
+
+//*** new functions for client requests and view change
+procedure ON_RECEIVE_CLIENT_REQUEST(MSG(cmd))
+	cmds.add(cmd)
+
+procedure ON_TIMEOUT(view)
+	SEND(GET_NEXT_LEADER(), MSG(COMPLAIN, ⊥, ⊥))
+	RESET_TIMER(view + 1)
+
+procedure ON_RECEIVE_COMPLAIN(m = MSG(COMPLAIN, ⊥, ⊥))
+	if IS_LEADER(m.view + 1)
+		if ∃(v, σ') ∈ C[b] then return // avoid duplicates
+		C[b] ← C[b] ∪ {(v, m.partialSig)} // collect complains
+		if |C[b]| = n − f then
+			qc ← QC({σ | (v', σ) ∈ C[b]})
+			BROADCAST(MSG(NEXT-VIEW, ⊥, qc))
+
+procedure ON_RECEIVE_NEXT_VIEW(MSG(NEXT-VIEW, ⊥, qc))
+	if m.view >= curView ∧ m.view = qc.view then
+		SEND(GET_CLIENT(), RES_MSG(exec, false)) // respond to client that request was unsuccessful	
+		exec = None
+		ON_NEXT_SYNC_VIEW(m.view + 1)
