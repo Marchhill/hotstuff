@@ -85,19 +85,7 @@ let init id nodes timeout verbose =
 		events = events;
 		push_event = push_event;
 		iter_count = ref 0;
-		stats = {
-			last_view = ref (Time_now.nanoseconds_since_unix_epoch ());
-			view_times = ref [];
-			action_times = ref [];
-			advance_times = ref [];
-			connection_times = ref [];
-			send_times = ref [];
-			sizes = ref [];
-			recv_msg_times = ref [];
-			recv_req_times = ref [];
-			res_times = ref [];
-			queue_times = ref [];
-		};
+		stats = empty_stats (Time_now.nanoseconds_since_unix_epoch ())
 	} in
 	Lwt.async (fun () -> do_actions s actions);
 	s

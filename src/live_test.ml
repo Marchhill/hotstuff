@@ -26,7 +26,7 @@ let reporter =
 
 let sent = ref 0
 
-let run_command conns timeout _i =
+let run_command conns timeout _i stats =
 	(* let id = !sent mod (List.length conns) in *)
 	(* let conn = List.nth conns id in *)
 	let data = Fmt.str "cmdcmdcmdcmdcmdcmdcmdcmdcmdcmdmcmdmcdmcmdmcmdcmdm#%d" !sent in
@@ -36,24 +36,50 @@ let run_command conns timeout _i =
 	(* let callback_id = "a" in *)
 	(* Fmt.pr "%d: sending \"%s\"@." _i data; *)
 	let res = List.mapi (fun _i conn ->
-		Net.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout
+		Net.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout stats
 	) conns in
 	Lwt.pick res
 	(* Hs.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout *)
 
 let benchmark conns res rate timeout =
-	let open Base.Int63 in
-	let tmp = List.init (Array.length res) (fun _ -> ()) in
+	(* let tmp = List.init (Array.length res) (fun _ -> ()) in *)
 	let t = Time_now.nanoseconds_since_unix_epoch () in
-	Lwt_list.iteri_p (fun i () ->
+	let s = Util.empty_stats (Base.Int63.zero) in
+	let period = Base.Int63.of_float((1. /. rate) *. 1_000_000_000.) in
+	let rec aux (i : int) (target : Base.Int63.t) =
+		if i >= (Array.length res) then
+			Lwt.return_unit
+		else (
+			let now = Time_now.nanoseconds_since_unix_epoch () in
+			let* () = if Base.Int63.(<) now target then
+				Lwt_unix.sleep (Util.delta now target)
+			else
+				Lwt.return_unit
+			in
+			Lwt.async (fun () ->
+				let x = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
+				let* success = run_command conns timeout i s in
+				let y = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
+				(* Fmt.pr "%d: success = %b at %s@." i success (to_string y); *)
+				let ret = if success then Some (x, y) else None in
+				Lwt.return (Array.set res i ret)
+			);
+			let now = Time_now.nanoseconds_since_unix_epoch () in
+			aux (i + 1) (Base.Int63.(+) now period)
+		)
+	in
+	let* () = aux 0 t in
+	(*
+	let* () = Lwt_list.iteri_p (fun i () ->
 			let* () = Lwt_unix.sleep ((Float.of_int i) /. rate) in
 			let x = Time_now.nanoseconds_since_unix_epoch () - t in
-			let* success = run_command conns timeout i in
+			let* success = run_command conns timeout i s in
 			let y = Time_now.nanoseconds_since_unix_epoch () - t in
 			(* Fmt.pr "%d: success = %b at %s@." i success (to_string y); *)
 			let ret = if success then Some (x, y) else None in
 			Lwt.return (Array.set res i ret)
-		) tmp
+		) tmp in*)
+	Lwt.return s
 
 (* calculate delta between timestamps in seconds s*)
 let delta x y =
@@ -67,7 +93,7 @@ let run_client nodes chained time rate req_times_fp stats_fp =
 		Lwt.async (fun () ->
 			let n = time * rate in
 			let res = Array.make n None in
-			let* () = benchmark conns res (Float.of_int rate) 1000. in
+			let* stats = benchmark conns res (Float.of_int rate) 1000. in
 			(* output request times to csv file*)
 			let name = match req_times_fp with
 				| Some s ->
@@ -100,6 +126,8 @@ let run_client nodes chained time rate req_times_fp stats_fp =
 			let sd = Float.sqrt ((sum_sq /. (Float.of_int n)) -. (mean *. mean)) in
 			let chained = if chained then "y" else "n" in
 			Fmt.pr "\nname = %s\nchained = %s\nnodes = %d \n reqs = %d / %d\nthroughput = %dreq/s\ngoodput = %freq/s\nmean = %fs\nsd = %fs@." name chained nodes success n rate goodput mean sd;
+			Util.print_stats !(stats.connection_times) "req_conn" "s" 69;
+			Util.print_stats !(stats.send_times) "req_send" "s" 69;
 			(* append stats to csv file*)
 			(match stats_fp with
 				| Some s ->

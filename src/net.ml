@@ -58,7 +58,7 @@ let send_msg conn (msg : Consensus.msg) stats =
 	Lwt.return_unit
 
 (* send a command to a node (used by client) *)
-let send_req conn (cmd : Consensus.cmd) _t =
+let send_req conn (cmd : Consensus.cmd) _t stats =
 	let send cap =
 		let open Api.Client.Hs.ClientReq in
 		let request, params = Capability.Request.create Params.init_pointer in
@@ -69,18 +69,36 @@ let send_req conn (cmd : Consensus.cmd) _t =
 		Lwt.return (Results.success_get res)
 	in
 	(* asychronously wait t seconds then timeout *)
-	let promise, resolver = Lwt.task () in
+	let timeout_p, timeout_r = Lwt.task () in
 	Lwt.async (fun () ->
 		let* () = Lwt_unix.sleep _t in
-		(match Lwt.state promise with
+		(match Lwt.state timeout_p with
 			| Lwt.Return _ -> ()
 			| Lwt.Fail _ -> ()
 			| Lwt.Sleep ->
 				Fmt.pr "request timed out: %s@." cmd.data;
-				Lwt.wakeup resolver false);
+				Lwt.wakeup timeout_r false);
 		Lwt.return_unit);
+	let dispatch_p, dispatch_r = Lwt.task () in
+	let t1 = Time_now.nanoseconds_since_unix_epoch () in
+	let* cap = get_cap conn in
+	let t2 = Time_now.nanoseconds_since_unix_epoch () in
+	Capability.inc_ref cap;
+	(* let* r = Capability.with_ref cap send in *)
+	Lwt.async(fun () ->
+		let* r = Capability.with_ref cap send in
+		(match Lwt.state dispatch_p with
+		| Lwt.Return _ -> ()
+		| Lwt.Fail _ -> ()
+		| Lwt.Sleep ->
+			Lwt.wakeup dispatch_r r);
+		Lwt.return_unit
+	);
+	let t3 = Time_now.nanoseconds_since_unix_epoch () in
+	stats.connection_times := (delta t1 t2) :: !(stats.connection_times);
+	stats.send_times := (delta t2 t3) :: !(stats.send_times);
 	(* either timeout or return result*)
-	Lwt.pick [promise; (let* cap = get_cap conn in Capability.inc_ref cap; Capability.with_ref cap send)]
+	Lwt.pick [timeout_p; dispatch_p]
 
 let send_quit conn =
 	let send cap =

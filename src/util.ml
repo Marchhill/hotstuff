@@ -1,4 +1,19 @@
 open Lwt.Syntax
+open Types
+
+let empty_stats t = {
+	last_view = ref (t);
+	view_times = ref [];
+	action_times = ref [];
+	advance_times = ref [];
+	connection_times = ref [];
+	send_times = ref [];
+	sizes = ref [];
+	recv_msg_times = ref [];
+	recv_req_times = ref [];
+	res_times = ref [];
+	queue_times = ref [];
+}
 
 let print_stats l name units id =
 	let n = List.length l in
