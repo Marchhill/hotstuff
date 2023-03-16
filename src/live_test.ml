@@ -64,8 +64,7 @@ let benchmark conns res rate timeout =
 				let ret = if success then Some (x, y) else None in
 				Lwt.return (Array.set res i ret)
 			);
-			let now = Time_now.nanoseconds_since_unix_epoch () in
-			aux (i + 1) (Base.Int63.(+) now period)
+			aux (i + 1) (Base.Int63.(+) target period)
 		)
 	in
 	let* () = aux 0 t in
@@ -91,7 +90,7 @@ let run_client nodes chained time rate req_times_fp stats_fp =
 		let conns = Net.open_conns nodes in
 		let promise, resolver = Lwt.wait () in
 		Lwt.async (fun () ->
-			let n = time * rate in
+			let n = time * rate in (* calculate based on actual number sent (filter)*)
 			let res = Array.make n None in
 			let* stats = benchmark conns res (Float.of_int rate) 1000. in
 			(* output request times to csv file*)
@@ -117,7 +116,7 @@ let run_client nodes chained time rate req_times_fp stats_fp =
 				let (lo, hi) = Array.fold_left (fun (lo, hi) -> function Some (_, x) -> (min lo x, max hi x) | None -> (lo, hi)) (max_value, min_value) res in
 				delta lo hi
 			in
-			let goodput = (Float.of_int n) /. elapsed in
+			let goodput = (Float.of_int success) /. elapsed in
 			let res = Array.map (function (Some (x, y)) -> delta x y | None -> 0.) res in
 			(* let goodput = (Float.of_int n) /. elapsed in *)
 			let sum = Array.fold_left (+.) 0. res in
