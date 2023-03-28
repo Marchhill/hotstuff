@@ -26,23 +26,38 @@ let reporter =
 
 let sent = ref 0
 
-let run_command conns timeout _i stats =
+let gen_callback_id () = Fmt.str "%x" (Int64.to_int (Random.bits64 ()))
+
+(* wait until we send a request to some node and it is commited *)
+let rec await_first_commit i conn timeout =
+	let tmp = Util.empty_stats (Base.Int63.zero) in (* these stats are discarded *)
+	let* success = Net.send_req conn ({data = "init"; callback_id = (gen_callback_id ())} : Consensus.cmd) timeout tmp in
+	if success then (
+		Fmt.pr "connected to %d!@." i;
+		Lwt.return_unit
+	)
+	else (
+		await_first_commit i conn timeout
+	)
+
+(* wait until we send a request to each node and they are all commited *)
+let await_connections conns timeout =
+	List.mapi (fun i conn -> await_first_commit i conn timeout) conns
+	|> Lwt.join
+
+let run_command conns timeout stats =
 	(* let id = !sent mod (List.length conns) in *)
 	(* let conn = List.nth conns id in *)
-	let data = Fmt.str "cmdcmdcmdcmdcmdcmdcmdcmdcmdcmdmcmdmcdmcmdmcmdcmdm#%d" !sent in
-	(* let data = "c" in *)
+	let data = Fmt.str "cmd#%d" !sent in
+	let callback_id = gen_callback_id () in
 	sent := !sent + 1;
-	let callback_id = Fmt.str "%x" (Int64.to_int (Random.bits64 ())) in
-	(* let callback_id = "a" in *)
-	(* Fmt.pr "%d: sending \"%s\"@." _i data; *)
-	let res = List.mapi (fun _i conn ->
+	(* Net.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout stats *)
+	let res = List.map (fun conn ->
 		Net.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout stats
 	) conns in
 	Lwt.pick res
-	(* Hs.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout *)
 
 let benchmark conns res rate timeout =
-	(* let tmp = List.init (Array.length res) (fun _ -> ()) in *)
 	let t = Time_now.nanoseconds_since_unix_epoch () in
 	let s = Util.empty_stats (Base.Int63.zero) in
 	let period = Base.Int63.of_float((1. /. rate) *. 1_000_000_000.) in
@@ -58,7 +73,7 @@ let benchmark conns res rate timeout =
 			in
 			Lwt.async (fun () ->
 				let x = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
-				let* success = run_command conns timeout i s in
+				let* success = run_command conns timeout s in
 				let y = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
 				(* Fmt.pr "%d: success = %b at %s@." i success (to_string y); *)
 				let ret = if success then Some (x, y) else None in
@@ -68,16 +83,6 @@ let benchmark conns res rate timeout =
 		)
 	in
 	let* () = aux 0 t in
-	(*
-	let* () = Lwt_list.iteri_p (fun i () ->
-			let* () = Lwt_unix.sleep ((Float.of_int i) /. rate) in
-			let x = Time_now.nanoseconds_since_unix_epoch () - t in
-			let* success = run_command conns timeout i s in
-			let y = Time_now.nanoseconds_since_unix_epoch () - t in
-			(* Fmt.pr "%d: success = %b at %s@." i success (to_string y); *)
-			let ret = if success then Some (x, y) else None in
-			Lwt.return (Array.set res i ret)
-		) tmp in*)
 	Lwt.return s
 
 (* calculate delta between timestamps in seconds s*)
@@ -89,6 +94,8 @@ let run_client nodes chained time rate req_times_fp stats_fp =
 	Lwt_main.run begin
 		let conns = Net.open_conns nodes in
 		let promise, resolver = Lwt.wait () in
+		let* () = await_connections conns 3. in
+		Fmt.pr "connected to all!@.";
 		Lwt.async (fun () ->
 			let n = time * rate in (* calculate based on actual number sent (filter)*)
 			let res = Array.make n None in
@@ -131,7 +138,7 @@ let run_client nodes chained time rate req_times_fp stats_fp =
 			(match stats_fp with
 				| Some s ->
 					Out_channel.with_open_gen [Open_append] 0o666 s (fun oc ->
-						Printf.fprintf oc "%s, %s, %d, %d, %f, %f, %f\n" name chained nodes rate goodput mean sd
+						Printf.fprintf oc "%s, %s, %d, %d, %f, %f, %f, %d, %d\n" name chained nodes rate goodput mean sd success n
 					)
 				| None -> ());
 			Lwt.wakeup resolver ();

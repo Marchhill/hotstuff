@@ -75,13 +75,14 @@ let rec on_commit (state : t) = function
 					(state, [Execute {id = state.id; node = b}; SendClient {id = state.id; callback_id = cmd.callback_id; success = true}])
 				| _ -> (state, [Execute {id = state.id; node = b}])
 			) in*)
+			let cmds = Cmd_set.diff b.cmds state.commited in
 			let actions = (Execute {id = state.id; node = b}) :: (Cmd_set.fold (fun cmd acc ->
 				if cmd.callback_id = "" then
 					acc
 				else
 					(SendClient {id = state.id; callback_id = cmd.callback_id; success = true})::acc
-			) (Cmd_set.diff b.cmds state.commited) []) in
-			let state = {state with commited = (Cmd_set.union state.commited b.cmds)} in
+			) cmds []) in
+			let state = {state with commited = (Cmd_set.union state.commited cmds)} in
 			let state, actions' = (on_commit state b.parent) in
 			(state, actions' @ actions)
 		)
@@ -126,7 +127,6 @@ let on_next_sync_view state view =
 		)
 		in*)
 		let cmds = Cmd_set.diff state.cmds state.commited in
-    (* let cmds = state.cmds in *)
 		let state = {state with cmds = Cmd_set.empty} in
 		on_beat state cmds
 	else
