@@ -75,6 +75,7 @@ let rec on_commit (state : t) = function
 					(state, [Execute {id = state.id; node = b}; SendClient {id = state.id; callback_id = cmd.callback_id; success = true}])
 				| _ -> (state, [Execute {id = state.id; node = b}])
 			) in*)
+			(* List.filter (fun i -> Set.mem committed i) cmds *)
 			let cmds = Cmd_set.diff b.cmds state.commited in
 			let actions = (Execute {id = state.id; node = b}) :: (Cmd_set.fold (fun cmd acc ->
 				if cmd.callback_id = "" then

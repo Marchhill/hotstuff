@@ -12,7 +12,8 @@ let empty_stats t = {
 	recv_msg_times = ref [];
 	recv_req_times = ref [];
 	res_times = ref [];
-	queue_times = ref [];
+	req_queue_times = ref [];
+  msg_queue_times = ref [];
 }
 
 let print_stats l name units id =

@@ -30,7 +30,7 @@ rates = [1000]
 # throughput = [2000]
 # rates = [10000]
 experiment_time = 10
-repeats = 5
+repeats = 1
 
 # randomise testing order
 test_iter = random.sample(list(itertools.product(rates, nodeCounts)) * repeats, len(rates) * len(nodeCounts) * repeats)

@@ -11,7 +11,7 @@ import seaborn.objects as so
 stats = pd.read_csv('./graphs/data/stats.csv', skipinitialspace=True)
 # times = pd.read_csv('./graphs/data/times-dummy_16-03-2023-16:25:00.csv', skipinitialspace=True)
 # times = pd.read_csv('./graphs/data/times-dummy_27-03-2023-23:13:56.csv', skipinitialspace=True)
-times = pd.read_csv('./graphs/data/times-dummy_28-03-2023-12:24:40.csv', skipinitialspace=True)
+times = pd.read_csv('./graphs/data/times-28-03-2023-12:56:05.csv', skipinitialspace=True)
 times['sent(s)'] = times['sent'] / 1_000_000_000
 times['latency'] = (times['rec'] - times['sent']) / 1_000_000
 stats['lost'] = 1. - (stats['rec'] / stats['sent'])

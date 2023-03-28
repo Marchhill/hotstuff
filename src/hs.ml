@@ -44,7 +44,7 @@ let rec do_actions s = function
 				s.stats.last_view := t_n;
 				s.reset_timer (fun view ->
 					let event = (Timeout {view = view} : Consensus.event) in
-					s.push_event (Some (event, Time_now.nanoseconds_since_unix_epoch ()));
+					s.push_msg (Some (event, Time_now.nanoseconds_since_unix_epoch ()));
 				) t.view;
 				Lwt.return_unit
 		) in
@@ -68,12 +68,13 @@ let get_keys id nodes =
 
 let init id nodes timeout verbose =
 	let _sk, _pks = get_keys id nodes in (* generate public and private keys *)
-	let crypto = Some ({sk = _sk; pks = _pks} : Consensus.crypto) in
-	let initial_state, new_view_actions = Consensus.create_state_machine id nodes ~crypto in (* initialise state machine *)
+	(* let crypto = Some ({sk = _sk; pks = _pks} : Consensus.crypto) in *)
+	let initial_state, new_view_actions = Consensus.create_state_machine id nodes in (* initialise state machine *)
 	let conns = open_conns nodes in (* connect to other nodes *)
 	let client_callbacks = Hashtbl.create 1000000 in (* store callbacks to respond to client commands *)
 	let reset_timer = create_timer timeout in (* create a view timer *)
-	let events, push_event = Lwt_stream.create () in
+	let msgs, push_msg = Lwt_stream.create () in
+	let reqs, push_req = Lwt_stream.create () in
 	(* send new-view message to first leader and start timer for first view *)
 	let reset_timer_action = (ResetTimer {id = id; view = 1} : Consensus.action) in
 	let actions = reset_timer_action :: new_view_actions in
@@ -82,8 +83,10 @@ let init id nodes timeout verbose =
 		verbose = verbose; conns = conns;
 		client_callbacks = client_callbacks;
 		reset_timer = reset_timer;
-		events = events;
-		push_event = push_event;
+		msgs = msgs;
+		push_msg = push_msg;
+		reqs = reqs;
+		push_req = push_req;
 		iter_count = ref 0;
 		stats = empty_stats (Time_now.nanoseconds_since_unix_epoch ())
 	} in
@@ -110,7 +113,7 @@ let local s =
 				)
 			in
 			(* add event to stream *)
-			s.push_event (Some (event, Time_now.nanoseconds_since_unix_epoch ()));
+			s.push_msg (Some (event, Time_now.nanoseconds_since_unix_epoch ()));
 			let t2 = Time_now.nanoseconds_since_unix_epoch () in
 			s.stats.recv_msg_times := (delta t1 t2) :: !(s.stats.recv_msg_times);
 			Service.return_empty ()
@@ -132,11 +135,11 @@ let local s =
 			(* create a consensus event from the client's command *)
 			let event = (ClientCmd cmd : Consensus.event) in
 			(* add event to stream *)
-			s.push_event (Some (event, Time_now.nanoseconds_since_unix_epoch ()));
+			s.push_req (Some (event, Time_now.nanoseconds_since_unix_epoch ()));
 			let t2 = Time_now.nanoseconds_since_unix_epoch () in
 			s.stats.recv_req_times := (delta t1 t2) :: !(s.stats.recv_req_times);
+			let t1 = Time_now.nanoseconds_since_unix_epoch () in
 			Service.return_lwt (fun () ->
-				let t1 = Time_now.nanoseconds_since_unix_epoch () in
 				(* wait to send response until callback resolver is woken *)
 				let* success = res in
 				let response, results = Service.Response.create Results.init_pointer in
@@ -159,15 +162,27 @@ let local s =
 			print_stats !(s.stats.recv_msg_times) "recv_msg" "s" !(s.state_machine).id;
 			print_stats !(s.stats.recv_req_times) "recv_req" "s" !(s.state_machine).id;
 			print_stats !(s.stats.res_times) "res_times" "s" !(s.state_machine).id;
-			print_stats !(s.stats.queue_times) "queue_times" "s" !(s.state_machine).id;
+			print_stats !(s.stats.req_queue_times) "req_queue_times" "s" !(s.state_machine).id;
+			print_stats !(s.stats.msg_queue_times) "msg_queue_times" "s" !(s.state_machine).id;
 			exit 0
 	end
 
 let rec main_loop s =
 	s.iter_count := !(s.iter_count) + 1;
-	(* take an event from the incoming stream  *)
-	let* x = Lwt_stream.get s.events in
-	let* () = (match x with
+	(* take an event from the incoming stream, priotise internal messages  *)
+	let* (event, is_req) = if (!(s.iter_count) mod 20) = 0 then (
+    	let* req_event = Lwt_stream.get s.reqs in
+		let is_req = Option.is_some req_event in
+    	let* event = if is_req then Lwt.return (req_event) else (Lwt_stream.get s.msgs) in
+		Lwt.return (event, is_req)
+	)
+  	else (
+    	let* msg_event = Lwt_stream.get s.msgs in
+		let is_req = Option.is_none msg_event in
+    	let* event = if (not is_req) then Lwt.return (msg_event) else (Lwt_stream.get s.reqs) in
+		Lwt.return (event, is_req)
+	) in
+	let* () = (match event with
 		| Some (event, queue_time) ->
 			let t1 = Time_now.nanoseconds_since_unix_epoch () in
 			(* advance consensus state machine by delivering the new event *)
@@ -182,7 +197,10 @@ let rec main_loop s =
 				Consensus.print_state state_machine';
 				List.iter (Consensus.print_action) actions;
 			) in
-			s.stats.queue_times := (delta queue_time t1) :: !(s.stats.queue_times);
+			(if is_req then
+				s.stats.req_queue_times := (delta queue_time t1) :: !(s.stats.req_queue_times)
+			else
+				s.stats.msg_queue_times := (delta queue_time t1) :: !(s.stats.msg_queue_times));
 			s.stats.advance_times := (delta t1 t2) :: !(s.stats.advance_times);
 			s.stats.action_times := (delta t2 t3) :: !(s.stats.action_times);
 			Lwt.return_unit
