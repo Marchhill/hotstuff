@@ -88,6 +88,8 @@ let init id nodes timeout verbose =
 		reqs = reqs;
 		push_req = push_req;
 		iter_count = ref 0;
+		next_beat = ref Base.Int63.zero;
+		beat_interval = (Base.Int63.of_int 5_000_000); (* 5ms*)
 		stats = empty_stats (Time_now.nanoseconds_since_unix_epoch ())
 	} in
 	Lwt.async (fun () -> do_actions s actions);
@@ -167,21 +169,33 @@ let local s =
 			exit 0
 	end
 
+let get_event s =
+	let t = Time_now.nanoseconds_since_unix_epoch () in
+	Fmt.pr "loop %d@." !(s.iter_count);
+	(* deliver beat event if delta has elapsed *)
+	if Base.Int63.(>) t !(s.next_beat) then (
+		s.next_beat := Base.Int63.(+) t s.beat_interval;
+		Lwt.return (Some (Consensus.Beat, Base.Int63.zero), false)
+	)
+	else (
+		if (!(s.iter_count) mod 20) = 0 then (
+			let* req_event = Lwt_stream.get s.reqs in
+			let is_req = Option.is_some req_event in
+			let* event = if is_req then Lwt.return (req_event) else (Lwt_stream.get s.msgs) in
+			Lwt.return (event, is_req)
+		)
+		else (
+			let* msg_event = Lwt_stream.get s.msgs in
+			let is_req = Option.is_none msg_event in
+			let* event = if (not is_req) then Lwt.return (msg_event) else (Lwt_stream.get s.reqs) in
+			Lwt.return (event, is_req)
+		)
+	)
+
 let rec main_loop s =
 	s.iter_count := !(s.iter_count) + 1;
-	(* take an event from the incoming stream, priotise internal messages  *)
-	let* (event, is_req) = if (!(s.iter_count) mod 20) = 0 then (
-    	let* req_event = Lwt_stream.get s.reqs in
-		let is_req = Option.is_some req_event in
-    	let* event = if is_req then Lwt.return (req_event) else (Lwt_stream.get s.msgs) in
-		Lwt.return (event, is_req)
-	)
-  	else (
-    	let* msg_event = Lwt_stream.get s.msgs in
-		let is_req = Option.is_none msg_event in
-    	let* event = if (not is_req) then Lwt.return (msg_event) else (Lwt_stream.get s.reqs) in
-		Lwt.return (event, is_req)
-	) in
+	(* take an event from the incoming stream, prioritise internal messages  *)
+	let* (event, is_req) = get_event s in
 	let* () = (match event with
 		| Some (event, queue_time) ->
 			let t1 = Time_now.nanoseconds_since_unix_epoch () in
@@ -200,7 +214,8 @@ let rec main_loop s =
 			(if is_req then
 				s.stats.req_queue_times := (delta queue_time t1) :: !(s.stats.req_queue_times)
 			else
-				s.stats.msg_queue_times := (delta queue_time t1) :: !(s.stats.msg_queue_times));
+				s.stats.msg_queue_times := (delta queue_time t1) :: !(s.stats.msg_queue_times)
+			);
 			s.stats.advance_times := (delta t1 t2) :: !(s.stats.advance_times);
 			s.stats.action_times := (delta t2 t3) :: !(s.stats.action_times);
 			Lwt.return_unit

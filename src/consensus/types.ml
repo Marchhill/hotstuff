@@ -34,6 +34,7 @@ type event =
 	| ClientCmd of cmd
 	| Timeout of {view: int}
 	| Complain of msg
+  | Beat
 
 type crypto = {sk: Tezos_crypto.Aggregate_signature.secret_key; pks: Tezos_crypto.Aggregate_signature.public_key list}
 

@@ -116,24 +116,7 @@ let on_beat state cmds =
 (* transition to view v *)
 let on_next_sync_view state view =
 	let state = {state with view = view} in
-	(* Fmt.pr "%d: new view %d!@." state.id view; *)
-	let (state, actions) = if (is_leader view state.id state.node_count) then
-		(* broadcast as leader *)
-		(*let exec = Queue.take_opt state.cmds in
-		let s = (match exec with
-			| Some cmd ->
-				Queue.add cmd state.exec;
-				cmd
-			| None -> {data = "#"; callback_id = ""} (* noop *)
-		)
-		in*)
-		let cmds = Cmd_set.diff state.cmds state.commited in
-		let state = {state with cmds = Cmd_set.empty} in
-		on_beat state cmds
-	else
-		(state, [])
-	in
-	(state, (ResetTimer {id = state.id; view = view})::actions)
+	(state, [ResetTimer {id = state.id; view = view}])
 
 let delta x y =
 	let open Base.Int63 in
@@ -249,7 +232,17 @@ let advance (state : t) (event : event) =
 							)
 						| None -> (state, [])
 					)
-				| _ -> (state, [])
+			| Beat ->
+				Fmt.pr "%d: die@." state.id;
+				if (is_leader state.view state.id state.node_count) then (
+					Fmt.pr "%d: beat!@." state.id;
+					let cmds = Cmd_set.diff state.cmds state.commited in
+					let state = {state with cmds = Cmd_set.empty} in
+					on_beat state cmds
+				)
+				else
+					(state, [])
+			| _ -> (state, [])
 		)
 	else
 		(state, [])

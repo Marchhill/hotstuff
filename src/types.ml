@@ -24,5 +24,7 @@ type ('a, 'b) node_state = {
   reqs: (Consensus.event * Base.Int63.t) Lwt_stream.t;
 	push_req: (Consensus.event * Base.Int63.t) option -> unit;
 	iter_count: int ref;
+  next_beat: Base.Int63.t ref;
+  beat_interval: Base.Int63.t;
 	stats: stats;
 }
