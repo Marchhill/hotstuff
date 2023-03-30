@@ -1,0 +1,27 @@
+yeet \cite{yin2019hotstuff}
+
+% This chapter should describe what was actually produced: the programs which were written, the hardware which was built or the theory which was developed. Any design strategies that looked ahead to the testing stage should be described in order to demonstrate a professional approach was taken.
+
+% Descriptions of programs may include fragments of high-level code but large chunks of code are usually best left to appendices or omitted altogether. Analogous advice applies to circuit diagrams or detailed steps in a machine-checked proof.
+
+% The implementation chapter should include a section labelled "Repository Overview". The repository overview should be around one page in length and should describe the high-level structure of the source code found in your source code repository. It should describe whether the code was written from scratch or if it built on an existing project or tutorial. Making effective use of powerful tools and pre-existing code is often laudable, and will count to your credit if properly reported. Nevertheless, as in the rest of the dissertation, it is essential to draw attention to the parts of the work which are not your own. 
+
+% It should not be necessary to give a day-by-day account of the progress of the work but major milestones may sometimes be highlighted with advantage.
+
+% practical contributions.
+% present deadlocks \& performance tests.
+% reusable modules.
+
+Live testing revealed many subtle bugs, deadlocks, and performance issues (memory usage, messages dropped due to bugs preventing leaders from always advancing) that were time consuming to debug. However they helped me to flesh out a pacemaker algorithm based on these ad-hoc fixes that we have proven both correctness and liveness for. I also improved the ease of implementability based on practicalities I discovered during implementation (eg. using node offset and hashes to compare nodes)
+
+We give cases of deadlock conditions
+and performance issues / improvements found from debugging traces:
+1. print statements (even when not in-between timing commands) can affect the time measured in another operation. Removed prints and printed all results at the end (use static collector function for logging that is passed around the program).
+2. >= used lexicographic ordering, resulted in chains being verified due to first field being increasing until a specific command "20" where the value became lexicographically decreasing
+3. Infinitely recursive start node not compatible nice with messaging system
+4. Memory usage massively increased due to recursive node functions, replaced with an offset
+5. Store a hash in each node and use it to compare nodes rather than checking their entire history
+6. Discarding messages from future views results in some leaders not progressing
+...
+These discoveries helped me to define this new refined pseudocode
+*present pseudocode*

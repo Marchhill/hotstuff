@@ -169,35 +169,25 @@ let local s =
 			exit 0
 	end
 
-let get_event s =
+let get_events s =
 	let t = Time_now.nanoseconds_since_unix_epoch () in
-	Fmt.pr "loop %d@." !(s.iter_count);
+	(* Fmt.pr "loop %d@." !(s.iter_count); *)
+	let msg_events = List.map (fun e -> (e, false)) (Lwt_stream.get_available s.msgs) in
+	let req_events = List.map (fun e -> (e, true)) (Lwt_stream.get_available s.reqs) in
+	let events = msg_events @ req_events in 
 	(* deliver beat event if delta has elapsed *)
 	if Base.Int63.(>) t !(s.next_beat) then (
+    	(* Fmt.pr "BEAT!!@."; *)
 		s.next_beat := Base.Int63.(+) t s.beat_interval;
-		Lwt.return (Some (Consensus.Beat, Base.Int63.zero), false)
+		((Consensus.Beat, t), false)::events
 	)
-	else (
-		if (!(s.iter_count) mod 20) = 0 then (
-			let* req_event = Lwt_stream.get s.reqs in
-			let is_req = Option.is_some req_event in
-			let* event = if is_req then Lwt.return (req_event) else (Lwt_stream.get s.msgs) in
-			Lwt.return (event, is_req)
-		)
-		else (
-			let* msg_event = Lwt_stream.get s.msgs in
-			let is_req = Option.is_none msg_event in
-			let* event = if (not is_req) then Lwt.return (msg_event) else (Lwt_stream.get s.reqs) in
-			Lwt.return (event, is_req)
-		)
-	)
+	else events
 
 let rec main_loop s =
 	s.iter_count := !(s.iter_count) + 1;
 	(* take an event from the incoming stream, prioritise internal messages  *)
-	let* (event, is_req) = get_event s in
-	let* () = (match event with
-		| Some (event, queue_time) ->
+	let events = get_events s in
+	let* () = Lwt_list.iter_s (fun ((event, queue_time), is_req) ->
 			let t1 = Time_now.nanoseconds_since_unix_epoch () in
 			(* advance consensus state machine by delivering the new event *)
 			let (state_machine', actions) = Consensus.advance !(s.state_machine) event in
@@ -219,7 +209,6 @@ let rec main_loop s =
 			s.stats.advance_times := (delta t1 t2) :: !(s.stats.advance_times);
 			s.stats.action_times := (delta t2 t3) :: !(s.stats.action_times);
 			Lwt.return_unit
-		| _ -> Lwt.return_unit
-	) in
+	) events in
 	let* () = if (!(s.iter_count) mod 10000) = 0 then Lwt.pause () else Lwt.return_unit in
 	main_loop s

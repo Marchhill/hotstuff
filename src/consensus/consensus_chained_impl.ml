@@ -233,9 +233,8 @@ let advance (state : t) (event : event) =
 						| None -> (state, [])
 					)
 			| Beat ->
-				Fmt.pr "%d: die@." state.id;
 				if (is_leader state.view state.id state.node_count) then (
-					Fmt.pr "%d: beat!@." state.id;
+					(* Fmt.pr "%d: beat!@." state.id; *)
 					let cmds = Cmd_set.diff state.cmds state.commited in
 					let state = {state with cmds = Cmd_set.empty} in
 					on_beat state cmds
