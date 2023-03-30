@@ -85,6 +85,7 @@ let get_event_type : event -> string = function
 	| Timeout _ -> "timeout"
 	| Complain _ -> "complain"
   | Beat -> "beat"
+  | NextSyncView -> "next_sync_view"
 
 let get_msg_from_event : event -> msg option = function
 	| NewView m -> Some m
@@ -102,6 +103,7 @@ let get_msg_from_event : event -> msg option = function
 	| Timeout _ -> None
 	| Complain m -> Some m
   | Beat -> None
+  | NextSyncView -> None
 
 let print_action = function
 	| Broadcast m -> Fmt.pr "%d: broadcast %s@." m.id (msg_to_string m)
@@ -135,6 +137,7 @@ let print_event = function
 	| Timeout x -> Fmt.pr "timeout %d@." x.view
 	| Complain m -> Fmt.pr "complain %s@." (msg_to_string m)
   | Beat -> Fmt.pr "beat@."
+  | NextSyncView -> Fmt.pr "nextsyncview@."
 
 let rec node_nth n node =
 	if n = 0 then

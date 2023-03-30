@@ -88,7 +88,7 @@ let init id nodes timeout verbose =
 		reqs = reqs;
 		push_req = push_req;
 		iter_count = ref 0;
-		next_beat = ref Base.Int63.zero;
+		next_beat = ref (Base.Int63.zero, true);
 		beat_interval = (Base.Int63.of_int 5_000_000); (* 5ms*)
 		stats = empty_stats (Time_now.nanoseconds_since_unix_epoch ())
 	} in
@@ -176,10 +176,14 @@ let get_events s =
 	let req_events = List.map (fun e -> (e, true)) (Lwt_stream.get_available s.reqs) in
 	let events = msg_events @ req_events in 
 	(* deliver beat event if delta has elapsed *)
-	if Base.Int63.(>) t !(s.next_beat) then (
+	let t', beat = !(s.next_beat) in
+	if Base.Int63.(>) t t' then (
     	(* Fmt.pr "BEAT!!@."; *)
-		s.next_beat := Base.Int63.(+) t s.beat_interval;
-		((Consensus.Beat, t), false)::events
+		s.next_beat := (Base.Int63.(+) t s.beat_interval, not beat);
+		if beat then
+			((Consensus.Beat, t), false) :: events
+		else
+			((Consensus.NextSyncView, t), false) :: events
 	)
 	else events
 

@@ -53,7 +53,7 @@ let rec trim_node (n : node) x = match n.parent, x with
 	| Some p, x -> {n with parent = Some (trim_node p (x - 1))}
 	| None, _ -> n
 
-let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) (height : int) =
+let _create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) (height : int) =
 	let b'' = get_node_from_qc qc in
 	let b' = get_node_from_qc (qc_from_node_justify b'') in
 	let b = get_node_from_qc (qc_from_node_justify b') in
@@ -66,6 +66,10 @@ let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) (height : int
 	let n = make_node cmds (Some parent) (Some {justify = justify; height = state.view + 1}) in
 	trim_node n (state.view + 1 - cutoff) (* only send nodes that will be used*)
 
+let create_leaf _state (parent : node) (cmds : Cmd_set.t) (qc : qc) (height : int) =
+	let justify = {node_offset = 1; view = qc.view; signature = qc.signature; msg_type = qc.msg_type; ids = qc.ids} in (* ??? change offset if skipped? *)
+	make_node cmds (Some parent) (Some {justify = justify; height = height})
+
 let rec on_commit (state : t) = function
 	| Some b ->
 		if (get_node_height b) > (get_node_height state.s.b_exec) then (
@@ -76,12 +80,14 @@ let rec on_commit (state : t) = function
 				| _ -> (state, [Execute {id = state.id; node = b}])
 			) in*)
 			(* List.filter (fun i -> Set.mem committed i) cmds *)
+			(* Fmt.pr "commit!@."; *)
 			let cmds = Cmd_set.diff b.cmds state.commited in
 			let actions = (Execute {id = state.id; node = b}) :: (Cmd_set.fold (fun cmd acc ->
 				if cmd.callback_id = "" then
 					acc
 				else
-					(SendClient {id = state.id; callback_id = cmd.callback_id; success = true})::acc
+					(Fmt.pr "%s@." cmd.data;
+					(SendClient {id = state.id; callback_id = cmd.callback_id; success = true})::acc)
 			) cmds []) in
 			let state = {state with commited = (Cmd_set.union state.commited cmds)} in
 			let state, actions' = (on_commit state b.parent) in
@@ -116,49 +122,34 @@ let on_beat state cmds =
 (* transition to view v *)
 let on_next_sync_view state view =
 	let state = {state with view = view} in
-	(state, [ResetTimer {id = state.id; view = view}])
+	let new_view_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = NewView; node = None; justify = Some state.s.qc_high; partial_signature = None}) in
+	(state, [ResetTimer {id = state.id; view = view}; SendNextLeader new_view_msg])
 
 let delta x y =
 	let open Base.Int63 in
 	(to_float (y - x)) /. 1_000_000_000.
 
 let on_recieve_proposal state msg =
-	let _t1 = Time_now.nanoseconds_since_unix_epoch () in
 	let b_new = (match msg.node with Some node -> node | None -> raise MissingNodeException) in
 	let n = get_node_from_qc (qc_from_node_justify b_new) in
-	let _t2 = Time_now.nanoseconds_since_unix_epoch () in
 	let (state, actions1) = if ((get_node_height b_new) > state.s.vheight) && ((extends (Some b_new) (Some state.s.b_lock)) || (get_node_height n) > (get_node_height state.s.b_lock)) then
 		let vote_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = GenericAck; node = Some b_new; justify = Some state.s.qc_high; partial_signature = None}) in
 		({state with s = {state.s with vheight = (get_node_height b_new)}}, [SendNextLeader vote_msg])
 	else (state, []) in
-	let _t3 = Time_now.nanoseconds_since_unix_epoch () in
 	let (state, actions2) = update state b_new in
-	let _t4 = Time_now.nanoseconds_since_unix_epoch () in
-	(* send next leader new-view message*)
-	let new_view_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = NewView; node = None; justify = Some state.s.qc_high; partial_signature = None}) in
-	let _t5 = Time_now.nanoseconds_since_unix_epoch () in
-	(* transition to next state if not next leader as next leader has to collect ACKs first *)
-	let (state, actions3) =
-		if (is_leader (state.view + 1) state.id state.node_count) then
-			(state, [])
-		else
-			on_next_sync_view state (state.view + 1)
-	in
-	let _t6 = Time_now.nanoseconds_since_unix_epoch () in
-	(*Fmt.pr "%d: total = %f, getting b_new = %f, voting = %f, updating = %f, new view = %f, next view%f@." state.id (delta t1 t6) (delta t1 t2) (delta t2 t3) (delta t3 t4) (delta t4 t5) (delta t5 t6);*)
-	(state, [SendNextLeader new_view_msg] @ actions1 @ actions2 @ actions3)
+	(state, actions1 @ actions2)
 
 let on_recieve_new_view state msg =
 	match msg.justify with
 		| Some qc ->
-			let state = update_qc_high state qc in
+			(*let state = update_qc_high state qc in
 			let state, actions = if msg.view > state.view then (
-				(* Fmt.pr "catching up!@."; *)
 				on_next_sync_view state msg.view
 			) else
 				(state, [])
 			in
-			(state, actions)
+			(state, actions)*)
+			(update_qc_high state qc, [])
 		| None ->
 			raise MissingQcException
 
@@ -167,9 +158,10 @@ let on_recieve_vote state event view =
 		| Some q ->
 			let qc = threshold_qc state.crypto q in
 			(* set new qc as votes as highest *)
-			let state = update_qc_high state qc in
+			(* let state = update_qc_high state qc in *)
 			(* transition to next state*)
-			on_next_sync_view state (view + 1)
+			(* on_next_sync_view state (view + 1) *)
+			(update_qc_high state qc, [])
 		| None ->
 			(state, [])
 
@@ -191,8 +183,8 @@ let advance (state : t) (event : event) =
 	) in
 	let state, actions = (match qc with
 		| Some qc when (qc.view + 1) > state.view ->
-				(* Fmt.pr "catching up!@.";
-				let actions = if qc.msg_type = Complain then (
+				Fmt.pr "catching up!@.";
+				(* let actions = if qc.msg_type = Complain then (
 						nextview mesage clears pipeline
 						let fail_messages = Queue.fold (fun acc cmd ->
 							acc @ [SendClient {id = state.id; callback_id = cmd.callback_id; success = false}]
@@ -241,6 +233,8 @@ let advance (state : t) (event : event) =
 				)
 				else
 					(state, [])
+			| NextSyncView ->
+				on_next_sync_view state (state.view + 1)
 			| _ -> (state, [])
 		)
 	else
