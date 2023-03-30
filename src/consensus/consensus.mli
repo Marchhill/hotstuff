@@ -2,7 +2,7 @@ include module type of Types
 include module type of Util
 
 type state
-type t = {view: int; id: int; node_count: int; cmds: Cmd_set.t; commited: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}
+type t = {view: int; id: int; node_count: int; cmds: Cmd_set.t; seen: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}
 
 (** [create_node id nodes pks useCrypto] returns the initialised state machine. *)
 val create_state_machine : ?crypto:crypto option -> int -> int -> t * (action list)

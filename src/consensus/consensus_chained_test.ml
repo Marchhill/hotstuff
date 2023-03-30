@@ -78,7 +78,7 @@ let rec do_actions nodes = function
 		let (nodes, actions') = do_actions nodes xs in
 		(nodes, actions @ actions')
 	| (SendClient m) :: xs ->
-		Fmt.pr "send_client id=\"%s\"@." m.callback_id;
+		Fmt.pr "send_client id=\"%s\"@." (Int64.to_string m.callback_id);
 		do_actions nodes xs
 	| (Execute m) :: xs ->
 		Fmt.pr "exec (%s)@." (node_to_string (Some m.node));
@@ -95,7 +95,7 @@ let view nodes a =
 (* deliver a command to be commited *)
 let sent = ref 0
 let deliver_command id nodes =
-	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = (Fmt.str "testid%d#%d" id (!sent))}] in
+	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = Int64.zero}] in (* ??? callback id*)
 	sent := !sent + 1;
 	nodes
 

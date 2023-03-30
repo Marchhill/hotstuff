@@ -98,7 +98,7 @@ let rec views nodes new_view_actions = function
 (* send a command to be commited to some node *)
 let sent = ref 0
 let deliver_command id nodes =
-	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = (Fmt.str "testid%d#%d" id (!sent))}] in
+	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = Int64.zero}] in (* ??? callback id*)
 	sent := !sent + 1;
 	nodes
 
@@ -147,10 +147,10 @@ let%expect_test "leader can commit from view 1" =
 let%expect_test "leader can commit from later view" =
 	let s = {(fst (create_state_machine 0 4)) with view = 100} in
 	let new_view_events = [
-		NewView {id = 0; view = 99; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 70; node = (create_leaf None (Cmd_set.singleton {data = "woo"; callback_id = ""})); signature = None; ids = []}); partial_signature = None};
+		NewView {id = 0; view = 99; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 70; node = (create_leaf None (Cmd_set.singleton {data = "woo"; callback_id = Int64.zero})); signature = None; ids = []}); partial_signature = None};
 		NewView {id = 1; view = 99; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 65; node = None; signature = None; ids = []}); partial_signature = None};
 		NewView {id = 2; view = 99; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 65; node = None; signature = None; ids = []}); partial_signature = None};
-		NewView {id = 3; view = 99; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 67; node = (create_leaf None (Cmd_set.singleton {data = "woo"; callback_id = ""})); signature = None; ids = []}); partial_signature = None}
+		NewView {id = 3; view = 99; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 67; node = (create_leaf None (Cmd_set.singleton {data = "woo"; callback_id = Int64.zero})); signature = None; ids = []}); partial_signature = None}
 	] in
 	let (s, a) = advance_multiple s new_view_events in
 	let s = {s with s = {s.s with phase = PreCommit}} in

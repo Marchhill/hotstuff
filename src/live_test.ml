@@ -26,7 +26,7 @@ let reporter =
 
 let sent = ref 0
 
-let gen_callback_id () = Fmt.str "%x" (Int64.to_int (Random.bits64 ()))
+let gen_callback_id () =Random.bits64 ()
 
 (* wait until we send a request to some node and it is commited *)
 let rec await_first_commit i conn timeout =
@@ -46,9 +46,9 @@ let await_connections conns timeout =
 	|> Lwt.join
 
 let run_command conns timeout stats =
-	(* let id = !sent mod (List.length conns) in *)
-	(* let conn = List.nth conns id in *)
-	let data = Fmt.str "cmd#%d" !sent in
+	(* let id = !sent mod (List.length conns) in
+	let conn = List.nth conns id in *)
+	let data = Fmt.str "c%d" !sent in
 	let callback_id = gen_callback_id () in
 	sent := !sent + 1;
 	(* Net.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout stats *)

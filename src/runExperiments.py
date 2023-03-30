@@ -23,10 +23,10 @@ if not os.path.isfile('./graphs/data/stats.csv'):
 	with open('./graphs/data/stats.csv', 'w') as f:
 		f.write('name, chained, nodes, throughput, goodput, mean, sd, rec, sent\n')
 
-nodeCounts = [4]
+nodeCounts = [2]
 # nodeCounts = [1]
 # rates = [500, 1000, 2000, 3000, 4000, 5000]
-rates = [1000]
+rates = [2000]
 # throughput = [2000]
 # rates = [10000]
 experiment_time = 10

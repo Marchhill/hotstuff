@@ -3,7 +3,7 @@ open Util
 open Crypto
 
 type state = {v: (int, event list) Hashtbl.t; vheight: int; b_lock: node; b_exec: node; b_leaf: node; qc_high: qc}
-type t = {view: int; id: int; node_count: int; cmds: Cmd_set.t;  commited: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}
+type t = {view: int; id: int; node_count: int; cmds: Cmd_set.t;  seen: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}
 
 let b_0_justify = {node_offset = 0; view = 0; signature = None; msg_type = GenericAck; ids = []}
 let b_0 = make_node Cmd_set.empty None (Some {justify = b_0_justify; height = 1})
@@ -76,14 +76,14 @@ let rec on_commit (state : t) = function
 				| _ -> (state, [Execute {id = state.id; node = b}])
 			) in*)
 			(* List.filter (fun i -> Set.mem committed i) cmds *)
-			let cmds = Cmd_set.diff b.cmds state.commited in
+			(* let cmds = Cmd_set.diff b.cmds state.commited in *)
 			let actions = (Execute {id = state.id; node = b}) :: (Cmd_set.fold (fun cmd acc ->
-				if cmd.callback_id = "" then
+				if cmd.callback_id = Int64.zero then
 					acc
 				else
 					(SendClient {id = state.id; callback_id = cmd.callback_id; success = true})::acc
-			) cmds []) in
-			let state = {state with commited = (Cmd_set.union state.commited cmds)} in
+			) b.cmds []) in
+			(* let state = {state with commited = (Cmd_set.union state.commited cmds)} in *)
 			let state, actions' = (on_commit state b.parent) in
 			(state, actions' @ actions)
 		)
@@ -116,7 +116,16 @@ let on_beat state cmds =
 (* transition to view v *)
 let on_next_sync_view state view =
 	let state = {state with view = view} in
-	(state, [ResetTimer {id = state.id; view = view}])
+	let (state, actions) = if (is_leader state.view state.id state.node_count) then (
+		(* let before = (Cmd_set.cardinal state.cmds) in *)
+		let filtered = Cmd_set.diff state.cmds state.seen in
+		let i = ref 0 in
+		let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i < 300) filtered in
+		(* Fmt.pr "%d: beat! %d : %d, %d@." state.id (Cmd_set.cardinal cmds) (Cmd_set.cardinal rest) (before - (Cmd_set.cardinal filtered)); *)
+		let state = {state with cmds = rest; seen = Cmd_set.empty} in
+		on_beat state cmds
+	) else (state, []) in
+	(state, ResetTimer {id = state.id; view = view} :: actions)
 
 let delta x y =
 	let open Base.Int63 in
@@ -126,6 +135,7 @@ let on_recieve_proposal state msg =
 	let _t1 = Time_now.nanoseconds_since_unix_epoch () in
 	let b_new = (match msg.node with Some node -> node | None -> raise MissingNodeException) in
 	let n = get_node_from_qc (qc_from_node_justify b_new) in
+	let state = {state with seen = (Cmd_set.union state.seen n.cmds)} in (* keep track of seen commands *)
 	let _t2 = Time_now.nanoseconds_since_unix_epoch () in
 	let (state, actions1) = if ((get_node_height b_new) > state.s.vheight) && ((extends (Some b_new) (Some state.s.b_lock)) || (get_node_height n) > (get_node_height state.s.b_lock)) then
 		let vote_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = GenericAck; node = Some b_new; justify = Some state.s.qc_high; partial_signature = None}) in
@@ -146,7 +156,7 @@ let on_recieve_proposal state msg =
 	in
 	let _t6 = Time_now.nanoseconds_since_unix_epoch () in
 	(*Fmt.pr "%d: total = %f, getting b_new = %f, voting = %f, updating = %f, new view = %f, next view%f@." state.id (delta t1 t6) (delta t1 t2) (delta t2 t3) (delta t3 t4) (delta t4 t5) (delta t5 t6);*)
-	(state, [SendNextLeader new_view_msg] @ actions1 @ actions2 @ actions3)
+	(state,  actions1 @ actions2 @ actions3 @ [SendNextLeader new_view_msg])
 
 let on_recieve_new_view state msg =
 	match msg.justify with
@@ -175,7 +185,7 @@ let on_recieve_vote state event view =
 
 let create_state_machine ?(crypto = None) id node_count =
 	let s = {v = (Hashtbl.create 10000); vheight = 1; b_lock = b_0; b_exec = b_0; b_leaf = b_0; qc_high = qc_0} in
-	let state = {view = 1; id = id; node_count = node_count; crypto = crypto; cmds = Cmd_set.empty; commited = Cmd_set.empty; complain = (Hashtbl.create 1000); s = s} in
+	let state = {view = 1; id = id; node_count = node_count; crypto = crypto; cmds = Cmd_set.empty; seen = Cmd_set.empty; complain = (Hashtbl.create 1000); s = s} in
 	if (is_leader 1 id node_count) then
 		on_next_sync_view state 1
 	else
@@ -232,15 +242,6 @@ let advance (state : t) (event : event) =
 							)
 						| None -> (state, [])
 					)
-			| Beat ->
-				if (is_leader state.view state.id state.node_count) then (
-					(* Fmt.pr "%d: beat!@." state.id; *)
-					let cmds = Cmd_set.diff state.cmds state.commited in
-					let state = {state with cmds = Cmd_set.empty} in
-					on_beat state cmds
-				)
-				else
-					(state, [])
 			| _ -> (state, [])
 		)
 	else

@@ -68,8 +68,8 @@ let get_keys id nodes =
 
 let init id nodes timeout verbose =
 	let _sk, _pks = get_keys id nodes in (* generate public and private keys *)
-	(* let crypto = Some ({sk = _sk; pks = _pks} : Consensus.crypto) in *)
-	let initial_state, new_view_actions = Consensus.create_state_machine id nodes in (* initialise state machine *)
+	let crypto = Some ({sk = _sk; pks = _pks} : Consensus.crypto) in
+	let initial_state, new_view_actions = Consensus.create_state_machine id nodes ~crypto in (* initialise state machine *)
 	let conns = open_conns nodes in (* connect to other nodes *)
 	let client_callbacks = Hashtbl.create 1000000 in (* store callbacks to respond to client commands *)
 	let reset_timer = create_timer timeout in (* create a view timer *)
@@ -88,8 +88,6 @@ let init id nodes timeout verbose =
 		reqs = reqs;
 		push_req = push_req;
 		iter_count = ref 0;
-		next_beat = ref Base.Int63.zero;
-		beat_interval = (Base.Int63.of_int 5_000_000); (* 5ms*)
 		stats = empty_stats (Time_now.nanoseconds_since_unix_epoch ())
 	} in
 	Lwt.async (fun () -> do_actions s actions);
@@ -170,18 +168,10 @@ let local s =
 	end
 
 let get_events s =
-	let t = Time_now.nanoseconds_since_unix_epoch () in
 	(* Fmt.pr "loop %d@." !(s.iter_count); *)
 	let msg_events = List.map (fun e -> (e, false)) (Lwt_stream.get_available s.msgs) in
 	let req_events = List.map (fun e -> (e, true)) (Lwt_stream.get_available s.reqs) in
-	let events = msg_events @ req_events in 
-	(* deliver beat event if delta has elapsed *)
-	if Base.Int63.(>) t !(s.next_beat) then (
-    	(* Fmt.pr "BEAT!!@."; *)
-		s.next_beat := Base.Int63.(+) t s.beat_interval;
-		((Consensus.Beat, t), false)::events
-	)
-	else events
+	msg_events @ req_events
 
 let rec main_loop s =
 	s.iter_count := !(s.iter_count) + 1;
