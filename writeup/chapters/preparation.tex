@@ -6,19 +6,20 @@
 
 % It is essential to declare the starting point. This states any existing codebase or materials that your project builds on. The text here can commonly be identical to the text in your proposal, but it may enlarge on it or report variations. For instance, the true starting point may have turned out to be different from that declared in the proposal and such discrepancies must be explained.
 
+% hotstuff algorithm
 % why Ocaml - mirage etc.
 % chubby (Google) - consensus is hard
 % related works
-% theoretical contribution - present HS and changes
 
-\subsection{Introduction}
+\section{Starting point}
+
+\section{HotStuff algorithm}
+\subsection{Problem statement}
 HotStuff is a Byzantine fault-tolerant consensus algorithm. It allows a group of parties to agree on some piece of information under adverse conditions where some messages can be lost and some parties are controlled by a malicious adversary. The main application of HotStuff is in permissioned blockchains. For example, one could create a cryptocurrency by using HotStuff to reach consensus on a log of transactions like ``Account X transfers account Y £10". By allowing a large amount of devices to reach consensus on a ledger, one can develop a decentralised payment system. In general Blockchains can be applied in situations where there is some central authority (a bank, DNS server, government, etc.) to instead create a distributed and decentralised system that requires less trust from participants.
 
 The protocol can be viewed as a solution to the Byzantine generals problem. In this problem a group of generals must all agree to siege a castle at the same time, as a single army would be defeated on its own. The problem is that the generals can only communicate via messengers that take some time to arrive and can be captured en-route. Additionally up to a third of the generals may be malicious, and try to prevent the other generals from reaching consensus on a time to attack. By following the HotStuff protocol the generals can ensure that they all attack together. In contrast to the generals problem, HotStuff is able to agree multiple values instead of just one, so instead of deciding a single value like ``Attack at dawn", HotStuff can agree on a log of multiple values. The key is that once a value is decided and appended to the log it can never be modified or erased, the log can only ever be extended.
 
 These conditions are described by the system model: partially synchronous, Byzantine, with reliable, authenticated, point-to-point delivery. This means that messages sent by one party will always be delivered to another within some bounded amount of time after GST has been reached and a message source cannot be spoofed. The Byzantine assumption means a maximum of n faulty nodes may be controlled by an adversary that is actively trying to prevent us from correctly reaching consensus, where $n = 3f + 1$ and n is the total number of parties.
-
-HotStuff can be used in `permissioned' blockchains, meaning that we must agree on the set of participants in advance. This is in contrast to permissionless blockchains like Bitcoin or Ethereum, where participants can freely leave and join the consensus protocol. This is because HotStuff is vulnerable to a `Sybil' attack - by adding a large amount of Byzantine nodes to the network an adversary can bypass our assumption that only a third of nodes are Byzantine. To prevent this kind of attack one could extend HotStuff with a system like Proof of Work or Proof of Stake. One of the extensions to this project is to design and implement a way to reconfigure the network, allowing the set of nodes participating in the system to be changed - this has not been achieved before.
 
 \subsection{Non-Byzantine case}
 We will start by describing an algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a Byzantine one. Examples of similar algorithms include Raft and multi-shot Paxos. Such an algorithm must ensure that once a value is decided and appended to the log, it cannot be modified or erased. In each view a leader proposes some log which it aims to decide upon with a group of replicas. Our implementation assigns leaders to views using a round robin system.
@@ -124,6 +125,26 @@ In order to achieve responsiveness we can modify our algorithm by adding a `key'
 	\item replicas $\to$ leader: ``ack", ...
 	\end{enumerate}
 \end{enumerate}
+\subsection{Chaining}
+chaining blah blah
+\subsection{View changes}
+\section{Tools \& Libraries}
+\subsection{OCaml}
+I chose OCaml for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, and good library support. Although using a language like C++ could have resulted in high performance code, it did not seem worth the tradeoff of increased development time and lack of memory safety. The core state machine in the HotStuff algorithm can be more elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm; OCaml's multi-paradigm nature is useful in this regard. Additionally the Tezos cryptocurrency is written in OCaml, and contains a cryptography library that provides the functionality needed by HotStuff.
 
-\subsection{Requirements analysis}
+OCaml has a powerful module system that facilitates writing highly reusable code. The module system was only briefly touched upon in the tripos (in Concepts in programming languages from IB), so I spent time learning about these features. Modules provide an elegant interface for the core state machine to interact with the imperative parts of the program that actually send messages over the network.
+
+There is no existing reference implementation of HotStuff in OCaml, so my project contributes to the growing OCaml ecosystem. This ecosystem is home to an active community, and interesting projects such as MirageOS unikernels.
+\subsection{Lwt}
+Lwt is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages and are used by asynchronous promises in Lwt. Lwt is useful to this project as promises provide a way to dispatch messages over the network and wait for their responses in different threads.
+\subsection{Cap'n Proto}
+Cap'n Proto is an RPC framework that includes a library for sending and receiving RPCs, and a schema language for designing the format of RPCs that can be sent. 
+\subsubsection{Benchmarks}
+
+\subsection{Tezos cryptography}
+\section{Requirements analysis}
+\section{Software engineering practices}
+\subsection{Development methodology}
+\subsection{Testing \& debugging methodology}
 appropriate software engineering techniques
+\subsection{Source code management}

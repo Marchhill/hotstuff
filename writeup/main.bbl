@@ -1,5 +1,10 @@
 \begin{thebibliography}{1}
 
+\bibitem{hardjono2019verifiable}
+{\sc Hardjono, T., and Pentland, A.}
+\newblock Verifiable anonymous identities and access control in permissioned
+  blockchains, 2019.
+
 \bibitem{yin2019hotstuff}
 {\sc Yin, M., Malkhi, D., Reiter, M.~K., Gueta, G.~G., and Abraham, I.}
 \newblock Hotstuff: Bft consensus in the lens of blockchain, 2019.
