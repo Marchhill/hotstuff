@@ -12,7 +12,14 @@ yeet \cite{yin2019hotstuff}
 % present deadlocks \& performance tests.
 % reusable modules.
 
-Live testing revealed many subtle bugs, deadlocks, and performance issues (memory usage, messages dropped due to bugs preventing leaders from always advancing) that were time consuming to debug. However they helped me to flesh out a pacemaker algorithm based on these ad-hoc fixes that we have proven both correctness and liveness for. I also improved the ease of implementability based on practicalities I discovered during implementation (eg. using node offset and hashes to compare nodes)
+% Live testing revealed many subtle bugs, deadlocks, and performance issues (memory usage, messages dropped due to bugs preventing leaders from always advancing) that were time consuming to debug. However they helped me to flesh out a pacemaker algorithm based on these ad-hoc fixes that we have proven both correctness and liveness for. I also improved the ease of implementability based on practicalities I discovered during implementation (eg. using node offset and hashes to compare nodes)
+
+\section{Overview}
+Present main program structure by modules: the consensus state machine and its interface, the server code & main loop (including stream), communication schema
+\section{Pacemaker Specification}
+\section{Deadlocks and performance improvements}
+Batching \& limiting of batch sizes. deduplication in batching
+Send to all
 
 We give cases of deadlock conditions
 and performance issues / improvements found from debugging traces:
@@ -22,6 +29,6 @@ and performance issues / improvements found from debugging traces:
 4. Memory usage massively increased due to recursive node functions, replaced with an offset
 5. Store a hash in each node and use it to compare nodes rather than checking their entire history
 6. Discarding messages from future views results in some leaders not progressing
-...
-These discoveries helped me to define this new refined pseudocode
-*present pseudocode*
+\section{Implementing for evaluation}
+Benchmarking code
+\section{Repository Overview}
