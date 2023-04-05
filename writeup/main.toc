@@ -1,33 +1,32 @@
-\contentsline {chapter}{Introduction}{3}{chapter*.3}%
-\contentsline {section}{\numberline {1.1}Motivation}{3}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Outline}{4}{section.1.2}%
-\contentsline {chapter}{Preparation}{5}{chapter*.4}%
-\contentsline {section}{\numberline {2.1}Starting point}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}HotStuff algorithm}{5}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Problem statement}{5}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Non-Byzantine case}{6}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Byzantine case}{7}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Optimistic responsiveness}{8}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}Chaining}{9}{subsection.2.2.5}%
-\contentsline {subsection}{\numberline {2.2.6}View changes}{10}{subsection.2.2.6}%
-\contentsline {section}{\numberline {2.3}Tools \& Libraries}{10}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}OCaml}{10}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Lwt}{10}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{10}{subsection.2.3.3}%
-\contentsline {subsubsection}{Benchmarks}{11}{subsubsection*.5}%
-\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{11}{subsection.2.3.4}%
-\contentsline {section}{\numberline {2.4}Requirements analysis}{11}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Software engineering practices}{12}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Development methodology}{12}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{12}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Source code management}{12}{subsection.2.5.3}%
-\contentsline {chapter}{Implementation}{13}{chapter*.6}%
-\contentsline {section}{\numberline {3.1}Overview}{13}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Pacemaker Specification}{13}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Deadlocks and performance improvements}{13}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Implementing for evaluation}{14}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Repository Overview}{14}{section.3.5}%
-\contentsline {chapter}{Evaluation}{15}{chapter*.7}%
-\contentsline {chapter}{Conclusion}{16}{chapter*.8}%
-\contentsline {subsection}{\numberline {5.0.1}Future Work}{16}{subsection.5.0.1}%
-\contentsline {chapter}{Bibliography}{16}{subsection.5.0.1}%
+\contentsline {chapter}{Introduction}{4}{chapter*.3}%
+\contentsline {chapter}{Preparation}{6}{chapter*.4}%
+\contentsline {section}{\numberline {2.1}Starting point}{6}{section.2.1}%
+\contentsline {section}{\numberline {2.2}HotStuff algorithm}{6}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Problem statement}{6}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Non-Byzantine case}{7}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Byzantine case}{8}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Optimistic responsiveness}{9}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}View changes}{11}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.6}Chaining}{11}{subsection.2.2.6}%
+\contentsline {section}{\numberline {2.3}Tools \& Libraries}{12}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}OCaml}{12}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Lwt}{13}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{13}{subsection.2.3.3}%
+\contentsline {subsubsection}{Benchmarks}{13}{subsubsection*.5}%
+\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{13}{subsection.2.3.4}%
+\contentsline {subsubsection}{Benchmarks}{14}{subsubsection*.6}%
+\contentsline {section}{\numberline {2.4}Requirements analysis}{14}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Software engineering practices}{15}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Development methodology}{15}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{15}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Source code management}{15}{subsection.2.5.3}%
+\contentsline {chapter}{Implementation}{16}{chapter*.7}%
+\contentsline {section}{\numberline {3.1}Overview}{16}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Pacemaker Specification}{16}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Deadlocks and performance improvements}{16}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Implementing for evaluation}{17}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Repository Overview}{17}{section.3.5}%
+\contentsline {chapter}{Evaluation}{18}{chapter*.8}%
+\contentsline {chapter}{Conclusion}{19}{chapter*.9}%
+\contentsline {subsection}{\numberline {5.0.1}Future Work}{19}{subsection.5.0.1}%
+\contentsline {chapter}{Bibliography}{20}{chapter*.10}%

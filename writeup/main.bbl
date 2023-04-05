@@ -1,0 +1,24 @@
+\begin{thebibliography}{1}
+
+\bibitem{ittai}
+{\sc Abraham, I.}
+\newblock \href{https://www.youtube.com/watch?v=Uoo2cOvQVN0}{Byzantine fault
+  tolerance, state machine replication and blockchains}.
+
+\bibitem{chubby}
+{\sc Chandra, T., Griesemer, R., and Redstone, J.}
+\newblock
+  \href{https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/paper2-1.pdf}{Paxos
+  made live: An engineering perspective}.
+\newblock pp.~398--407.
+
+\bibitem{hardjono2019verifiable}
+{\sc Hardjono, T., and Pentland, A.}
+\newblock Verifiable anonymous identities and access control in permissioned
+  blockchains, 2019.
+
+\bibitem{yin2019hotstuff}
+{\sc Yin, M., Malkhi, D., Reiter, M.~K., Gueta, G.~G., and Abraham, I.}
+\newblock Hotstuff: Bft consensus in the lens of blockchain, 2019.
+
+\end{thebibliography}

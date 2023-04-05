@@ -12,10 +12,11 @@
 % related works
 
 \section{Starting point}
+I have some experience of using OCaml from the IA course, but have never used it in a project. I also have some background in distributed systems from the IB course, which briefly covered Raft, a non-byzantine consensus algorithm. I have some understanding of byzantine consensus from my own reading into Nakamoto consensus and from developing a wallet application for Ethereum; neither of these are directly useful to implementing HotStuff.
 
 \section{HotStuff algorithm}
 \subsection{Problem statement}
-HotStuff is a Byzantine fault-tolerant consensus algorithm. It allows a group of parties to agree on some piece of information under adverse conditions where some messages can be lost and some parties are controlled by a malicious adversary. The main application of HotStuff is in permissioned blockchains. For example, one could create a cryptocurrency by using HotStuff to reach consensus on a log of transactions like ``Account X transfers account Y £10". By allowing a large amount of devices to reach consensus on a ledger, one can develop a decentralised payment system. In general Blockchains can be applied in situations where there is some central authority (a bank, DNS server, government, etc.) to instead create a distributed and decentralised system that requires less trust from participants.
+HotStuff is a Byzantine fault-tolerant consensus algorithm. It allows a group of parties to agree on some piece of information under adverse conditions where some messages can be lost and some parties are controlled by a malicious adversary. The main application of HotStuff is in permissioned blockchains. For example, one could create a cryptocurrency by using HotStuff to reach consensus on a log of transactions like ``Account X transfers account Y £10". By allowing a large amount of devices to reach consensus on a ledger, one can develop a decentralised payment system. In general blockchains can be applied in situations where there is some central authority (a bank, DNS server, government, etc.) to instead create a distributed and decentralised system that requires less trust from participants.
 
 The protocol can be viewed as a solution to the Byzantine generals problem. In this problem a group of generals must all agree to siege a castle at the same time, as a single army would be defeated on its own. The problem is that the generals can only communicate via messengers that take some time to arrive and can be captured en-route. Additionally up to a third of the generals may be malicious, and try to prevent the other generals from reaching consensus on a time to attack. By following the HotStuff protocol the generals can ensure that they all attack together. In contrast to the generals problem, HotStuff is able to agree multiple values instead of just one, so instead of deciding a single value like ``Attack at dawn", HotStuff can agree on a log of multiple values. The key is that once a value is decided and appended to the log it can never be modified or erased, the log can only ever be extended.
 
@@ -26,119 +27,140 @@ We will start by describing an algorithm to solve the simpler problem of reachin
 
 Each view can be broken into two phases; phase 1 allows the leader to learn of previously decided values, and in phase 2 it decides on a value. Phase 1 is initiated by the leader broadcasting the current view number to the replicas, that respond by sending their longest accepted log (the one with the highest corresponding view number). Once the leader has a quorum of responses, it initiates phase 2: it selects the longest log that has been sent to it and broadcasts it to the replicas. The leader may also extend the log at this point with its own values, or create a new log if it did not receive anything. Finally the replica updates its log to the value sent by the leader, and sends an acknowledgement. Once the leader receives a quorum of acknowledgements it can commit the new log. This algorithm satisfies our requirement that a committed log can only be extended.
 
-We will refer to phase 1 as the `new view' stage, and phase 2 as the `propose' phase (there is no standard terminology but we find this to be more clear than the terminology used in the HotStuff paper). These are followed by the `commit' phase, when the leader sends a commit message to replicas. Once they receive this message they can consider the log decided, and execute the new commands which have been added to the log.
-
-Example:
-
+We will refer to phase 1 as the \textit{new-view} stage, and phase 2 as the \textit{commit} phase to use the terminology of the HotStuff paper. These are followed by the \textit{decide} phase, when the leader sends a decide message to replicas. Once they receive this message they can consider the log decided, and execute the new commands which have been added to the log.
+\texttt{
 \begin{enumerate}
-\item New view: 
+\item New-view: 
 	\begin{enumerate}
 	\item leader $\to$ replicas: ``view = 3" 
 	\item replicas $\to$ leader: ``view = 2, log = [`hello', `world']", ...
 	\end{enumerate}
-\item Proposal:
+\item Commit:
 	\begin{enumerate}
 	\item leader $\to$ replicas: ``log = [`hello', `world', `!']"
 	\item replicas $\to$ leader: ``ack", ...
 	\end{enumerate}
-\item Commit:
+\item Decide:
 	\begin{enumerate}
-	\item leader $\to$ replicas: ``commit"
-	\item replicas $\to$ leader: ``ack", ...
+	\item leader $\to$ replicas: ``decide"
+	\item replicas: execute log
 	\end{enumerate}
 \end{enumerate}
-
+}
 \subsection{Byzantine case}
 In order to extend our algorithm to achieve consensus under a Byzantine threat model we must handle three threats that we will deal with in turn. In order to do this we must first introduce the concept of a `threshold signature'. Acknowledgements from replicas all contain a signature over the message to prove that they were actually sent by the correct node. The leader can create a threshold signature by combining $n - f $ ack messages' signatures to prove that they really received a quorum of acknowledgements. A collection of a quorum of votes with a threshold signature is known as a `quorum certificate'.
 
 \begin{enumerate}
 \item Threat: equivocation - a faulty leader broadcasts one value to some replicas and a different value to others. For example in the case of a cryptocurrency, this could result in a malicious actor (controlling account X) carrying out a double spend attack, sending ``Account X transfers account Y £10" to some nodes, and ``Account X transfers account Z £10" to other nodes, even if Account X only contains £10.
 
-Solution: Add a new stage `pre-propose' which happens just before the `propose' phase. In this phase the leader again chooses the longest log it received in the `new view' phase to send in the `pre-propose' phase, this may also be extended with the leader's new values. Once we receive a quorum of acknowledgements, we begin the `propose' phase. The difference is that this time we include a quorum certificate over the quorum of pre-propose acks, which proves that we pre-proposed the value to at least $n - f$ nodes and received their acks, so we are not proposing one value to some node and another value to others.
+Solution: Add a new stage \textit{prepare} which happens just before the \textit{commit} phase. In this phase the leader again chooses the longest log it received in the \textit{new-view} phase to send in the \textit{prepare} phase, this may also be extended with the leader's new values. Once we receive a quorum of acknowledgements, we begin the \textit{commit} phase. The difference is that this time we include a quorum certificate over the quorum of \textit{prepare} acks, which proves that we pre-proposed the value to at least $n - f$ nodes and received their acks, so we are not proposing one value to some node and another value to others.
 
-\item Threat: A faulty leader pre-proposes a log that conflicts with one that has already been committed.
+\item Threat: A faulty leader sends in the \textit{prepare} phase a log that conflicts with one that has already been committed.
 
-Solution: Replicas must lock on a value once it is proposed and not accept a pre-proposal from a leader that contradicts that. They will store the quorum certificate that they receive during the `propose' phase and will only accept a new pre-proposal if it extends from the node stored in the certificate.
+Solution: Replicas must lock on a value once it is committed and not accept a \textit{prepare} from a leader that contradicts that. They will store the quorum certificate that they receive during the \textit{commit} phase and will only accept a new \textit{prepare} if it extends from the node stored in the certificate.
 
 \item Threat: A faulty replica sends a the leader a fake log in its new-view message that was never actually proposed. Note that this does not break safety as a pre-proposal for the fake log would not be accepted since the protocol is safe. However, this breaks the liveness property of the protocol as a non-faulty leader could be prevented from making progress by faulty replicas sending fake logs.
 
-Solution: 
-
+Solution: Add to the \textit{new-view} message a qc over \textit{prepare} acks from the original view in which the message was proposed as a proof that it was indeed proposed.
 \end{enumerate}
-
-Example:
-
+\texttt{
 \begin{enumerate}
-\item New view: 
+\item New-view: 
 	\begin{enumerate}
 	\item leader $\to$ replicas: ``view = 3" 
-	\item replicas $\to$ leader: ``view = 2, log = [`hello', `world'], qc = (pre-proposal acks from view 2)", ...
+	\item replicas $\to$ leader: ``log = [`hello', `world'], qc = (prepare acks from view 2)", ...
 	\end{enumerate}
-\item Pre-proposal:
+\item Prepare:
 	\begin{enumerate}
-	\item leader $\to$ replicas: ``view = 2, log = [`hello', `world']"
-	\item replicas $\to$ leader: ``log = [`hello', `world'] ack", ...
+	\item leader $\to$ replicas: ``log = [`hello', `world', `!']"
+	\item replicas verify the proposal is safe
+	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", ...
 	\end{enumerate}
-\item Proposal:
+\item Commit (lock):
 	\begin{enumerate}
-	\item leader $\to$ replicas: ``log = [`hello', `world', `!']", qc = (pre-proposal acks from previous stage)"
+	\item leader $\to$ replicas: ``log = [`hello', `world', `!']", qc = (prepare acks from previous stage)"
+	\item replicas `lock' on proposed log
 	\item replicas $\to$ leader: ``ack", ...
 	\end{enumerate}
-\item Commit:
+\item Decide:
 	\begin{enumerate}
-	\item leader $\to$ replicas: ``commit", qc = (proposal acks from previous stage)"
-	\item replicas $\to$ leader: ``ack", ...
+	\item leader $\to$ replicas: ``decide, qc = (commit acks from previous stage)"
+	\item replicas: execute log
 	\end{enumerate}
 \end{enumerate}
+}
 \subsection{Optimistic responsiveness}
-Consider again the pre-proposal phase. In this phase the leader selects the quorum certificate from the highest view that it hears about from the new-view messages. However, it is possible that there is some honest replica that we do not hear from (perhaps their message was lost) that is locked on a higher view proposal than the one that we choose to send. When this replica receives our pre-proposal, it will reject it as it is locked on a higher view proposal. This means that we could be prevented from making progress in this view by missing one replica in the new-view phase.
+Consider again the \textit{prepare} phase. In this phase the leader selects the quorum certificate from the highest view that it hears about from the \textit{new-view} messages. However, it is possible that there is some honest replica that we do not hear from (perhaps their message was lost) that is locked on a higher view proposal than the one that we choose to propose. When this replica receives our pre-proposal, it will reject it as it is locked on a higher view proposal. This means that we could be prevented from making progress in this view by missing one replica in the \textit{new-view} phase.
 
-This means that our system doesn't have the `liveness' property, which means that it will make progress under synchronous conditions when a non-faulty leader is elected. It is possible that we repeatedly don't hear from this one honest replica and fail to make progress indefinitely. One solution to this problem is to introduce a timeout $\Delta$, once this timeout is elapsed we will give up on this view and start a new one. This solution has the disadvantage that our system is not `responsive', which means that the system can make progress as fast as network conditions allow when we have a faulty leader, and does not depend on $\Delta$.
+This means that our system doesn't have the `liveness' property, which means that it will make progress under synchronous conditions when a non-faulty leader is elected. It is possible that we repeatedly don't hear from this one honest replica and fail to make progress indefinitely. One solution to this problem is to introduce a timeout $\Delta$ that we must wait for before progressing to ensure that we have allowed sufficient time to pass such that we have heard from the honest replica. This solution has the disadvantage that our system is not `responsive', which means that the system can make progress as fast as network conditions allow when we have a non-faulty leader, and does not depend on $\Delta$.
 
-In order to achieve responsiveness we can modify our algorithm by adding a `key' phase in between pre-propose and propose. This ensures that if some honest replica becomes locked on a value in the propose phase, then there are at least $f + 1$ honest nodes that have a `key' for that value. More specifically, they have a `key-proof' composed of a quorum certificate over pre-proposal acks. Replicas then send this key-proof with their new-view message when a new view begins. The new leader selects the key-proof with the highest view proposal, and sends the key-proof along with their pre-proposal. Even if the leader does not receive a new-view message from the replica which is locked on the highest view proposal, they must have received the key to this proposal from some honest replica, so their pre-proposal will make progress.
-
+In order to achieve responsiveness we can modify our algorithm by adding a \textit{pre-commit} phase in between \textit{prepare} and \textit{commit}. This ensures that if some honest replica becomes locked on a value in the \textit{commit} phase, then there are at least $f + 1$ honest nodes that have a `key' for that value from the \textit{pre-commit} phase. More specifically, they have a `key-proof' composed of a quorum certificate over \textit{pre-commit} acks. Replicas then send this key-proof with their \textit{new-view} message when a new view begins. The new leader selects the key-proof with the highest view proposal, and sends the key-proof along with their \textit{prepare} message. Even if the leader does not receive a \textit{new-view} message from the replica which is locked on the highest view proposal, they must have received the key to this proposal from some honest replica, so their \textit{prepare} message will make progress.
+\texttt{
 \begin{enumerate}
 \item New view: 
 	\begin{enumerate}
 	\item leader $\to$ replicas: ``view = 3" 
 	\item replicas $\to$ leader: ``qc = (key-proof for view = 2, log = [`hello', `world'])", ...
 	\end{enumerate}
-\item Pre-proposal:
+\item Prepare:
 	\begin{enumerate}
-	\item leader $\to$ replicas: ``view = 3, log = [`hello', `world', `!'], qc = (key-proof for view = 2, log = [`hello', `world'])"
+	\item leader $\to$ replicas: ``log = [`hello', `world', `!'], qc = (key-proof for view = 2, log = [`hello', `world'])"
 	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", ...
 	\end{enumerate}
-\item Key:
+\item Pre-commit (key):
 	\begin{enumerate}
-	\item leader $\to$ replicas: ``qc = (pre-proposal acks from previous stage)"
+	\item leader $\to$ replicas: ``qc = (prepare acks / key-proof from previous stage)"
+	\item replicas store qc as a `key'
 	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", ...
 	\end{enumerate}
-
-\item Proposal:
+\item Commit (lock):
 	\begin{enumerate}
-	\item leader $\to$ replicas: ``qc = (key acks / propose-proof from previous stage)"
+	\item leader $\to$ replicas: ``qc = (pre-commit acks from previous stage)"
+	\item replicas `lock' on proposed log
 	\item replicas $\to$ leader: ``ack", ...
 	\end{enumerate}
-\item Commit:
+\item Decide:
 	\begin{enumerate}
-	\item leader $\to$ replicas: ``commit", qc = (proposal acks from previous stage)"
-	\item replicas $\to$ leader: ``ack", ...
+	\item leader $\to$ replicas: ``decide, qc = (commit acks from previous stage)"
+	\item replicas: execute log
 	\end{enumerate}
 \end{enumerate}
-\subsection{Chaining}
-chaining blah blah
+}
 \subsection{View changes}
+If a leader fails to make progress within some timeout a view change takes place and the next view begins. The HotStuff paper does not go into detail on how view changes take place, so this explanation is based on a talk by one of its authors, Ittai Abraham \cite{ittai}.
+
+Once the view times out, nodes send a \textit{complain} message to the next leader and start a new timeout for the next view. Once the next leader achieves a quorum of \textit{complain} messages it collects them into a QC known as a \textit{view-change proof}. This leader can then send a \textit{view-change} message containing the \textit{view-change proof} to all replicas, who will respond by transitioning to the next view and sending a \textit{new-view} message to the new leader. The inclusion of the \textit{view-change proof} prevents liveness attacks by byzantine nodes that could otherwise attack the system by constantly causing view changes to take place, and preventing non-faulty leaders from making progress.
+
+The use of timeouts in this way is a type of failure detector, which is a system that facilitates the detection of failed nodes. [add more information on failure detectors ***]
+\subsection{Chaining}
+The unchained algorithm presented goes through three very similar phases in order to commit a proposal, these phases involve collecting votes from replicas to form a QC that then serves in later phases. Instead of having different phases as before, we can have a single \textit{generic} phase that collects votes, creates a \textit{generic QC}, and sends it to the next leader; now we change view on each phase and a QC can serve in multiple phases concurrently.
+
+In each view some leader sends a proposal to all replicas, who send their replies to the next leader who can form a QC to add to their proposal. The replicas also send \textit{new-view} messages to the next leader as before, to allow them to select a node to propose.
+
+\textit{diagram of n-chain}
+
+The above diagram shows a chain of nodes connected by `parent' links; every time we propose a value we extend the chain with a new node. Some node \textit{b} also contains a link to another node within \textit{b.justify.node}, this is the previous generic QC in the chain. In the event of a view change a dummy node will be inserted in the chain which will cause a `gap' where some \textit{b.justify.node} pointer jumps over a dummy node. If some node \textit{b} has a QC that points to its direct parent with no `gap' in-between, then we say that it forms a \textit{one-chain}. In general if we have n such direct links without `gaps' we refer to this an \textit{n-chain} as shown above.
+
+To reproduce the behaviour of the unchained algorithm, on receiving a proposal for node \textit{b\textsuperscript{*}} a replica must look at \textit{b\textsuperscript{*}.justify.node} to see if it points to an \textit{n-chain}. It must take different actions depending on the length of the chain:
+
+\begin{itemize}
+\item one-chain: this is equivalent to the \textit{pre-commit} phase from the unchained version, so the replica should store a `key'
+\item two-chain: this is equivalent to the \textit{commit} phase, so the replica should `lock' on the value proposed at the start of the two-chain
+\item three-chain: this is equivalent to the \textit{decide} phase, so the replica can execute the commands from the node at the start of the three-chain
+\end{itemize}
+
 \section{Tools \& Libraries}
 \subsection{OCaml}
-I chose OCaml for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, and good library support. Although using a language like C++ could have resulted in high performance code, it did not seem worth the tradeoff of increased development time and lack of memory safety. The core state machine in the HotStuff algorithm can be more elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm; OCaml's multi-paradigm nature is useful in this regard. Additionally the Tezos cryptocurrency is written in OCaml, and contains a cryptography library that provides the functionality needed by HotStuff.
+I chose OCaml for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, and good library support. OCaml's multi-paradigm nature is suitable for implementing HotStuff, as the core state machine can be elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm. Additionally the Tezos cryptocurrency is written in OCaml, and contains a cryptography library that provides the functionality needed by HotStuff.
+
+The performance bottlenecks for distributed byzantine algorithms are generally cryptography, message serialisation and network delays. This means that it is more important to chose a language with suitable features to aid implementation, rather than picking a `high-performance' language like C++.
 
 OCaml has a powerful module system that facilitates writing highly reusable code. The module system was only briefly touched upon in the tripos (in Concepts in programming languages from IB), so I spent time learning about these features. Modules provide an elegant interface for the core state machine to interact with the imperative parts of the program that actually send messages over the network.
 
 There is no existing reference implementation of HotStuff in OCaml, so my project contributes to the growing OCaml ecosystem. This ecosystem is home to an active community, and interesting projects such as MirageOS unikernels.
 
 \subsection{Lwt}
-Lwt is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages and are used by asynchronous promises in Lwt. Lwt is useful to this project as promises provide a way to dispatch messages over the network and wait for their responses in different threads.
-
+Lwt is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages and are used by asynchronous promises in Lwt. Lwt is useful to this project as promises provide a way to dispatch messages over the network and wait for their responses in different threads. Promises are cheap to create in Lwt, so one can create many lightweight threads with good performance [citation needed***].
 \subsection{Cap'n Proto}
 Cap'n Proto is an RPC framework that includes a library for sending and receiving RPCs, and a schema language for designing the format of RPCs that can be sent. 
 
@@ -148,19 +170,25 @@ Cap'n Proto is an RPC framework that includes a library for sending and receivin
 \subsection{Tezos cryptography}
 The Tezos cryptography library provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, to aggregate several signatures into a single one, and to check an aggregate signature is valid. The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature.
 
+\subsubsection{Benchmarks}
+*** run core bench over tezos cryptography stuff
+
 \section{Requirements analysis}
 \begin{itemize}
-	\item Correctness - The consensus algorithm is implemented as it is described in the paper. This can be established by comparison of the program trace to a known correct implementation or mapping to a verified TLA+ model.
+	\item Correctness - The consensus algorithm is implemented as it is described in the paper. This can be established by testing of the program trace for compliance with the algorithm specification [do I need to mention change from proposal here ***].
 	\item Evaluation - Analysis of system throughput and latency carried out on a simulated network of 8 replicas. Evaluation will be carried out by testing the program locally, analysing the trace, and testing in an emulator.
 	\item Improve transaction throughput and reduce latency. This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
 	\item Description of how to implement verifiable anonymous identities on top of the HotStuff implementation.
 \end{itemize}
-These requirements are similar to those presented in my proposal (Appendix X***) with a few differences. The first difference is to evaluate on 8 nodes rather than 32. Benchmarking of Cap'n Proto has revealed its limitations when sending large messages. Once batching of requests is implemented the internal messages sent between nodes will be large and could cause a performance bottleneck for the state machine progressing. Because of this it may not be feasible to get reasonable performance with more nodes, as more nodes result in more internal messages being sent.
+
+These requirements are similar to those presented in my proposal (Appendix X***) with a few differences. The first difference is to evaluate on 8 nodes rather than 32. Benchmarking of Cap'n Proto has revealed its limitations when sending large messages. Once batching of requests is implemented the internal messages sent between nodes will be large and could cause a performance bottleneck for the state machine progressing. Because of this it may not be feasible to get reasonable performance with more nodes, as more nodes result in more internal messages being sent. In practice permissioned blockchains are often run with a small number of nodes, so this limitation may not be important [citation needed *** honeybadger BFT?].
+% https://github.com/heidihoward/distributed-consensus-reading-list#bft-surveys
 
 Additionally the extension has been changed from adding support for network reconfiguration to describing how to implement verifiable anonymous identities. This is because this extension seemed like a more interesting direction for the project with more exciting applications.
 
 \section{Software engineering practices}
 \subsection{Development methodology}
 \subsection{Testing \& debugging methodology}
-appropriate software engineering techniques
+expect tests, CI
+software engineering techniques
 \subsection{Source code management}

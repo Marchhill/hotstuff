@@ -15,8 +15,12 @@ yeet \cite{yin2019hotstuff}
 % Live testing revealed many subtle bugs, deadlocks, and performance issues (memory usage, messages dropped due to bugs preventing leaders from always advancing) that were time consuming to debug. However they helped me to flesh out a pacemaker algorithm based on these ad-hoc fixes that we have proven both correctness and liveness for. I also improved the ease of implementability based on practicalities I discovered during implementation (eg. using node offset and hashes to compare nodes)
 
 \section{Overview}
-Present main program structure by modules: the consensus state machine and its interface, the server code & main loop (including stream), communication schema
+Present main program structure by modules: the consensus state machine and its interface, the server code \& main loop (including stream), communication schema
+% some of this is inspired by the OCons project, it was still in development
 \section{Pacemaker Specification}
+prove that it doesn't break safety
+maybe try to prove liveness
+% https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Deadlocks and performance improvements}
 Batching \& limiting of batch sizes. deduplication in batching
 Send to all
@@ -31,4 +35,7 @@ and performance issues / improvements found from debugging traces:
 6. Discarding messages from future views results in some leaders not progressing
 \section{Implementing for evaluation}
 Benchmarking code
+discuss open loop vs closed loop clients
+avoid coordinated ommision by using open loop clients
+% section 3: https://dl.acm.org/doi/pdf/10.1145/3447851.3458739
 \section{Repository Overview}
