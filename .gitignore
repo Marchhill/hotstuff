@@ -1,6 +1,5 @@
 src/_build*
 src/profile*
-src/graphs/data/*
 src.tmp
 .vscode
 .DS_Store

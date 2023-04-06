@@ -12,7 +12,7 @@
 % related works
 
 \section{Starting point}
-I have some experience of using OCaml from the IA course, but have never used it in a project. I also have some background in distributed systems from the IB course, which briefly covered Raft, a non-byzantine consensus algorithm. I have some understanding of byzantine consensus from my own reading into Nakamoto consensus and from developing a wallet application for Ethereum; neither of these are directly useful to implementing HotStuff.
+I had some experience of using OCaml from the IA course, but had never used it in a project. I also had some background in distributed systems from the IB course, which briefly covered Raft, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus and from developing a wallet application for Ethereum; neither of these were directly useful to implementing HotStuff, but they gave me some wider context of the field.
 
 \section{HotStuff algorithm}
 \subsection{Problem statement}
@@ -188,7 +188,14 @@ Additionally the extension has been changed from adding support for network reco
 
 \section{Software engineering practices}
 \subsection{Development methodology}
+[should i say i used something like RAD and productivity tracking tools???]
 \subsection{Testing \& debugging methodology}
-expect tests, CI
-software engineering techniques
+Unit testing was carried out using `expect tests', which compare the outputted program trace to the correct output. I wrote a testing suite that verifies that the program behaves as specified in the HotStuff paper.
+
+The Memtrace library and viewer were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
+
+Due to the distributed nature of the program, normal debugging tools and profilers are not useful to debugging deadlocks and performance issues. This is because the cause of deadlocks and performance issues is often some process waiting or a backlog of work forming, but this cannot be detected by tools that just track things like CPU usage. Instead I had to rely on manual inspection of the program trace and commands that measure the real time taken for some part of the program to run.
+
+[implement CI???]
 \subsection{Source code management}
+I used Git for version control, and regularly pushed my local changes to a private GitHub repository.

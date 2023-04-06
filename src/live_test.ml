@@ -45,11 +45,17 @@ let await_connections conns timeout =
 	List.mapi (fun i conn -> await_first_commit i conn timeout) conns
 	|> Lwt.join
 
-let run_command conns timeout stats =
+let run_command conns timeout stats msg_size =
 	(* let id = !sent mod (List.length conns) in
 	let conn = List.nth conns id in *)
 	let data = Fmt.str "c%d" !sent in
 	let callback_id = gen_callback_id () in
+	(* simulate the size of a batch *)
+	let data = if msg_size = 1 then
+    	data
+	else
+    	List.fold_left (fun acc x -> acc ^ x) "" (List.init msg_size (fun _ -> data ^ (Int64.to_string callback_id)))
+	in
 	sent := !sent + 1;
 	(* Net.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout stats *)
 	let res = List.map (fun conn ->
@@ -57,7 +63,7 @@ let run_command conns timeout stats =
 	) conns in
 	Lwt.pick res
 
-let benchmark conns res rate timeout =
+let benchmark conns res rate timeout msg_size =
 	let t = Time_now.nanoseconds_since_unix_epoch () in
 	let s = Util.empty_stats (Base.Int63.zero) in
 	let period = Base.Int63.of_float((1. /. rate) *. 1_000_000_000.) in
@@ -73,7 +79,7 @@ let benchmark conns res rate timeout =
 			in
 			Lwt.async (fun () ->
 				let x = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
-				let* success = run_command conns timeout s in
+				let* success = run_command conns timeout s msg_size in
 				let y = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
 				(* Fmt.pr "%d: success = %b at %s@." i success (to_string y); *)
 				let ret = if success then Some (x, y) else None in
@@ -90,7 +96,7 @@ let delta x y =
 	let open Base.Int63 in
 	(to_float (y - x)) /. 1_000_000_000.
 
-let run_client nodes chained time rate req_times_fp stats_fp =
+let run_client nodes chained time rate req_times_fp stats_fp msg_size =
 	Lwt_main.run begin
 		let conns = Net.open_conns nodes in
 		let promise, resolver = Lwt.wait () in
@@ -99,7 +105,7 @@ let run_client nodes chained time rate req_times_fp stats_fp =
 		Lwt.async (fun () ->
 			let n = time * rate in (* calculate based on actual number sent (filter)*)
 			let res = Array.make n None in
-			let* stats = benchmark conns res (Float.of_int rate) 1000. in
+			let* stats = benchmark conns res (Float.of_int rate) 1000. msg_size in
 			(* output request times to csv file*)
 			let name = match req_times_fp with
 				| Some s ->
@@ -178,10 +184,14 @@ let throughput =
 	let doc = "Rate at which to send requests." in
 	Arg.(value & opt int 10 & info ["r"; "rate"] ~docv:"RATE" ~doc)
 
+let msg_size =
+	let doc = "Batch size to simulate." in
+	Arg.(value & opt int 1 & info ["s"; "size"] ~docv:"SIZE" ~doc)
+
 let connect_cmd =
 	let doc = "run the client" in
 	let info = Cmd.info "connect" ~doc in
-	Cmd.v info Term.(const run_client $ nodes $ chained $ time $ throughput $ req_times_fp $ stats_fp)
+	Cmd.v info Term.(const run_client $ nodes $ chained $ time $ throughput $ req_times_fp $ stats_fp $ msg_size)
 
 let () =
 	Random.self_init ();
