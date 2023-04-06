@@ -3,7 +3,7 @@ open Util
 open Crypto
 
 type state = {v: (int, event list) Hashtbl.t; vheight: int; b_lock: node; b_exec: node; b_leaf: node; qc_high: qc}
-type t = {view: int; id: int; node_count: int; cmds: Cmd_set.t;  seen: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}
+type t = {view: int; id: int; node_count: int; batch_size: int; cmds: Cmd_set.t;  seen: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}
 
 let b_0_justify = {node_offset = 0; view = 0; signature = None; msg_type = GenericAck; ids = []}
 let b_0 = make_node Cmd_set.empty None (Some {justify = b_0_justify; height = 1})
@@ -69,14 +69,6 @@ let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) (height : int
 let rec on_commit (state : t) = function
 	| Some b ->
 		if (get_node_height b) > (get_node_height state.s.b_exec) then (
-			(*let state, actions = (match Queue.peek_opt state.exec with
-				| Some cmd when (cmd.callback_id = b.cmd.callback_id) ->
-					let _ = Queue.pop state.exec in
-					(state, [Execute {id = state.id; node = b}; SendClient {id = state.id; callback_id = cmd.callback_id; success = true}])
-				| _ -> (state, [Execute {id = state.id; node = b}])
-			) in*)
-			(* List.filter (fun i -> Set.mem committed i) cmds *)
-			(* let cmds = Cmd_set.diff b.cmds state.commited in *)
 			let actions = (Execute {id = state.id; node = b}) :: (Cmd_set.fold (fun cmd acc ->
 				if cmd.callback_id = Int64.zero then
 					acc
@@ -120,7 +112,8 @@ let on_next_sync_view state view =
 		(* let before = (Cmd_set.cardinal state.cmds) in *)
 		let filtered = Cmd_set.diff state.cmds state.seen in
 		let i = ref 0 in
-		let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i < 300) filtered in
+    (* limit batch size *)
+		let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i < state.batch_size) filtered in
 		(* Fmt.pr "%d: beat! %d : %d, %d@." state.id (Cmd_set.cardinal cmds) (Cmd_set.cardinal rest) (before - (Cmd_set.cardinal filtered)); *)
 		let state = {state with cmds = rest; seen = Cmd_set.empty} in
 		on_beat state cmds
@@ -183,9 +176,9 @@ let on_recieve_vote state event view =
 		| None ->
 			(state, [])
 
-let create_state_machine ?(crypto = None) id node_count =
+let create_state_machine ?(crypto = None) id node_count batch_size =
 	let s = {v = (Hashtbl.create 10000); vheight = 1; b_lock = b_0; b_exec = b_0; b_leaf = b_0; qc_high = qc_0} in
-	let state = {view = 1; id = id; node_count = node_count; crypto = crypto; cmds = Cmd_set.empty; seen = Cmd_set.empty; complain = (Hashtbl.create 1000); s = s} in
+	let state = {view = 1; id = id; node_count = node_count; batch_size = batch_size; crypto = crypto; cmds = Cmd_set.empty; seen = Cmd_set.empty; complain = (Hashtbl.create 1000); s = s} in
 	if (is_leader 1 id node_count) then
 		on_next_sync_view state 1
 	else

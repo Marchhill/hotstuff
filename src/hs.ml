@@ -66,10 +66,10 @@ let get_keys id nodes =
 	let pks = List.map (fun (_, x, _) -> x) keys in
 	(sk, pks)
 
-let init id nodes timeout verbose =
+let init id nodes timeout batch_size verbose =
 	let _sk, _pks = get_keys id nodes in (* generate public and private keys *)
 	let crypto = Some ({sk = _sk; pks = _pks} : Consensus.crypto) in
-	let initial_state, new_view_actions = Consensus.create_state_machine id nodes ~crypto in (* initialise state machine *)
+	let initial_state, new_view_actions = Consensus.create_state_machine id nodes batch_size ~crypto in (* initialise state machine *)
 	let conns = open_conns nodes in (* connect to other nodes *)
 	let client_callbacks = Hashtbl.create 1000000 in (* store callbacks to respond to client commands *)
 	let reset_timer = create_timer timeout in (* create a view timer *)

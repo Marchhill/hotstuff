@@ -28,9 +28,9 @@ let create_nodes ?(use_crypto = false) n =
 			let sks, pks = gen_keys n in
 			List.init n (fun i ->
 				let crypto = Some {sk = (List.nth sks i); pks = pks} in
-				create_state_machine i n ~crypto)
+				create_state_machine i n 100 ~crypto)
 		else
-			List.init n (fun i -> create_state_machine i n)
+			List.init n (fun i -> create_state_machine i n 100)
 	)
 	(* flatten actions *)
 	|> List.fold_left (fun (states, actions) (state', actions') -> (state'::states, actions @ actions')) ([], [])
@@ -98,12 +98,12 @@ let rec views nodes new_view_actions = function
 (* send a command to be commited to some node *)
 let sent = ref 0
 let deliver_command id nodes =
-	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = Int64.zero}] in (* ??? callback id*)
+	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = Int64.one}] in
 	sent := !sent + 1;
 	nodes
 
 let%expect_test "leader can commit from view 1" =
-	let s, _ = create_state_machine 0 4 in
+	let s, _ = create_state_machine 0 4 100 in
 	let new_view_events = List.init 4 (fun id -> NewView {id = id; view = 0; msg_type = NewView; node = None; justify = None; partial_signature = None}) in
 	let (s, a) = advance_multiple s new_view_events in
 	let s = {s with s = {s.s with phase = PreCommit}} in
@@ -145,7 +145,7 @@ let%expect_test "leader can commit from view 1" =
 	[%expect {| 0: broadcast view=1 src=0 type=decide node=(⊥) justify=(view=1 type=commit_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}]
 
 let%expect_test "leader can commit from later view" =
-	let s = {(fst (create_state_machine 0 4)) with view = 100} in
+	let s = {(fst (create_state_machine 0 4 100)) with view = 100} in
 	let new_view_events = [
 		NewView {id = 0; view = 99; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 70; node = (create_leaf None (Cmd_set.singleton {data = "woo"; callback_id = Int64.zero})); signature = None; ids = []}); partial_signature = None};
 		NewView {id = 1; view = 99; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 65; node = None; signature = None; ids = []}); partial_signature = None};
@@ -684,7 +684,7 @@ let%expect_test "leader + replicas can commit and send response to client" =
   state id=1 phase=decide role=replica view=1
   state id=0 phase=decide role=leader view=1
   0: broadcast view=1 src=0 type=decide node=(⊥) justify=(view=1 type=commit_ack node=(["hello1#0",]-[]-⊥) sig=(#3,#2,#1)) sig=(#0)
-  0: send_client success=true callback_id="testid1#0" |}];
+  0: send_client success=true callback_id="1" |}];
 	let (_, decide_ack_actions) = do_actions nodes decide_actions in
 	List.iter print_state nodes;
 	List.iter print_action decide_ack_actions;

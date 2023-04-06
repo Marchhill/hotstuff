@@ -27,7 +27,7 @@ os.mkdir(test_path + 'subtests')
 
 # create stats file
 with open(test_path + 'stats.csv', 'w') as f:
-	f.write('name, chained, nodes, throughput, goodput, mean, sd, rec, sent\n')
+	f.write('name, chained, nodes, throughput, goodput, mean, sd, rec, sent, batch_size, msg_size\n')
 
 nodeCounts = [2]
 # nodeCounts = [1]
@@ -35,21 +35,22 @@ nodeCounts = [2]
 rates = [2000]
 # throughput = [2000]
 # rates = [10000]
+batch_sizes = [300]
 experiment_time = 10
 repeats = 3
 
 # randomise testing order
-test_iter = random.sample(list(itertools.product(rates, nodeCounts)) * repeats, len(rates) * len(nodeCounts) * repeats)
+test_iter = random.sample(list(itertools.product(rates, nodeCounts, batch_sizes)) * repeats, len(rates) * len(nodeCounts) * len(batch_sizes) * repeats)
 
 x = 0
 # randomise order of tests (generate permutations...)
-for (rate, n) in test_iter:
-	name = f'test{x}_{rate}_{n}'
+for (rate, n, s) in test_iter:
+	name = f'test{x}_{rate}_{n}_{s}'
 	print(f'running "{name}"')
 	for i in range(n):
-		processes.append(subprocess.Popen(f'ulimit -n 65536; eval $(opam env) OCAML_LANDMARKS=format=json,output=profile{str(i)}.json dune exec --build-dir=_build{str(i)} -- ./main.exe -i {str(i)} -n {str(n)}', shell=True, preexec_fn=os.setsid))
+		processes.append(subprocess.Popen(f'ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build{str(i)} -- ./main.exe -i {str(i)} -n {str(n)} -b {str(s)}', shell=True, preexec_fn=os.setsid))
 	time.sleep(5)
-	subprocess.run(f'eval $(opam env) OCAML_LANDMARKS=output=profile dune exec -- ./live_test.exe {str(n)} -t {str(experiment_time)} -r {str(rate)} --times "{test_path + "subtests/" + name}.csv" --stats "{test_path}stats.csv"', shell=True)
+	subprocess.run(f'eval $(opam env) dune exec -- ./live_test.exe {str(n)} -t {str(experiment_time)} -r {str(rate)} --times "{test_path + "subtests/" + name}.csv" --stats "{test_path}stats.csv"', shell=True)
 	time.sleep(1)
 	kill_processes()
 	processes = []

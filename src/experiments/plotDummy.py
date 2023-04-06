@@ -19,19 +19,19 @@ if not os.path.exists(graph_dir):
 stats = pd.read_csv(f'./experiments/data/{test_name}/stats.csv', skipinitialspace=True)
 stats['lost'] = 1. - (stats['rec'] / stats['sent'])
 
-ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='nodes')
+ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='msg_size')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputgoodput.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='nodes')
+ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='msg_size')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlost.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='goodput', y='mean', data=stats, hue='nodes')
+ax = sns.lineplot(x='goodput', y='mean', data=stats, hue='msg_size')
 ax.set(xlabel = 'goodput (req/s)', ylabel = 'mean latency (ms)')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'goodputlatency.png')

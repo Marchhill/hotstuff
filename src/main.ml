@@ -28,12 +28,12 @@ let reporter =
   in
   { Logs.report = report }
 
-let start_node id nodes verbose =
+let start_node id nodes batch_size verbose =
 	Lwt_main.run begin
 		let listen_address = `TCP ("127.0.0.1", 9000 + id) in
 		let config = Capnp_rpc_unix.Vat_config.create ~serve_tls:false ~secret_key listen_address in
 		let service_id = Capnp_rpc_net.Restorer.Id.public "" in
-    let node_state = Hs.init id nodes timeout verbose in
+    let node_state = Hs.init id nodes timeout batch_size verbose in
 		let restore = Capnp_rpc_net.Restorer.single service_id (Hs.local node_state) in
 		let* vat = Capnp_rpc_unix.serve config ~restore in
 		let uri = Capnp_rpc_unix.Vat.sturdy_uri vat service_id in
@@ -53,10 +53,14 @@ let verbose =
 	let doc = "Output info about messages and state machine." in
 	Arg.(value & flag & info ["v"; "verbose"] ~docv:"VERBOSE" ~doc)
 
+let batch_size =
+	let doc = "Batch size." in
+	Arg.(value & opt int 300 & info ["b"; "batch"] ~docv:"BATCH" ~doc)
+
 let cmd =
 	let doc = "run a hotstuff node" in
 	let info = Cmd.info "hs" ~version:"%‌%VERSION%%" ~doc in
-	Cmd.v info Term.(const start_node $ id $ nodes $ verbose)
+	Cmd.v info Term.(const start_node $ id $ nodes $ batch_size $ verbose)
 
 let () =
 	(*Fmt_tty.setup_std_outputs ();

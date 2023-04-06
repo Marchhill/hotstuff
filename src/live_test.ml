@@ -96,7 +96,7 @@ let delta x y =
 	let open Base.Int63 in
 	(to_float (y - x)) /. 1_000_000_000.
 
-let run_client nodes chained time rate req_times_fp stats_fp msg_size =
+let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size =
 	Lwt_main.run begin
 		let conns = Net.open_conns nodes in
 		let promise, resolver = Lwt.wait () in
@@ -144,7 +144,7 @@ let run_client nodes chained time rate req_times_fp stats_fp msg_size =
 			(match stats_fp with
 				| Some s ->
 					Out_channel.with_open_gen [Open_append] 0o666 s (fun oc ->
-						Printf.fprintf oc "%s, %s, %d, %d, %f, %f, %f, %d, %d\n" name chained nodes rate goodput mean sd success n
+						Printf.fprintf oc "%s, %s, %d, %d, %f, %f, %f, %d, %d, %d, %d\n" name chained nodes rate goodput mean sd success n batch_size msg_size
 					)
 				| None -> ());
 			Lwt.wakeup resolver ();
@@ -185,13 +185,17 @@ let throughput =
 	Arg.(value & opt int 10 & info ["r"; "rate"] ~docv:"RATE" ~doc)
 
 let msg_size =
-	let doc = "Batch size to simulate." in
+	let doc = "Message size." in
 	Arg.(value & opt int 1 & info ["s"; "size"] ~docv:"SIZE" ~doc)
+
+let batch_size =
+	let doc = "Batch size." in
+	Arg.(value & opt int 1 & info ["b"; "batch"] ~docv:"BATCH_SIZE" ~doc)
 
 let connect_cmd =
 	let doc = "run the client" in
 	let info = Cmd.info "connect" ~doc in
-	Cmd.v info Term.(const run_client $ nodes $ chained $ time $ throughput $ req_times_fp $ stats_fp $ msg_size)
+	Cmd.v info Term.(const run_client $ nodes $ chained $ time $ throughput $ req_times_fp $ stats_fp $ msg_size $ batch_size)
 
 let () =
 	Random.self_init ();

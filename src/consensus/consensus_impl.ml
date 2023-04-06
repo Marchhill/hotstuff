@@ -9,7 +9,7 @@ type phase = Prepare | PreCommit | Commit | Decide
 type role = Leader of {m: event list; vpc: event list; vc: event list; vd: event list; has_proposed: bool} | Replica
 
 type state = {phase: phase; role: role; locked_qc: qc option; prepare_qc: qc option; nv: event list}
-type t = {view: int; id: int; node_count: int; cmds: Cmd_set.t; crypto: crypto option; complain: event list; s: state}
+type t = {view: int; id: int; node_count: int; batch_size: int; cmds: Cmd_set.t; crypto: crypto option; complain: event list; s: state}
 
 let b_0 = make_node Cmd_set.empty None None
 let qc_0 = {node = Some b_0; view = 0; signature = None; msg_type = PrepareAck; ids = []}
@@ -233,10 +233,10 @@ let as_replica state (event : event) =
 			({state with s = {state.s with nv = event::state.s.nv}}, [])
 		| _ -> (state, [])
 
-let create_state_machine ?(crypto = None) id node_count =
+let create_state_machine ?(crypto = None) id node_count batch_size =
 	let r = get_role 1 id node_count [] in
 	let s = {phase = Prepare; role = r; locked_qc = Some qc_0; prepare_qc = Some qc_0; nv = []} in
-	let state = {view = 1; id = id; node_count = node_count; crypto = crypto; cmds = Cmd_set.empty; complain = []; s = s} in
+	let state = {view = 1; id = id; node_count = node_count; batch_size = batch_size; crypto = crypto; cmds = Cmd_set.empty; complain = []; s = s} in
 	let new_view_msg = sign state.crypto ({id = state.id; view = 0; msg_type = NewView; node = None; justify = Some qc_0; partial_signature = None}) in
 	let new_view_action = SendNextLeader new_view_msg in
 	(state, [new_view_action])
