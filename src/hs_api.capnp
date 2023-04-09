@@ -52,10 +52,6 @@ struct Msg {
 	id @5 :Int32;
 }
 
-interface Callback {
-	send @0 () -> ();
-}
-
 interface Hs {
 	sendMsg @0 (msg :Msg) -> ();
 	clientReq @1 (cmd :Cmd) -> (success :Bool);

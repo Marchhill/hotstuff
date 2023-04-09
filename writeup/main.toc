@@ -22,12 +22,13 @@
 \contentsline {subsection}{\numberline {2.5.3}Source code management}{17}{subsection.2.5.3}%
 \contentsline {chapter}{Implementation}{18}{chapter*.7}%
 \contentsline {section}{\numberline {3.1}Overview}{18}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Pacemaker Specification}{18}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Correctness Proof}{21}{subsection.3.2.1}%
-\contentsline {section}{\numberline {3.3}Deadlocks and performance improvements}{21}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Implementing for evaluation}{22}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Repository Overview}{24}{section.3.5}%
-\contentsline {chapter}{Evaluation}{26}{chapter*.8}%
-\contentsline {chapter}{Conclusion}{27}{chapter*.9}%
-\contentsline {subsection}{\numberline {5.0.1}Future Work}{27}{subsection.5.0.1}%
-\contentsline {chapter}{Bibliography}{28}{chapter*.10}%
+\contentsline {section}{\numberline {3.2}Pacemaker Specification}{19}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Correctness Proof}{22}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Liveness Proof}{22}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Deadlocks and performance improvements}{22}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Implementing for evaluation}{23}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Repository Overview}{25}{section.3.5}%
+\contentsline {chapter}{Evaluation}{27}{chapter*.8}%
+\contentsline {chapter}{Conclusion}{28}{chapter*.9}%
+\contentsline {subsection}{\numberline {5.0.1}Future Work}{28}{subsection.5.0.1}%
+\contentsline {chapter}{Bibliography}{29}{chapter*.10}%

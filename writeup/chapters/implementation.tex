@@ -36,10 +36,18 @@
 % ---
 
 \section{Overview}
-Present main program structure by modules: the consensus state machine and its interface, the server code \& main loop (including stream), communication schema
+%Present main program structure by modules: the consensus state machine and its interface, the server code \& main loop (including stream), communication schema
 % some of this is inspired by the OCons project, it was still in development
+The core implementation of the HotStuff algorithm (which we will give in \ref{spec}) is implemented in the \textit{consensus} module. The main function provided by this module is \textit{advance}, which delivers some event (such as an incoming message, client request or timeout) to the consensus state machine and returns an updated state and a list of actions (such as sending a message to another node or responding to a client request) to be carried out. This architecture is inspired by the \href{https://github.com/Cjen1/OCons}{OCons }project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.}, which was developed by my project supervisor. The \textit{consensus} module contains both a chained and unchained implementation that share a common signature, so can be interchanged. The module uses the Tezos cryptography library (see \ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
+
+Each node operates as a server waiting for messages from other nodes or requests from a client (or in the case of our experiments a load generator, which is described in \ref{benchcode}). The format of RPCs is specified in a Capn' Proto schema, in their \href{https://capnproto.org/language.html}{custom markdown language}. A received RPC must be decoded, and the Capn' Proto types converted into the internal types of the consensus state machine. Messages and requests are added to separate streams\footnote{A stream is thread-safe implementation of a queue in Lwt.} when they are received. When a request is received the callback function to respond to the request is stored in a hash table, so that it can be accessed when the command has been committed and the client request can be responded to.
+
+The main loop takes events from the message and request streams, prioritising internal messages over client requests [expand on why, maybe cite something ***]. It takes these events and delivers them to the \textit{advance} function of the consensus state machine. This architecture was chosen so that the \textit{advance} function is never run in parallel on different messages / requests, as this could lead to race conditions. The \textit{advance} function then returns a new state which is stored, and a list of actions to carry out.
+
+The actions that can be carried out are sending a message to other nodes, responding to a client request, and resetting a timer. In order to send a message we must convert the consensus state machine internal types into Capn' Proto types, and construct an RPC that matches the schema. Messages are dispatched asynchronously in a new thread. The node maintains TCP connections with all other nodes that are reused every time a message is sent, and in the event of the connection breaking the node repeatedly attempts to reconnect with binary exponential back-off. When responding to a client request the committed command's unique identifier is used to lookup the callback to respond to the client, which is then called, sending a response to the client. The timer is implemented with Lwt promises, a new thread is created which waits for a timeout to elapse and then adds a TIMEOUT message to the message stream.
+
 \section{Pacemaker Specification} \label{spec}
-We present the pseudocode given in the HotStuff paper (see algorithm 4 \& 5) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), we will present these in \ref{deadlock}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
+We present the pseudocode for the unchained algorithm given in the HotStuff paper (see algorithm 4 \& 5) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), we will present these in \ref{deadlock}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
 
 \begin{algorithm}[h!]
 	\caption{Modified HotStuff}\label{hotstuff}
@@ -185,6 +193,7 @@ We present the pseudocode given in the HotStuff paper (see algorithm 4 \& 5) wit
 
 \subsection{Correctness Proof}
 
+\subsection{Liveness Proof}
 %prove that it doesn't break safety
 %maybe try to prove liveness
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
@@ -245,4 +254,4 @@ avoid coordinated ommision by using open loop clients
 	]
 \end{forest}
 
-The \textit{src} directory contains the main server loop and the code for interacting with Capn'proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in \ref{spec}. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.
+The \textit{src} directory contains the main server loop and the code for interacting with Capn' Proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in \ref{spec}. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.

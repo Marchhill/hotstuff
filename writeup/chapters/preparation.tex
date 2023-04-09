@@ -181,7 +181,7 @@ The figures demonstrate that the framework has a severe drop in performance when
 
 [maybe add goodput / latency graph once it is in a reasonable state! ***]
 
-\subsection{Tezos cryptography}
+\subsection{Tezos cryptography} \label{tezos}
 The Tezos cryptography library provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, to aggregate several signatures into a single one, and to check an aggregate signature is valid. The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature.
 
 \subsubsection{Benchmarks}
