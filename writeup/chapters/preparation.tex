@@ -126,7 +126,7 @@ In order to achieve responsiveness we can modify our algorithm by adding a \text
 	\end{enumerate}
 \end{enumerate}
 }
-\subsection{View changes}
+\subsection{View changes} \label{viewchange}
 If a leader fails to make progress within some timeout a view change takes place and the next view begins. The HotStuff paper does not go into detail on how view changes take place, so this explanation is based on a talk by one of its authors, Ittai Abraham \cite{ittai}.
 
 Once the view times out, nodes send a \textit{complain} message to the next leader and start a new timeout for the next view. Once the next leader achieves a quorum of \textit{complain} messages it collects them into a QC known as a \textit{view-change proof}. This leader can then send a \textit{view-change} message containing the \textit{view-change proof} to all replicas, who will respond by transitioning to the next view and sending a \textit{new-view} message to the new leader. The inclusion of the \textit{view-change proof} prevents liveness attacks by byzantine nodes that could otherwise attack the system by constantly causing view changes to take place, and preventing non-faulty leaders from making progress.
@@ -137,7 +137,7 @@ The unchained algorithm presented goes through three very similar phases in orde
 
 In each view some leader sends a proposal to all replicas, who send their replies to the next leader who can form a QC to add to their proposal. The replicas also send \textit{new-view} messages to the next leader as before, to allow them to select a node to propose.
 
-\textit{diagram of n-chain}
+\textit{diagram of n-chain ***}
 
 The above diagram shows a chain of nodes connected by `parent' links; every time we propose a value we extend the chain with a new node. Some node \textit{b} also contains a link to another node within \textit{b.justify.node}, this is the previous generic QC in the chain. In the event of a view change a dummy node will be inserted in the chain which will cause a `gap' where some \textit{b.justify.node} pointer jumps over a dummy node. If some node \textit{b} has a QC that points to its direct parent with no `gap' in-between, then we say that it forms a \textit{one-chain}. In general if we have n such direct links without `gaps' we refer to this an \textit{n-chain} as shown above.
 
@@ -165,13 +165,51 @@ Lwt is a concurrent programming library for OCaml. It allows the creation of pro
 Cap'n Proto is an RPC framework that includes a library for sending and receiving RPCs, and a schema language for designing the format of RPCs that can be sent. 
 
 \subsubsection{Benchmarks}
-***present graphs benchmarking capnproto***
+I benchmarked the message sending functionality of Cap'n Proto. I did this with an open-loop load generator (which is described in \ref{benchcode}), running each experiment for 10s. I varied the size of messages sent in different tests to replicate the behaviour of the algorithm when sending `batches' of many commands, so a message size of 600 means that the message size is approximately that of a message containing 600 commands.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{dummy_throughputgoodput.png}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{dummy_throughputlost.png}
+\end{figure}
+
+The figures demonstrate that the framework has a severe drop in performance when sending large messages. For a message size of 600 the goodput goes to zero as the throughput increases, meaning that no messages are being responded to.
+
+[maybe add goodput / latency graph once it is in a reasonable state! ***]
 
 \subsection{Tezos cryptography}
 The Tezos cryptography library provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, to aggregate several signatures into a single one, and to check an aggregate signature is valid. The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature.
 
 \subsubsection{Benchmarks}
-*** run core bench over tezos cryptography stuff
+I profiled the important functions of the library with Jane Street's Core\_bench module. Core\_bench is a micro-benchmarking library used to estimate the cost of operations in OCaml, it runs the operation many times and uses linear regression to try to reduce the effect of high variance between runs.
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|r|}
+	\hline
+	Function                 & Time (µs) \\ \hline
+	Sign                     & 427.87   \\
+	Check                    & 1,171.77 \\
+	Aggregate (4 sigs)       & 302.90   \\
+	Aggregate check (4 sigs) & 1,179.25 \\
+	Aggregate (8 sigs)       & 605.38   \\
+	Aggregate check (8 sigs) & 1,180.61 \\ \hline
+	\end{tabular}
+\end{table}
+% ┌─────────────┬────────────┬─────────┬──────────┬──────────┬────────────┐
+% │ Name        │   Time/Run │ mWd/Run │ mjWd/Run │ Prom/Run │ Percentage │
+% ├─────────────┼────────────┼─────────┼──────────┼──────────┼────────────┤
+% │ sign        │   427.87us │ 144.00w │          │          │     36.24  │
+% │ check       │ 1_171.77us │  75.00w │          │          │     99.25  │
+% │ agg_4       │   302.90us │ 484.00w │    0.15w │    0.15w │     25.66  │
+% │ agg_check_4 │ 1_179.25us │  75.00w │          │          │     99.88  │
+% │ agg_8       │   605.38us │ 944.00w │    0.35w │    0.35w │     51.28  │
+% │ agg_check_8 │ 1_180.61us │  75.00w │          │          │    100.00  │
+% └─────────────┴────────────┴─────────┴──────────┴──────────┴────────────┘
 
 \section{Requirements analysis}
 \begin{itemize}

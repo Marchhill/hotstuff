@@ -29,15 +29,15 @@ os.mkdir(test_path + 'subtests')
 with open(test_path + 'stats.csv', 'w') as f:
 	f.write('name, chained, nodes, throughput, goodput, mean, sd, rec, sent, batch_size, msg_size\n')
 
-nodeCounts = [2]
+nodeCounts = [4]
 # nodeCounts = [1]
 # rates = [500, 1000, 2000, 3000, 4000, 5000]
-rates = [2000]
+rates = [1000]
 # throughput = [2000]
 # rates = [10000]
 batch_sizes = [300]
 experiment_time = 10
-repeats = 3
+repeats = 1
 
 # randomise testing order
 test_iter = random.sample(list(itertools.product(rates, nodeCounts, batch_sizes)) * repeats, len(rates) * len(nodeCounts) * len(batch_sizes) * repeats)

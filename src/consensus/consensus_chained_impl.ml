@@ -98,7 +98,8 @@ let update (state: t) (b_star : node) =
 
 let on_propose state cmds =
 	let b_new = create_leaf state state.s.b_leaf cmds state.s.qc_high ((get_node_height state.s.b_leaf) + 1) in
-	let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = Generic; node = Some b_new; justify = Some state.s.qc_high; partial_signature = None}) in
+  (* ??? should i send empty QC here? *)
+	let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = Generic; node = Some b_new; justify = None; partial_signature = None}) in
 	(b_new, [Broadcast broadcast_msg])
 
 let on_beat state cmds =
@@ -131,7 +132,8 @@ let on_recieve_proposal state msg =
 	let state = {state with seen = (Cmd_set.union state.seen n.cmds)} in (* keep track of seen commands *)
 	let _t2 = Time_now.nanoseconds_since_unix_epoch () in
 	let (state, actions1) = if ((get_node_height b_new) > state.s.vheight) && ((extends (Some b_new) (Some state.s.b_lock)) || (get_node_height n) > (get_node_height state.s.b_lock)) then
-		let vote_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = GenericAck; node = Some b_new; justify = Some state.s.qc_high; partial_signature = None}) in
+    (* ??? should i send empty qc? *)
+		let vote_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = GenericAck; node = Some b_new; justify = None; partial_signature = None}) in
 		({state with s = {state.s with vheight = (get_node_height b_new)}}, [SendNextLeader vote_msg])
 	else (state, []) in
 	let _t3 = Time_now.nanoseconds_since_unix_epoch () in
@@ -155,13 +157,13 @@ let on_recieve_new_view state msg =
 	match msg.justify with
 		| Some qc ->
 			let state = update_qc_high state qc in
-			let state, actions = if msg.view > state.view then (
-				(* Fmt.pr "catching up!@."; *)
+      (* ??? do I need this bit? *)
+			(*let state, actions = if msg.view > state.view then (
 				on_next_sync_view state msg.view
 			) else
 				(state, [])
-			in
-			(state, actions)
+			in*)
+			(state, [])
 		| None ->
 			raise MissingQcException
 
@@ -215,7 +217,7 @@ let advance (state : t) (event : event) =
 		(match event with
 			| GenericAck msg when (is_leader (msg.view + 1) state.id state.node_count) && msg.view >= state.view -> on_recieve_vote state event msg.view
 			| Generic msg when msg.view = state.view -> on_recieve_proposal state msg
-			| NewView msg when (Option.is_some qc) && msg.view >= state.view -> on_recieve_new_view state msg
+			| NewView msg when (Option.is_some qc) -> on_recieve_new_view state msg
 			| ClientCmd cmd ->
 				({state with cmds = Cmd_set.add cmd state.cmds}, [])
 			| Timeout x ->

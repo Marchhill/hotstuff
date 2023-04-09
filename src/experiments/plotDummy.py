@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import seaborn.objects as so
 
+color = sns.color_palette("bright")
+
 # stats = pd.read_csv('./graphs/data/dummystats.csv', skipinitialspace=True)
 test_name = sys.argv[1]
 
@@ -19,20 +21,23 @@ if not os.path.exists(graph_dir):
 stats = pd.read_csv(f'./experiments/data/{test_name}/stats.csv', skipinitialspace=True)
 stats['lost'] = 1. - (stats['rec'] / stats['sent'])
 
-ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='msg_size')
+ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='msg_size', palette = color)
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)')
+ax.legend(title = 'message size')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputgoodput.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='msg_size')
+ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='msg_size', palette = color)
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost')
+ax.legend(title = 'message size')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlost.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='goodput', y='mean', data=stats, hue='msg_size')
+ax = sns.lineplot(x='goodput', y='mean', data=stats, hue='msg_size', palette = color) #err_style="band", estimator=np.median, ci='sd'
 ax.set(xlabel = 'goodput (req/s)', ylabel = 'mean latency (ms)')
+ax.legend(title = 'message size')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'goodputlatency.png')
 plt.close(fig)

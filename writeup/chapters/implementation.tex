@@ -16,10 +16,156 @@
 Present main program structure by modules: the consensus state machine and its interface, the server code \& main loop (including stream), communication schema
 % some of this is inspired by the OCons project, it was still in development
 \section{Pacemaker Specification}
-prove that it doesn't break safety
-maybe try to prove liveness
+We present the pseudocode given in the HotStuff paper (see algorithm 4 \& 5) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), we will present these in \ref{deadlock}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
+
+\begin{algorithm}[h!]
+	\caption{Modified HotStuff}\label{hotstuff}
+	\begin{algorithmic}[1]
+	\color{Magenta}
+	\Function{CREATE{\large L}EAF}{\textit{parent, cmd, qc}}
+		\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
+		\State $\textit{b.height} \gets \textit{curView} + 1$
+		\State $\textit{b.cmd} \gets \textit{cmd}$
+		\State $\textit{b.justify} \gets \textit{qc}$
+		\State \textbf{return} b
+	\EndFunction
+	\color{black}
+	\Procedure{UPDATE}{\textit{b\textsuperscript{*}}}
+		\State $\textit{b''} \gets \textit{b\textsuperscript{*}.justify.node}$
+		\State $\textit{b'} \gets \textit{b''.justify.node}$
+		\State $\textit{b} \gets \textit{b\textsuperscript{*}.justify.node}$
+		\State $\text{UPDATE{\large Q}C{\large H}IGH}(\textit{b\textsuperscript{*}.justify})$
+		\If{$\textit{b'.height} > \textit{b\textsubscript{lock}.height}$}
+			\State $\textit{b\textsubscript{lock}} \gets \textit{b'}$
+		\EndIf
+		\If{$(\textit{b''.parent} = \textit{b'}) \land (\textit{b'.parent} = \textit{b})$}
+			\State $\text{ON{\large C}OMMIT}(\textit{b})$
+			\State $\textit{b\textsubscript{exec}} \gets \textit{b}$
+		\EndIf
+	\EndProcedure
+	\Procedure{ON{\large C}OMMIT}{\textit{b}}
+		\If{$\textit{b\textsubscript{exec}.height} < \textit{b.height}$}
+			\State $\text{ON{\large C}OMMIT}(\textit{b.parent})$
+			\State $\text{EXECUTE}(\textit{b.cmd})$
+		\EndIf
+	\EndProcedure
+	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot)$}
+		\color{Green}
+		\If {$ \textit{m.view} = curView$}
+			\color{black}
+			\If{$\textit{b\textsubscript{new}.height} > \textit{vheight} \land (\textit{b\textsubscript{new}}\ \text{extends}\ \textit{b\textsubscript{lock}} \lor \textit{n.height} > \textit{b\textsubscript{lock}.height})$}
+				\State $\textit{vheight} \gets \textit{b\textsubscript{new}.height}$
+				\State $ \text{SEND}(\text{GET{\large L}EADER}(), \text{VOTE{\large M}SG}\textsubscript{\textit{u}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot))$
+			\EndIf
+			\State $\text{UPDATE}(\textit{b\textsubscript{new}})$
+			\color{Green}
+			\State $\text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{MSG}\textsubscript{\textit{u}}(\text{NEW{\large V}IEW}, \bot, \textit{qc\textsubscript{high}}))$
+			\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $}
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{curview} + 1)$
+			\EndIf
+		\EndIf
+		\color{black}
+	\EndProcedure
+	\Procedure{ON{\large R}ECEIVE{\large V}OTE}{$\text{VOTE{\large M}SG}\textsubscript{\textit{v}}(\text{GENERIC{\large A}CK}, \textit{b}, \bot)$}
+		\color{Green}
+		\If {$ \text{IS{\large L}EADER}(\textit{m.view} + 1) \land \textit{m.view} \ge curView$}
+			\color{black}
+			\If {$\exists(v, \sigma') \in V\textcolor{Magenta}{\textsubscript{m.view}}[b]$}
+				\State \textbf{return}
+			\EndIf
+			\State $V[b] \gets V\textcolor{Magenta}{\textsubscript{m.view}}[b] \cup \{(v, m.partialSig)\}$
+			\If{$ |V\textcolor{Magenta}{\textsubscript{m.view}}[b]| \ge n - f$}
+				\State $qc \gets QC(\{ \sigma | (v', \sigma) \in V\textcolor{Magenta}{\textsubscript{m.view}}[b]\})$
+				\State $ \text{UPDATE{\large Q}C{\large H}IGH}(\textit{qc}) $
+				\color{Green}
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{m.view} + 1)$
+				\color{black}
+			\EndIf
+		\EndIf
+	\EndProcedure
+	\Function{ON{\large P}ROPOSE}{$ \textit{b\textsubscript{leaf}}, \textit{cmd}, \textit{qc\textsubscript{high}}$}
+		\State $b\textsubscript{new} \gets \text{CREATE{\large L}EAF}(\textit{b\textsubscript{leaf}, \textit{cmd}, \textit{qc\textsubscript{high}}, \textit{b\textsubscript{leaf}.height} + 1})$
+		\State $ \text{BROADCAST}(\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot)) $
+		\State \textbf{return} b\textsubscript{new}
+	\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[h!]
+	\caption{Modified Pacemaker}\label{pacemaker}
+	\begin{algorithmic}[1]
+	\Function{GET{\large L}EADER}{}
+		\color{Green}
+		\State $\textbf{return}\ \textit{curView}\ \text{mod}\ \textit{nodeCount}$
+		\color{black}
+	\EndFunction
+	\Procedure{UPDATE{\large Q}C{\large H}IGH}{$\textit{qc'\textsubscript{high}}$}
+		\If {$\textit{qc'\textsubscript{high}.node.height} > \textit{qc\textsubscript{high}} $}
+			\State $ \textit{qc'\textsubscript{high}} \gets \textit{qc\textsubscript{high}} $
+			\State $ \textit{b\textsubscript{leaf}} \gets \textit{qc'\textsubscript{high}.node}$
+		\EndIf
+	\EndProcedure
+	\Procedure{ON{\large B}EAT}{$\textit{cmd}$}
+		\If {$ \textit{u} = \text{GET{\large L}EADER}()$}
+			\State $ \textit{b\textsubscript{leaf}} \gets \text{ON{\large P}ROPOSE}(\textit{b\textsubscript{leaf}}, \textit{cmd}, \textit{qc\textsubscript{high}})$
+		\EndIf
+	\EndProcedure
+	\Procedure{ON{\large N}EXT{\large S}YNC{\large V}IEW}{$\textit{view}$}
+		\color{Magenta}
+		\State $ \textit{curView} \gets \textit{view}$
+		\State $ \text{ON{\large B}EAT}(\textit{cmds.take()})$
+		\State $ \text{RESET{\large T}IMER}(\textit{curView})$
+		\color{black}
+	\EndProcedure
+	\Procedure{ON{\large R}ECEIVE{\large N}EW{\large V}IEW}{$ \text{MSG}\textsubscript{\textit{u}}(\text{NEW{\large V}IEW}, \bot, \textit{qc'\textsubscript{high}}) $}
+		\State $ \text{UPDATE{\large Q}C{\large H}IGH}(\textit{qc'\textsubscript{high}}) $
+	\EndProcedure
+	\color{Green}
+	\Procedure{ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST}{\text{REQ}(\textit{cmd})}
+		\State $ \textit{cmds.add(cmd)} $
+	\EndProcedure
+	\Procedure{ON{\large T}IMEOUT}{$ \textit{view} $}
+		\State $ \text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{MSG}(\text{COMPLAIN}, \bot, \bot)) $
+		\State $ \text{RESET{\large T}IMER}(\textit{view} + 1) $
+	\EndProcedure
+	\Procedure{ON{\large R}ECIEVE{\large C}OMPLAIN}{$ m = \text{MSG}(\text{COMPLAIN}, \bot, \bot) $}
+		\If {$ \text{IS{\large L}EADER}(\textit{m.view} + 1) \land \textit{m.view} \ge \textit{curView}$}
+			\If {$\exists(v, \sigma') \in C\textsubscript{m.view}[b]$}
+				\State \textbf{return}
+			\EndIf
+			\State $C\textsubscript{m.view}[b] \gets C[b] \cup \{(v, m.partialSig)\}$
+			\If{$ |C\textsubscript{m.view}[b]| = n - f$}
+				\State $qc \gets QC(\{ \sigma | (v', \sigma) \in C\textsubscript{m.view}[b]\})$
+				\State $\text{BROADCAST}(\text{MSG}(\text{NEXT{\large V}IEW}, \bot, \textit{qc}))$
+			\EndIf
+		\EndIf
+	\EndProcedure
+	\Procedure{ON{\large R}ECEIVE{\large N}EXT{\large V}IEW}{$ m = \text{MSG}(*, \bot, \textit{qc}) $}
+		\If {$ \textit{qc.view} \ge \textit{curView}$}
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{qc.view} + 1)$
+		\EndIf
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+\begin{itemize}
+	\item CREATE{\large L}EAF (Algorithm \ref{hotstuff}): This function has been modified so that `dummy' nodes are inserted to maintain the invariant that the height of the chain is always one greater than the current view number. This is very similar to the CREATE{\large L}EAF function given for the chained version of the protocol in the HotStuff paper; it is unclear as to why this was changed for the unchained version [work out why it changed?].
+	\item ON{\large R}ECEIVE{\large P}ROPOSAL (Algorithm \ref{hotstuff}): The change on line 22 ensures that we only respond to a proposal from our current view, this is important for safety but was not explicitly included in the original pseudocode. The change on line 27 is that we send a NEW{\large V}IEW message to the next leader once we receive a proposal. This is in contrast to the original pseudocode where we send a NEW{\large V}IEW inside ON{\large N}EXT{\large S}YNC{\large V}IEW on receiving some unspecified interrupt. Finally, once we have received a proposal we can transition into the next view \textit{unless} we are the next leader, in which case we must wait to collect the VOTE{\large M}SGs before transitioning.
+	\item ON{\large R}ECEIVE{\large V}OTE (Algorithm \ref{hotstuff}): The change on line 31 ensures we ignore messages from earlier views, which is important for liveness, and that we are the correct destination for the vote message. Another change we make is dividing \textit{V} into different sets for messages from different views; this prevents votes from different views being used to form a quorum. The change on line 38 means that once a leader has received a quorum of messages, it can transition to the next view (which it starts by sending a proposal in ON{\large N}EXT{\large S}YNC{\large V}IEW)
+	\item GET{\large L}EADER (Algorithm \ref{pacemaker}): The original pseudocode states that this function is application specific. We have chosen to use a round-robin system to assign leaders to views.
+	\item ON{\large N}EXT{\large S}YNC{\large V}IEW (Algorithm \ref{pacemaker}): This function previously just sent a NEW{\large V}IEW message to the next leader. Our modified function updates the \textit{curView}, and resets the timer for the new view. Additionally it calls ON{\large B}EAT which causes a leader to propose a new value.
+	\item ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST (Algorithm \ref{pacemaker}): On receiving a client request we simply add it to a queue of commands waiting to be proposed.
+	\item ON{\large T}IMEOUT (Algorithm \ref{pacemaker}): When our current view times out we send a COMPLAIN to the next leader, and reset our timer for the next view. This behaviour is explained in \ref{viewchange}.
+	\item ON{\large R}ECIEVE{\large C}OMPLAIN (Algorithm \ref{pacemaker}): This function is very similar to ON{\large R}ECEIVE{\large V}OTE, except that we are collecting a quorum of COMPLAIN messages rather than votes. On achieving a quorum we can broadcast a NEXT{\large V}IEW message to get the replicas to transition to the next state, including the quorum of COMPLAINs as proof. This behaviour is explained in \ref{viewchange}.
+	\item ON{\large R}ECEIVE{\large N}EXT{\large V}IEW (Algorithm \ref{pacemaker}): N.B. the message type given is the wildcard operator, so this procedure is run on every message we receive. The function checks if the quorum received is from a greater view than \textit{curView}, if so then it is safe to transition to that view in order to catch up.
+\end{itemize}
+
+\subsection{Correctness Proof}
+
+%prove that it doesn't break safety
+%maybe try to prove liveness
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
-\section{Deadlocks and performance improvements}
+\section{Deadlocks and performance improvements} \label{deadlock}
 Batching \& limiting of batch sizes. deduplication in batching
 Send to all
 
@@ -31,7 +177,7 @@ and performance issues / improvements found from debugging traces:
 4. Memory usage massively increased due to recursive node functions, replaced with an offset
 5. Store a hash in each node and use it to compare nodes rather than checking their entire history
 6. Discarding messages from future views results in some leaders not progressing
-\section{Implementing for evaluation}
+\section{Implementing for evaluation} \label{benchcode}
 Benchmarking code
 discuss open loop vs closed loop clients
 avoid coordinated ommision by using open loop clients
