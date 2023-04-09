@@ -12,10 +12,33 @@
 
 % Live testing revealed many subtle bugs, deadlocks, and performance issues (memory usage, messages dropped due to bugs preventing leaders from always advancing) that were time consuming to debug. However they helped me to flesh out a pacemaker algorithm based on these ad-hoc fixes that we have proven both correctness and liveness for. I also improved the ease of implementability based on practicalities I discovered during implementation (eg. using node offset and hashes to compare nodes)
 
+% --- directory forest stuff
+\definecolor{foldercolor}{RGB}{124,166,198}
+
+\tikzset{pics/folder/.style={code={%
+	\node[inner sep=0pt, minimum size=#1](-foldericon){};
+	\node[folder style, inner sep=0pt, minimum width=0.3*#1, minimum height=0.6*#1, above right, xshift=0.05*#1] at (-foldericon.west){};
+	\node[folder style, inner sep=0pt, minimum size=#1] at (-foldericon.center){};}
+	},
+	pics/folder/.default={20pt},
+	folder style/.style={draw=foldercolor!80!black,top color=foldercolor!40,bottom color=foldercolor}
+}
+
+\forestset{is file/.style={edge path'/.expanded={%
+		([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor)},
+		inner sep=1pt},
+	this folder size/.style={edge path'/.expanded={%
+		([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor) pic[solid]{folder=#1}}, inner ysep=0.6*#1},
+	folder tree indent/.style={before computing xy={l=#1}},
+	folder icons/.style={folder, this folder size=#1, folder tree indent=3*#1},
+	folder icons/.default={12pt},
+}
+% ---
+
 \section{Overview}
 Present main program structure by modules: the consensus state machine and its interface, the server code \& main loop (including stream), communication schema
 % some of this is inspired by the OCons project, it was still in development
-\section{Pacemaker Specification}
+\section{Pacemaker Specification} \label{spec}
 We present the pseudocode given in the HotStuff paper (see algorithm 4 \& 5) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), we will present these in \ref{deadlock}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
 
 \begin{algorithm}[h!]
@@ -183,3 +206,43 @@ discuss open loop vs closed loop clients
 avoid coordinated ommision by using open loop clients
 % section 3: https://dl.acm.org/doi/pdf/10.1145/3447851.3458739
 \section{Repository Overview}
+
+\begin{forest}
+	for tree={font=\sffamily, grow'=0,
+	folder indent=0.9em, folder icons,
+	edge=densely dotted}
+	[src
+		[\ consensus,
+			[consensus\_chained\_impl.ml, is file]
+			[consensus\_chained\_test.ml, is file]
+			[consensus\_impl.ml, is file]
+			[consensus\_test.ml, is file]
+			[consensus.ml, is file]
+			[consensus.mli, is file]
+			[crypto.ml, is file]
+			[types.ml, is file]
+			[types.mli, is file]
+			[util.ml, is file]
+		]
+		[\ experiments
+			[\ data]
+			[\ graphs]
+			[plot.py, is file]
+			[plotDummy.py, is file]
+		]
+		[hs\_api.capnp, is file]
+		[api\_wrapper.ml, is file]
+		[api\_wrapper.mli, is file]
+		[dummy.ml, is file]
+		[hs.ml, is file]
+		[live\_test.ml, is file]
+		[main.ml, is file]
+		[net.ml, is file]
+		[types.ml, is file]
+		[util.ml, is file]
+		[runDummyExperiments.py, is file]
+		[runExperiments.py, is file]
+	]
+\end{forest}
+
+The \textit{src} directory contains the main server loop and the code for interacting with Capn'proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in \ref{spec}. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.
