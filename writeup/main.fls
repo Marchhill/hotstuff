@@ -1243,16 +1243,6 @@ INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti0800.tfm
-INPUT ./images//dummy_throughputgoodput.png
-INPUT ./images//dummy_throughputgoodput.png
-INPUT images//dummy_throughputgoodput.png
-INPUT ./images//dummy_throughputgoodput.png
-INPUT ./images//dummy_throughputgoodput.png
-INPUT ./images//dummy_throughputlost.png
-INPUT ./images//dummy_throughputlost.png
-INPUT images//dummy_throughputlost.png
-INPUT ./images//dummy_throughputlost.png
-INPUT ./images//dummy_throughputlost.png
 INPUT ./chapters/implementation.tex
 INPUT chapters/implementation.tex
 INPUT ./chapters/implementation.tex
@@ -1275,6 +1265,7 @@ INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappe
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti0500.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx0800.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx0600.tfm
+INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1440.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmss.fd
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmss.fd
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmss.fd
@@ -1284,6 +1275,16 @@ INPUT ./chapters/evaluation.tex
 INPUT chapters/evaluation.tex
 INPUT ./chapters/evaluation.tex
 INPUT chapters/evaluation.tex
+INPUT ./images//dummy_throughputgoodput.png
+INPUT ./images//dummy_throughputgoodput.png
+INPUT images//dummy_throughputgoodput.png
+INPUT ./images//dummy_throughputgoodput.png
+INPUT ./images//dummy_throughputgoodput.png
+INPUT ./images//dummy_throughputlost.png
+INPUT ./images//dummy_throughputlost.png
+INPUT images//dummy_throughputlost.png
+INPUT ./images//dummy_throughputlost.png
+INPUT ./images//dummy_throughputlost.png
 INPUT ./chapters/conclusions.tex
 INPUT chapters/conclusions.tex
 INPUT ./chapters/conclusions.tex
@@ -1317,4 +1318,5 @@ INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/publi
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb
+INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb

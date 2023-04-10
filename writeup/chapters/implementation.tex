@@ -35,16 +35,17 @@
 }
 % ---
 
-\section{Overview}
+\section{Overview} \label{overview}
+% add diagram here
 %Present main program structure by modules: the consensus state machine and its interface, the server code \& main loop (including stream), communication schema
 % some of this is inspired by the OCons project, it was still in development
 The core implementation of the HotStuff algorithm (which we will give in \ref{spec}) is implemented in the \textit{consensus} module. The main function provided by this module is \textit{advance}, which delivers some event (such as an incoming message, client request or timeout) to the consensus state machine and returns an updated state and a list of actions (such as sending a message to another node or responding to a client request) to be carried out. This architecture is inspired by the \href{https://github.com/Cjen1/OCons}{OCons }project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.}, which was developed by my project supervisor. The \textit{consensus} module contains both a chained and unchained implementation that share a common signature, so can be interchanged. The module uses the Tezos cryptography library (see \ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
 
-Each node operates as a server waiting for messages from other nodes or requests from a client (or in the case of our experiments a load generator, which is described in \ref{benchcode}). The format of RPCs is specified in a Capn' Proto schema, in their \href{https://capnproto.org/language.html}{custom markdown language}. A received RPC must be decoded, and the Capn' Proto types converted into the internal types of the consensus state machine. Messages and requests are added to separate streams\footnote{A stream is thread-safe implementation of a queue in Lwt.} when they are received. When a request is received the callback function to respond to the request is stored in a hash table, so that it can be accessed when the command has been committed and the client request can be responded to.
+Each node operates as a server waiting for messages from other nodes or requests from a client (or in the case of our experiments a load generator, which is described in \ref{benchcode}). The format of RPCs is specified in a Cap'n Proto schema, in their \href{https://capnproto.org/language.html}{custom markdown language}. A received RPC must be decoded, and the Cap'n Proto types converted into the internal types of the consensus state machine. Messages and requests are added to separate streams\footnote{A stream is thread-safe implementation of a queue in Lwt.} when they are received. When a request is received the callback function to respond to the request is stored in a hash table, so that it can be accessed when the command has been committed and the client request can be responded to.
 
 The main loop takes events from the message and request streams, prioritising internal messages over client requests [expand on why, maybe cite something ***]. It takes these events and delivers them to the \textit{advance} function of the consensus state machine. This architecture was chosen so that the \textit{advance} function is never run in parallel on different messages / requests, as this could lead to race conditions. The \textit{advance} function then returns a new state which is stored, and a list of actions to carry out.
 
-The actions that can be carried out are sending a message to other nodes, responding to a client request, and resetting a timer. In order to send a message we must convert the consensus state machine internal types into Capn' Proto types, and construct an RPC that matches the schema. Messages are dispatched asynchronously in a new thread. The node maintains TCP connections with all other nodes that are reused every time a message is sent, and in the event of the connection breaking the node repeatedly attempts to reconnect with binary exponential back-off. When responding to a client request the committed command's unique identifier is used to lookup the callback to respond to the client, which is then called, sending a response to the client. The timer is implemented with Lwt promises, a new thread is created which waits for a timeout to elapse and then adds a TIMEOUT message to the message stream.
+The actions that can be carried out are sending a message to other nodes, responding to a client request, and resetting a timer. In order to send a message we must convert the consensus state machine internal types into Cap'n Proto types, and construct an RPC that matches the schema. Messages are dispatched asynchronously in a new thread. The node maintains TCP connections with all other nodes that are reused every time a message is sent, and in the event of the connection breaking the node repeatedly attempts to reconnect with binary exponential back-off. When responding to a client request the committed command's unique identifier is used to lookup the callback to respond to the client, which is then called, sending a response to the client. The timer is implemented with Lwt promises, a new thread is created which waits for a timeout to elapse and then adds a TIMEOUT message to the message stream.
 
 \section{Pacemaker Specification} \label{spec}
 We present the pseudocode for the unchained algorithm given in the HotStuff paper (see algorithm 4 \& 5) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), we will present these in \ref{deadlock}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
@@ -197,18 +198,91 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 %prove that it doesn't break safety
 %maybe try to prove liveness
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
-\section{Deadlocks and performance improvements} \label{deadlock}
-Batching \& limiting of batch sizes. deduplication in batching
-Send to all
+\section{Performance improvements} \label{deadlock}
+% Batching \& limiting of batch sizes. deduplication in batching
+% Send to all
 
-We give cases of deadlock conditions
-and performance issues / improvements found from debugging traces:
-1. print statements (even when not in-between timing commands) can affect the time measured in another operation. Removed prints and printed all results at the end (use static collector function for logging that is passed around the program).
-2. >= used lexicographic ordering, resulted in chains being verified due to first field being increasing until a specific command "20" where the value became lexicographically decreasing
-3. Infinitely recursive start node not compatible nice with messaging system
-4. Memory usage massively increased due to recursive node functions, replaced with an offset
-5. Store a hash in each node and use it to compare nodes rather than checking their entire history
-6. Discarding messages from future views results in some leaders not progressing
+% We give cases of deadlock conditions
+% and performance issues / improvements found from debugging traces:
+% 1. print statements (even when not in-between timing commands) can affect the time measured in another operation. Removed prints and printed all results at the end (use static collector function for logging that is passed around the program).
+% 2. >= used lexicographic ordering, resulted in chains being verified due to first field being increasing until a specific command "20" where the value became lexicographically decreasing
+% 3. Infinitely recursive start node not compatible nice with messaging system
+% 4. Memory usage massively increased due to recursive node functions, replaced with an offset
+% 5. Store a hash in each node and use it to compare nodes rather than checking their entire history
+% 6. Discarding messages from future views results in some leaders not progressing
+\subsection{Batching}
+% mention send to all & send to one, 4x throughput
+% reference latency graphs from final
+One way to improve goodput (number of requests committed) is to `batch' requests, meaning a node may contain many commands instead of just one. This can dramatically increase goodput as now a single view can result in many commands being committed and executed instead of just one.
+
+In order to implement this change in algorithm \ref{pacemaker} one simply has to modify the ON{\large N}EXT{\large S}YNC{\large V}IEW procedure. Instead of taking a single element from the queue of commands waiting to be proposed, the whole queue will be `batched' into a single proposal.
+
+In theory this change should result in significantly higher goodput without any significant increase in latency. Analysis of timing data after implementing this feature revealed that latency had increased substantially. We now present some of the analysis and experimentation that was carried out to diagnose this issue. As mentioned in \ref{testing}, the nature of the project meant that debugging had to be carried out by manual inspection of the program trace and timing sections of the program. To overcome this I carried out tests in a scientific manner, constructing a hypothesis for why the program was slow based on crawling through logs, then attempting to test my hypothesis while controlling other variables, and finally implementing a solution.
+
+\subsubsection{Probing effects}
+% development of logging framework, some details of what is logged
+I started by increasing the number of timing and logging statements in key parts of the program, allowing me to better diagnose the source of the poor performance. Running a live test with print statements has the advantage that one can quickly see when progress is not being made, or when there are pauses, as the print statements stop. However, this benefit is outweighed by the sheer volume of logs and times being printed, it becomes difficult to manage when logs are in the millions of lines long.
+
+Moreover, my debugging by print statements had a larger problem of large inconsistencies between runs making it difficult to diagnose any problem. After some experimentation I realised that my print statements had a significant effect on the performance of the program. I had assumed that because the print statements were not in-between the timing statements they would not affect my measurements, but they are an expensive operation that can cause delays to happen in execution where one would not expect.
+
+In order to overcome this problem I developed a simple logging framework. Key parts of the program such as the state machine advancing, actions being carried out, messages being sent, are all timed and added to lists. Critically, this list is stored and not printed out until the node is killed, so the printing cannot interfere with execution. Relevant statistics such as mean, standard deviation, and total time for each interval measured are outputted, providing crucial insight into the performance of the program.
+
+\subsubsection{Architectural experimentation}
+% https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQADc%2B0AASzwxBgZSNOjdNZ%2Bw%3D
+% development of architecture in overview
+% tried moving to non event-driven model
+% thought resource contention was issue, in fact it was async get function
+My initial analysis of timing data showed a large amount of time was spent by requests queuing on the node before they are delivered to the state machine. At this time I had not developed the whole of the architecture presented in \ref{overview}, specifically, I only had one stream that contained both internal messages and client requests. This led me to develop the following:
+
+\textbf{Hypothesis: } Internal messages are being starved by client requests. At large throughputs the stream quickly becomes filled with client requests, which may prevent internal messages being handled. Internal messages represent a backlog of work that we have not yet finished, so this should be handled before accepting more work (client requests).
+
+\textbf{Potential solution: } Split the stream into two separate streams for messages and requests, and always pick from the message stream over the request stream until the message stream is empty.
+
+Implementing the potential solution did not lead to a significant improvement in performance, so this was not the issue. However, I retained this architectural model as it is theoretically better and may lead to observable improvements later. Next, I began to think that the actual cause of the issue may be that internal messages are actually starving client requests. My implementation of the pacemaker (\ref{spec}) immediately begins a new view as soon as the previous one is finished, which led me to make the following hypothesis.
+
+\textbf{Hypothesis: } Because the state machine is constantly advancing at the fastest possible rate, the volume of internal messages may prevent new requests from being handled.
+
+\textbf{Experimentation: } I attempted to `balance' the starvation by mostly prioritising internal messages, but every \textit{x} iterations picking a request instead of an internal message. Varying \textit{x} led to significant changes in performance, but I could not find any value that led to a good level of performance. I chose to pursue another route, as the nature of starvation seemed to be a complicated, with messages starving requests, and the other way around.
+
+\textbf{Potential solution: } Instead of starting the next view whenever possible, deliver the \textit{BEAT} and \textit{ON{\large N}EXT{\large S}YNC{\large V}IEW} interrupts at a steady rate.
+
+I implemented this potential solution, which involved checking a timer on every iteration of the main loop to see if some $\Delta$ had elapsed, and it was time to deliver the next interrupt; it also required significant modifications to be made to the consensus state machine. Implementing this feature actually led to a significant performance hit, so I discarded the changes I made. However, while experimenting with this feature I noticed that the main loop which is infinitely recursive, was running at a much slower rate than one would expect. Further timing statements revealed that the command which removed an element from the stream would sometimes take a very long time (on the order of seconds). Reading more into the Lwt documentation led me to the following idea:
+
+\textbf{Potential solution: } Use a different method to take elements from the queue that is synchronous. This should stop the main loop blocking waiting for the queue to fill up.
+
+This change improved performance by reducing the amount of time spent waiting in the main loop, the difference is shown in an ablation study [reference evaluation ***], and I hoped that the problem had been fixed.
+
+\subsubsection{Send to all and deduplication}
+% send to all weird graph: https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAM2hZuzkpUNIuGt2QHNZQvc%3D
+% exponential growth with end to all https://imgur.com/a/wDlhbn9 28/03 pseudocode
+% theory: nodes reproposing same values
+% first solution: deduplicate before commiting, use set instead of queue
+% second solution: deduplicate based on *seen* commands
+% could mention bug of reawaking the same promise in the hash table - this brought to my attention the deduplication issue!
+\subsubsection{Batch sizes}
+% insight: track batch sizes
+% experimented with limiting batch size
+% tie into benchmarking of cap'n proto
+\subsection{Encoding of nodes}
+% https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQALSHx8XQgvxMrG5AvVEd9as%3D
+% 19/01 onwards
+% first issue: infintely recursive node structure
+% solution: hardcoding final node at either end so it is not sent
+% second issue: growing memory usage - revealed by profiling
+% solution: use offset to node, and reconstruct node at either end. introduce `justify' type
+% third issue: memory usage comparing nodes
+% solution: include node hashes
+% fourth issue: size of sending all nodes
+% solution: TODO implement TCP
+\subsection{Connections}
+% talk about capabilities?
+
+\section{Verifiable anonymous identities}
+% https://www.usenix.org/system/files/nsdi22-paper-shamis.pdf
+% section 5
+% when to set up connections? use promises
+% https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAEXEcHtcUNFFo%2FRcUtQcSmc%3D
+
 \section{Implementing for evaluation} \label{benchcode}
 Benchmarking code
 discuss open loop vs closed loop clients
@@ -254,4 +328,4 @@ avoid coordinated ommision by using open loop clients
 	]
 \end{forest}
 
-The \textit{src} directory contains the main server loop and the code for interacting with Capn' Proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in \ref{spec}. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.
+The \textit{src} directory contains the main server loop and the code for interacting with Cap'n Proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in \ref{spec}. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.

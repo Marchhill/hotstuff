@@ -157,59 +157,16 @@ The performance bottlenecks for distributed byzantine algorithms are generally c
 
 OCaml has a powerful module system that facilitates writing highly reusable code. The module system was only briefly touched upon in the tripos (in Concepts in programming languages from IB), so I spent time learning about these features. Modules provide an elegant interface for the core state machine to interact with the imperative parts of the program that actually send messages over the network.
 
-There is no existing reference implementation of HotStuff in OCaml, so my project contributes to the growing OCaml ecosystem. This ecosystem is home to an active community, and interesting projects such as MirageOS unikernels.
+There is no existing reference implementation of HotStuff in OCaml, so my project contributes to the growing OCaml ecosystem. This ecosystem is home to an active community, and interesting projects such as MirageOS unikernels. Because my project is implemented purely in OCaml, it could potentially be deployed on a MirageOS unikernel [???].
 
 \subsection{Lwt}
 Lwt is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages and are used by asynchronous promises in Lwt. Lwt is useful to this project as promises provide a way to dispatch messages over the network and wait for their responses in different threads. Promises are cheap to create in Lwt, so one can create many lightweight threads with good performance [citation needed***].
+
 \subsection{Cap'n Proto}
-Cap'n Proto is an RPC framework that includes a library for sending and receiving RPCs, and a schema language for designing the format of RPCs that can be sent. 
-
-\subsubsection{Benchmarks}
-I benchmarked the message sending functionality of Cap'n Proto. I did this with an open-loop load generator (which is described in \ref{benchcode}), running each experiment for 10s. I varied the size of messages sent in different tests to replicate the behaviour of the algorithm when sending `batches' of many commands, so a message size of 600 means that the message size is approximately that of a message containing 600 commands.
-
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.75]{dummy_throughputgoodput.png}
-\end{figure}
-
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.75]{dummy_throughputlost.png}
-\end{figure}
-
-The figures demonstrate that the framework has a severe drop in performance when sending large messages. For a message size of 600 the goodput goes to zero as the throughput increases, meaning that no messages are being responded to.
-
-[maybe add goodput / latency graph once it is in a reasonable state! ***]
+Cap'n Proto is an RPC framework that includes a library for sending and receiving RPCs, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in \ref{capnpbenchmark}.
 
 \subsection{Tezos cryptography} \label{tezos}
-The Tezos cryptography library provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, to aggregate several signatures into a single one, and to check an aggregate signature is valid. The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature.
-
-\subsubsection{Benchmarks}
-I profiled the important functions of the library with Jane Street's Core\_bench module. Core\_bench is a micro-benchmarking library used to estimate the cost of operations in OCaml, it runs the operation many times and uses linear regression to try to reduce the effect of high variance between runs.
-
-\begin{table}[!h]
-	\centering
-	\begin{tabular}{|l|r|}
-	\hline
-	Function                 & Time (µs) \\ \hline
-	Sign                     & 427.87   \\
-	Check                    & 1,171.77 \\
-	Aggregate (4 sigs)       & 302.90   \\
-	Aggregate check (4 sigs) & 1,179.25 \\
-	Aggregate (8 sigs)       & 605.38   \\
-	Aggregate check (8 sigs) & 1,180.61 \\ \hline
-	\end{tabular}
-\end{table}
-% ┌─────────────┬────────────┬─────────┬──────────┬──────────┬────────────┐
-% │ Name        │   Time/Run │ mWd/Run │ mjWd/Run │ Prom/Run │ Percentage │
-% ├─────────────┼────────────┼─────────┼──────────┼──────────┼────────────┤
-% │ sign        │   427.87us │ 144.00w │          │          │     36.24  │
-% │ check       │ 1_171.77us │  75.00w │          │          │     99.25  │
-% │ agg_4       │   302.90us │ 484.00w │    0.15w │    0.15w │     25.66  │
-% │ agg_check_4 │ 1_179.25us │  75.00w │          │          │     99.88  │
-% │ agg_8       │   605.38us │ 944.00w │    0.35w │    0.35w │     51.28  │
-% │ agg_check_8 │ 1_180.61us │  75.00w │          │          │    100.00  │
-% └─────────────┴────────────┴─────────┴──────────┴──────────┴────────────┘
+The Tezos cryptography library provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, to aggregate several signatures into a single one, and to check an aggregate signature is valid. The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature.Benchmarks for the library are presented in \ref{tezosbenchmark}.
 
 \section{Requirements analysis}
 \begin{itemize}
@@ -227,10 +184,40 @@ Additionally the extension has been changed from adding support for network reco
 \section{Software engineering practices}
 \subsection{Development methodology}
 [should i say i used something like RAD and productivity tracking tools???]
-\subsection{Testing \& debugging methodology}
+\subsection{Testing \& debugging methodology} \label{testing}
 Unit testing was carried out using `expect tests', which compare the outputted program trace to the correct output. I wrote a testing suite that verifies that the program behaves as specified in the HotStuff paper.
 
 The Memtrace library and viewer were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
+
+% mention mininet for evaluation?
+% Clone github.com/cjen1/reckon
+
+% ```
+% # This is likely to take a while
+% make reckon-mininet
+
+% docker run -it --privileged -e DISPLAY --network host --name reckon-mininet cjen1/reckon:latest bash
+
+% # Set up mininet net with a single switch and 3 nodes
+% # drops you into a cli (you can also use python scripting)
+% mn --topo single,3
+
+% # observe no delay between nodes
+% mininet> h1 ping h2
+% mininet> <Ctrl-C>/<Ctrl-D> to exit
+
+% # syntax is `mininet> <node> <command>`
+% # I run screens on each node and then attach to those from outside mininet to run the tests in different terminal screens. (Tmux doesn't work correctly afaicr)
+
+% mininet> h1 screen -dmS node_h1 bash
+
+% #Then in another terminal session
+% docker exec -it reckon-mininet bash
+% screen -r node_h1
+% <whatever commands you want to run on that emulated node>
+
+% #Similarly for the other nodes
+% ```
 
 Due to the distributed nature of the program, normal debugging tools and profilers are not useful to debugging deadlocks and performance issues. This is because the cause of deadlocks and performance issues is often some process waiting or a backlog of work forming, but this cannot be detected by tools that just track things like CPU usage. Instead I had to rely on manual inspection of the program trace and commands that measure the real time taken for some part of the program to run.
 
