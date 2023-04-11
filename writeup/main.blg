@@ -5,45 +5,45 @@ The style file: acm.bst
 Database file #1: ref.bib
 Warning--empty booktitle in ittai
 Warning--empty booktitle in chubby
-You've used 4 entries,
+You've used 3 entries,
             2253 wiz_defined-function locations,
-            545 strings with 4582 characters,
-and the built_in function-call counts, 1243 in all, are:
-= -- 107
-> -- 63
+            542 strings with 4449 characters,
+and the built_in function-call counts, 1007 in all, are:
+= -- 87
+> -- 51
 < -- 0
-+ -- 26
-- -- 22
-* -- 74
-:= -- 201
-add.period$ -- 9
-call.type$ -- 4
-change.case$ -- 23
++ -- 21
+- -- 18
+* -- 62
+:= -- 163
+add.period$ -- 7
+call.type$ -- 3
+change.case$ -- 18
 chr.to.int$ -- 0
-cite$ -- 6
-duplicate$ -- 52
-empty$ -- 106
-format.name$ -- 22
-if$ -- 262
+cite$ -- 5
+duplicate$ -- 44
+empty$ -- 83
+format.name$ -- 18
+if$ -- 212
 int.to.chr$ -- 0
-int.to.str$ -- 4
+int.to.str$ -- 3
 missing$ -- 2
-newline$ -- 20
-num.names$ -- 8
-pop$ -- 44
+newline$ -- 16
+num.names$ -- 6
+pop$ -- 34
 preamble$ -- 1
-purify$ -- 19
+purify$ -- 15
 quote$ -- 0
-skip$ -- 39
+skip$ -- 31
 stack$ -- 0
-substring$ -- 48
-swap$ -- 14
+substring$ -- 43
+swap$ -- 12
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 16
+type$ -- 12
 warning$ -- 2
-while$ -- 10
-width$ -- 5
-write$ -- 34
+while$ -- 8
+width$ -- 4
+write$ -- 26
 (There were 2 warnings)

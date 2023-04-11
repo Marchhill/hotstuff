@@ -312,7 +312,7 @@ This implementation did not lead to the desired reduction in latency, the system
 \textbf{Potential solution: } Screen incoming commands more aggressively by instead maintaining a set of any commands that we have \textit{seen}. Only filter out commands when they are being proposed rather than when thet are being committed, as there is no evidence that screening at commit time gives any tangible benefit.
 
 \begin{algorithm}[h!]
-	\caption{Deduplication implementation \#2}
+	\caption{Deduplication implementation \#2} \label{dedup2}
 	\begin{algorithmic}[1]
 	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot)$}
 		\If {$ \textit{m.view} = curView$}
@@ -339,6 +339,12 @@ Note the small optimisation on line \ref{smalloptimisation}, we can safely empty
 % insight: track batch sizes
 % experimented with limiting batch size
 % tie into benchmarking of cap'n proto
+The effectiveness of filtering out commands to make proposals smaller implies that the size of a proposal has a significant impact on the performance of the program. Furthermore, analysis of the time data for sending messages showed that there was a high variance in time taken, with some messages taking on the order of milliseconds [verify ***] to be sent.
+
+\textbf{Hypothesis: } Large batches of commands cause messages to become larger, which causes them to be sent slowly due to limitations in the RPC framework.
+\textbf{Potential mitigation: } Limit the size of batches to prevent messages becoming too large.
+
+Implementing this feature required minimal changes to algorithm \ref{dedup2}, one simply has to take a subset of \textit{cmds} to propose instead of the whole set. This feature gave a significant performance improvement, and largely eliminated the exponential growth in latency that had been seen previously. There is a trade-off between sending larger batches (more commands are committed, but messages take longer to send) and sending smaller batches (less commands are committed, but messages are sent faster). This trade-off is explored more in our analysis of the system with different batch sizes [refer to evaluation***]. Fundamentally, there are limitations in the RPC framework that give an upper bound on the performance we can hope to achieve, these limitations are evident in our benchmarking of the Cap'n Proto framework (see \ref{capnpbenchmark}).
 \subsection{Encoding of nodes}
 % https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQALSHx8XQgvxMrG5AvVEd9as%3D
 % 19/01 onwards
@@ -350,20 +356,42 @@ Note the small optimisation on line \ref{smalloptimisation}, we can safely empty
 % solution: include node hashes
 % fourth issue: size of sending all nodes
 % solution: TODO implement TCP
+This section concerns the difficulties of encoding nodes in the Cap'n Proto schema, and designing a suitable type to represent them. As mentioned in \ref{overview}, Cap'n Proto requires a schema to define the format of RPCs that can be sent, and one must convert between consensus state machine internal types and Cap'n Proto types in order to send messages.
+
+\subsubsection{Recursive types}
+The unchained HotStuff algorithm has a genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. Each node contains the fields \textit{parent}, \textit{cmd}, \textit{justify}, and \textit{height}, with the \textit{justify} field containing a quorum certificate with a `pointer' to another node in the chain (see \ref{chaining}). The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
+
+This recursion poses a problem when carrying out the conversion between Cap'n Proto types and OCaml types. It is perfectly possible to define a recursive type in OCaml, so one can represent \textit{b\textsubscript{0}} inside the consensus state machine. However, the naive implementation of a function to convert this node into a Cap'n Proto type will not terminate, as it will infinitely recurse into the field $ b_0.\textit{justify}.\textit{node} $. A simple solution to this problem is to add a flag to the Cap'n Proto schema \textit{is\_b\textsubscript{0}}; when this flag is enabled then the node is assumed to be equal to \textit{b\textsubscript{0}}. This prevents \textit{b\textsubscript{0}} from ever having to be converted into a Cap'n Proto type or being sent over the network, it can instead be reconstructed as a recursive type in the consensus state machine of the receiver.
+
+\subsubsection{Node offsets}
+During live testing, memory usage increased rapidly, the nodes quickly exceeded the amount of memory the system had, and their processes were killed by the OS. Profiling with Memtrace (see \ref{testing}) showed that the functions for converting between Cap'n Proto types and internal consensus types was responsible for the rapidly increasing memory usage.
+
+This problem arose from the internal types that were designed to represent nodes. As well as the \textit{node} type, there was a \textit{qc} type that was used as the type of the \textit{node.justify} field since it is a quorum certificate. By defining types in this way the `pointers' in \textit{node.justify.node} were not actually pointers, they contained a significant part of the chain. In this way the chain contained many redundant copies of parts of it, resulting in a very bloated \textit{node} object that was very expensive to convert.
+
+A solution to this problem is to store an offset to a node inside the \textit{justify} field rather than the node itself - making it more like a real pointer. This offset represents how many \textit{parent} links away the node is, and so can be used to reconstruct all of the original information. To implement this another type \textit{node\_justify} was added, that is identical to \textit{qc}, but with the field \textit{node} replaced with \textit{node\_offset}. One must then convert between the \textit{node\_justify} and \textit{qc} types to reconstruct the original data and follow the \textit{node.justify.node} link.
+
+\subsubsection{Node comparison}
+Memtrace profiling also showed that the equality function for nodes was memory intensive. The solution to this was including a \textit{digest} field in the node that is a hash over all of the other fields. Notably we can compute this hash over the \textit{digest} field of the parent node rather than recursing through the whole chain. This means that we can also compare two nodes by comparing their digests without having to recurse through each chain; the digests being equal cryptographically guarantees that the whole chains are equal.
+
+\subsubsection{Node trunction}
+Implement TCP style nodes??
+
 \subsection{Connections}
 % talk about capabilities?
-
-\section{Verifiable anonymous identities}
-% https://www.usenix.org/system/files/nsdi22-paper-shamis.pdf
-% section 5
 % when to set up connections? use promises
 % https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAEXEcHtcUNFFo%2FRcUtQcSmc%3D
 
+% \section{Verifiable anonymous identities}
+% https://www.usenix.org/system/files/nsdi22-paper-shamis.pdf
+% section 5
+
 \section{Implementing for evaluation} \label{benchcode}
-Benchmarking code
-discuss open loop vs closed loop clients
-avoid coordinated ommision by using open loop clients
+% Benchmarking code
+% discuss open loop vs closed loop clients
+% avoid coordinated ommision by using open loop clients
 % section 3: https://dl.acm.org/doi/pdf/10.1145/3447851.3458739
+\subsection{Load generator}
+\subsection{Experiment scripts}
 \section{Repository Overview}
 
 \begin{forest}
