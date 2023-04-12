@@ -29,7 +29,7 @@ os.mkdir(test_path + 'subtests')
 with open(test_path + 'stats.csv', 'w') as f:
 	f.write('name, chained, nodes, throughput, goodput, mean, sd, rec, sent, batch_size, msg_size\n')
 
-nodeCounts = [4]
+nodeCounts = [8]
 # nodeCounts = [1]
 # rates = [500, 1000, 2000, 3000, 4000, 5000]
 rates = [1000]

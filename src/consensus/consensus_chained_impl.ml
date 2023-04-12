@@ -19,23 +19,6 @@ let print_state state = Fmt.pr "state id=%d view=%d qc_high=(%s) cmd=(%s) v=[%s]
 	(Cmd_set.fold (fun cmd acc -> acc ^ cmd.data ^ ",") state.cmds "")
 	(List.fold_left (fun acc e -> get_event_type e ^ ", " ^ acc) "" (match Hashtbl.find_opt state.s.v state.view with Some l -> l | None -> []))
 
-let get_node_height n = match n.i with
-	| Some i -> i.height
-	| None -> raise NodeInternalException
-
-let get_node_justify n = match n.i with
-	| Some i -> i.justify
-	| None -> raise NodeInternalException
-
-let get_node_from_qc (qc : qc) =
-	match qc.node with
-		| Some n -> n
-		| None -> raise MissingNodeException
-
-let qc_from_node_justify n =
-	let justify = get_node_justify n in
-	{node = Some (node_nth justify.node_offset n); view = justify.view; signature = justify.signature; msg_type = justify.msg_type; ids = justify.ids}
-
 let update_qc_high state (qc'_high : qc) =
 	let n' = get_node_from_qc qc'_high in
 	let n = get_node_from_qc state.s.qc_high in
@@ -44,27 +27,16 @@ let update_qc_high state (qc'_high : qc) =
 	else
 		state
 
-let rec add_dummy_nodes (n : node) = function
-	| 0 -> n
-	| x -> add_dummy_nodes (make_node Cmd_set.empty (Some n) (Some {height = get_node_height n; justify = get_node_justify n})) (x - 1)
-
-let rec trim_node (n : node) x = match n.parent, x with
-	| _, 0 -> {n with parent = None}
-	| Some p, x -> {n with parent = Some (trim_node p (x - 1))}
-	| None, _ -> n
-
 let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) (height : int) =
 	let b'' = get_node_from_qc qc in
 	let b' = get_node_from_qc (qc_from_node_justify b'') in
 	let b = get_node_from_qc (qc_from_node_justify b') in
-	let cutoff = min (get_node_height b) ((get_node_height b') - 1) in (* calculate cutoff of how much history to send *)
+	let cutoff = (get_node_height b) - 1 in (*calculate cutoff of how much history to send *)
 	let offset = state.view - height + 1 in
-	(* Fmt.pr "%d: create leaf view = %d parent = (%s) cmd = (%s) qc = (%s) height = %d offset = %d@." state.id state.view (node_to_string (Some parent)) cmd.data (qc_to_string (Some qc)) height offset; *)
 	let parent = add_dummy_nodes parent offset in
-	(* Fmt.pr "%d: parent with dummys = (%s)@." state.id (node_to_string (Some parent)); *)
 	let justify = {node_offset = offset + 1; view = qc.view; signature = qc.signature; msg_type = qc.msg_type; ids = qc.ids} in (* ??? change offset if skipped? *)
 	let n = make_node cmds (Some parent) (Some {justify = justify; height = state.view + 1}) in
-	trim_node n (state.view + 1 - cutoff) (* only send nodes that will be used*)
+	trim_node n (state.view + 1 - cutoff) (* only send nodes that will be used *)
 
 let rec on_commit (state : t) = function
 	| Some b ->
@@ -75,7 +47,6 @@ let rec on_commit (state : t) = function
 				else
 					(SendClient {id = state.id; callback_id = cmd.callback_id; success = true})::acc
 			) b.cmds []) in
-			(* let state = {state with commited = (Cmd_set.union state.commited cmds)} in *)
 			let state, actions' = (on_commit state b.parent) in
 			(state, actions' @ actions)
 		)
@@ -110,38 +81,30 @@ let on_beat state cmds =
 let on_next_sync_view state view =
 	let state = {state with view = view} in
 	let (state, actions) = if (is_leader state.view state.id state.node_count) then (
-		(* let before = (Cmd_set.cardinal state.cmds) in *)
 		let filtered = Cmd_set.diff state.cmds state.seen in
 		let i = ref 0 in
-    (* limit batch size *)
+    	(* limit batch size *)
 		let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i < state.batch_size) filtered in
-		(* Fmt.pr "%d: beat! %d : %d, %d@." state.id (Cmd_set.cardinal cmds) (Cmd_set.cardinal rest) (before - (Cmd_set.cardinal filtered)); *)
 		let state = {state with cmds = rest; seen = Cmd_set.empty} in
 		on_beat state cmds
 	) else (state, []) in
 	(state, ResetTimer {id = state.id; view = view} :: actions)
 
-let delta x y =
-	let open Base.Int63 in
-	(to_float (y - x)) /. 1_000_000_000.
-
 let on_recieve_proposal state msg =
-	let _t1 = Time_now.nanoseconds_since_unix_epoch () in
-	let b_new = (match msg.node with Some node -> node | None -> raise MissingNodeException) in
+	(* Fmt.pr "before: %s@." (node_to_string msg.node);
+	Fmt.pr "b_exec: %s@." (node_to_string (Some state.s.b_exec)); *)
+	let x = combine_nodes msg.node (Some state.s.b_exec) in
+	(* Fmt.pr " after: %s@." (node_to_string x); *)
+	let b_new = (match x with Some node -> node | None -> raise MissingNodeException) in
 	let n = get_node_from_qc (qc_from_node_justify b_new) in
 	let state = {state with seen = (Cmd_set.union state.seen n.cmds)} in (* keep track of seen commands *)
-	let _t2 = Time_now.nanoseconds_since_unix_epoch () in
 	let (state, actions1) = if ((get_node_height b_new) > state.s.vheight) && ((extends (Some b_new) (Some state.s.b_lock)) || (get_node_height n) > (get_node_height state.s.b_lock)) then
-    (* ??? should i send empty qc? *)
 		let vote_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = GenericAck; node = Some b_new; justify = None; partial_signature = None}) in
 		({state with s = {state.s with vheight = (get_node_height b_new)}}, [SendNextLeader vote_msg])
 	else (state, []) in
-	let _t3 = Time_now.nanoseconds_since_unix_epoch () in
 	let (state, actions2) = update state b_new in
-	let _t4 = Time_now.nanoseconds_since_unix_epoch () in
 	(* send next leader new-view message*)
 	let new_view_msg = sign state.crypto ({id = state.id; view = state.view; msg_type = NewView; node = None; justify = Some state.s.qc_high; partial_signature = None}) in
-	let _t5 = Time_now.nanoseconds_since_unix_epoch () in
 	(* transition to next state if not next leader as next leader has to collect ACKs first *)
 	let (state, actions3) =
 		if (is_leader (state.view + 1) state.id state.node_count) then
@@ -149,20 +112,12 @@ let on_recieve_proposal state msg =
 		else
 			on_next_sync_view state (state.view + 1)
 	in
-	let _t6 = Time_now.nanoseconds_since_unix_epoch () in
-	(*Fmt.pr "%d: total = %f, getting b_new = %f, voting = %f, updating = %f, new view = %f, next view%f@." state.id (delta t1 t6) (delta t1 t2) (delta t2 t3) (delta t3 t4) (delta t4 t5) (delta t5 t6);*)
 	(state,  actions1 @ actions2 @ actions3 @ [SendNextLeader new_view_msg])
 
 let on_recieve_new_view state msg =
 	match msg.justify with
 		| Some qc ->
 			let state = update_qc_high state qc in
-      (* ??? do I need this bit? *)
-			(*let state, actions = if msg.view > state.view then (
-				on_next_sync_view state msg.view
-			) else
-				(state, [])
-			in*)
 			(state, [])
 		| None ->
 			raise MissingQcException
@@ -196,16 +151,6 @@ let advance (state : t) (event : event) =
 	) in
 	let state, actions = (match qc with
 		| Some qc when (qc.view + 1) > state.view ->
-				(* Fmt.pr "catching up!@.";
-				let actions = if qc.msg_type = Complain then (
-						nextview mesage clears pipeline
-						let fail_messages = Queue.fold (fun acc cmd ->
-							acc @ [SendClient {id = state.id; callback_id = cmd.callback_id; success = false}]
-						) [] state.exec in
-						Queue.clear state.exec;
-						fail_messages
-				) else [] in
-				*)
 				(* qc proves we should transition to state qc.view + 1 *)
 				let state, actions' = on_next_sync_view state (qc.view + 1) in
 				(state, actions')

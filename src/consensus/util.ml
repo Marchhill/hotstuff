@@ -173,6 +173,43 @@ let rec extends n1 n2 =
 		| Some _, None | None, None -> true
 		| None, Some _ -> false
 
+let get_node_height n =
+	match n.i with
+		| Some i -> i.height
+		| None -> raise NodeInternalException
+
+let get_node_justify n =
+	match n.i with
+		| Some i -> i.justify
+		| None -> raise NodeInternalException
+
+let get_node_from_qc (qc : qc) =
+	match qc.node with
+		| Some n -> n
+		| None -> raise MissingNodeException
+
+let qc_from_node_justify n =
+	let justify = get_node_justify n in
+	{node = Some (node_nth justify.node_offset n); view = justify.view; signature = justify.signature; msg_type = justify.msg_type; ids = justify.ids} 
+
+let rec add_dummy_nodes (n : node) = function
+	| 0 -> n
+	| x -> add_dummy_nodes (make_node Cmd_set.empty (Some n) (Some {height = get_node_height n; justify = get_node_justify n})) (x - 1)
+
+let rec trim_node (n : node) x = match n.parent, x with
+	| _, 0 -> {n with parent = None}
+	| Some p, x -> {n with parent = Some (trim_node p (x - 1))}
+	| None, _ -> n
+
+let rec combine_nodes n1 n2 =
+	if equal_nodes n1 n2 then
+		n2
+	else (
+		match n1 with
+			| Some n1 -> Some {n1 with parent = (combine_nodes n1.parent n2)}
+			| None -> None
+	)
+
 (* takes a list of events and returns a subset that forms a quorum if one exist *)
 let get_quorum (l : event list) n =
 	(* group messages by content *)

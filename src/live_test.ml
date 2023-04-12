@@ -101,6 +101,7 @@ let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size
 		let conns = Net.open_conns nodes in
 		let promise, resolver = Lwt.wait () in
 		let* () = await_connections conns 3. in
+    (* let* () = Net.send_quit (List.hd conns) in *)
 		Fmt.pr "connected to all!@.";
 		Lwt.async (fun () ->
 			let n = time * rate in (* calculate based on actual number sent (filter)*)

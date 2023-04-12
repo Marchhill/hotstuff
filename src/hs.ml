@@ -80,6 +80,7 @@ let init id nodes timeout batch_size verbose =
 	let actions = reset_timer_action :: new_view_actions in
 	let s = {
 		state_machine = ref initial_state;
+	alive = ref true;
 		verbose = verbose; conns = conns;
 		client_callbacks = client_callbacks;
 		reset_timer = reset_timer;
@@ -164,7 +165,8 @@ let local s =
 			print_stats !(s.stats.res_times) "res_times" "s" !(s.state_machine).id;
 			print_stats !(s.stats.req_queue_times) "req_queue_times" "s" !(s.state_machine).id;
 			print_stats !(s.stats.msg_queue_times) "msg_queue_times" "s" !(s.state_machine).id;
-			exit 0
+			s.alive := false;
+	  Service.return_empty ()
 	end
 
 let get_events s =
@@ -174,10 +176,11 @@ let get_events s =
 	msg_events @ req_events
 
 let rec main_loop s =
-	s.iter_count := !(s.iter_count) + 1;
-	(* take an event from the incoming stream, prioritise internal messages  *)
-	let events = get_events s in
-	let* () = Lwt_list.iter_s (fun ((event, queue_time), is_req) ->
+	let* () = if !(s.alive) then (
+		s.iter_count := !(s.iter_count) + 1;
+		(* take an event from the incoming stream, prioritise internal messages  *)
+		let events = get_events s in
+		Lwt_list.iter_s (fun ((event, queue_time), is_req) ->
 			let t1 = Time_now.nanoseconds_since_unix_epoch () in
 			(* advance consensus state machine by delivering the new event *)
 			let (state_machine', actions) = Consensus.advance !(s.state_machine) event in
@@ -188,17 +191,21 @@ let rec main_loop s =
 			let t3 = Time_now.nanoseconds_since_unix_epoch () in
 			(* record stats / output events *)
 			let () = if s.verbose then (
-				Consensus.print_state state_machine';
-				List.iter (Consensus.print_action) actions;
+			Consensus.print_state state_machine';
+			List.iter (Consensus.print_action) actions;
 			) in
 			(if is_req then
-				s.stats.req_queue_times := (delta queue_time t1) :: !(s.stats.req_queue_times)
+			s.stats.req_queue_times := (delta queue_time t1) :: !(s.stats.req_queue_times)
 			else
-				s.stats.msg_queue_times := (delta queue_time t1) :: !(s.stats.msg_queue_times)
+			s.stats.msg_queue_times := (delta queue_time t1) :: !(s.stats.msg_queue_times)
 			);
 			s.stats.advance_times := (delta t1 t2) :: !(s.stats.advance_times);
 			s.stats.action_times := (delta t2 t3) :: !(s.stats.action_times);
 			Lwt.return_unit
-	) events in
+		) events
+  	)
+	else
+		Lwt.return_unit
+	in
 	let* () = if (!(s.iter_count) mod 10000) = 0 then Lwt.pause () else Lwt.return_unit in
 	main_loop s

@@ -15,6 +15,7 @@ type stats = {
 
 type ('a, 'b) node_state = {
 	state_machine: Consensus.t ref;
+  alive: bool ref;
 	verbose: bool;
 	conns: ('a Capnp_rpc_lwt.Sturdy_ref.t * Api_wrapper.Api.Client.Hs.t Capnp_rpc_lwt.Capability.t Lwt.t ref) list;
 	client_callbacks: (Int64.t, bool Lwt.u option) Hashtbl.t;

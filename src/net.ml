@@ -5,13 +5,13 @@ open Types
 open Lwt.Syntax
 
 let rec connect service t =
-		let* r = Sturdy_ref.connect service in
-		match r with
-			| Ok conn -> Capability.when_released conn (fun () -> Fmt.pr "conn released!!@.");Lwt.return conn
-			| Error _ ->
-				let* () = Lwt_unix.sleep t in
-				Fmt.pr "backed off %f...@." t;
-				connect service (t *. 2.) (* binary exponential backoff *)
+	let* r = Sturdy_ref.connect service in
+	match r with
+		| Ok conn -> Capability.when_released conn (fun () -> Fmt.pr "conn released!!@.");Lwt.return conn
+		| Error _ ->
+			let* () = Lwt_unix.sleep t in
+			Fmt.pr "backed off %f...@." t;
+			connect service (t *. 2.) (* binary exponential backoff *)
 
 let open_conn vat id =
 	let uri = Uri.of_string ("capnp://insecure@127.0.0.1:" ^ Int.to_string (id + 9000)) in
@@ -47,14 +47,17 @@ let send_msg conn (msg : Consensus.msg) stats =
 		let _t4 = Time_now.nanoseconds_since_unix_epoch () in
 		Lwt.return ()
 	in
-	let t1 = Time_now.nanoseconds_since_unix_epoch () in
-	let* cap = get_cap conn in
-	let t2 = Time_now.nanoseconds_since_unix_epoch () in
-	Capability.inc_ref cap;
-	Lwt.async(fun () -> Capability.with_ref cap send);
-	let t3 = Time_now.nanoseconds_since_unix_epoch () in
-	stats.connection_times := (delta t1 t2) :: !(stats.connection_times);
-	stats.send_times := (delta t2 t3) :: !(stats.send_times);
+	Lwt.async(fun () ->
+		let t1 = Time_now.nanoseconds_since_unix_epoch () in
+		let* cap = get_cap conn in
+		let t2 = Time_now.nanoseconds_since_unix_epoch () in
+		Capability.inc_ref cap;
+		let* _ = Capability.with_ref cap send in
+		let t3 = Time_now.nanoseconds_since_unix_epoch () in
+		stats.connection_times := (delta t1 t2) :: !(stats.connection_times);
+		stats.send_times := (delta t2 t3) :: !(stats.send_times);
+		Lwt.return_unit
+	);
 	Lwt.return_unit
 
 (* send a command to a node (used by client) *)
@@ -65,8 +68,12 @@ let send_req conn (cmd : Consensus.cmd) _t stats =
 		let cmd_builder = Params.cmd_get params in
 		Api.Builder.Cmd.data_set cmd_builder cmd.data;
 		Api.Builder.Cmd.id_set cmd_builder cmd.callback_id;
-		let* res = Capability.call_for_value_exn cap method_id request in
-		Lwt.return (Results.success_get res)
+		let* res = Capability.call_for_value cap method_id request in
+		let success = match res with
+			| Ok r -> Results.success_get r
+			| Error _ -> false
+		in
+		Lwt.return success
 	in
 	(* asychronously wait t seconds then timeout *)
 	let timeout_p, timeout_r = Lwt.task () in
@@ -80,23 +87,22 @@ let send_req conn (cmd : Consensus.cmd) _t stats =
 				Lwt.wakeup timeout_r false);
 		Lwt.return_unit);
 	let dispatch_p, dispatch_r = Lwt.task () in
-	let t1 = Time_now.nanoseconds_since_unix_epoch () in
-	let* cap = get_cap conn in
-	let t2 = Time_now.nanoseconds_since_unix_epoch () in
-	Capability.inc_ref cap;
-	(* let* r = Capability.with_ref cap send in *)
 	Lwt.async(fun () ->
+		let t1 = Time_now.nanoseconds_since_unix_epoch () in
+		let* cap = get_cap conn in
+		let t2 = Time_now.nanoseconds_since_unix_epoch () in
+		Capability.inc_ref cap;
 		let* r = Capability.with_ref cap send in
 		(match Lwt.state dispatch_p with
 		| Lwt.Return _ -> ()
 		| Lwt.Fail _ -> ()
 		| Lwt.Sleep ->
 			Lwt.wakeup dispatch_r r);
+		let t3 = Time_now.nanoseconds_since_unix_epoch () in
+		stats.connection_times := (delta t1 t2) :: !(stats.connection_times);
+		stats.send_times := (delta t2 t3) :: !(stats.send_times);
 		Lwt.return_unit
 	);
-	let t3 = Time_now.nanoseconds_since_unix_epoch () in
-	stats.connection_times := (delta t1 t2) :: !(stats.connection_times);
-	stats.send_times := (delta t2 t3) :: !(stats.send_times);
 	(* either timeout or return result*)
 	Lwt.pick [timeout_p; dispatch_p]
 
@@ -104,7 +110,8 @@ let send_quit conn =
 	let send cap =
 		let open Api.Client.Hs.Quit in
 		let request = Capability.Request.create_no_args () in
-		let* () = Capability.call_for_unit_exn cap method_id request in
+		(* let* () = Capability.call_for_unit_exn cap method_id request in *)
+		let* _ = Capability.call_for_unit cap method_id request in
 		Lwt.return ()
 	in
 	let* cap = get_cap conn in
