@@ -12,6 +12,7 @@
 
 \section{Setup}
 % describe sofia server
+Evaluation was carried out on the computer laboratory's Sofia server (2x Xeon Gold 6230R chips, 768GB RAM). Carrying out experiments on the server should help to minimise interference from other processes on the system.
 
 \section{Library benchmarks}
 \subsection{Cap'n Proto} \label{capnpbenchmark}
@@ -20,11 +21,13 @@ I benchmarked the message sending functionality of Cap'n Proto. I did this with 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{dummy_throughputgoodput.png}
+\caption{Benchmarking of Cap'n Proto server goodput for varying throughputs and message sizes, run for 10s}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{dummy_throughputlost.png}
+\caption{Benchmarking of Cap'n Proto server \% of failed requests for varying throughputs and message sizes, run for 10s}
 \end{figure}
 
 The figures demonstrate that the framework has a severe drop in performance when sending large messages. For a message size of 600 the goodput goes to zero as the throughput increases, meaning that no messages are being responded to.
@@ -47,6 +50,7 @@ I profiled the important functions of the library with Jane Street's Core\_bench
 	Aggregate (8 sigs)       & 605.38   \\
 	Aggregate check (8 sigs) & 1,180.61 \\ \hline
 	\end{tabular}
+	\caption{Benchmarking of key functions of the Tezos Cryptography library}
 \end{table}
 % ┌─────────────┬────────────┬─────────┬──────────┬──────────┬────────────┐
 % │ Name        │   Time/Run │ mWd/Run │ mjWd/Run │ Prom/Run │ Percentage │

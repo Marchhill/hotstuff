@@ -177,7 +177,7 @@ let stats_fp =
 	Arg.(value & opt (some string) None & info ["stats"] ~docv:"STATS" ~doc)
 
 let time =
-	let doc = "Time to reun experiment for." in
+	let doc = "Time to run experiment for." in
 	Arg.(value & opt int 100 & info ["t"; "time"] ~docv:"TIME" ~doc)
 
 let throughput =

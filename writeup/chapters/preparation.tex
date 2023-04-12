@@ -162,6 +162,8 @@ There is no existing reference implementation of HotStuff in OCaml, so my projec
 \subsection{Lwt}
 Lwt is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages and are used by asynchronous promises in Lwt. Lwt is useful to this project as promises provide a way to dispatch messages over the network and wait for their responses in different threads. Promises are cheap to create in Lwt, so one can create many lightweight threads with good performance [citation needed***].
 
+One alternative I could have used is Jane Street's Async library, which has similar features but better performance. I chose not to use this library due to its poor documentation. Another alternative that has better performance than Lwt is EIO, but this library is new and not yet in a stable state.
+
 \subsection{Cap'n Proto}
 Cap'n Proto is an RPC framework that includes a library for sending and receiving RPCs, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in \ref{capnpbenchmark}.
 

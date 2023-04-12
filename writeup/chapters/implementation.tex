@@ -256,7 +256,7 @@ This potential solution was implemented; it involved checking a timer on every i
 
 This change improved performance by reducing the amount of time spent waiting in the main loop, the difference is shown in an ablation study [reference evaluation ***]. However, performance was still not at a satisfactory level.
 
-\subsubsection{Send-to-all and deduplication}
+\subsubsection{Send-to-all and deduplication} \label{sendtoall}
 % send to all weird graph: https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAM2hZuzkpUNIuGt2QHNZQvc%3D
 % exponential growth with end to all https://imgur.com/a/wDlhbn9 28/03 pseudocode
 % theory: nodes reproposing same values
@@ -391,9 +391,28 @@ Implement TCP style nodes??
 % avoid coordinated ommision by using open loop clients
 % section 3: https://dl.acm.org/doi/pdf/10.1145/3447851.3458739
 \subsection{Load generator}
+The load generator is responsible for sending client requests to the nodes of the system. One is able to vary the throughput that the load generator drives the system at, and the duration that it runs for before it sends a \textit{kill} messages to the nodes, ending the test. It is also responsible for timing and calculating statistics.
+
+\textbf{Throughput: } The number of requests sent by the load generator each second.
+
+\textbf{Goodput: } The number of requests that are responded to each second. This is calculated by number of responses divided by the time difference between the first and last response [change to end of test???].
+
+\textbf{Latency: } The amount of time it takes between sending a request and receiving a response. The load generator reports both mean and standard deviation of latencies.
+
+[*** diagram of open loop and closed loop load generators]
+
+The load generator is open-loop, which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator, which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator `waits' for the system, so cannot overload it.
+
+The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all (\ref{sendtoall}) the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, eliminating start-up effects.
+
 \subsection{Experiment scripts}
+Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
+
+Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes all possible permutations of the input variables, duplicates them (so that each experiment is run multiple times to get better results), and runs them in a random order. By running experiments in a random order external factors that affect performance are somewhat mitigated. For example if the experiments were not run in a random order, the system may happen to experience interference when running experiments on 8 nodes, giving distorted results for this set of experiments. If instead the experiments were run randomly, the interference would affect some random group of experiments, and it would be more apparent that these results were anomalous.
+
 \section{Repository Overview}
 
+\begin{small}
 \begin{forest}
 	for tree={font=\sffamily, grow'=0,
 	folder indent=0.9em, folder icons,
@@ -429,7 +448,11 @@ Implement TCP style nodes??
 		[util.ml, is file]
 		[runDummyExperiments.py, is file]
 		[runExperiments.py, is file]
+		[README.md, is file]
 	]
 \end{forest}
+\end{small}
 
 The \textit{src} directory contains the main server loop and the code for interacting with Cap'n Proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in \ref{spec}. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.
+
+In order to run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \textit{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time. These scripts will run on Linux and MacOS, but will have to be modified to work on Windows.

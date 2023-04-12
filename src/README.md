@@ -23,4 +23,7 @@ opam install dune ppx_expect conf-libev lwt capnp-rpc-unix tezos-crypto
 
 # install python dependencies for plotting
 pip3 install pandas matplotlib seaborn
+
+# run an experiment
+python3 runExperiments.py
 ```

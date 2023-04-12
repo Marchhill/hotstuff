@@ -34,16 +34,16 @@
 \contentsline {subsubsection}{Node offsets}{27}{subsubsection*.11}%
 \contentsline {subsubsection}{Node comparison}{28}{subsubsection*.12}%
 \contentsline {subsubsection}{Node trunction}{28}{subsubsection*.13}%
-\contentsline {subsection}{\numberline {3.3.3}Connections}{30}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Implementing for evaluation}{30}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Load generator}{30}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{30}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.3.3}Connections}{28}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Implementing for evaluation}{28}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Load generator}{28}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{29}{subsection.3.4.2}%
 \contentsline {section}{\numberline {3.5}Repository Overview}{30}{section.3.5}%
 \contentsline {chapter}{Evaluation}{32}{chapter*.14}%
 \contentsline {section}{\numberline {4.1}Setup}{32}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Library benchmarks}{32}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{32}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{33}{subsection.4.2.2}%
-\contentsline {chapter}{Conclusion}{34}{chapter*.15}%
-\contentsline {section}{\numberline {5.1}Future Work}{34}{section.5.1}%
-\contentsline {chapter}{Bibliography}{35}{chapter*.16}%
+\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{32}{subsection.4.2.2}%
+\contentsline {chapter}{Conclusion}{35}{chapter*.15}%
+\contentsline {section}{\numberline {5.1}Future Work}{35}{section.5.1}%
+\contentsline {chapter}{Bibliography}{36}{chapter*.16}%
