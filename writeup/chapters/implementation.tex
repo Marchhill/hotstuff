@@ -335,7 +335,7 @@ This implementation did not lead to the desired reduction in latency, the system
 
 Note the small optimisation on line \ref{smalloptimisation}, we can safely empty the \textit{seen} set as we will not try to propose this value again; this reduces the amount of computation required to calculate the set difference next time. The second implementation was much more effective at screening requests and resulted in a significant reduction in latency. The effectiveness of this change led to further insight into what the bottlenecks for performance were.
 
-\subsubsection{Batch sizes}
+\subsubsection{Batch sizes} \label{batchsizes}
 % insight: track batch sizes
 % experimented with limiting batch size
 % tie into benchmarking of cap'n proto
@@ -373,10 +373,16 @@ A solution to this problem is to store an offset to a node inside the \textit{ju
 \subsubsection{Node comparison}
 Memtrace profiling also showed that the equality function for nodes was memory intensive. The solution to this was including a \textit{digest} field in the node that is a hash over all of the other fields. Notably we can compute this hash over the \textit{digest} field of the parent node rather than recursing through the whole chain. This means that we can also compare two nodes by comparing their digests without having to recurse through each chain; the digests being equal cryptographically guarantees that the whole chains are equal.
 
-\subsubsection{Node trunction}
-Implement TCP style nodes??
+\subsubsection{Node truncation}
+Our current approach sends the entire node inside internal messages, which becomes expensive as the chain grows. As highlighted in \ref{batchsizes}, the size of messages being sent is a bottleneck in the system, making this particularly expensive.
 
-\subsection{Connections}
+In order to overcome this problem, one can truncate the node before sending it, cutting off the node's parent link at some chosen depth. The entire node can then be reconstructed at the receiver, the received node can be `spliced' back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. However, we must ensure that we do not truncate the log too much, so that there is a gap between what we send and \textit{b\textsubscript{exec}} at the receiver, leading to commands being missed out and not executed. This is a problem in the event that some node becomes isolated from the rest; it must be able to catch up to the others once the network partition is healed.
+
+To overcome this problem we use a TCP-style approach. We include a field containing the height of the \textit{b\textsubscript{exec}} node to the \textit{PROPOSE}, \textit{NEW{\large V}IEW}, and \textit{COMPLAIN} messages. Each node maintains a list of the \textit{b\textsubscript{exec}} height of every other node. When making a proposal, the leader takes the minimum height from this list, and truncates the node up to that depth. This ensures that every node that receives the proposal has enough information to reconstruct the entire log.
+
+There are some cases when the leader does not receive the latest \textit{b\textsubscript{exec}} of every other node before it makes a proposal. This means that the leader will not truncate the node as much as it could have. One can optimise by having a node send the entire list of all stored \textit{b\textsubscript{exec}} heights rather than just its own, allowing the heights to propagate around the system more quickly.
+
+% \subsection{Connections}
 % talk about capabilities?
 % when to set up connections? use promises
 % https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAEXEcHtcUNFFo%2FRcUtQcSmc%3D

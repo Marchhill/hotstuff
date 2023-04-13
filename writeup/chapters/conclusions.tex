@@ -6,4 +6,6 @@ Further work would port to using the async library which is known to have better
 
 % if i was to reimplement i would already have a solid grasp on the algorithm, language, and frameworks. i could focus more on the practicalities of bottlenecks, profiling, testing lwt & queueing, benchmarking, etc. from the outset
 
+% to develop a real production ready system that has a reasonable level of performance would take an order of magnitude more time than this problem. one would have to carefully study byzantine threats and how one would counter availability attacks. In some cases optimisations may be antagonistic with security considerations (eg. TCP style truncation could be attacked). if the system was to be deployed in a real environment (eg. a cryptocurrency) security would be paramount, and it could take years of fixes and bug bounties to develop a robust system.
+
 We have presented a potential path for implementing verifiable anonymous identities and reconfiguration using our permissioned blockchain, future work could consist of a practical implementation of this.

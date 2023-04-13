@@ -1,2 +1,0 @@
-name, chained, nodes, throughput, goodput, mean, sd, rec, sent, batch_size, msg_size
-test0_1000_4_200, n, 4, 1000, 339.196307, 0.447586, 0.711595, 3097, 10000, 1, 1
