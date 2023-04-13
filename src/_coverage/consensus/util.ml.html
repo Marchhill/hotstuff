@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>util.ml &mdash; Coverage report</title>
+    <meta name="description" content="75.54% coverage in consensus/util.ml">
+    <link rel="stylesheet" href="../coverage.css"/>
+    <script src="../highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body>
+    <div id="header">
+      <h1>
+        <a href="../index.html">
+          <span class="dirname">consensus/</span>util.ml
+        </a>
+      </h1>
+      <h2>75.54%</h2>
+    </div>
+    <div id="navbar">
+      <span class="unvisited" style="top:5.00%"></span>
+      <span class="unvisited" style="top:5.42%"></span>
+      <span class="unvisited" style="top:28.33%"></span>
+      <span class="unvisited" style="top:35.00%"></span>
+      <span class="unvisited" style="top:35.42%"></span>
+      <span class="unvisited" style="top:47.08%"></span>
+      <span class="unvisited" style="top:47.50%"></span>
+      <span class="unvisited" style="top:47.92%"></span>
+      <span class="unvisited" style="top:48.33%"></span>
+      <span class="unvisited" style="top:48.75%"></span>
+      <span class="unvisited" style="top:49.17%"></span>
+      <span class="unvisited" style="bottom:49.58%"></span>
+      <span class="unvisited" style="bottom:49.17%"></span>
+      <span class="unvisited" style="bottom:48.75%"></span>
+      <span class="unvisited" style="bottom:48.33%"></span>
+      <span class="unvisited" style="bottom:47.92%"></span>
+      <span class="unvisited" style="bottom:47.50%"></span>
+      <span class="unvisited" style="bottom:47.08%"></span>
+      <span class="unvisited" style="bottom:46.67%"></span>
+      <span class="unvisited" style="bottom:46.25%"></span>
+      <span class="unvisited" style="bottom:45.83%"></span>
+      <span class="unvisited" style="bottom:45.42%"></span>
+      <span class="unvisited" style="bottom:45.00%"></span>
+      <span class="unvisited" style="bottom:44.58%"></span>
+      <span class="unvisited" style="bottom:44.17%"></span>
+      <span class="unvisited" style="bottom:40.83%"></span>
+      <span class="unvisited" style="bottom:35.42%"></span>
+      <span class="unvisited" style="bottom:31.25%"></span>
+      <span class="unvisited" style="bottom:27.92%"></span>
+      <span class="unvisited" style="bottom:27.50%"></span>
+      <span class="unvisited" style="bottom:25.42%"></span>
+      <span class="unvisited" style="bottom:23.33%"></span>
+      <span class="unvisited" style="bottom:21.25%"></span>
+      <span class="unvisited" style="bottom:15.83%"></span>
+      <span class="unvisited" style="bottom:12.50%"></span>
+      <span class="some-visited" style="bottom:9.58%"></span>
+    </div>
+    <div id="report">
+      <div id="lines-layer">
+        <pre>
+<a id="L1"></a><span > </span>
+<a id="L2"></a><span > </span>
+<a id="L3"></a><span class="visited"> </span>
+<a id="L4"></a><span > </span>
+<a id="L5"></a><span class="visited"> </span>
+<a id="L6"></a><span > </span>
+<a id="L7"></a><span > </span>
+<a id="L8"></a><span class="visited"> </span>
+<a id="L9"></a><span class="visited"> </span>
+<a id="L10"></a><span > </span>
+<a id="L11"></a><span > </span>
+<a id="L12"></a><span class="unvisited"> </span>
+<a id="L13"></a><span class="unvisited"> </span>
+<a id="L14"></a><span > </span>
+<a id="L15"></a><span > </span>
+<a id="L16"></a><span class="visited"> </span>
+<a id="L17"></a><span class="visited"> </span>
+<a id="L18"></a><span class="visited"> </span>
+<a id="L19"></a><span class="visited"> </span>
+<a id="L20"></a><span > </span>
+<a id="L21"></a><span class="visited"> </span>
+<a id="L22"></a><span class="visited"> </span>
+<a id="L23"></a><span > </span>
+<a id="L24"></a><span class="visited"> </span>
+<a id="L25"></a><span > </span>
+<a id="L26"></a><span class="visited"> </span>
+<a id="L27"></a><span class="visited"> </span>
+<a id="L28"></a><span class="visited"> </span>
+<a id="L29"></a><span > </span>
+<a id="L30"></a><span class="visited"> </span>
+<a id="L31"></a><span > </span>
+<a id="L32"></a><span > </span>
+<a id="L33"></a><span class="visited"> </span>
+<a id="L34"></a><span class="visited"> </span>
+<a id="L35"></a><span class="visited"> </span>
+<a id="L36"></a><span class="visited"> </span>
+<a id="L37"></a><span class="visited"> </span>
+<a id="L38"></a><span class="visited"> </span>
+<a id="L39"></a><span class="visited"> </span>
+<a id="L40"></a><span class="visited"> </span>
+<a id="L41"></a><span class="visited"> </span>
+<a id="L42"></a><span class="visited"> </span>
+<a id="L43"></a><span class="visited"> </span>
+<a id="L44"></a><span class="visited"> </span>
+<a id="L45"></a><span > </span>
+<a id="L46"></a><span > </span>
+<a id="L47"></a><span class="visited"> </span>
+<a id="L48"></a><span class="visited"> </span>
+<a id="L49"></a><span > </span>
+<a id="L50"></a><span > </span>
+<a id="L51"></a><span class="visited"> </span>
+<a id="L52"></a><span > </span>
+<a id="L53"></a><span class="visited"> </span>
+<a id="L54"></a><span class="visited"> </span>
+<a id="L55"></a><span class="visited"> </span>
+<a id="L56"></a><span class="visited"> </span>
+<a id="L57"></a><span class="visited"> </span>
+<a id="L58"></a><span class="visited"> </span>
+<a id="L59"></a><span > </span>
+<a id="L60"></a><span > </span>
+<a id="L61"></a><span class="visited"> </span>
+<a id="L62"></a><span > </span>
+<a id="L63"></a><span class="visited"> </span>
+<a id="L64"></a><span class="visited"> </span>
+<a id="L65"></a><span class="visited"> </span>
+<a id="L66"></a><span class="visited"> </span>
+<a id="L67"></a><span class="visited"> </span>
+<a id="L68"></a><span class="unvisited"> </span>
+<a id="L69"></a><span > </span>
+<a id="L70"></a><span class="visited"> </span>
+<a id="L71"></a><span > </span>
+<a id="L72"></a><span > </span>
+<a id="L73"></a><span class="visited"> </span>
+<a id="L74"></a><span class="visited"> </span>
+<a id="L75"></a><span class="visited"> </span>
+<a id="L76"></a><span class="visited"> </span>
+<a id="L77"></a><span class="visited"> </span>
+<a id="L78"></a><span class="visited"> </span>
+<a id="L79"></a><span class="visited"> </span>
+<a id="L80"></a><span class="visited"> </span>
+<a id="L81"></a><span class="visited"> </span>
+<a id="L82"></a><span class="visited"> </span>
+<a id="L83"></a><span class="visited"> </span>
+<a id="L84"></a><span class="unvisited"> </span>
+<a id="L85"></a><span class="unvisited"> </span>
+<a id="L86"></a><span class="visited"> </span>
+<a id="L87"></a><span > </span>
+<a id="L88"></a><span > </span>
+<a id="L89"></a><span class="visited"> </span>
+<a id="L90"></a><span class="visited"> </span>
+<a id="L91"></a><span class="visited"> </span>
+<a id="L92"></a><span class="visited"> </span>
+<a id="L93"></a><span class="visited"> </span>
+<a id="L94"></a><span class="visited"> </span>
+<a id="L95"></a><span class="visited"> </span>
+<a id="L96"></a><span class="visited"> </span>
+<a id="L97"></a><span class="visited"> </span>
+<a id="L98"></a><span class="visited"> </span>
+<a id="L99"></a><span class="visited"> </span>
+<a id="L100"></a><span class="visited"> </span>
+<a id="L101"></a><span class="visited"> </span>
+<a id="L102"></a><span class="visited"> </span>
+<a id="L103"></a><span > </span>
+<a id="L104"></a><span > </span>
+<a id="L105"></a><span class="visited"> </span>
+<a id="L106"></a><span class="visited"> </span>
+<a id="L107"></a><span class="visited"> </span>
+<a id="L108"></a><span class="visited"> </span>
+<a id="L109"></a><span class="visited"> </span>
+<a id="L110"></a><span class="visited"> </span>
+<a id="L111"></a><span > </span>
+<a id="L112"></a><span > </span>
+<a id="L113"></a><span class="unvisited"> </span>
+<a id="L114"></a><span class="unvisited"> </span>
+<a id="L115"></a><span class="unvisited"> </span>
+<a id="L116"></a><span class="unvisited"> </span>
+<a id="L117"></a><span class="unvisited"> </span>
+<a id="L118"></a><span class="unvisited"> </span>
+<a id="L119"></a><span > </span>
+<a id="L120"></a><span > </span>
+<a id="L121"></a><span class="unvisited"> </span>
+<a id="L122"></a><span class="unvisited"> </span>
+<a id="L123"></a><span class="unvisited"> </span>
+<a id="L124"></a><span class="unvisited"> </span>
+<a id="L125"></a><span class="unvisited"> </span>
+<a id="L126"></a><span class="unvisited"> </span>
+<a id="L127"></a><span class="unvisited"> </span>
+<a id="L128"></a><span class="unvisited"> </span>
+<a id="L129"></a><span class="unvisited"> </span>
+<a id="L130"></a><span class="unvisited"> </span>
+<a id="L131"></a><span class="unvisited"> </span>
+<a id="L132"></a><span class="unvisited"> </span>
+<a id="L133"></a><span class="unvisited"> </span>
+<a id="L134"></a><span class="unvisited"> </span>
+<a id="L135"></a><span > </span>
+<a id="L136"></a><span > </span>
+<a id="L137"></a><span class="visited"> </span>
+<a id="L138"></a><span class="visited"> </span>
+<a id="L139"></a><span > </span>
+<a id="L140"></a><span class="visited"> </span>
+<a id="L141"></a><span class="visited"> </span>
+<a id="L142"></a><span class="unvisited"> </span>
+<a id="L143"></a><span > </span>
+<a id="L144"></a><span > </span>
+<a id="L145"></a><span > </span>
+<a id="L146"></a><span > </span>
+<a id="L147"></a><span class="visited"> </span>
+<a id="L148"></a><span class="visited"> </span>
+<a id="L149"></a><span class="visited"> </span>
+<a id="L150"></a><span class="visited"> </span>
+<a id="L151"></a><span class="visited"> </span>
+<a id="L152"></a><span > </span>
+<a id="L153"></a><span class="visited"> </span>
+<a id="L154"></a><span class="visited"> </span>
+<a id="L155"></a><span class="unvisited"> </span>
+<a id="L156"></a><span class="visited"> </span>
+<a id="L157"></a><span > </span>
+<a id="L158"></a><span class="visited"> </span>
+<a id="L159"></a><span class="visited"> </span>
+<a id="L160"></a><span class="visited"> </span>
+<a id="L161"></a><span class="visited"> </span>
+<a id="L162"></a><span class="visited"> </span>
+<a id="L163"></a><span class="visited"> </span>
+<a id="L164"></a><span class="visited"> </span>
+<a id="L165"></a><span class="unvisited"> </span>
+<a id="L166"></a><span class="visited"> </span>
+<a id="L167"></a><span > </span>
+<a id="L168"></a><span class="visited"> </span>
+<a id="L169"></a><span > </span>
+<a id="L170"></a><span > </span>
+<a id="L171"></a><span class="visited"> </span>
+<a id="L172"></a><span class="visited"> </span>
+<a id="L173"></a><span class="unvisited"> </span>
+<a id="L174"></a><span class="unvisited"> </span>
+<a id="L175"></a><span > </span>
+<a id="L176"></a><span > </span>
+<a id="L177"></a><span class="visited"> </span>
+<a id="L178"></a><span class="visited"> </span>
+<a id="L179"></a><span class="unvisited"> </span>
+<a id="L180"></a><span > </span>
+<a id="L181"></a><span > </span>
+<a id="L182"></a><span class="visited"> </span>
+<a id="L183"></a><span class="visited"> </span>
+<a id="L184"></a><span class="unvisited"> </span>
+<a id="L185"></a><span > </span>
+<a id="L186"></a><span > </span>
+<a id="L187"></a><span class="visited"> </span>
+<a id="L188"></a><span class="visited"> </span>
+<a id="L189"></a><span class="unvisited"> </span>
+<a id="L190"></a><span > </span>
+<a id="L191"></a><span > </span>
+<a id="L192"></a><span class="visited"> </span>
+<a id="L193"></a><span class="visited"> </span>
+<a id="L194"></a><span > </span>
+<a id="L195"></a><span > </span>
+<a id="L196"></a><span class="visited"> </span>
+<a id="L197"></a><span class="visited"> </span>
+<a id="L198"></a><span > </span>
+<a id="L199"></a><span class="visited"> </span>
+<a id="L200"></a><span class="visited"> </span>
+<a id="L201"></a><span class="visited"> </span>
+<a id="L202"></a><span class="unvisited"> </span>
+<a id="L203"></a><span > </span>
+<a id="L204"></a><span > </span>
+<a id="L205"></a><span class="visited"> </span>
+<a id="L206"></a><span class="visited"> </span>
+<a id="L207"></a><span class="visited"> </span>
+<a id="L208"></a><span > </span>
+<a id="L209"></a><span class="visited"> </span>
+<a id="L210"></a><span class="unvisited"> </span>
+<a id="L211"></a><span > </span>
+<a id="L212"></a><span > </span>
+<a id="L213"></a><span > </span>
+<a id="L214"></a><span > </span>
+<a id="L215"></a><span > </span>
+<a id="L216"></a><span class="visited"> </span>
+<a id="L217"></a><span class="some-visited"> </span>
+<a id="L218"></a><span class="visited"> </span>
+<a id="L219"></a><span > </span>
+<a id="L220"></a><span class="visited"> </span>
+<a id="L221"></a><span class="visited"> </span>
+<a id="L222"></a><span class="visited"> </span>
+<a id="L223"></a><span > </span>
+<a id="L224"></a><span > </span>
+<a id="L225"></a><span > </span>
+<a id="L226"></a><span class="visited"> </span>
+<a id="L227"></a><span > </span>
+<a id="L228"></a><span class="visited"> </span>
+<a id="L229"></a><span > </span>
+<a id="L230"></a><span class="visited"> </span>
+<a id="L231"></a><span > </span>
+<a id="L232"></a><span > </span>
+<a id="L233"></a><span class="visited"> </span>
+<a id="L234"></a><span > </span>
+<a id="L235"></a><span class="visited"> </span>
+<a id="L236"></a><span class="visited"> </span>
+<a id="L237"></a><span > </span>
+<a id="L238"></a><span > </span>
+<a id="L239"></a><span class="visited"> </span>
+<a id="L240"></a><span > </span>
+</pre>
+      </div>
+      <div id="text-layer">
+        <pre id="line-numbers">
+<a href="#L1">  1</a>
+<a href="#L2">  2</a>
+<a href="#L3">  3</a>
+<a href="#L4">  4</a>
+<a href="#L5">  5</a>
+<a href="#L6">  6</a>
+<a href="#L7">  7</a>
+<a href="#L8">  8</a>
+<a href="#L9">  9</a>
+<a href="#L10"> 10</a>
+<a href="#L11"> 11</a>
+<a href="#L12"> 12</a>
+<a href="#L13"> 13</a>
+<a href="#L14"> 14</a>
+<a href="#L15"> 15</a>
+<a href="#L16"> 16</a>
+<a href="#L17"> 17</a>
+<a href="#L18"> 18</a>
+<a href="#L19"> 19</a>
+<a href="#L20"> 20</a>
+<a href="#L21"> 21</a>
+<a href="#L22"> 22</a>
+<a href="#L23"> 23</a>
+<a href="#L24"> 24</a>
+<a href="#L25"> 25</a>
+<a href="#L26"> 26</a>
+<a href="#L27"> 27</a>
+<a href="#L28"> 28</a>
+<a href="#L29"> 29</a>
+<a href="#L30"> 30</a>
+<a href="#L31"> 31</a>
+<a href="#L32"> 32</a>
+<a href="#L33"> 33</a>
+<a href="#L34"> 34</a>
+<a href="#L35"> 35</a>
+<a href="#L36"> 36</a>
+<a href="#L37"> 37</a>
+<a href="#L38"> 38</a>
+<a href="#L39"> 39</a>
+<a href="#L40"> 40</a>
+<a href="#L41"> 41</a>
+<a href="#L42"> 42</a>
+<a href="#L43"> 43</a>
+<a href="#L44"> 44</a>
+<a href="#L45"> 45</a>
+<a href="#L46"> 46</a>
+<a href="#L47"> 47</a>
+<a href="#L48"> 48</a>
+<a href="#L49"> 49</a>
+<a href="#L50"> 50</a>
+<a href="#L51"> 51</a>
+<a href="#L52"> 52</a>
+<a href="#L53"> 53</a>
+<a href="#L54"> 54</a>
+<a href="#L55"> 55</a>
+<a href="#L56"> 56</a>
+<a href="#L57"> 57</a>
+<a href="#L58"> 58</a>
+<a href="#L59"> 59</a>
+<a href="#L60"> 60</a>
+<a href="#L61"> 61</a>
+<a href="#L62"> 62</a>
+<a href="#L63"> 63</a>
+<a href="#L64"> 64</a>
+<a href="#L65"> 65</a>
+<a href="#L66"> 66</a>
+<a href="#L67"> 67</a>
+<a href="#L68"> 68</a>
+<a href="#L69"> 69</a>
+<a href="#L70"> 70</a>
+<a href="#L71"> 71</a>
+<a href="#L72"> 72</a>
+<a href="#L73"> 73</a>
+<a href="#L74"> 74</a>
+<a href="#L75"> 75</a>
+<a href="#L76"> 76</a>
+<a href="#L77"> 77</a>
+<a href="#L78"> 78</a>
+<a href="#L79"> 79</a>
+<a href="#L80"> 80</a>
+<a href="#L81"> 81</a>
+<a href="#L82"> 82</a>
+<a href="#L83"> 83</a>
+<a href="#L84"> 84</a>
+<a href="#L85"> 85</a>
+<a href="#L86"> 86</a>
+<a href="#L87"> 87</a>
+<a href="#L88"> 88</a>
+<a href="#L89"> 89</a>
+<a href="#L90"> 90</a>
+<a href="#L91"> 91</a>
+<a href="#L92"> 92</a>
+<a href="#L93"> 93</a>
+<a href="#L94"> 94</a>
+<a href="#L95"> 95</a>
+<a href="#L96"> 96</a>
+<a href="#L97"> 97</a>
+<a href="#L98"> 98</a>
+<a href="#L99"> 99</a>
+<a href="#L100">100</a>
+<a href="#L101">101</a>
+<a href="#L102">102</a>
+<a href="#L103">103</a>
+<a href="#L104">104</a>
+<a href="#L105">105</a>
+<a href="#L106">106</a>
+<a href="#L107">107</a>
+<a href="#L108">108</a>
+<a href="#L109">109</a>
+<a href="#L110">110</a>
+<a href="#L111">111</a>
+<a href="#L112">112</a>
+<a href="#L113">113</a>
+<a href="#L114">114</a>
+<a href="#L115">115</a>
+<a href="#L116">116</a>
+<a href="#L117">117</a>
+<a href="#L118">118</a>
+<a href="#L119">119</a>
+<a href="#L120">120</a>
+<a href="#L121">121</a>
+<a href="#L122">122</a>
+<a href="#L123">123</a>
+<a href="#L124">124</a>
+<a href="#L125">125</a>
+<a href="#L126">126</a>
+<a href="#L127">127</a>
+<a href="#L128">128</a>
+<a href="#L129">129</a>
+<a href="#L130">130</a>
+<a href="#L131">131</a>
+<a href="#L132">132</a>
+<a href="#L133">133</a>
+<a href="#L134">134</a>
+<a href="#L135">135</a>
+<a href="#L136">136</a>
+<a href="#L137">137</a>
+<a href="#L138">138</a>
+<a href="#L139">139</a>
+<a href="#L140">140</a>
+<a href="#L141">141</a>
+<a href="#L142">142</a>
+<a href="#L143">143</a>
+<a href="#L144">144</a>
+<a href="#L145">145</a>
+<a href="#L146">146</a>
+<a href="#L147">147</a>
+<a href="#L148">148</a>
+<a href="#L149">149</a>
+<a href="#L150">150</a>
+<a href="#L151">151</a>
+<a href="#L152">152</a>
+<a href="#L153">153</a>
+<a href="#L154">154</a>
+<a href="#L155">155</a>
+<a href="#L156">156</a>
+<a href="#L157">157</a>
+<a href="#L158">158</a>
+<a href="#L159">159</a>
+<a href="#L160">160</a>
+<a href="#L161">161</a>
+<a href="#L162">162</a>
+<a href="#L163">163</a>
+<a href="#L164">164</a>
+<a href="#L165">165</a>
+<a href="#L166">166</a>
+<a href="#L167">167</a>
+<a href="#L168">168</a>
+<a href="#L169">169</a>
+<a href="#L170">170</a>
+<a href="#L171">171</a>
+<a href="#L172">172</a>
+<a href="#L173">173</a>
+<a href="#L174">174</a>
+<a href="#L175">175</a>
+<a href="#L176">176</a>
+<a href="#L177">177</a>
+<a href="#L178">178</a>
+<a href="#L179">179</a>
+<a href="#L180">180</a>
+<a href="#L181">181</a>
+<a href="#L182">182</a>
+<a href="#L183">183</a>
+<a href="#L184">184</a>
+<a href="#L185">185</a>
+<a href="#L186">186</a>
+<a href="#L187">187</a>
+<a href="#L188">188</a>
+<a href="#L189">189</a>
+<a href="#L190">190</a>
+<a href="#L191">191</a>
+<a href="#L192">192</a>
+<a href="#L193">193</a>
+<a href="#L194">194</a>
+<a href="#L195">195</a>
+<a href="#L196">196</a>
+<a href="#L197">197</a>
+<a href="#L198">198</a>
+<a href="#L199">199</a>
+<a href="#L200">200</a>
+<a href="#L201">201</a>
+<a href="#L202">202</a>
+<a href="#L203">203</a>
+<a href="#L204">204</a>
+<a href="#L205">205</a>
+<a href="#L206">206</a>
+<a href="#L207">207</a>
+<a href="#L208">208</a>
+<a href="#L209">209</a>
+<a href="#L210">210</a>
+<a href="#L211">211</a>
+<a href="#L212">212</a>
+<a href="#L213">213</a>
+<a href="#L214">214</a>
+<a href="#L215">215</a>
+<a href="#L216">216</a>
+<a href="#L217">217</a>
+<a href="#L218">218</a>
+<a href="#L219">219</a>
+<a href="#L220">220</a>
+<a href="#L221">221</a>
+<a href="#L222">222</a>
+<a href="#L223">223</a>
+<a href="#L224">224</a>
+<a href="#L225">225</a>
+<a href="#L226">226</a>
+<a href="#L227">227</a>
+<a href="#L228">228</a>
+<a href="#L229">229</a>
+<a href="#L230">230</a>
+<a href="#L231">231</a>
+<a href="#L232">232</a>
+<a href="#L233">233</a>
+<a href="#L234">234</a>
+<a href="#L235">235</a>
+<a href="#L236">236</a>
+<a href="#L237">237</a>
+<a href="#L238">238</a>
+<a href="#L239">239</a>
+<a href="#L240">240</a>
+</pre>
+<pre><code class="ocaml">open Types
+
+let leader_id view node_count = <span data-count="5181">(</span>view - 1) mod node_count
+
+let is_leader view id node_count = <span data-count="5181">i</span>d = (leader_i<span data-count="5181">d</span> view node_count)
+
+let is_quorum_length l n =
+  <span data-count="2312">l</span>et f = (n - 1) / 3 in
+  (List.lengt<span data-count="2312">h</span> l) &gt;= n - f
+
+let hash_to_string x =
+  <span data-count="0">l</span>et Tezos_crypto.Hacl.Blake2b.Hash h = x in
+  Fmt.str "%x%x%x%x" (Int64.to_in<span data-count="0">t</span> (Bytes.get_int64_n<span data-count="0">e</span> h 0)) (Int64.to_in<span data-count="0">t</span> (Bytes.get_int64_n<span data-count="0">e</span> h 8)) (Int64.to_in<span data-count="0">t</span> (Bytes.get_int64_n<span data-count="0">e</span> h 16)) (Int64.to_in<span data-count="0">t</span> (Bytes.get_int64_n<span data-count="0">e</span> h 24))
+  
+let rec node_to_string : node option -&gt; string = function
+  | <span data-count="27009">S</span>ome x -&gt;
+    let cmds_str = Cmd_set.fold (fun cmd acc -&gt; <span data-count="3143">"</span>\"" ^ cmd.data ^ "\"," ^ acc) x.cmds "" in
+    <span data-count="27009">"</span>[" ^ cmds_str ^ "]-" ^ (node_to_strin<span data-count="27009">g</span> x.parent)
+  | <span data-count="6460">N</span>one -&gt; "⊥"
+
+let rec node_to_string_trunc depth : node option -&gt; string = <span data-count="301">f</span>unction
+  | <span data-count="320">S</span>ome x -&gt;
+      if depth = 0 then
+        <span data-count="20">"</span>..."
+      else
+        <span data-count="300">l</span>et cmds_str = Cmd_set.fold (fun cmd acc -&gt; <span data-count="60">"</span>\"" ^ cmd.data ^ "\"," ^ acc) x.cmds "" in
+    <span data-count="300">"</span>[" ^ cmds_str ^ "]-" ^ (node_to_string_trun<span data-count="300">c</span> (depth - 1) x.parent)
+  | <span data-count="64">N</span>one -&gt; "⊥"
+
+let node_to_string_short = node_to_string_trun<span data-count="1">c</span> 5
+
+let msg_type_to_string : msg_type -&gt; string = function
+  | <span data-count="432">N</span>ewView -&gt; "new_view"
+  | <span data-count="39">P</span>repare -&gt; "prepare"
+  | <span data-count="603">P</span>repareAck -&gt; "prepare_ack"
+  | <span data-count="39">P</span>reCommit -&gt; "pre_commit"
+  | <span data-count="286">P</span>reCommitAck -&gt; "pre_commit_ack"
+  | <span data-count="39">C</span>ommit -&gt; "commit"
+  | <span data-count="286">C</span>ommitAck -&gt; "commit_ack"
+  | <span data-count="39">D</span>ecide -&gt; "decide"
+  | <span data-count="81">C</span>omplain -&gt; "complain"
+  | <span data-count="10">N</span>extView -&gt; "next_view"
+  | <span data-count="100">G</span>eneric -&gt; "generic"
+  | <span data-count="625">G</span>enericAck -&gt; "generic_ack"
+
+let partial_signature_to_string id = function
+  | <span data-count="204">S</span>ome _ -&gt; Fmt.str "#%d" id
+  | <span data-count="77">N</span>one -&gt; "⊥"
+
+let qc_to_string : qc option -&gt; string = function
+  | <span data-count="400">S</span>ome qc -&gt;
+    let signature = (match qc.signature with
+      | <span data-count="229">S</span>ome _ -&gt;
+        List.mapi (fun i id -&gt; <span data-count="687">i</span>f i = (List.lengt<span data-count="687">h</span> qc.ids) - 1 then <span data-count="229">(</span>Fmt.str "#%d" id) else <span data-count="458">(</span>Fmt.st<span data-count="458">r</span> "#%d,") id) qc.ids
+        |&gt; <span data-count="229">L</span>ist.fold_lef<span data-count="229">t</span> (^) ""
+      | <span data-count="171">N</span>one -&gt; "⊥") in
+    Fmt.str "view=%d type=%s node=(%s) sig=(%s)" qc.view (msg_type_to_strin<span data-count="400">g</span> qc.msg_type) (node_to_strin<span data-count="400">g</span> qc.node) signature
+  | <span data-count="133">N</span>one -&gt; ""
+
+let node_justify_to_string : node_justify option -&gt; string = function
+  | <span data-count="65">S</span>ome qc -&gt;
+    let signature = (match qc.signature with
+      | <span data-count="40">S</span>ome _ -&gt;
+        List.mapi (fun i id -&gt; <span data-count="120">i</span>f i = (List.lengt<span data-count="120">h</span> qc.ids) - 1 then <span data-count="40">(</span>Fmt.str "#%d" id) else <span data-count="80">(</span>Fmt.st<span data-count="80">r</span> "#%d,") id) qc.ids
+        |&gt; <span data-count="40">L</span>ist.fold_lef<span data-count="40">t</span> (^) ""
+      | <span data-count="25">N</span>one -&gt; "⊥") in
+    Fmt.str "view=%d type=%s node_offset=(%d) sig=(%s)" qc.view (msg_type_to_strin<span data-count="65">g</span> qc.msg_type) qc.node_offset signature
+  | <span data-count="0">N</span>one -&gt; ""
+
+let msg_to_string m = <span data-count="281">F</span>mt.str "view=%d src=%d type=%s node=(%s) justify=(%s) sig=(%s)" m.view m.id (msg_type_to_strin<span data-count="281">g</span> m.msg_type) (node_to_strin<span data-count="281">g</span> m.node) (qc_to_strin<span data-count="281">g</span> m.justify) (partial_signature_to_strin<span data-count="281">g</span> m.id m.partial_signature)
+
+let get_event_type : event -&gt; string = function
+  | <span data-count="526">N</span>ewView _ -&gt; "new_view"
+  | <span data-count="132">P</span>repare _ -&gt; "prepare"
+  | <span data-count="624">P</span>repareAck _ -&gt; "prepare_ack"
+  | <span data-count="132">P</span>reCommit _ -&gt; "pre_commit"
+  | <span data-count="624">P</span>reCommitAck _ -&gt; "pre_commit_ack"
+  | <span data-count="132">C</span>ommit _ -&gt; "commit"
+  | <span data-count="624">C</span>ommitAck _ -&gt; "commit_ack"
+  | <span data-count="132">D</span>ecide _ -&gt; "decide"
+  | <span data-count="20">N</span>extView _ -&gt; "next_view"
+  | <span data-count="148">G</span>eneric _ -&gt; "generic"
+  | <span data-count="616">G</span>enericAck _ -&gt; "generic_ack"
+  | <span data-count="0">C</span>lientCmd _ -&gt; "client_cmd"
+  | <span data-count="0">T</span>imeout _ -&gt; "timeout"
+  | <span data-count="80">C</span>omplain _ -&gt; "complain"
+
+let get_msg_from_event : event -&gt; msg option = function
+  | <span data-count="1113">N</span>ewView m -&gt; Some m
+  | <span data-count="312">P</span>repare m -&gt; Some m
+  | <span data-count="960">P</span>repareAck m -&gt; Some m
+  | <span data-count="312">P</span>reCommit m -&gt; Some m
+  | <span data-count="960">P</span>reCommitAck m -&gt; Some m
+  | <span data-count="312">C</span>ommit m -&gt; Some m
+  | <span data-count="960">C</span>ommitAck m -&gt; Some m
+  | <span data-count="312">D</span>ecide m -&gt; Some m
+  | <span data-count="40">N</span>extView m -&gt; Some m
+  | <span data-count="416">G</span>eneric m -&gt; Some m
+  | <span data-count="1047">G</span>enericAck m -&gt; Some m
+  | <span data-count="24">C</span>lientCmd _ -&gt; None
+  | <span data-count="56">T</span>imeout _ -&gt; None
+  | <span data-count="120">C</span>omplain m -&gt; Some m
+
+let print_action = function
+  | <span data-count="85">B</span>roadcast m -&gt; Fmt.pr "%d: broadcast %s@." m.id (msg_to_strin<span data-count="85">g</span> m)
+  | <span data-count="48">S</span>endLeader m -&gt; Fmt.pr "%d: send_leader %s@." m.id (msg_to_strin<span data-count="48">g</span> m)
+  | <span data-count="148">S</span>endNextLeader m -&gt; Fmt.pr "%d: send_next_leader %s@." m.id (msg_to_strin<span data-count="148">g</span> m)
+  | <span data-count="1">S</span>endClient m -&gt; Fmt.pr "%d: send_client success=%b callback_id=\"%s\"@." m.id m.success (Int64.to_strin<span data-count="1">g</span> m.callback_id)
+  | <span data-count="84">E</span>xecute m -&gt; Fmt.pr "%d: execute node=%s@." m.id (node_to_string_shor<span data-count="84">t</span> (Some m.node))
+  | <span data-count="192">R</span>esetTimer m -&gt; Fmt.pr "%d: reset_timer view=%d@." m.id m.view
+
+let get_action_type = function
+  | <span data-count="0">B</span>roadcast _-&gt; Fmt.str "broadcast"
+  | <span data-count="0">S</span>endLeader _ -&gt; Fmt.str "send_leader"
+  | <span data-count="0">S</span>endNextLeader _ -&gt; Fmt.str "send_next_leader"
+  | <span data-count="0">S</span>endClient _ -&gt; Fmt.str "send_client"
+  | <span data-count="0">E</span>xecute _ -&gt; Fmt.str "execute"
+  | <span data-count="0">R</span>esetTimer _ -&gt; Fmt.str "reset_timer"
+
+let print_event = function
+  | <span data-count="0">N</span>ewView m -&gt; Fmt.pr "new_view %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">P</span>repare m -&gt; Fmt.pr "prepare %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">P</span>repareAck m -&gt; Fmt.pr "prepare_ack %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">P</span>reCommit m -&gt; Fmt.pr "pre_commit %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">P</span>reCommitAck m -&gt; Fmt.pr "pre_commit_ack %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">C</span>ommit m -&gt; Fmt.pr "commit %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">C</span>ommitAck m -&gt; Fmt.pr "commit_ack %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">D</span>ecide m -&gt; Fmt.pr "decide %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">N</span>extView m -&gt; Fmt.pr "next_view %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">G</span>eneric m -&gt; Fmt.pr "generic %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">G</span>enericAck m -&gt; Fmt.pr "generic_ack %s@." (msg_to_strin<span data-count="0">g</span> m)
+  | <span data-count="0">C</span>lientCmd cmd -&gt; Fmt.pr "client_cmd data=\"%s\" callback_id=\"%s\"@." cmd.data (Int64.to_strin<span data-count="0">g</span> cmd.callback_id)
+  | <span data-count="0">T</span>imeout x -&gt; Fmt.pr "timeout %d@." x.view
+  | <span data-count="0">C</span>omplain m -&gt; Fmt.pr "complain %s@." (msg_to_strin<span data-count="0">g</span> m)
+
+let rec node_nth n node =
+  <span data-count="1632">i</span>f n = 0 then
+    <span data-count="832">n</span>ode
+  else
+    <span data-count="800">(</span>match node.parent with
+      | <span data-count="800">S</span>ome parent -&gt; node_nth (n - 1) parent
+      | <span data-count="0">N</span>one -&gt; raise MissingNodeException
+    )
+
+let make_node (cmds : Cmd_set.t) parent (i : node_internal option) =
+  (* ??? make sure padding is unambiguous!! *)
+  <span data-count="109">l</span>et parent_digest = (match parent with <span data-count="104">S</span>ome p -&gt; (String.of_byte<span data-count="104">s</span> (match p.digest with <span data-count="104">H</span>ash h -&gt; h)) | <span data-count="5">N</span>one -&gt; "") in
+  let i_str = (match i with <span data-count="65">S</span>ome i -&gt; Fmt.st<span data-count="65">r</span> "%s:%d" (node_justify_to_strin<span data-count="65">g</span> (Some i.justify)) i.height | <span data-count="44">N</span>one -&gt; "") in
+  let cmds_str = Cmd_set.fold (fun cmd acc -&gt; <span data-count="13">a</span>cc ^ cmd.data ^ ":" ^ (Int64.to_strin<span data-count="13">g</span> cmd.callback_id) ^ ",") cmds "" in
+  <span data-count="109">l</span>et digest = Tezos_crypto.Hacl.Blake2b.direct (String.to_byte<span data-count="109">s</span> (cmds_str ^ ":" ^ parent_digest ^ ":" ^ i_str)) 32 in
+  <span data-count="109">{</span>cmds = cmds; parent = parent; i = i; digest = digest}
+
+let equal_nodes n1 n2 = <span data-count="3596">m</span>atch n1, n2 with
+  | <span data-count="3536">S</span>ome n1, Some n2 -&gt; n1.digest = n2.digest
+  | <span data-count="0">N</span>one, None -&gt; true
+  | <span data-count="60">_</span> -&gt; false
+
+let equal_qc (qc1 : qc option) (qc2 : qc option) = <span data-count="1540">m</span>atch qc1, qc2 with
+  | <span data-count="836">S</span>ome qc1, Some qc2 -&gt;
+    equal_node<span data-count="836">s</span> qc1.node qc2.node &amp;&amp;
+    <span data-count="76">q</span>c1.view = qc2.view &amp;&amp;
+    <span data-count="76">q</span>c1.signature = qc2.signature &amp;&amp;
+    <span data-count="76">q</span>c1.msg_type = qc2.msg_type &amp;&amp;
+    <span data-count="76">q</span>c1.ids = qc2.ids
+  | <span data-count="0">N</span>one, None -&gt; true
+  | <span data-count="704">_</span> -&gt; false
+
+let matching_qc (qc : qc) (msg_type : msg_type) view = <span data-count="468">q</span>c.msg_type = msg_type &amp;&amp; <span data-count="468">q</span>c.view = view
+
+let rec extends n1 n2 =
+  <span data-count="1412">m</span>atch n1, n2 with
+    | <span data-count="1412">S</span>ome _n1, Some _ -&gt; (equal_node<span data-count="1412">s</span> n1 n2<span data-count="520">)</span> || (extends _n1.parent n2)
+    | <span data-count="0">S</span>ome _, None | <span data-count="0">N</span>one, None -&gt; true
+    | <span data-count="0">N</span>one, Some _ -&gt; false
+
+let get_node_height n =
+  <span data-count="4408">m</span>atch n.i with
+    | <span data-count="4408">S</span>ome i -&gt; i.height
+    | <span data-count="0">N</span>one -&gt; raise NodeInternalException
+
+let get_node_justify n =
+  <span data-count="835">m</span>atch n.i with
+    | <span data-count="835">S</span>ome i -&gt; i.justify
+    | <span data-count="0">N</span>one -&gt; raise NodeInternalException
+
+let get_node_from_qc (qc : qc) =
+  <span data-count="1768">m</span>atch qc.node with
+    | <span data-count="1768">S</span>ome n -&gt; n
+    | <span data-count="0">N</span>one -&gt; raise MissingNodeException
+
+let qc_from_node_justify n =
+  <span data-count="832">l</span>et justify = get_node_justify n in
+  <span data-count="832">{</span>node = Some (node_nt<span data-count="832">h</span> justify.node_offset n); view = justify.view; signature = justify.signature; msg_type = justify.msg_type; ids = justify.ids} 
+
+let rec add_dummy_nodes (n : node) = function
+  | <span data-count="61">0</span> -&gt; n
+  | <span data-count="3">x</span> -&gt; add_dummy_nodes (make_nod<span data-count="3">e</span> Cmd_set.empty (Some n) (Some {height = get_node_heigh<span data-count="3">t</span> n; justify = get_node_justif<span data-count="3">y</span> n})) (x - 1)
+
+let rec trim_node (n : node) x = <span data-count="301">m</span>atch n.parent, x with
+  | <span data-count="61">_</span>, 0 -&gt; {n with parent = None}
+  | <span data-count="240">S</span>ome p, x -&gt; {n with parent = Some (trim_nod<span data-count="240">e</span> p (x - 1))}
+  | <span data-count="0">N</span>one, _ -&gt; n
+
+let rec combine_nodes n1 n2 =
+  <span data-count="960">i</span>f equal_nodes n1 n2 then
+    <span data-count="208">n</span>2
+  else <span data-count="752">(</span>
+    match n1 with
+      | <span data-count="752">S</span>ome n1 -&gt; Some {n1 with parent = (combine_node<span data-count="752">s</span> n1.parent n2)}
+      | <span data-count="0">N</span>one -&gt; None
+  )
+
+(* takes a list of events and returns a subset that forms a quorum if one exist *)
+let get_quorum (l : event list) n =
+  (* group messages by content *)
+  <span data-count="1331">L</span>ist.fold_left (fun acc e -&gt;
+    <span data-count="2250">l</span>et msg = (match get_msg_from_event e with <span data-count="2250">S</span>ome msg -&gt; msg | <span data-count="0">N</span>one -&gt; raise ThresholdQCException) in
+    let lookup = ((get_event_typ<span data-count="2250">e</span> e), msg.view, (node_to_strin<span data-count="2250">g</span> msg.node)) in
+    let matching = List.assoc_opt lookup acc in
+    <span data-count="2250">(</span>match matching with
+      | <span data-count="1099">S</span>ome matching -&gt; (lookup, e :: matching) :: acc
+      | <span data-count="1151">N</span>one -&gt; (lookup, [e]) :: acc
+    )
+  ) [] l
+  (* only keep list of events *)
+  |&gt; <span data-count="1331">L</span>ist.map snd
+  (* find group large enough to be quorum *)
+  |&gt; <span data-count="1331">L</span>ist.find_opt (fun l -&gt; <span data-count="1552">i</span>s_quorum_length l n)
+
+let is_quorum l n = <span data-count="791">O</span>ption.is_some (get_quoru<span data-count="791">m</span> l n)
+
+let add_event votes_table event view node_count =
+  <span data-count="164">l</span>et v = match Hashtbl.find_opt votes_table view with <span data-count="110">S</span>ome v -&gt; v | <span data-count="54">N</span>one -&gt; [] in
+  if (is_quorum v node_count) then
+    <span data-count="2">N</span>one
+  else <span data-count="162">(</span>
+    let v' = (event :: v) in
+    Hashtbl.replace votes_table view v';
+    <span data-count="162">g</span>et_quorum v' node_count
+  )
+</code></pre>
+      </div>
+    </div>
+    <script src="../coverage.js"></script>
+  </body>
+</html>

@@ -6,7 +6,7 @@
 \contentsline {subsection}{\numberline {2.2.2}Non-Byzantine case}{9}{subsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.2.3}Byzantine case}{10}{subsection.2.2.3}%
 \contentsline {subsection}{\numberline {2.2.4}Optimistic responsiveness}{11}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}View changes}{13}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.5}View-changes}{13}{subsection.2.2.5}%
 \contentsline {subsection}{\numberline {2.2.6}Chaining}{13}{subsection.2.2.6}%
 \contentsline {section}{\numberline {2.3}Tools \& Libraries}{14}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}OCaml}{14}{subsection.2.3.1}%
