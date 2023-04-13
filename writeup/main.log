@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  12 APR 2023 12:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  13 APR 2023 00:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1102,7 +1102,7 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  39539 strings out of 478268
  864367 string characters out of 5835366
- 1170964 words of memory out of 5000000
+ 1170962 words of memory out of 5000000
  57043 multiletter control sequences out of 15000+600000
  494145 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191

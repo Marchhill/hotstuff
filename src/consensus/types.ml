@@ -9,7 +9,7 @@ type node_internal = {justify: node_justify; height: int}
 type node = {cmds: Cmd_set.t; parent: node option; i: node_internal option; digest: Tezos_crypto.Hacl.Blake2b.hash}
 type qc = {node: node option; view: int; signature: Tezos_crypto.Aggregate_signature.t option; msg_type: msg_type; ids: int list}
 
-type msg = {id: int; msg_type: msg_type; view: int; node: node option; justify: qc option; partial_signature: Tezos_crypto.Aggregate_signature.t option}
+type msg = {id: int; msg_type: msg_type; view: int; tcp_len: int; node: node option; justify: qc option; partial_signature: Tezos_crypto.Aggregate_signature.t option}
 
 type action =
 	| Broadcast of msg

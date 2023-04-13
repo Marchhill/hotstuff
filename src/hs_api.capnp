@@ -50,6 +50,7 @@ struct Msg {
 	justify @3 :QC;
 	partialSignature @4 :Data;
 	id @5 :Int32;
+	tcpLen @6 :Int32;
 }
 
 interface Hs {
