@@ -104,7 +104,7 @@ let deliver_command id nodes =
 
 let%expect_test "leader can commit from view 1" =
 	let s, _ = create_state_machine 0 4 100 in
-	let new_view_events = List.init 4 (fun id -> NewView {id = id; view = 0; tcp_len = 0; msg_type = NewView; node = None; justify = None; partial_signature = None}) in
+	let new_view_events = List.init 4 (fun id -> NewView {id = id; view = 0; tcp_lens = []; msg_type = NewView; node = None; justify = None; partial_signature = None}) in
 	let (s, a) = advance_multiple s new_view_events in
 	let s = {s with s = {s.s with phase = PreCommit}} in
 	List.iter print_action a;
@@ -113,7 +113,7 @@ let%expect_test "leader can commit from view 1" =
 		| Broadcast x -> x.node
 		| _ -> raise TestException 
 	) in
-	let prepare_events = List.init 4 (fun id -> PrepareAck {id = id; view = 1; tcp_len = 0; msg_type = PrepareAck; node = n; justify = None; partial_signature = None}) in
+	let prepare_events = List.init 4 (fun id -> PrepareAck {id = id; view = 1; tcp_lens = []; msg_type = PrepareAck; node = n; justify = None; partial_signature = None}) in
 	let (s, a) = advance_multiple s prepare_events in
 	let s = {s with s = {s.s with phase = Commit}} in
 	List.iter print_action a;
@@ -126,7 +126,7 @@ let%expect_test "leader can commit from view 1" =
 			)
 		| _ -> raise TestException
 	) in
-	let pre_commit_events = List.init 4 (fun id -> PreCommitAck {id = id; view = 1; tcp_len = 0; msg_type = PreCommitAck; node = n; justify = None; partial_signature = None}) in
+	let pre_commit_events = List.init 4 (fun id -> PreCommitAck {id = id; view = 1; tcp_lens = []; msg_type = PreCommitAck; node = n; justify = None; partial_signature = None}) in
 	let (s, a) = advance_multiple s pre_commit_events in
 	let s = {s with s = {s.s with phase = Decide}} in
 	List.iter print_action a;
@@ -139,7 +139,7 @@ let%expect_test "leader can commit from view 1" =
 			)
 		| _ -> raise TestException
 	) in
-	let commit_events = List.init 4 (fun id -> CommitAck{id = id; view = 1; tcp_len = 0; msg_type = CommitAck; node = n; justify = None; partial_signature = None}) in
+	let commit_events = List.init 4 (fun id -> CommitAck{id = id; view = 1; tcp_lens = []; msg_type = CommitAck; node = n; justify = None; partial_signature = None}) in
 	let (_, a) = advance_multiple s commit_events in
 	List.iter print_action a;
 	[%expect {| 0: broadcast view=1 src=0 type=decide node=(⊥) justify=(view=1 type=commit_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}]
@@ -147,10 +147,10 @@ let%expect_test "leader can commit from view 1" =
 let%expect_test "leader can commit from later view" =
 	let s = {(fst (create_state_machine 0 4 100)) with view = 100} in
 	let new_view_events = [
-		NewView {id = 0; view = 99; tcp_len = 0; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 70; node = (create_leaf None (Cmd_set.singleton {data = "woo"; callback_id = Int64.zero})); signature = None; ids = []}); partial_signature = None};
-		NewView {id = 1; view = 99; tcp_len = 0; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 65; node = None; signature = None; ids = []}); partial_signature = None};
-		NewView {id = 2; view = 99; tcp_len = 0; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 65; node = None; signature = None; ids = []}); partial_signature = None};
-		NewView {id = 3; view = 99; tcp_len = 0; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 67; node = (create_leaf None (Cmd_set.singleton {data = "woo"; callback_id = Int64.zero})); signature = None; ids = []}); partial_signature = None}
+		NewView {id = 0; view = 99; tcp_lens = []; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 70; node = (create_leaf None (Cmd_set.singleton {data = "woo"; callback_id = Int64.zero})); signature = None; ids = []}); partial_signature = None};
+		NewView {id = 1; view = 99; tcp_lens = []; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 65; node = None; signature = None; ids = []}); partial_signature = None};
+		NewView {id = 2; view = 99; tcp_lens = []; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 65; node = None; signature = None; ids = []}); partial_signature = None};
+		NewView {id = 3; view = 99; tcp_lens = []; msg_type = NewView; node = None; justify = (Some {msg_type = PrepareAck; view = 67; node = (create_leaf None (Cmd_set.singleton {data = "woo"; callback_id = Int64.zero})); signature = None; ids = []}); partial_signature = None}
 	] in
 	let (s, a) = advance_multiple s new_view_events in
 	let s = {s with s = {s.s with phase = PreCommit}} in
@@ -160,7 +160,7 @@ let%expect_test "leader can commit from later view" =
 		| Broadcast x -> x.node
 		| _ -> raise TestException 
 	) in
-	let prepare_events = List.init 4 (fun id -> PrepareAck {id = id; view = 100; tcp_len = 0; msg_type = PrepareAck; node = n; justify = None; partial_signature = None}) in
+	let prepare_events = List.init 4 (fun id -> PrepareAck {id = id; view = 100; tcp_lens = []; msg_type = PrepareAck; node = n; justify = None; partial_signature = None}) in
 	let (s, a) = advance_multiple s prepare_events in
 	let s = {s with s = {s.s with phase = Commit}} in
 	List.iter print_action a;
@@ -173,7 +173,7 @@ let%expect_test "leader can commit from later view" =
 			)
 		| _ -> raise TestException
 	) in
-	let pre_commit_events = List.init 4 (fun id -> PreCommitAck {id = id; view = 100; tcp_len = 0; msg_type = PreCommitAck; node = n; justify = None; partial_signature = None}) in
+	let pre_commit_events = List.init 4 (fun id -> PreCommitAck {id = id; view = 100; tcp_lens = []; msg_type = PreCommitAck; node = n; justify = None; partial_signature = None}) in
 	let (s, a) = advance_multiple s pre_commit_events in
 	let s = {s with s = {s.s with phase = Decide}} in
 	List.iter print_action a;
@@ -186,7 +186,7 @@ let%expect_test "leader can commit from later view" =
 			)
 		| _ -> raise TestException
 	) in
-	let commit_events = List.init 4 (fun id -> CommitAck {id = id; view = 100; tcp_len = 0; msg_type = CommitAck; node = n; justify = None; partial_signature = None}) in
+	let commit_events = List.init 4 (fun id -> CommitAck {id = id; view = 100; tcp_lens = []; msg_type = CommitAck; node = n; justify = None; partial_signature = None}) in
 	let (_, a) = advance_multiple s commit_events in
 	List.iter print_action a;
 	[%expect {| 0: broadcast view=100 src=0 type=decide node=(⊥) justify=(view=100 type=commit_ack node=([]-["woo",]-⊥) sig=(⊥)) sig=(⊥) |}]

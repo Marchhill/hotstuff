@@ -77,7 +77,7 @@ let api_qc_to_qc (api_qc : Api.Reader.QC.t) =
 let api_msg_to_consensus_event api_msg =
 	let view = Int32.to_int (Api.Reader.Msg.cur_view_get api_msg) in
 	let id = Int32.to_int (Api.Reader.Msg.id_get api_msg) in
-	let tcp_len = Int32.to_int (Api.Reader.Msg.tcp_len_get api_msg) in
+	let tcp_lens = List.map Int32.to_int (Api.Reader.Msg.tcp_lens_get_list api_msg) in
 	let partial_signature = Tezos_crypto.Aggregate_signature.of_string_opt (Api.Reader.Msg.partial_signature_get api_msg) in
 	let node = api_node_list_to_node (Api.Reader.Msg.node_get_list api_msg) in
 	let justify = if Api.Reader.Msg.has_justify api_msg then
@@ -87,7 +87,7 @@ let api_msg_to_consensus_event api_msg =
 		None
 	in
 	let msg_type = api_msg_type_to_msg_type (Api.Reader.Msg.type_get api_msg) in
-	let msg = ({id = id; view = view; tcp_len = tcp_len; msg_type = msg_type; node = node; justify = justify; partial_signature = partial_signature} : Consensus.msg) in 
+	let msg = ({id = id; view = view; tcp_lens = tcp_lens; msg_type = msg_type; node = node; justify = justify; partial_signature = partial_signature} : Consensus.msg) in 
 	match msg_type with
 		| NewView -> (NewView msg : Consensus.event)
 		| Prepare -> Prepare msg
@@ -158,7 +158,7 @@ let msg_to_api_msg (builder : Api.Builder.Msg.t) (msg : Consensus.msg) =
 	Api.Builder.Msg.cur_view_set builder (Int32.of_int msg.view);
 	Api.Builder.Msg.type_set builder api_msg_type;
 	Api.Builder.Msg.id_set builder (Int32.of_int msg.id);
-	Api.Builder.Msg.tcp_len_set builder (Int32.of_int msg.tcp_len);
+  let _ = Api.Builder.Msg.tcp_lens_set_list builder (List.map Int32.of_int msg.tcp_lens) in
 	let _ = Api.Builder.Msg.node_set_list builder (node_to_api_node_list msg.node) in
 	(match msg.justify with
 			| Some justify ->

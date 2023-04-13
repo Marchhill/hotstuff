@@ -27,8 +27,11 @@ let update_qc_high state (qc'_high : qc) =
 	else
 		state
 
-let update_tcp_lens state id height =
-	let tcp_lens = List.mapi (fun i l -> if i = id then height else l) state.s.tcp_lens in
+let update_tcp_lens state (tcp_lens' : int list) =
+	let tcp_lens = List.mapi (fun i l ->
+		let l' = List.nth tcp_lens' i in
+		let l' = if i = state.id then max l' (get_node_height state.s.b_exec) else l' in
+		max l l') state.s.tcp_lens in
     {state with s = {state.s with tcp_lens = tcp_lens}}
 
 let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) =
@@ -65,12 +68,14 @@ let update (state: t) (b_star : node) =
 	else state in
 	if (equal_nodes b''.parent (Some b')) && (equal_nodes b'.parent (Some b)) then
 		let state, actions = on_commit state (Some b) in
-		({state with s = {state.s with b_exec = b}}, actions)
+		let state = {state with s = {state.s with b_exec = b}} in
+		let state = update_tcp_lens state state.s.tcp_lens in
+		(state, actions)
   	else (state, [])
 
 let on_propose state cmds =
 	let b_new = create_leaf state state.s.b_leaf cmds state.s.qc_high in
-	let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = (get_node_height state.s.b_exec); msg_type = Generic; node = Some b_new; justify = None; partial_signature = None}) in
+	let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = state.s.tcp_lens; msg_type = Generic; node = Some b_new; justify = None; partial_signature = None}) in
 	(b_new, [Broadcast broadcast_msg])
 
 let on_beat state cmds =
@@ -91,18 +96,18 @@ let on_next_sync_view state view =
 	(state, ResetTimer {id = state.id; view = view} :: actions)
 
 let on_recieve_proposal state (msg : msg) =
-	let state = update_tcp_lens state msg.id msg.tcp_len in
+	let state = update_tcp_lens state msg.tcp_lens in
 	let x = combine_nodes msg.node (Some state.s.b_exec) in
 	let b_new = (match x with Some node -> node | None -> raise MissingNodeException) in
 	let n = get_node_from_qc (qc_from_node_justify b_new) in
 	let state = {state with seen = (Cmd_set.union state.seen n.cmds)} in (* keep track of seen commands *)
 	let (state, actions1) = if ((get_node_height b_new) > state.s.vheight) && ((extends (Some b_new) (Some state.s.b_lock)) || (get_node_height n) > (get_node_height state.s.b_lock)) then
-		let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = 0; msg_type = GenericAck; node = Some b_new; justify = None; partial_signature = None}) in
+		let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = GenericAck; node = Some b_new; justify = None; partial_signature = None}) in
 		({state with s = {state.s with vheight = (get_node_height b_new)}}, [SendNextLeader vote_msg])
 	else (state, []) in
 	let (state, actions2) = update state b_new in
 	(* send next leader new-view message *)
-	let new_view_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = (get_node_height state.s.b_exec); msg_type = NewView; node = None; justify = Some state.s.qc_high; partial_signature = None}) in
+	let new_view_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = state.s.tcp_lens; msg_type = NewView; node = None; justify = Some state.s.qc_high; partial_signature = None}) in
 	(* transition to next state if not next leader as next leader has to collect ACKs first *)
 	let (state, actions3) =
 		if (is_leader (state.view + 1) state.id state.node_count) then
@@ -117,7 +122,7 @@ let on_recieve_new_view state msg =
 		| Some qc ->
 			let state = update_qc_high state qc in
 			(* update tcp length for source node *)
-    		let state = update_tcp_lens state msg.id msg.tcp_len in
+    		let state = update_tcp_lens state msg.tcp_lens in
 			(state, [])
 		| _ ->
 			raise MissingQcException
@@ -165,17 +170,17 @@ let advance (state : t) (event : event) =
 			| ClientCmd cmd ->
 				({state with cmds = Cmd_set.add cmd state.cmds}, [])
 			| Timeout x ->
-				let complain_msg = sign state.crypto ({id = state.id; view = x.view; tcp_len = (get_node_height state.s.b_exec); msg_type = Complain; node = None; justify = Some state.s.qc_high; partial_signature = None}) in
+				let complain_msg = sign state.crypto ({id = state.id; view = x.view; tcp_lens = state.s.tcp_lens; msg_type = Complain; node = None; justify = Some state.s.qc_high; partial_signature = None}) in
 				(state, [
 					ResetTimer {id = state.id; view = (x.view + 1)}; (* start timeout for next view *)
 					SendNextLeader complain_msg (* complain to next leader *)
 					])
 			| Complain msg when msg.view >= state.view && (is_leader (msg.view + 1) state.id state.node_count) ->
-					let state = update_tcp_lens state msg.id msg.tcp_len in
+					let state = update_tcp_lens state msg.tcp_lens in
 					(match (add_event state.complain event msg.view state.node_count) with
 						| Some q ->
 							let complainQC = Some (threshold_qc state.crypto q) in
-							let broadcast_msg = sign state.crypto ({id = state.id; view = msg.view; tcp_len = 0; msg_type = NextView; node = None; justify = complainQC; partial_signature = None}) in
+							let broadcast_msg = sign state.crypto ({id = state.id; view = msg.view; tcp_lens = []; msg_type = NextView; node = None; justify = complainQC; partial_signature = None}) in
 							(
 								state,
 								[Broadcast broadcast_msg]

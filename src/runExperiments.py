@@ -35,7 +35,7 @@ nodeCounts = [4]
 rates = [1000]
 # throughput = [2000]
 # rates = [10000]
-batch_sizes = [200]
+batch_sizes = [300]
 experiment_time = 10
 repeats = 1
 

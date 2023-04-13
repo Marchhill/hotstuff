@@ -82,7 +82,7 @@ let as_leader state event =
 							| Some qc -> create_leaf qc.node state.cmds (* extend log *)
 							| None -> create_leaf None state.cmds (* should only happen in view 1 *)
 						in
-						let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = 0; msg_type = Prepare; node = curProposal; justify = highQC; partial_signature = None}) in
+						let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = Prepare; node = curProposal; justify = highQC; partial_signature = None}) in
 						(
 							{state with s = {state.s with role = Leader {l with has_proposed = true}}; cmds = Cmd_set.empty},
 							[Broadcast broadcast_msg]
@@ -96,7 +96,7 @@ let as_leader state event =
 					(match q with
 						| Some q ->
 							let prepareQC = Some (threshold_qc state.crypto q) in
-							let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = 0; msg_type = PreCommit; node = None; justify = prepareQC; partial_signature = None}) in
+							let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = PreCommit; node = None; justify = prepareQC; partial_signature = None}) in
 							(
 								state,
 								[Broadcast broadcast_msg]
@@ -110,7 +110,7 @@ let as_leader state event =
 					(match q with
 						| Some q ->
 							let precommitQC = Some (threshold_qc state.crypto q) in
-							let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = 0; msg_type = Commit; node = None; justify = precommitQC; partial_signature = None}) in
+							let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = Commit; node = None; justify = precommitQC; partial_signature = None}) in
 							(
 								state,
 								[Broadcast broadcast_msg]
@@ -124,7 +124,7 @@ let as_leader state event =
 					(match q with
 						| Some q ->
 							let commitQC = Some (threshold_qc state.crypto q) in
-							let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = 0; msg_type = Decide; node = None; justify = commitQC; partial_signature = None}) in
+							let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = Decide; node = None; justify = commitQC; partial_signature = None}) in
 							let cmds = match msg.node with Some n -> n.cmds | None -> Cmd_set.empty in
 							let actions = (Broadcast broadcast_msg) :: (Cmd_set.fold (fun cmd acc ->
 								if cmd.callback_id = Int64.zero then
@@ -152,7 +152,7 @@ let finally state view =
 			nv = []
 		}
 	} in
-	let msg = sign state.crypto ({id = state.id; view = (view - 1); tcp_len = 0; msg_type = NewView; node = None; justify = state.s.prepare_qc; partial_signature = None}) in
+	let msg = sign state.crypto ({id = state.id; view = (view - 1); tcp_lens = []; msg_type = NewView; node = None; justify = state.s.prepare_qc; partial_signature = None}) in
 	let actions = [SendNextLeader msg; ResetTimer {id = state.id; view = view}] in
 	(state', actions)
 
@@ -164,7 +164,7 @@ let as_replica state (event : event) =
 				| Some qc -> (extends msg.node qc.node) && (safe_node msg.node msg.justify state.s.locked_qc)
 				| None -> true
 			) in
-			let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = 0; msg_type = PrepareAck; node = msg.node; justify = None; partial_signature = None}) in
+			let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = PrepareAck; node = msg.node; justify = None; partial_signature = None}) in
 			if is_safe then
 				(
 					{state with s = {state.s with phase = PreCommit}},
@@ -175,7 +175,7 @@ let as_replica state (event : event) =
 		| PreCommit msg when state.view = msg.view && has_qc ->
 			(match msg.justify with
 				| Some qc when (matching_qc qc PrepareAck state.view) ->
-					let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = 0; msg_type = PreCommitAck; node = qc.node; justify = None; partial_signature = None}) in
+					let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = PreCommitAck; node = qc.node; justify = None; partial_signature = None}) in
 					(
 						{state with s = {state.s with prepare_qc = msg.justify; phase = Commit}},
 						[SendLeader vote_msg]
@@ -185,7 +185,7 @@ let as_replica state (event : event) =
 		| Commit msg when state.view = msg.view && has_qc ->
 			(match msg.justify with
 				| Some qc when (matching_qc qc PreCommitAck state.view) ->
-					let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_len = 0; msg_type = CommitAck; node = qc.node; justify = None; partial_signature = None}) in
+					let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = CommitAck; node = qc.node; justify = None; partial_signature = None}) in
 					(
 						{state with s = {state.s with locked_qc = msg.justify; phase = Decide}},
 						[SendLeader vote_msg]
@@ -209,7 +209,7 @@ let as_replica state (event : event) =
 				| _ -> (state, [])
 			)
 		| Timeout x ->
-			let complain_msg = sign state.crypto ({id = state.id; view = x.view; tcp_len = 0; msg_type = Complain; node = None; justify = None; partial_signature = None}) in
+			let complain_msg = sign state.crypto ({id = state.id; view = x.view; tcp_lens = []; msg_type = Complain; node = None; justify = None; partial_signature = None}) in
 			(state, [
 				ResetTimer {id = state.id; view = (x.view + 1)}; (* start timeout fot next view *)
 				SendNextLeader complain_msg (* complain to next leader *)
@@ -221,7 +221,7 @@ let as_replica state (event : event) =
 				(match q with
 					| Some q ->
 						let complainQC = Some (threshold_qc state.crypto q) in
-						let broadcast_msg = sign state.crypto ({id = state.id; view = msg.view; tcp_len = 0; msg_type = NextView; node = None; justify = complainQC; partial_signature = None}) in
+						let broadcast_msg = sign state.crypto ({id = state.id; view = msg.view; tcp_lens = []; msg_type = NextView; node = None; justify = complainQC; partial_signature = None}) in
 						(
 							state,
 							[Broadcast broadcast_msg]
@@ -237,7 +237,7 @@ let create_state_machine ?(crypto = None) id node_count batch_size =
 	let r = get_role 1 id node_count [] in
 	let s = {phase = Prepare; role = r; locked_qc = Some qc_0; prepare_qc = Some qc_0; nv = []} in
 	let state = {view = 1; id = id; node_count = node_count; batch_size = batch_size; crypto = crypto; cmds = Cmd_set.empty; complain = []; s = s} in
-	let new_view_msg = sign state.crypto ({id = state.id; view = 0; tcp_len = 0; msg_type = NewView; node = None; justify = Some qc_0; partial_signature = None}) in
+	let new_view_msg = sign state.crypto ({id = state.id; view = 0; tcp_lens = []; msg_type = NewView; node = None; justify = Some qc_0; partial_signature = None}) in
 	let new_view_action = SendNextLeader new_view_msg in
 	(state, [new_view_action])
 
