@@ -32,12 +32,12 @@ with open(test_path + 'stats.csv', 'w') as f:
 nodeCounts = [4]
 # nodeCounts = [1]
 # rates = [500, 1000, 2000, 3000, 4000, 5000]
-rates = [1, 10, 50, 100, 200, 400, 600, 800, 1000, 1500, 2000]
+rates = [1, 10, 50, 100, 200, 400, 600, 800, 1000, 1500, 2000, 4000]
 # throughput = [2000]
 # rates = [10000]
 batch_sizes = [1, 50, 100, 300, 450, 600]
 experiment_time = 10
-repeats = 1
+repeats = 5
 
 # randomise testing order
 test_iter = random.sample(list(itertools.product(rates, nodeCounts, batch_sizes)) * repeats, len(rates) * len(nodeCounts) * len(batch_sizes) * repeats)
