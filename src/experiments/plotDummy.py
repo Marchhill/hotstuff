@@ -43,25 +43,3 @@ ax.legend(title = 'message size')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlatency.png')
 plt.close(fig)
-
-for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
-	filename = os.fsdecode(file)
-	times = pd.read_csv(f'./experiments/data/{test_name}/subtests/{filename}', skipinitialspace=True)
-	filename = os.path.splitext(filename)[0]
-	times['sent(s)'] = times['sent'] / 1_000_000_000
-	times['latency'] = (times['rec'] - times['sent']) / 1_000_000
-
-	# cumulative latency
-	ax = sns.ecdfplot(x='latency', data=times)
-	ax.set(xlabel = 'latency (ms)', ylabel = 'fraction of requests', xscale = 'log')
-	fig = ax.get_figure()
-	fig.savefig(f'{graph_dir + filename}_cumlatency.png')
-	plt.close(fig)
-
-	# time / latency heatmap
-	fig, ax = plt.subplots(1, 1, figsize=(10, 5), constrained_layout=True)
-	# ax = sns.histplot(times, x="sent(s)", y="latency", binwidth=(0.05, 10), ax=ax)
-	ax = sns.histplot(times, x="sent(s)", y="latency", bins = 50, ax=ax)
-	ax.set(xlabel="time (s)", xlim=(0,10), ylabel = "latency (ms)")
-	fig.savefig(f'{graph_dir + filename}_timelatencyheatmap.png')
-	plt.close(fig)

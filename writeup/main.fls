@@ -1242,6 +1242,11 @@ INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
+INPUT ./images//nchain.png
+INPUT ./images//nchain.png
+INPUT images//nchain.png
+INPUT ./images//nchain.png
+INPUT ./images//nchain.png
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti0800.tfm
 INPUT ./chapters/implementation.tex
 INPUT chapters/implementation.tex

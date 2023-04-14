@@ -1,26 +1,27 @@
 open Lwt.Syntax
+open Lwt.Infix
 
 (* Verbose logging *)
 
 let pp_qid f = function
   | None -> ()
   | Some x ->
-    let s = Stdint.Uint32.to_string x in
-    Fmt.(styled `Magenta (fun f x -> Fmt.pf f " (qid=%s)" x)) f s
+	let s = Stdint.Uint32.to_string x in
+	Fmt.(styled `Magenta (fun f x -> Fmt.pf f " (qid=%s)" x)) f s
 
 let reporter =
   let report src level ~over k msgf =
-    let src = Logs.Src.name src in
-    msgf @@ fun ?header ?(tags=Logs.Tag.empty) fmt ->
-    let qid = Logs.Tag.find Capnp_rpc.Debug.qid_tag tags in
-    let print _ =
-      Fmt.(pf stdout) "%a@." pp_qid qid;
-      over ();
-      k ()
-    in
-    Fmt.kpf print Fmt.stdout ("%a %a: @[" ^^ fmt ^^ "@]")
-      Fmt.(styled `Magenta string) (Printf.sprintf "%11s" src)
-      Logs_fmt.pp_header (level, header)
+	let src = Logs.Src.name src in
+	msgf @@ fun ?header ?(tags=Logs.Tag.empty) fmt ->
+	let qid = Logs.Tag.find Capnp_rpc.Debug.qid_tag tags in
+	let print _ =
+	  Fmt.(pf stdout) "%a@." pp_qid qid;
+	  over ();
+	  k ()
+	in
+	Fmt.kpf print Fmt.stdout ("%a %a: @[" ^^ fmt ^^ "@]")
+	  Fmt.(styled `Magenta string) (Printf.sprintf "%11s" src)
+	  Logs_fmt.pp_header (level, header)
   in
   { Logs.report = report }
 
@@ -29,21 +30,26 @@ let sent = ref 0
 let gen_callback_id () =Random.bits64 ()
 
 (* wait until we send a request to some node and it is commited *)
-let rec await_first_commit i conn timeout =
-	let tmp = Util.empty_stats (Base.Int63.zero) in (* these stats are discarded *)
-	let* success = Net.send_req conn ({data = "init"; callback_id = (gen_callback_id ())} : Consensus.cmd) timeout tmp in
-	if success then (
-		Fmt.pr "connected to %d!@." i;
-		Lwt.return_unit
-	)
+let rec await_first_commit i conn timeout retries =
+	if retries = 0 then
+		Lwt.return false
 	else (
-		await_first_commit i conn timeout
+		let tmp = Util.empty_stats (Base.Int63.zero) in (* these stats are discarded *)
+		let* success = Net.send_req conn ({data = "init"; callback_id = (gen_callback_id ())} : Consensus.cmd) timeout tmp in
+		if success then (
+			Fmt.pr "connected to %d!@." i;
+			Lwt.return true
+		)
+		else (
+			await_first_commit i conn timeout (retries - 1)
+		)
 	)
 
 (* wait until we send a request to each node and they are all commited *)
-let await_connections conns timeout =
-	List.mapi (fun i conn -> await_first_commit i conn timeout) conns
-	|> Lwt.join
+let await_connections conns timeout retries =
+	List.mapi (fun i conn -> await_first_commit i conn timeout retries) conns
+	|> Lwt.all
+	>|= List.fold_left (&&) true
 
 let run_command conns timeout stats msg_size =
 	(* let id = !sent mod (List.length conns) in
@@ -52,9 +58,9 @@ let run_command conns timeout stats msg_size =
 	let callback_id = gen_callback_id () in
 	(* simulate the size of a batch *)
 	let data = if msg_size = 1 then
-    	data
+		data
 	else
-    	List.fold_left (fun acc x -> acc ^ x) "" (List.init msg_size (fun _ -> data ^ (Int64.to_string callback_id)))
+		List.fold_left (fun acc x -> acc ^ x) "" (List.init msg_size (fun _ -> data ^ (Int64.to_string callback_id)))
 	in
 	sent := !sent + 1;
 	(* Net.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout stats *)
@@ -99,15 +105,19 @@ let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size
 	Lwt_main.run begin
 		let conns = Net.open_conns nodes in
 		let promise, resolver = Lwt.wait () in
-		let* () = await_connections conns 3. in
-    (* let* () = Net.send_quit (List.hd conns) in *)
+		let* connected = await_connections conns 2. 3 in
+		if not connected then (
+			Fmt.epr "abort!@.";
+			exit 1;
+		);
+		(* let* () = Net.send_quit (List.hd conns) in *)
 		Fmt.pr "connected to all!@.";
 		Lwt.async (fun () ->
 			let n = time * rate in (* calculate based on actual number sent (filter)*)
 			let res = Array.make n None in
-	    let start_time = Time_now.nanoseconds_since_unix_epoch () in
+			let start_time = Time_now.nanoseconds_since_unix_epoch () in
 			let* stats = benchmark conns res (Float.of_int rate) 1000. msg_size start_time in
-      let end_time = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) start_time in
+	 		let end_time = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) start_time in
 			(* output request times to csv file*)
 			let name = match req_times_fp with
 				| Some s ->

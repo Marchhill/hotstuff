@@ -138,7 +138,10 @@ The unchained algorithm presented goes through three very similar phases to comm
 
 In each view, some leader sends a proposal to all replicas, who send their replies to the next leader who can form a QC to add to their proposal. The replicas also send \textit{new-view} messages to the next leader as before, to allow them to select a node to propose.
 
-\textit{diagram of n-chain ***}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{nchain.png}
+\end{figure}
 
 The above diagram shows a chain of nodes connected by `parent' links; every time we propose a value we extend the chain with a new node. Some node \textit{b} also contains a link to another node within \textit{b.justify.node}, this is the previous generic QC in the chain. In the event of a view-change a dummy node will be inserted in the chain which will cause a `gap' where some \textit{b.justify.node} pointer jumps over a dummy node. If some node \textit{b} has a QC that points to its direct parent with no `gap' in-between, then we say that it forms a \textit{one-chain}. In general, if we have n such direct links without `gaps' we refer to this as an \textit{n-chain}, as shown above.
 

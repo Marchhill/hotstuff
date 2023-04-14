@@ -89,7 +89,7 @@ let on_next_sync_view state view =
 		let filtered = Cmd_set.diff state.cmds state.seen in
 		let i = ref 0 in
     	(* limit batch size *)
-		let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i < state.batch_size) filtered in
+		let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i <= state.batch_size) filtered in
 		let state = {state with cmds = rest; seen = Cmd_set.empty} in
 		on_beat state cmds
 	) else (state, []) in
