@@ -31,10 +31,11 @@ with open(test_path + 'stats.csv', 'w') as f:
 
 # nodeCounts = [4, 8]
 nodeCounts = [1]
-# rates = [100, 200, 500, 1000, 2000, 3000, 4000, 5000]
-rates = [1, 10, 50, 200, 400, 600, 800, 1000, 2000, 4000, 8000]
+# rates = [1, 10, 50, 200, 400, 600, 800, 1000, 2000, 4000, 8000]
+rates = [10000,12000,14000,16000]
 experiment_time = 10
-msg_sizes = [1, 50, 100, 300, 450, 600]
+# msg_sizes = [1, 50, 100, 300, 450, 600]
+msg_sizes = [1, 50, 100]
 repeats = 5
 
 # randomise testing order
