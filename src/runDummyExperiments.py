@@ -32,10 +32,10 @@ with open(test_path + 'stats.csv', 'w') as f:
 # nodeCounts = [4, 8]
 nodeCounts = [1]
 # rates = [100, 200, 500, 1000, 2000, 3000, 4000, 5000]
-rates = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+rates = [1, 10, 50, 200, 400, 600, 800, 1000, 2000, 4000, 8000]
 experiment_time = 10
-msg_sizes = [50, 100, 300, 450, 600]
-repeats = 3
+msg_sizes = [1, 50, 100, 300, 450, 600]
+repeats = 5
 
 # randomise testing order
 test_iter = random.sample(list(itertools.product(rates, nodeCounts, msg_sizes)) * repeats, len(rates) * len(nodeCounts) * len(msg_sizes) * repeats)
