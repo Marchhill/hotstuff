@@ -29,13 +29,10 @@ os.mkdir(test_path + 'subtests')
 with open(test_path + 'stats.csv', 'w') as f:
 	f.write('name, chained, nodes, throughput, goodput, mean, sd, rec, sent, batch_size, msg_size\n')
 
-nodeCounts = [4]
-# nodeCounts = [1]
-# rates = [500, 1000, 2000, 3000, 4000, 5000]
+nodeCounts = [1, 2, 4, 7, 10, 13]
 rates = [1, 10, 50, 100, 200, 400, 600, 800, 1000, 1500, 2000, 4000]
-# throughput = [2000]
-# rates = [10000]
-batch_sizes = [1, 50, 100, 300, 450, 600]
+# batch_sizes = [1, 50, 100, 300, 450, 600]
+batch_sizes = [300]
 experiment_time = 10
 repeats = 5
 
@@ -52,7 +49,7 @@ for (rate, n, s) in test_iter:
 		for i in range(n):
 			processes.append(subprocess.Popen(f'ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build{str(i)} -- ./main.exe -i {str(i)} -n {str(n)} -b {str(s)}', shell=True, preexec_fn=os.setsid))
 		time.sleep(5)
-		completed = subprocess.run(f'eval $(opam env) dune exec -- ./live_test.exe {str(n)} -t {str(experiment_time)} -r {str(rate)} --times "{test_path + "subtests/" + name}.csv" --stats "{test_path}stats.csv"', shell=True)
+		completed = subprocess.run(f'eval $(opam env) dune exec -- ./live_test.exe {str(n)} -t {str(experiment_time)} -r {str(rate)} -b {s} --times "{test_path + "subtests/" + name}.csv" --stats "{test_path}stats.csv"', shell=True)
 		if completed.returncode == 0:
 			succ = True
 		time.sleep(1)

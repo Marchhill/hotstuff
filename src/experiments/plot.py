@@ -23,23 +23,43 @@ stats['lost'] = 1. - (stats['rec'] / stats['sent'])
 stats['diff'] = np.abs(stats['throughput'] - stats['goodput']) / stats['throughput']
 stats['throughputfiltered'] = np.where(stats['diff'] <= 0.05, stats['throughput'], None)
 
+ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='batch_size', palette = color)
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)')
+fig = ax.get_figure()
+ax.legend(title = 'batch size')
+fig.savefig(graph_dir + 'throughputgoodput.png')
+plt.close(fig)
+
+ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='batch_size', palette = color)
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost')
+fig = ax.get_figure()
+ax.legend(title = 'batch size')
+fig.savefig(graph_dir + 'throughputlost.png')
+plt.close(fig)
+
+ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='batch_size', palette = color)
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (ms)')
+ax.legend(title = 'batch size')
+fig = ax.get_figure()
+fig.savefig(graph_dir + 'throughputlatency.png')
+plt.close(fig)
+
 ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='nodes', palette = color)
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)')
 fig = ax.get_figure()
-fig.savefig(graph_dir + 'throughputgoodput.png')
+fig.savefig(graph_dir + 'throughputgoodput_nodes.png')
 plt.close(fig)
 
 ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='nodes', palette = color)
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost')
 fig = ax.get_figure()
-fig.savefig(graph_dir + 'throughputlost.png')
+fig.savefig(graph_dir + 'throughputlost_nodes.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='msg_size', palette = color) #err_style="band", estimator=np.median, ci='sd'
+ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='nodes', palette = color)
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (ms)')
-ax.legend(title = 'message size')
 fig = ax.get_figure()
-fig.savefig(graph_dir + 'throughputlatency.png')
+fig.savefig(graph_dir + 'throughputlatency_nodes.png')
 plt.close(fig)
 
 for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
