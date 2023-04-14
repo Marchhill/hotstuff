@@ -63,8 +63,7 @@ let run_command conns timeout stats msg_size =
 	) conns in
 	Lwt.pick res
 
-let benchmark conns res rate timeout msg_size =
-	let t = Time_now.nanoseconds_since_unix_epoch () in
+let benchmark conns res rate timeout msg_size t =
 	let s = Util.empty_stats (Base.Int63.zero) in
 	let period = Base.Int63.of_float((1. /. rate) *. 1_000_000_000.) in
 	let rec aux (i : int) (target : Base.Int63.t) =
@@ -106,7 +105,9 @@ let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size
 		Lwt.async (fun () ->
 			let n = time * rate in (* calculate based on actual number sent (filter)*)
 			let res = Array.make n None in
-			let* stats = benchmark conns res (Float.of_int rate) 1000. msg_size in
+	    let start_time = Time_now.nanoseconds_since_unix_epoch () in
+			let* stats = benchmark conns res (Float.of_int rate) 1000. msg_size start_time in
+      let end_time = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) start_time in
 			(* output request times to csv file*)
 			let name = match req_times_fp with
 				| Some s ->
@@ -127,8 +128,8 @@ let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size
 			let success = Array.fold_left (fun acc -> function Some _ -> acc + 1 | None -> acc) 0  res in
 			let elapsed =
 				let open Base.Int63 in
-				let (lo, hi) = Array.fold_left (fun (lo, hi) -> function Some (_, x) -> (min lo x, max hi x) | None -> (lo, hi)) (max_value, min_value) res in
-				delta lo hi
+				let (lo, _) = Array.fold_left (fun (lo, hi) -> function Some (_, x) -> (min lo x, max hi x) | None -> (lo, hi)) (max_value, min_value) res in
+				delta lo end_time
 			in
 			let goodput = (Float.of_int success) /. elapsed in
 			let res = Array.map (function (Some (x, y)) -> delta x y | None -> 0.) res in
