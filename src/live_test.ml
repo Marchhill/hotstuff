@@ -105,7 +105,7 @@ let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size
 	Lwt_main.run begin
 		let conns = Net.open_conns nodes in
 		let promise, resolver = Lwt.wait () in
-		let* connected = await_connections conns 2. 3 in
+		let* connected = await_connections conns 5. 10 in
 		if not connected then (
 			Fmt.epr "abort!@.";
 			exit 1;
