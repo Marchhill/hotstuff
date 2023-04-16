@@ -63,15 +63,17 @@ let update (state: t) (b_star : node) =
 	let b' = get_node_from_qc (qc_from_node_justify b'') in
 	let b = get_node_from_qc (qc_from_node_justify b') in
 	let state = update_qc_high state qc_high in
-	let state = if (get_node_height b') > (get_node_height state.s.b_lock) then
+	let state = if (get_node_height b') > (get_node_height state.s.b_lock) then (
 		{state with s = {state.s with b_lock = b'}}
+  )
 	else state in
-	if (equal_nodes b''.parent (Some b')) && (equal_nodes b'.parent (Some b)) then
+	if (equal_nodes b''.parent (Some b')) && (equal_nodes b'.parent (Some b)) then (
 		let state, actions = on_commit state (Some b) in
 		let state = {state with s = {state.s with b_exec = b}} in
 		let state = update_tcp_lens state state.s.tcp_lens in
 		(state, actions)
-  	else (state, [])
+  )
+  else (state, [])
 
 let on_propose state cmds =
 	let b_new = create_leaf state state.s.b_leaf cmds state.s.qc_high in

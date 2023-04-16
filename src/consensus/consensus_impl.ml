@@ -9,7 +9,7 @@ type phase = Prepare | PreCommit | Commit | Decide
 type role = Leader of {m: event list; vpc: event list; vc: event list; vd: event list; has_proposed: bool} | Replica
 
 type state = {phase: phase; role: role; locked_qc: qc option; prepare_qc: qc option; nv: event list}
-type t = {view: int; id: int; node_count: int; batch_size: int; cmds: Cmd_set.t; crypto: crypto option; complain: event list; s: state}
+type t = {view: int; id: int; node_count: int; batch_size: int; cmds: Cmd_set.t;  seen: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}
 
 let b_0 = make_node Cmd_set.empty None None
 let qc_0 = {node = Some b_0; view = 0; signature = None; msg_type = PrepareAck; ids = []}
@@ -144,11 +144,9 @@ let finally state view =
 	let role = get_role view state.id state.node_count state.s.nv in
 	let state' = {state with
 		view = view;
-		complain = [];
 		s = {state.s with
 			role = role;
 			phase = Prepare;
-			
 			nv = []
 		}
 	} in
@@ -214,11 +212,8 @@ let as_replica state (event : event) =
 				ResetTimer {id = state.id; view = (x.view + 1)}; (* start timeout fot next view *)
 				SendNextLeader complain_msg (* complain to next leader *)
 				])
-		| Complain msg when (is_leader (msg.view + 1) state.id state.node_count) && not(is_quorum state.complain state.node_count) ->
-				let complain' = event::(state.complain) in
-				let q = get_quorum complain' state.node_count in
-				let state = {state with complain = complain'}in
-				(match q with
+		| Complain msg when (is_leader (msg.view + 1) state.id state.node_count) ->
+				(match (add_event state.complain event msg.view state.node_count) with
 					| Some q ->
 						let complainQC = Some (threshold_qc state.crypto q) in
 						let broadcast_msg = sign state.crypto ({id = state.id; view = msg.view; tcp_lens = []; msg_type = NextView; node = None; justify = complainQC; partial_signature = None}) in
@@ -233,10 +228,10 @@ let as_replica state (event : event) =
 			({state with s = {state.s with nv = event::state.s.nv}}, [])
 		| _ -> (state, [])
 
-let create_state_machine ?(crypto = None) id node_count batch_size =
+let create_state_machine ?(crypto = None) id node_count _ =
 	let r = get_role 1 id node_count [] in
 	let s = {phase = Prepare; role = r; locked_qc = Some qc_0; prepare_qc = Some qc_0; nv = []} in
-	let state = {view = 1; id = id; node_count = node_count; batch_size = batch_size; crypto = crypto; cmds = Cmd_set.empty; complain = []; s = s} in
+	let state = {view = 1; id = id; node_count = node_count; batch_size = 0; crypto = crypto; cmds = Cmd_set.empty; seen = Cmd_set.empty; complain = (Hashtbl.create 1000); s = s} in
 	let new_view_msg = sign state.crypto ({id = state.id; view = 0; tcp_lens = []; msg_type = NewView; node = None; justify = Some qc_0; partial_signature = None}) in
 	let new_view_action = SendNextLeader new_view_msg in
 	(state, [new_view_action])
@@ -248,8 +243,5 @@ let advance (state : t) (event : event) =
 		(state, asLeaderActions @ asReplicaActions)
 	else
 		(state, [])
-
-let get_node_height _ = None
-let get_node_justify _ = None
 
 let create_node_internal (_ : int option) (_ : node_justify option) = (None : node_internal option)

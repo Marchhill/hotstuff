@@ -63,7 +63,6 @@ let run_command conns timeout stats msg_size =
 		List.fold_left (fun acc x -> acc ^ x) "" (List.init msg_size (fun _ -> data ^ (Int64.to_string callback_id)))
 	in
 	sent := !sent + 1;
-	(* Net.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout stats *)
 	let res = List.map (fun conn ->
 		Net.send_req conn ({data = data; callback_id = callback_id} : Consensus.cmd) timeout stats
 	) conns in
