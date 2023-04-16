@@ -35,12 +35,13 @@ let update_tcp_lens state (tcp_lens' : int list) =
     {state with s = {state.s with tcp_lens = tcp_lens}}
 
 let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) =
-	let cutoff = List.fold_left min Int.max_int state.s.tcp_lens in
+	let _cutoff = List.fold_left min Int.max_int state.s.tcp_lens in
 	let offset = state.view - (get_node_height parent) in
 	let parent = add_dummy_nodes parent offset in
 	let justify = {node_offset = offset + 1; view = qc.view; signature = qc.signature; msg_type = qc.msg_type; ids = qc.ids} in (* ??? change offset if skipped? *)
 	let n = make_node cmds (Some parent) (Some {justify = justify; height = state.view + 1}) in
-	trim_node n (state.view + 1 - cutoff) (* only send nodes that will be used *)
+	(*trim_node n (state.view + 1 - cutoff)*) (* only send nodes that will be used *)
+        n
 
 let rec on_commit (state : t) = function
 	| Some b ->
