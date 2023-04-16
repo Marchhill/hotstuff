@@ -156,7 +156,7 @@ let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size
 			(match stats_fp with
 				| Some s ->
 					Out_channel.with_open_gen [Open_append] 0o666 s (fun oc ->
-						Printf.fprintf oc "%s, %s, %d, %d, %f, %f, %f, %d, %d, %d, %d\n" name chained nodes rate goodput mean sd success n batch_size msg_size
+						Printf.fprintf oc "%s, %s, %d, %d, %f, %f, %f, %d, %d, %s, %d\n" name chained nodes rate goodput mean sd success n batch_size msg_size
 					)
 				| None -> ());
 			Lwt.wakeup resolver ();
@@ -202,7 +202,7 @@ let msg_size =
 
 let batch_size =
 	let doc = "Batch size." in
-	Arg.(value & opt int 1 & info ["b"; "batch"] ~docv:"BATCH_SIZE" ~doc)
+	Arg.(value & opt string "1" & info ["b"; "batch"] ~docv:"BATCH_SIZE" ~doc)
 
 let connect_cmd =
 	let doc = "run the client" in
