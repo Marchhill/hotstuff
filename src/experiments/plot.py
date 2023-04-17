@@ -9,13 +9,15 @@ import seaborn.objects as so
 
 color = sns.color_palette("colorblind")
 
-# stats = pd.read_csv('./graphs/data/dummystats.csv', skipinitialspace=True)
 test_name = sys.argv[1]
 
 # create directory to output graphs to
 graph_dir = f'./experiments/graphs/{test_name}/'
+subtests_dir = f'./experiments/graphs/{test_name}/subtests/'
 if not os.path.exists(graph_dir):
 	os.mkdir(graph_dir)
+if not os.path.exists(subtests_dir):
+	os.mkdir(subtests_dir)
 
 # open stats file and add column
 stats = pd.read_csv(f'./experiments/data/{test_name}/stats.csv', skipinitialspace=True)
@@ -23,40 +25,40 @@ stats['lost'] = 1. - (stats['rec'] / stats['sent'])
 stats['diff'] = np.abs(stats['throughput'] - stats['goodput']) / stats['throughput']
 stats['throughputfiltered'] = np.where(stats['diff'] <= 0.05, stats['throughput'], None)
 
-ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='batch_size', palette = color)
+ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='batch_size', palette = color, linestyle='--')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)')
 fig = ax.get_figure()
 ax.legend(title = 'batch size')
 fig.savefig(graph_dir + 'throughputgoodput.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='batch_size', palette = color)
+ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='batch_size', palette = color, linestyle='--')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost')
 fig = ax.get_figure()
 ax.legend(title = 'batch size')
 fig.savefig(graph_dir + 'throughputlost.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='batch_size', palette = color)
+ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='batch_size', palette = color, linestyle='--')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (ms)')
 ax.legend(title = 'batch size')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlatency.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='nodes', palette = color)
+ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='nodes', palette = color, linestyle='--')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputgoodput_nodes.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='nodes', palette = color)
+ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='nodes', palette = color, linestyle='--')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlost_nodes.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='nodes', palette = color)
+ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='nodes', palette = color, linestyle='--')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (ms)')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlatency_nodes.png')
@@ -73,7 +75,7 @@ for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
 	ax = sns.ecdfplot(x='latency', data=times, palette = color)
 	ax.set(xlabel = 'latency (ms)', ylabel = 'fraction of requests', xscale = 'log')
 	fig = ax.get_figure()
-	fig.savefig(f'{graph_dir + filename}_cumlatency.png')
+	fig.savefig(f'{subtests_dir + filename}_cumlatency.png')
 	plt.close(fig)
 
 	# time / latency heatmap
@@ -81,5 +83,5 @@ for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
 	# ax = sns.histplot(times, x="sent(s)", y="latency", binwidth=(0.05, 10), ax=ax)
 	ax = sns.histplot(times, x="sent(s)", y="latency", bins = 50, ax=ax, palette = color)
 	ax.set(xlabel="time (s)", xlim=(0,10), ylabel = "latency (ms)")
-	fig.savefig(f'{graph_dir + filename}_timelatencyheatmap.png')
+	fig.savefig(f'{subtests_dir + filename}_timelatencyheatmap.png')
 	plt.close(fig)
