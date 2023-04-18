@@ -43,6 +43,10 @@
 \contentsline {section}{\numberline {4.2}Library benchmarks}{34}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{34}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{34}{subsection.4.2.2}%
-\contentsline {chapter}{Conclusion}{37}{chapter*.16}%
-\contentsline {section}{\numberline {5.1}Future Work}{37}{section.5.1}%
-\contentsline {chapter}{Bibliography}{38}{chapter*.17}%
+\contentsline {section}{\numberline {4.3}Benchmarking HotStuff implementation}{36}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{36}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Node counts}{36}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Ablation study}{38}{subsection.4.3.3}%
+\contentsline {chapter}{Conclusion}{42}{chapter*.16}%
+\contentsline {section}{\numberline {5.1}Future Work}{42}{section.5.1}%
+\contentsline {chapter}{Bibliography}{43}{chapter*.17}%

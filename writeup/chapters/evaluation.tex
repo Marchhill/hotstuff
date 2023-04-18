@@ -20,13 +20,19 @@ I benchmarked the message sending functionality of Cap'n Proto. I did this with 
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{dummy_throughputgoodput.png}
+\includegraphics[scale=0.75]{dummy_test/throughputgoodput.png}
 \caption{Benchmarking of Cap'n Proto server goodput for varying throughputs and message sizes, run for 10s}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{dummy_throughputlost.png}
+\includegraphics[scale=0.75]{dummy_test/throughputlatency.png}
+\caption{Benchmarking of Cap'n Proto server latencies for varying throughputs and message sizes, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{dummy_test/throughputlost.png}
 \caption{Benchmarking of Cap'n Proto server \% of failed requests for varying throughputs and message sizes, run for 10s}
 \end{figure}
 
@@ -62,3 +68,76 @@ I profiled the important functions of the library with Jane Street's Core\_bench
 % │ agg_8       │   605.38us │ 944.00w │    0.35w │    0.35w │     51.28  │
 % │ agg_check_8 │ 1_180.61us │  75.00w │          │          │    100.00  │
 % └─────────────┴────────────┴─────────┴──────────┴──────────┴────────────┘
+
+\section{Benchmarking HotStuff implementation}
+\subsection{Batch sizes}
+blah blah batch sizes
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{batch_size_test/throughputgoodput.png}
+\caption{Benchmarking of goodput for varying throughputs and batch sizes, run for 10s}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{batch_size_test/throughputlatency.png}
+\caption{Benchmarking of mean latency while varying throughputs and batch sizes, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{batch_size_test/throughputlost.png}
+\caption{Benchmarking of \% requests lost while varying throughputs and batch sizes, run for 10s.}
+\end{figure}
+
+\subsection{Node counts}
+blah blah node counts
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{node_count_test/throughputgoodput_nodes.png}
+\caption{Benchmarking of goodput for varying throughputs and node counts, run for 10s}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{node_count_test/throughputlatency_nodes.png}
+\caption{Benchmarking of mean latency while varying throughputs and node counts, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{node_count_test/throughputlost_nodes.png}
+\caption{Benchmarking of \% requests lost while varying throughputs and node counts, run for 10s.}
+\end{figure}
+
+\subsection{Ablation study}
+blah blah ablation
+
+Versions:
+\begin{enumerate}
+	\item Chained
+	\item Unchained version - node truncation disabled, command filtering disabled
+	\item Unchained version - node truncation disabled, command filtering enabled
+	\item Unchained version - node truncation enabled, command filtering disabled
+	\item Unchained version - node truncation enabled, command filtering enabled
+\end{enumerate}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{ablation/throughputgoodput_ablation.png}
+\caption{Benchmarking of goodput for varying throughputs and implementation versions, run for 10s}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{ablation/throughputlatency_ablation.png}
+\caption{Benchmarking of mean latency while varying throughputs and implementation versions, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{ablation/throughputlost_ablation.png}
+\caption{Benchmarking of \% requests lost while varying throughputs and implementation versions, run for 10s.}
+\end{figure}

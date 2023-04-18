@@ -21,7 +21,7 @@ if not os.path.exists(subtests_dir):
 
 # open stats file and add column
 stats = pd.read_csv(f'./experiments/data/{test_name}/stats.csv', skipinitialspace=True)
-stats['lost'] = 1. - (stats['rec'] / stats['sent'])
+stats['lost'] = 100. * (1. - (stats['rec'] / stats['sent']))
 stats['diff'] = np.abs(stats['throughput'] - stats['goodput']) / stats['throughput']
 stats['throughputfiltered'] = np.where(stats['diff'] <= 0.05, stats['throughput'], None)
 
@@ -33,7 +33,7 @@ fig.savefig(graph_dir + 'throughputgoodput.png')
 plt.close(fig)
 
 ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='batch_size', palette = color, linestyle='--')
-ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost')
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost (%)', xscale = 'log')
 fig = ax.get_figure()
 ax.legend(title = 'batch size')
 fig.savefig(graph_dir + 'throughputlost.png')
@@ -53,7 +53,7 @@ fig.savefig(graph_dir + 'throughputgoodput_nodes.png')
 plt.close(fig)
 
 ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='nodes', palette = color, linestyle='--')
-ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost')
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost (%)', xscale = 'log')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlost_nodes.png')
 plt.close(fig)
@@ -62,6 +62,27 @@ ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='nodes', pal
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (ms)')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlatency_nodes.png')
+plt.close(fig)
+
+ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='chained', palette = color, linestyle='--')
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)')
+fig = ax.get_figure()
+ax.legend(title = 'version')
+fig.savefig(graph_dir + 'throughputgoodput_ablation.png')
+plt.close(fig)
+
+ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='chained', palette = color, linestyle='--')
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost (%)', xscale = 'log')
+fig = ax.get_figure()
+ax.legend(title = 'version')
+fig.savefig(graph_dir + 'throughputlost_ablation.png')
+plt.close(fig)
+
+ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='chained', palette = color, linestyle='--')
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (ms)')
+ax.legend(title = 'version')
+fig = ax.get_figure()
+fig.savefig(graph_dir + 'throughputlatency_ablation.png')
 plt.close(fig)
 
 for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
