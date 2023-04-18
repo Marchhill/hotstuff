@@ -34,12 +34,12 @@ let update_tcp_lens state (tcp_lens' : int list) =
     {state with s = {state.s with tcp_lens = tcp_lens}}
 
 let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) =
-	let _cutoff = List.fold_left min Int.max_int state.s.tcp_lens in
+	let cutoff = List.fold_left min Int.max_int state.s.tcp_lens in
 	let offset = state.view - (get_node_height parent) in
 	let parent = add_dummy_nodes parent offset in
 	let justify = {node_offset = offset + 1; view = qc.view; signature = qc.signature; msg_type = qc.msg_type; ids = qc.ids} in (* ??? change offset if skipped? *)
 	let n = make_node cmds (Some parent) (Some {justify = justify; height = state.view + 1}) in
-	trim_node n (state.view + 1 - _cutoff) (* only send nodes that will be used *)
+	trim_node n (state.view + 1 - cutoff) (* only send nodes that will be used *)
 
 let rec on_commit (state : t) = function
 	| Some b ->
@@ -87,8 +87,7 @@ let on_beat state cmds =
 let on_next_sync_view state view =
 	let state = {state with view = view} in
 	let (state, actions) = if (is_leader state.view state.id state.node_count) then (
-		(* let filtered = Cmd_set.diff state.cmds state.seen in *)
-    let filtered = state.cmds in
+		let filtered = Cmd_set.diff state.cmds state.seen in
 		let i = ref 0 in
     	(* limit batch size *)
 		let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i <= state.batch_size) filtered in
