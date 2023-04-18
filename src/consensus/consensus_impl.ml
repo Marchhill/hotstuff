@@ -154,24 +154,33 @@ let finally state view =
 	let actions = [SendNextLeader msg; ResetTimer {id = state.id; view = view}] in
 	(state', actions)
 
+let execute state = function
+	| Some n ->
+		let state, actions = finally state (state.view + 1) in
+		(state, (Execute {id = state.id; node = n}) :: actions)
+	| None -> (state, [])
+
 let as_replica state (event : event) =
-	let has_qc = (match get_msg_from_event event with Some msg -> verify_threshold_qc state.crypto state.node_count (Some qc_0) msg.justify | None -> false) in
+	let qc = (match get_msg_from_event event with
+    	| Some msg -> if (verify_threshold_qc state.crypto state.node_count (Some qc_0) msg.justify) then msg.justify else None
+		| None -> None
+	) in
 	match event with
-		| Prepare msg when state.view = msg.view && has_qc ->
-			let is_safe = (match msg.justify with
+		| Prepare msg when state.view = msg.view ->
+			let is_safe = (match qc with
 				| Some qc -> (extends msg.node qc.node) && (safe_node msg.node msg.justify state.s.locked_qc)
-				| None -> true
+				| None -> false
 			) in
-			let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = PrepareAck; node = msg.node; justify = None; partial_signature = None}) in
 			if is_safe then
 				(
+			    let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = PrepareAck; node = msg.node; justify = None; partial_signature = None}) in
 					{state with s = {state.s with phase = PreCommit}},
 					[SendLeader vote_msg]
 				)
 			else
 				(state, [])
-		| PreCommit msg when state.view = msg.view && has_qc ->
-			(match msg.justify with
+		| PreCommit msg when state.view = msg.view ->
+			(match qc with
 				| Some qc when (matching_qc qc PrepareAck state.view) ->
 					let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = PreCommitAck; node = qc.node; justify = None; partial_signature = None}) in
 					(
@@ -180,8 +189,8 @@ let as_replica state (event : event) =
 					)
 				| _ -> (state, [])
 			)
-		| Commit msg when state.view = msg.view && has_qc ->
-			(match msg.justify with
+		| Commit msg when state.view = msg.view ->
+			(match qc with
 				| Some qc when (matching_qc qc PreCommitAck state.view) ->
 					let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = CommitAck; node = qc.node; justify = None; partial_signature = None}) in
 					(
@@ -190,18 +199,15 @@ let as_replica state (event : event) =
 					)
 				| _ -> (state, [])
 			)
-		| Decide msg when state.view = msg.view && has_qc ->
-			(match msg.justify with
-				| Some qc when (matching_qc qc CommitAck state.view) ->
-					let e = (match qc.node with Some n -> Execute {id = state.id; node = n} | None -> raise CannotExecuteException) in
-					let state, actions = finally state (state.view + 1) in
-					(state, e :: actions)
+		| Decide msg when state.view = msg.view ->
+			(match qc with
+				| Some qc when (matching_qc qc CommitAck state.view) -> execute state qc.node
 				| _ -> (state, [])
 			)
 		| ClientCmd cmd ->
 			({state with cmds = Cmd_set.add cmd state.cmds}, [])
-		| NextView msg when has_qc ->
-			(match msg.justify with
+		| NextView msg ->
+			(match qc with
 				| Some qc when qc.msg_type = Complain && msg.view >= state.view && msg.view = qc.view ->
 					finally state (msg.view + 1)
 				| _ -> (state, [])

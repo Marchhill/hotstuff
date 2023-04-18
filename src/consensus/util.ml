@@ -8,10 +8,6 @@ let is_quorum_length l n =
 	let f = (n - 1) / 3 in
 	(List.length l) >= n - f
 
-let hash_to_string x =
-	let Tezos_crypto.Hacl.Blake2b.Hash h = x in
-	Fmt.str "%x%x%x%x" (Int64.to_int (Bytes.get_int64_ne h 0)) (Int64.to_int (Bytes.get_int64_ne h 8)) (Int64.to_int (Bytes.get_int64_ne h 16)) (Int64.to_int (Bytes.get_int64_ne h 24))
-  
 let rec node_to_string : node option -> string = function
 	| Some x ->
 		let cmds_str = Cmd_set.fold (fun cmd acc -> "\"" ^ cmd.data ^ "\"," ^ acc) x.cmds "" in
@@ -109,14 +105,6 @@ let print_action = function
 	| Execute m -> Fmt.pr "%d: execute node=%s@." m.id (node_to_string_short (Some m.node))
 	| ResetTimer m -> Fmt.pr "%d: reset_timer view=%d@." m.id m.view
 
-let get_action_type = function
-	| Broadcast _-> Fmt.str "broadcast"
-	| SendLeader _ -> Fmt.str "send_leader"
-	| SendNextLeader _ -> Fmt.str "send_next_leader"
-	| SendClient _ -> Fmt.str "send_client"
-	| Execute _ -> Fmt.str "execute"
-	| ResetTimer _ -> Fmt.str "reset_timer"
-
 let print_event = function
 	| NewView m -> Fmt.pr "new_view %s@." (msg_to_string m)
 	| Prepare m -> Fmt.pr "prepare %s@." (msg_to_string m)
@@ -170,7 +158,7 @@ let matching_qc (qc : qc) (msg_type : msg_type) view = qc.msg_type = msg_type &&
 let rec extends n1 n2 =
 	match n1, n2 with
 		| Some _n1, Some _ -> (equal_nodes n1 n2) || (extends _n1.parent n2)
-		| Some _, None | None, None -> true
+		| _, None -> true
 		| None, Some _ -> false
 
 let get_node_height n =

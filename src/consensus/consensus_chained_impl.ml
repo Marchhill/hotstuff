@@ -12,12 +12,11 @@ let qc_0 = {node = Some b_0; view = 0; signature = None; msg_type = GenericAck; 
 let get_qc_0 () = Some qc_0
 let get_b_0 () = Some b_0
 
-let print_state state = Fmt.pr "state id=%d view=%d qc_high=(%s) cmd=(%s) v=[%s]@."
+let print_state state = Fmt.pr "state id=%d view=%d qc_high=(%s) cmd=(%s)@."
 	state.id
 	state.view
 	(qc_to_string (Some state.s.qc_high))
 	(Cmd_set.fold (fun cmd acc -> acc ^ cmd.data ^ ",") state.cmds "")
-	(List.fold_left (fun acc e -> get_event_type e ^ ", " ^ acc) "" (match Hashtbl.find_opt state.s.v state.view with Some l -> l | None -> []))
 
 let update_qc_high state (qc'_high : qc) =
 	let n' = get_node_from_qc qc'_high in
@@ -40,8 +39,7 @@ let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) =
 	let parent = add_dummy_nodes parent offset in
 	let justify = {node_offset = offset + 1; view = qc.view; signature = qc.signature; msg_type = qc.msg_type; ids = qc.ids} in (* ??? change offset if skipped? *)
 	let n = make_node cmds (Some parent) (Some {justify = justify; height = state.view + 1}) in
-	(*trim_node n (state.view + 1 - cutoff)*) (* only send nodes that will be used *)
-  n
+	trim_node n (state.view + 1 - _cutoff) (* only send nodes that will be used *)
 
 let rec on_commit (state : t) = function
 	| Some b ->
@@ -99,15 +97,18 @@ let on_next_sync_view state view =
 	) else (state, []) in
 	(state, ResetTimer {id = state.id; view = view} :: actions)
 
+let safe_node state b_new n = ((get_node_height b_new) > state.s.vheight) && ((extends (Some b_new) (Some state.s.b_lock)) || ((get_node_height n) > (get_node_height state.s.b_lock)))
+
 let on_recieve_proposal state (msg : msg) =
 	let state = update_tcp_lens state msg.tcp_lens in
 	let x = combine_nodes msg.node (Some state.s.b_exec) in
 	let b_new = (match x with Some node -> node | None -> raise MissingNodeException) in
 	let n = get_node_from_qc (qc_from_node_justify b_new) in
 	let state = {state with seen = (Cmd_set.union state.seen n.cmds)} in (* keep track of seen commands *)
-	let (state, actions1) = if ((get_node_height b_new) > state.s.vheight) && ((extends (Some b_new) (Some state.s.b_lock)) || (get_node_height n) > (get_node_height state.s.b_lock)) then
+	let (state, actions1) = if safe_node state b_new n then (
 		let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = GenericAck; node = Some b_new; justify = None; partial_signature = None}) in
 		({state with s = {state.s with vheight = (get_node_height b_new)}}, [SendNextLeader vote_msg])
+	)
 	else (state, []) in
 	let (state, actions2) = update state b_new in
 	(* send next leader new-view message *)
@@ -121,15 +122,11 @@ let on_recieve_proposal state (msg : msg) =
 	in
 	(state,  (SendNextLeader new_view_msg) :: actions1 @ actions2 @ actions3)
 
-let on_recieve_new_view state msg =
-	match msg.justify with
-		| Some qc ->
-			let state = update_qc_high state qc in
-			(* update tcp length for source node *)
-    		let state = update_tcp_lens state msg.tcp_lens in
-			(state, [])
-		| _ ->
-			raise MissingQcException
+let on_recieve_new_view state (msg : msg) qc =
+	let state = update_qc_high state qc in
+	(* update tcp length for source node *)
+	let state = update_tcp_lens state msg.tcp_lens in
+	(state, [])
 
 let on_recieve_vote state event view =
 	match (add_event state.s.v event view state.node_count) with
@@ -157,20 +154,23 @@ let advance (state : t) (event : event) =
 		| Some msg -> if verify_threshold_qc state.crypto state.node_count (Some qc_0) msg.justify then msg.justify else None
 		| None -> None
 	) in
-	let state, actions = (match qc with
+	let state, actions = if is_signed then (match qc with
 		| Some qc when (qc.view + 1) > state.view ->
 				(* qc proves we should transition to state qc.view + 1 *)
 				let state, actions' = on_next_sync_view state (qc.view + 1) in
 				(state, actions')
 		| _ ->
 			(state, [])
-	)
+	) else (state, [])
 	in
 	let state, actions' = if is_signed then
 		(match event with
 			| GenericAck msg when (is_leader (msg.view + 1) state.id state.node_count) && msg.view >= state.view -> on_recieve_vote state event msg.view
-			| Generic msg when msg.view = state.view -> on_recieve_proposal state msg
-			| NewView msg when (Option.is_some qc) -> on_recieve_new_view state msg
+			| Generic msg when msg.view = state.view && (is_leader msg.view msg.id state.node_count)-> on_recieve_proposal state msg
+			| NewView msg -> (match qc with
+				| Some qc -> on_recieve_new_view state msg qc
+				| None -> (state, [])	
+			)
 			| ClientCmd cmd ->
 				({state with cmds = Cmd_set.add cmd state.cmds}, [])
 			| Timeout x ->

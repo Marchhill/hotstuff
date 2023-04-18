@@ -1,11 +1,13 @@
 open Types
 open Util
 
+let get_msg_from_event_exn e = match get_msg_from_event e with Some msg -> msg | None -> raise ThresholdQCException
+
 let threshold_qc crypto events =
 	let (signature, ids) = (match crypto with
 		| Some _ ->
 			let (partial_signatures, ids) = List.map (fun e ->
-				let msg = (match get_msg_from_event e with Some msg -> msg | None -> raise ThresholdQCException) in
+				let msg = get_msg_from_event_exn e in
 				match msg.partial_signature with
 					| Some p -> (p, msg.id)
 					| None -> raise ThresholdQCException) events
@@ -17,7 +19,7 @@ let threshold_qc crypto events =
 	in
 	match events with
 		| e :: _ ->
-			let msg = (match get_msg_from_event e with Some msg -> msg | None -> raise ThresholdQCException) in
+			let msg = get_msg_from_event_exn e in
 			{msg_type = msg.msg_type; view = msg.view; node = msg.node; signature = signature; ids = ids}
 		| [] -> raise ThresholdQCException (* should never happen! *)
 

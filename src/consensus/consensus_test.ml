@@ -98,7 +98,7 @@ let rec views nodes new_view_actions = function
 (* send a command to be commited to some node *)
 let sent = ref 0
 let deliver_command id nodes =
-	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = Int64.one}] in
+	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = (Int64.of_int !sent)}] in
 	sent := !sent + 1;
 	nodes
 
@@ -108,7 +108,8 @@ let%expect_test "leader can commit from view 1" =
 	let (s, a) = advance_multiple s new_view_events in
 	let s = {s with s = {s.s with phase = PreCommit}} in
 	List.iter print_action a;
-	[%expect {| 0: broadcast view=1 src=0 type=prepare node=([]-⊥) justify=() sig=(⊥) |}];
+	[%expect {|
+  0: broadcast view=1 src=0 type=prepare node=([]-⊥) justify=() sig=(⊥) |}];
 	let n = (match List.hd a with
 		| Broadcast x -> x.node
 		| _ -> raise TestException 
@@ -117,7 +118,8 @@ let%expect_test "leader can commit from view 1" =
 	let (s, a) = advance_multiple s prepare_events in
 	let s = {s with s = {s.s with phase = Commit}} in
 	List.iter print_action a;
-	[%expect {| 0: broadcast view=1 src=0 type=pre_commit node=(⊥) justify=(view=1 type=prepare_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}];
+	[%expect {|
+  0: broadcast view=1 src=0 type=pre_commit node=(⊥) justify=(view=1 type=prepare_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}];
 	let n = (match List.hd a with
 		| Broadcast x ->
 			(match x.justify with
@@ -130,7 +132,8 @@ let%expect_test "leader can commit from view 1" =
 	let (s, a) = advance_multiple s pre_commit_events in
 	let s = {s with s = {s.s with phase = Decide}} in
 	List.iter print_action a;
-	[%expect {| 0: broadcast view=1 src=0 type=commit node=(⊥) justify=(view=1 type=pre_commit_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}];
+	[%expect {|
+  0: broadcast view=1 src=0 type=commit node=(⊥) justify=(view=1 type=pre_commit_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}];
 	let n = (match List.hd a with
 		| Broadcast x ->
 			(match x.justify with
@@ -142,7 +145,8 @@ let%expect_test "leader can commit from view 1" =
 	let commit_events = List.init 4 (fun id -> CommitAck{id = id; view = 1; tcp_lens = []; msg_type = CommitAck; node = n; justify = None; partial_signature = None}) in
 	let (_, a) = advance_multiple s commit_events in
 	List.iter print_action a;
-	[%expect {| 0: broadcast view=1 src=0 type=decide node=(⊥) justify=(view=1 type=commit_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}]
+	[%expect {|
+  0: broadcast view=1 src=0 type=decide node=(⊥) justify=(view=1 type=commit_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}]
 
 let%expect_test "leader can commit from later view" =
 	let s = {(fst (create_state_machine 0 4 100)) with view = 100} in
@@ -155,7 +159,8 @@ let%expect_test "leader can commit from later view" =
 	let (s, a) = advance_multiple s new_view_events in
 	let s = {s with s = {s.s with phase = PreCommit}} in
 	List.iter print_action a;
-	[%expect {| 0: broadcast view=100 src=0 type=prepare node=([]-["woo",]-⊥) justify=(view=70 type=prepare_ack node=(["woo",]-⊥) sig=(⊥)) sig=(⊥) |}];
+	[%expect {|
+  0: broadcast view=100 src=0 type=prepare node=([]-["woo",]-⊥) justify=(view=70 type=prepare_ack node=(["woo",]-⊥) sig=(⊥)) sig=(⊥) |}];
 	let n = (match List.hd a with
 		| Broadcast x -> x.node
 		| _ -> raise TestException 
@@ -164,7 +169,8 @@ let%expect_test "leader can commit from later view" =
 	let (s, a) = advance_multiple s prepare_events in
 	let s = {s with s = {s.s with phase = Commit}} in
 	List.iter print_action a;
-	[%expect {| 0: broadcast view=100 src=0 type=pre_commit node=(⊥) justify=(view=100 type=prepare_ack node=([]-["woo",]-⊥) sig=(⊥)) sig=(⊥) |}];
+	[%expect {|
+  0: broadcast view=100 src=0 type=pre_commit node=(⊥) justify=(view=100 type=prepare_ack node=([]-["woo",]-⊥) sig=(⊥)) sig=(⊥) |}];
 	let n = (match List.hd a with
 		| Broadcast x ->
 			(match x.justify with
@@ -177,7 +183,8 @@ let%expect_test "leader can commit from later view" =
 	let (s, a) = advance_multiple s pre_commit_events in
 	let s = {s with s = {s.s with phase = Decide}} in
 	List.iter print_action a;
-	[%expect {| 0: broadcast view=100 src=0 type=commit node=(⊥) justify=(view=100 type=pre_commit_ack node=([]-["woo",]-⊥) sig=(⊥)) sig=(⊥) |}];
+	[%expect {|
+  0: broadcast view=100 src=0 type=commit node=(⊥) justify=(view=100 type=pre_commit_ack node=([]-["woo",]-⊥) sig=(⊥)) sig=(⊥) |}];
 	let n = (match List.hd a with
 		| Broadcast x ->
 			(match x.justify with
@@ -189,7 +196,8 @@ let%expect_test "leader can commit from later view" =
 	let commit_events = List.init 4 (fun id -> CommitAck {id = id; view = 100; tcp_lens = []; msg_type = CommitAck; node = n; justify = None; partial_signature = None}) in
 	let (_, a) = advance_multiple s commit_events in
 	List.iter print_action a;
-	[%expect {| 0: broadcast view=100 src=0 type=decide node=(⊥) justify=(view=100 type=commit_ack node=([]-["woo",]-⊥) sig=(⊥)) sig=(⊥) |}]
+	[%expect {|
+  0: broadcast view=100 src=0 type=decide node=(⊥) justify=(view=100 type=commit_ack node=([]-["woo",]-⊥) sig=(⊥)) sig=(⊥) |}]
 
 let%expect_test "leader + replicas can commit from view 1" =
 	let nodes, new_view_actions = create_nodes 4 in
@@ -683,8 +691,7 @@ let%expect_test "leader + replicas can commit and send response to client" =
   state id=2 phase=decide role=replica view=1
   state id=1 phase=decide role=replica view=1
   state id=0 phase=decide role=leader view=1
-  0: broadcast view=1 src=0 type=decide node=(⊥) justify=(view=1 type=commit_ack node=(["hello1#0",]-[]-⊥) sig=(#3,#2,#1)) sig=(#0)
-  0: send_client success=true callback_id="1" |}];
+  0: broadcast view=1 src=0 type=decide node=(⊥) justify=(view=1 type=commit_ack node=(["hello1#0",]-[]-⊥) sig=(#3,#2,#1)) sig=(#0) |}];
 	let (_, decide_ack_actions) = do_actions nodes decide_actions in
 	List.iter print_state nodes;
 	List.iter print_action decide_ack_actions;
@@ -1143,3 +1150,289 @@ let%expect_test "leader + replicas can view change from view 10 to 13" =
   0: execute node=[]-[]-[]-[]-[]-...
   0: send_next_leader view=13 src=0 type=new_view node=(⊥) justify=(view=13 type=prepare_ack node=([]-[]-[]-[]-[]-[]-[]-[]-[]-[]-[]-⊥) sig=(#3,#2,#1)) sig=(#0)
   0: reset_timer view=14 |}]
+
+let%expect_test "genesis nodes" =
+	let qc_0 = get_qc_0 () in
+	let b_0 = get_b_0 () in
+	Fmt.pr "%s@." (node_to_string b_0);
+	Fmt.pr "%s@." (qc_to_string qc_0);
+	[%expect {| ⊥ |}]
+
+let%expect_test "node internal" =
+	let ni = create_node_internal None None in
+	(match ni with
+		| Some _ -> ()
+		| None -> Fmt.pr "none!@.");
+	[%expect {| none! |}]
+
+let%expect_test "max qc" =
+	let qc1 = {node = None; view = 10; signature = None; msg_type = Complain; ids = []} in
+	let qc2 = {node = None; view = 4; signature = None; msg_type = Complain; ids = []} in
+  Fmt.pr "%s@." (qc_to_string (max_qc (Some qc1) (Some qc2)));
+	[%expect {| view=10 type=complain node=(⊥) sig=(⊥) |}];
+  Fmt.pr "%s@." (qc_to_string (max_qc (Some qc1) None));
+	[%expect {| view=10 type=complain node=(⊥) sig=(⊥) |}]
+
+let%expect_test "get high qc" =
+	let qc = try (get_high_qc [Timeout {view = 5}]) with EventTypeNotFoundException -> Fmt.pr "not found!@."; None in
+  Fmt.pr "%s@." (qc_to_string qc);
+	[%expect {| not found! |}]
+
+let%expect_test "safe node" =
+	let n = None in
+	let qc = Some {msg_type = Complain; view = 2; node = Some b_0; signature = None; ids = []} in
+	let locked_qc = Some {msg_type = Complain; view = 1; node = Some b_0; signature = None; ids = []} in
+	Fmt.pr "%b@." (safe_node n qc locked_qc);
+	[%expect {| true |}];
+  Fmt.pr "%b@." (safe_node n qc None);
+	[%expect {| true |}];
+  Fmt.pr "%b@." (safe_node n None locked_qc);
+	[%expect {| false |}]
+
+let%expect_test "empty node in commit ack gives empty command set." =
+	let s, _ = create_state_machine 0 4 100 in
+	let new_view_events = List.init 4 (fun id -> NewView {id = id; view = 0; tcp_lens = []; msg_type = NewView; node = None; justify = None; partial_signature = None}) in
+	let (s, a) = advance_multiple s new_view_events in
+	let s = {s with s = {s.s with phase = PreCommit}} in
+	List.iter print_action a;
+	[%expect {|
+  0: broadcast view=1 src=0 type=prepare node=([]-⊥) justify=() sig=(⊥) |}];
+	let n = (match List.hd a with
+		| Broadcast x -> x.node
+		| _ -> raise TestException 
+	) in
+	let prepare_events = List.init 4 (fun id -> PrepareAck {id = id; view = 1; tcp_lens = []; msg_type = PrepareAck; node = n; justify = None; partial_signature = None}) in
+	let (s, a) = advance_multiple s prepare_events in
+	let s = {s with s = {s.s with phase = Commit}} in
+	List.iter print_action a;
+	[%expect {|
+  0: broadcast view=1 src=0 type=pre_commit node=(⊥) justify=(view=1 type=prepare_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}];
+	let n = (match List.hd a with
+		| Broadcast x ->
+			(match x.justify with
+			| Some qc -> qc.node
+			| None -> None
+			)
+		| _ -> raise TestException
+	) in
+	let pre_commit_events = List.init 4 (fun id -> PreCommitAck {id = id; view = 1; tcp_lens = []; msg_type = PreCommitAck; node = n; justify = None; partial_signature = None}) in
+	let (s, a) = advance_multiple s pre_commit_events in
+	let s = {s with s = {s.s with phase = Decide}} in
+	List.iter print_action a;
+	[%expect {|
+  0: broadcast view=1 src=0 type=commit node=(⊥) justify=(view=1 type=pre_commit_ack node=([]-⊥) sig=(⊥)) sig=(⊥) |}];
+	let commit_events = List.init 4 (fun id -> CommitAck{id = id; view = 1; tcp_lens = []; msg_type = CommitAck; node = None; justify = None; partial_signature = None}) in
+	let (_, a) = advance_multiple s commit_events in
+	List.iter print_action a;
+	[%expect {|
+  0: broadcast view=1 src=0 type=decide node=(⊥) justify=(view=1 type=commit_ack node=(⊥) sig=(⊥)) sig=(⊥) |}]
+	
+let%expect_test "ignore messages without a qc." =
+	let nodes, new_view_actions = create_nodes 4 ~use_crypto:true in
+	List.iter print_state nodes;
+	List.iter print_action new_view_actions;
+	[%expect {|
+  state id=3 phase=prepare role=replica view=1
+  state id=2 phase=prepare role=replica view=1
+  state id=1 phase=prepare role=replica view=1
+  state id=0 phase=prepare role=leader view=1
+  0: send_next_leader view=0 src=0 type=new_view node=(⊥) justify=(view=0 type=prepare_ack node=([]-⊥) sig=(⊥)) sig=(#0)
+  1: send_next_leader view=0 src=1 type=new_view node=(⊥) justify=(view=0 type=prepare_ack node=([]-⊥) sig=(⊥)) sig=(#1)
+  2: send_next_leader view=0 src=2 type=new_view node=(⊥) justify=(view=0 type=prepare_ack node=([]-⊥) sig=(⊥)) sig=(#2)
+  3: send_next_leader view=0 src=3 type=new_view node=(⊥) justify=(view=0 type=prepare_ack node=([]-⊥) sig=(⊥)) sig=(#3) |}];
+	let (nodes, prepare_actions) = do_actions nodes new_view_actions in
+	List.iter print_state nodes;
+	List.iter print_action prepare_actions;
+	[%expect {|
+  state id=3 phase=prepare role=replica view=1
+  state id=2 phase=prepare role=replica view=1
+  state id=1 phase=prepare role=replica view=1
+  state id=0 phase=prepare role=leader view=1
+  0: broadcast view=1 src=0 type=prepare node=([]-[]-⊥) justify=(view=0 type=prepare_ack node=([]-⊥) sig=(⊥)) sig=(#0) |}];
+	let prepare_actions_no_qc = [(match (List.hd prepare_actions) with Broadcast m -> Broadcast {m with justify = None} | _ -> raise TestException)] in
+	let (nodes, prepare_ack_actions) = do_actions nodes prepare_actions_no_qc in
+	List.iter print_state nodes;
+	List.iter print_action prepare_ack_actions;
+	[%expect {|
+  state id=3 phase=prepare role=replica view=1
+  state id=2 phase=prepare role=replica view=1
+  state id=1 phase=prepare role=replica view=1
+  state id=0 phase=prepare role=leader view=1 |}];
+	let (nodes, prepare_ack_actions) = do_actions nodes prepare_actions in
+	List.iter print_state nodes;
+	List.iter print_action prepare_ack_actions;
+	[%expect {|
+  state id=3 phase=pre_commit role=replica view=1
+  state id=2 phase=pre_commit role=replica view=1
+  state id=1 phase=pre_commit role=replica view=1
+  state id=0 phase=pre_commit role=leader view=1
+  3: send_leader view=1 src=3 type=prepare_ack node=([]-[]-⊥) justify=() sig=(#3)
+  2: send_leader view=1 src=2 type=prepare_ack node=([]-[]-⊥) justify=() sig=(#2)
+  1: send_leader view=1 src=1 type=prepare_ack node=([]-[]-⊥) justify=() sig=(#1)
+  0: send_leader view=1 src=0 type=prepare_ack node=([]-[]-⊥) justify=() sig=(#0) |}];
+	let (nodes, pre_commit_actions) = do_actions nodes prepare_ack_actions in
+	List.iter print_state nodes;
+	List.iter print_action pre_commit_actions;
+	[%expect {|
+  state id=3 phase=pre_commit role=replica view=1
+  state id=2 phase=pre_commit role=replica view=1
+  state id=1 phase=pre_commit role=replica view=1
+  state id=0 phase=pre_commit role=leader view=1
+  0: broadcast view=1 src=0 type=pre_commit node=(⊥) justify=(view=1 type=prepare_ack node=([]-[]-⊥) sig=(#3,#2,#1)) sig=(#0) |}];
+	let pre_commit_actions_no_qc = [(match (List.hd pre_commit_actions) with Broadcast m -> Broadcast {m with justify = None} | _ -> raise TestException)] in
+	let (nodes, pre_commit_ack_actions) = do_actions nodes pre_commit_actions_no_qc in
+	List.iter print_state nodes;
+	List.iter print_action pre_commit_ack_actions;
+	[%expect {|
+  state id=3 phase=pre_commit role=replica view=1
+  state id=2 phase=pre_commit role=replica view=1
+  state id=1 phase=pre_commit role=replica view=1
+  state id=0 phase=pre_commit role=leader view=1 |}];
+	let (nodes, pre_commit_ack_actions) = do_actions nodes pre_commit_actions in
+	List.iter print_state nodes;
+	List.iter print_action pre_commit_ack_actions;
+	[%expect {|
+  state id=3 phase=commit role=replica view=1
+  state id=2 phase=commit role=replica view=1
+  state id=1 phase=commit role=replica view=1
+  state id=0 phase=commit role=leader view=1
+  3: send_leader view=1 src=3 type=pre_commit_ack node=([]-[]-⊥) justify=() sig=(#3)
+  2: send_leader view=1 src=2 type=pre_commit_ack node=([]-[]-⊥) justify=() sig=(#2)
+  1: send_leader view=1 src=1 type=pre_commit_ack node=([]-[]-⊥) justify=() sig=(#1)
+  0: send_leader view=1 src=0 type=pre_commit_ack node=([]-[]-⊥) justify=() sig=(#0) |}];
+	let (nodes, commit_actions) = do_actions nodes pre_commit_ack_actions in
+	List.iter print_state nodes;
+	List.iter print_action commit_actions;
+	[%expect {|
+  state id=3 phase=commit role=replica view=1
+  state id=2 phase=commit role=replica view=1
+  state id=1 phase=commit role=replica view=1
+  state id=0 phase=commit role=leader view=1
+  0: broadcast view=1 src=0 type=commit node=(⊥) justify=(view=1 type=pre_commit_ack node=([]-[]-⊥) sig=(#3,#2,#1)) sig=(#0) |}];
+	let commit_actions_no_qc = [(match (List.hd commit_actions) with Broadcast m -> Broadcast {m with justify = None} | _ -> raise TestException)] in
+	let (nodes, commit_ack_actions) = do_actions nodes commit_actions_no_qc in
+	List.iter print_state nodes;
+	List.iter print_action commit_ack_actions;
+	[%expect {|
+  state id=3 phase=commit role=replica view=1
+  state id=2 phase=commit role=replica view=1
+  state id=1 phase=commit role=replica view=1
+  state id=0 phase=commit role=leader view=1 |}];
+	let (nodes, commit_ack_actions) = do_actions nodes commit_actions in
+	List.iter print_state nodes;
+	List.iter print_action commit_ack_actions;
+	[%expect {|
+  state id=3 phase=decide role=replica view=1
+  state id=2 phase=decide role=replica view=1
+  state id=1 phase=decide role=replica view=1
+  state id=0 phase=decide role=leader view=1
+  3: send_leader view=1 src=3 type=commit_ack node=([]-[]-⊥) justify=() sig=(#3)
+  2: send_leader view=1 src=2 type=commit_ack node=([]-[]-⊥) justify=() sig=(#2)
+  1: send_leader view=1 src=1 type=commit_ack node=([]-[]-⊥) justify=() sig=(#1)
+  0: send_leader view=1 src=0 type=commit_ack node=([]-[]-⊥) justify=() sig=(#0) |}];
+	let (nodes, decide_actions) = do_actions nodes commit_ack_actions in
+	List.iter print_state nodes;
+	List.iter print_action decide_actions;
+	[%expect {|
+  state id=3 phase=decide role=replica view=1
+  state id=2 phase=decide role=replica view=1
+  state id=1 phase=decide role=replica view=1
+  state id=0 phase=decide role=leader view=1
+  0: broadcast view=1 src=0 type=decide node=(⊥) justify=(view=1 type=commit_ack node=([]-[]-⊥) sig=(#3,#2,#1)) sig=(#0) |}];
+	let decide_actions_no_qc = [(match (List.hd decide_actions) with Broadcast m -> Broadcast {m with justify = None} | _ -> raise TestException)] in
+	let (nodes, decide_ack_actions) = do_actions nodes decide_actions_no_qc in
+	List.iter print_state nodes;
+	List.iter print_action decide_ack_actions;
+	[%expect {|
+  state id=3 phase=decide role=replica view=1
+  state id=2 phase=decide role=replica view=1
+  state id=1 phase=decide role=replica view=1
+  state id=0 phase=decide role=leader view=1 |}];
+	let (_, decide_ack_actions) = do_actions nodes decide_actions in
+	List.iter print_state nodes;
+	List.iter print_action decide_ack_actions;
+	[%expect {|
+  state id=3 phase=decide role=replica view=1
+  state id=2 phase=decide role=replica view=1
+  state id=1 phase=decide role=replica view=1
+  state id=0 phase=decide role=leader view=1
+  3: execute node=[]-[]-⊥
+  3: send_next_leader view=1 src=3 type=new_view node=(⊥) justify=(view=1 type=prepare_ack node=([]-[]-⊥) sig=(#3,#2,#1)) sig=(#3)
+  3: reset_timer view=2
+  2: execute node=[]-[]-⊥
+  2: send_next_leader view=1 src=2 type=new_view node=(⊥) justify=(view=1 type=prepare_ack node=([]-[]-⊥) sig=(#3,#2,#1)) sig=(#2)
+  2: reset_timer view=2
+  1: execute node=[]-[]-⊥
+  1: send_next_leader view=1 src=1 type=new_view node=(⊥) justify=(view=1 type=prepare_ack node=([]-[]-⊥) sig=(#3,#2,#1)) sig=(#1)
+  1: reset_timer view=2
+  0: execute node=[]-[]-⊥
+  0: send_next_leader view=1 src=0 type=new_view node=(⊥) justify=(view=1 type=prepare_ack node=([]-[]-⊥) sig=(#3,#2,#1)) sig=(#0)
+  0: reset_timer view=2 |}]
+
+let%expect_test "execute ignores qc without node." =
+	let s, _ = create_state_machine 0 4 100 in
+	let (s, actions) = execute s None in
+	print_state s;
+	List.iter print_action actions;
+	[%expect {| state id=0 phase=prepare role=leader view=1 |}]
+
+let%expect_test "ignore nextview message without qc." =
+	let nodes, _ = create_nodes 4 ~use_crypto:true in
+	let timeout = Timeout {view = 1} in
+	let nodes, actions = advance_all nodes [timeout] in
+	List.iter print_state nodes;
+	List.iter print_action actions;
+	(* should send complain messages *)
+	[%expect {|
+  state id=3 phase=prepare role=replica view=1
+  state id=2 phase=prepare role=replica view=1
+  state id=1 phase=prepare role=replica view=1
+  state id=0 phase=prepare role=leader view=1
+  3: reset_timer view=2
+  3: send_next_leader view=1 src=3 type=complain node=(⊥) justify=() sig=(#3)
+  2: reset_timer view=2
+  2: send_next_leader view=1 src=2 type=complain node=(⊥) justify=() sig=(#2)
+  1: reset_timer view=2
+  1: send_next_leader view=1 src=1 type=complain node=(⊥) justify=() sig=(#1)
+  0: reset_timer view=2
+  0: send_next_leader view=1 src=0 type=complain node=(⊥) justify=() sig=(#0) |}];
+	let nodes, actions = do_actions nodes actions in
+	List.iter print_state nodes;
+	List.iter print_action actions;
+	(* should broadcast next-view *)
+	[%expect {|
+  state id=3 phase=prepare role=replica view=1
+  state id=2 phase=prepare role=replica view=1
+  state id=1 phase=prepare role=replica view=1
+  state id=0 phase=prepare role=leader view=1
+  1: broadcast view=1 src=1 type=next_view node=(⊥) justify=(view=1 type=complain node=(⊥) sig=(#3,#2,#1)) sig=(#1) |}];
+	let actions_no_qc = [(match (List.hd actions) with Broadcast m -> Broadcast {m with justify = None} | _ -> raise TestException)] in
+	let (nodes, actions) = do_actions nodes actions_no_qc in
+	List.iter print_state nodes;
+	List.iter print_action actions;
+	[%expect {|
+  state id=3 phase=prepare role=replica view=1
+  state id=2 phase=prepare role=replica view=1
+  state id=1 phase=prepare role=replica view=1
+  state id=0 phase=prepare role=leader view=1 |}]
+
+let%expect_test "ignore unsigned message" =
+	let sks, pks = gen_keys 1 in
+	let crypto = Some {sk = (List.hd sks); pks = pks} in
+	let s, actions = create_state_machine 0 4 100 ~crypto in
+	let actions = [(match (List.hd actions) with SendNextLeader m -> SendNextLeader {m with partial_signature = None} | _ -> raise TestException)] in
+	let (nodes, actions) = do_actions [s] actions in
+	List.iter print_state nodes;
+	List.iter print_action actions;
+	[%expect {| state id=0 phase=prepare role=leader view=1 |}]
+
+let%expect_test "store newview message for next view." =
+	let nodes, _ = create_nodes 4 in
+	let nv = NewView {id = 0; view = 1; tcp_lens = []; msg_type = NewView; node = None; justify = None; partial_signature = None} in
+	let nodes, _ = advance_all nodes [nv] in
+	List.iter (fun n -> Fmt.pr "%d: %dnvs stored@." n.id (List.length n.s.nv)) nodes;
+	[%expect {|
+  3: 0nvs stored
+  2: 0nvs stored
+  1: 1nvs stored
+  0: 0nvs stored |}]

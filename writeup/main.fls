@@ -1248,10 +1248,6 @@ INPUT images//nchain.png
 INPUT ./images//nchain.png
 INPUT ./images//nchain.png
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti0800.tfm
-INPUT ./chapters/implementation.tex
-INPUT chapters/implementation.tex
-INPUT ./chapters/implementation.tex
-INPUT chapters/implementation.tex
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm0800.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
@@ -1263,6 +1259,10 @@ INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/public/
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm0700.tfm
+INPUT ./chapters/implementation.tex
+INPUT chapters/implementation.tex
+INPUT ./chapters/implementation.tex
+INPUT chapters/implementation.tex
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/eccc1200.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/eccc1440.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm0600.tfm

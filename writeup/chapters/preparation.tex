@@ -192,7 +192,7 @@ These requirements are similar to those presented in my proposal (Appendix X***)
 \subsection{Development methodology}
 [should i say i used something like RAD and productivity tracking tools???]
 \subsection{Testing \& debugging methodology} \label{testing}
-Unit testing was carried out using `expect tests', which compare the outputted program trace to the correct output. A testing suite of expect tests verifies that the program behaves as specified in the HotStuff paper. This suite has 91.74\% code coverage of the consensus state machine code, with much of the uncovered code being logging functions and code that is theoretically unreachable.
+Unit testing was carried out using `expect tests', which compare the outputted program trace to the correct output. A testing suite of expect tests verifies that the program behaves as specified in the HotStuff paper. This suite has 100\% code coverage\footnote{The report says 97.89\% coverage, but the only uncovered code is the testing code itself.} of the consensus state machine code, the coverage report is at \textit{\_coverage/index.html}.
 
 The Memtrace library and viewer were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
 

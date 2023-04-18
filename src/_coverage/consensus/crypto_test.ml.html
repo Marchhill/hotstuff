@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>crypto_test.ml &mdash; Coverage report</title>
+    <meta name="description" content="88.89% coverage in consensus/crypto_test.ml">
+    <link rel="stylesheet" href="../coverage.css"/>
+    <script src="../highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body>
+    <div id="header">
+      <h1>
+        <a href="../index.html">
+          <span class="dirname">consensus/</span>crypto_test.ml
+        </a>
+      </h1>
+      <h2>88.89%</h2>
+    </div>
+    <div id="navbar">
+      <span class="some-visited" style="top:30.77%"></span>
+      <span class="some-visited" style="top:38.46%"></span>
+      <span class="some-visited" style="top:50.00%"></span>
+    </div>
+    <div id="report">
+      <div id="lines-layer">
+        <pre>
+<a id="L1"></a><span > </span>
+<a id="L2"></a><span > </span>
+<a id="L3"></a><span > </span>
+<a id="L4"></a><span > </span>
+<a id="L5"></a><span class="visited"> </span>
+<a id="L6"></a><span class="visited"> </span>
+<a id="L7"></a><span > </span>
+<a id="L8"></a><span class="some-visited"> </span>
+<a id="L9"></a><span class="visited"> </span>
+<a id="L10"></a><span class="some-visited"> </span>
+<a id="L11"></a><span class="visited"> </span>
+<a id="L12"></a><span class="visited"> </span>
+<a id="L13"></a><span class="some-visited"> </span>
+<a id="L14"></a><span class="visited"> </span>
+<a id="L15"></a><span > </span>
+<a id="L16"></a><span > </span>
+<a id="L17"></a><span class="visited"> </span>
+<a id="L18"></a><span class="visited"> </span>
+<a id="L19"></a><span > </span>
+<a id="L20"></a><span > </span>
+<a id="L21"></a><span class="visited"> </span>
+<a id="L22"></a><span class="visited"> </span>
+<a id="L23"></a><span class="visited"> </span>
+<a id="L24"></a><span > </span>
+<a id="L25"></a><span class="visited"> </span>
+<a id="L26"></a><span class="visited"> </span>
+</pre>
+      </div>
+      <div id="text-layer">
+        <pre id="line-numbers">
+<a href="#L1"> 1</a>
+<a href="#L2"> 2</a>
+<a href="#L3"> 3</a>
+<a href="#L4"> 4</a>
+<a href="#L5"> 5</a>
+<a href="#L6"> 6</a>
+<a href="#L7"> 7</a>
+<a href="#L8"> 8</a>
+<a href="#L9"> 9</a>
+<a href="#L10">10</a>
+<a href="#L11">11</a>
+<a href="#L12">12</a>
+<a href="#L13">13</a>
+<a href="#L14">14</a>
+<a href="#L15">15</a>
+<a href="#L16">16</a>
+<a href="#L17">17</a>
+<a href="#L18">18</a>
+<a href="#L19">19</a>
+<a href="#L20">20</a>
+<a href="#L21">21</a>
+<a href="#L22">22</a>
+<a href="#L23">23</a>
+<a href="#L24">24</a>
+<a href="#L25">25</a>
+<a href="#L26">26</a>
+</pre>
+<pre><code class="ocaml">open Types
+open Crypto
+
+let%expect_test "threshold qc rejects bad inputs." =
+  <span data-count="1">l</span>et sks, pks = gen_keys 1 in
+  <span data-count="1">l</span>et crypto = Some {sk = (List.h<span data-count="1">d</span> sks); pks = pks} in
+  let events = [NewView {id = 0; view = 1; tcp_lens = []; msg_type = NewView; node = None; justify = None; partial_signature = None}] in
+  let _ = try threshold_q<span data-count="0">c</span> crypto events with <span data-count="1">T</span>hresholdQCException -&gt; Fmt.pr "could not make qc!@."; <span data-count="1">C</span>onsensus_chained_impl.qc_0 in
+  [%expect {| could not make qc! |}<span data-count="3">]</span>;
+  <span data-count="1">l</span>et _ = try threshold_q<span data-count="0">c</span> crypto [] with <span data-count="1">T</span>hresholdQCException -&gt; Fmt.pr "could not make qc!@."; <span data-count="1">C</span>onsensus_chained_impl.qc_0 in
+  [%expect {| could not make qc! |}<span data-count="3">]</span>;
+  <span data-count="1">l</span>et events = [Timeout {view = 10}] in
+  let _ = try threshold_q<span data-count="0">c</span> crypto events with <span data-count="1">T</span>hresholdQCException -&gt; Fmt.pr "could not make qc!@."; <span data-count="1">C</span>onsensus_chained_impl.qc_0 in
+  [%expect {| could not make qc! |}<span data-count="3">]</span>
+
+let%expect_test "verify threshold qc rejects incomplete quorums." =
+  <span data-count="1">l</span>et sks, pks = gen_keys 1 in
+  <span data-count="1">l</span>et crypto = Some {sk = (List.h<span data-count="1">d</span> sks); pks = pks} in
+  let qc = {msg_type = NewView; view = 1; node = None; signature = None; ids = []} in
+  let v = verify_threshold_qc crypto 4 (Some Consensus_chained_impl.qc_0) (Some qc) in
+  <span data-count="1">F</span>mt.pr "%b@." v;
+  <span data-count="1">[</span>%expect {| false |}<span data-count="3">]</span>;
+  <span data-count="1">l</span>et qc = {msg_type = NewView; view = 1; node = None; signature = None; ids = [1; 2; 3]} in
+  let v = verify_threshold_qc crypto 4 (Some Consensus_chained_impl.qc_0) (Some qc) in
+  <span data-count="1">F</span>mt.pr "%b@." v;
+  <span data-count="1">[</span>%expect {| false |}<span data-count="3">]</span>
+</code></pre>
+      </div>
+    </div>
+    <script src="../coverage.js"></script>
+  </body>
+</html>
