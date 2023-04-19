@@ -47,6 +47,7 @@
 \contentsline {subsection}{\numberline {4.3.1}Batch sizes}{36}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Node counts}{36}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}Ablation study}{38}{subsection.4.3.3}%
-\contentsline {chapter}{Conclusion}{42}{chapter*.16}%
-\contentsline {section}{\numberline {5.1}Future Work}{42}{section.5.1}%
-\contentsline {chapter}{Bibliography}{43}{chapter*.17}%
+\contentsline {subsection}{\numberline {4.3.4}View change}{40}{subsection.4.3.4}%
+\contentsline {chapter}{Conclusion}{43}{chapter*.16}%
+\contentsline {section}{\numberline {5.1}Future Work}{43}{section.5.1}%
+\contentsline {chapter}{Bibliography}{44}{chapter*.17}%

@@ -1341,6 +1341,11 @@ INPUT ./images//ablation/throughputlost_ablation.png
 INPUT images//ablation/throughputlost_ablation.png
 INPUT ./images//ablation/throughputlost_ablation.png
 INPUT ./images//ablation/throughputlost_ablation.png
+INPUT ./images//viewchange/test7_100_7_100_timelatencyheatmap.png
+INPUT ./images//viewchange/test7_100_7_100_timelatencyheatmap.png
+INPUT images//viewchange/test7_100_7_100_timelatencyheatmap.png
+INPUT ./images//viewchange/test7_100_7_100_timelatencyheatmap.png
+INPUT ./images//viewchange/test7_100_7_100_timelatencyheatmap.png
 INPUT ./chapters/conclusions.tex
 INPUT chapters/conclusions.tex
 INPUT ./chapters/conclusions.tex

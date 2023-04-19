@@ -109,11 +109,10 @@ let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size
 			Fmt.epr "abort!@.";
 			exit 1;
 		);
-		(*  in *)
-		Lwt.async (fun () ->
+		(* Lwt.async (fun () ->
 			let* () = Lwt_unix.sleep 5. in
 			Net.send_quit (List.hd conns)
-		);
+		); * view change experiment *)
 		Fmt.pr "connected to all!@.";
 		Lwt.async (fun () ->
 			let n = time * rate in (* calculate based on actual number sent (filter)*)

@@ -14,7 +14,7 @@ let rec connect service t =
 			connect service (t *. 2.) (* binary exponential backoff *)
 
 let open_conn vat id =
-	let uri = Uri.of_string ("capnp://insecure@127.0.0.1:" ^ Int.to_string (id + 9000)) in
+	let uri = Uri.of_string ("capnp://insecure@10.0.0." ^ (Int.to_string (id + 1)) ^ ":9000") in
 	let sr = Capnp_rpc_unix.Vat.import_exn vat uri in
 	(sr, ref (connect sr 0.1))
 
