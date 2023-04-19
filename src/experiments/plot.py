@@ -40,7 +40,7 @@ fig.savefig(graph_dir + 'throughputlost.png')
 plt.close(fig)
 
 ax = sns.lineplot(x='goodput', y='mean', data=stats, hue='batch_size', palette = color, linestyle='--')
-ax.set(xlabel = 'goodput (req/s)', ylabel = 'mean latency (ms)')
+ax.set(xlabel = 'goodput (req/s)', ylabel = 'mean latency (s)')
 ax.legend(title = 'batch size')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlatency.png')
