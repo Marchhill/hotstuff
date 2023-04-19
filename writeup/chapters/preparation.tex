@@ -11,16 +11,18 @@
 % chubby (Google) - consensus is hard
 % related works
 
+Write stuff here\dots
+
 \section{Starting point}
 I had some experience using OCaml from the IA course but had never used it in a project. I also had some background in distributed systems from the IB course, which briefly covered Raft, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus and from developing a wallet application for Ethereum; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
 
 \section{HotStuff algorithm}
+Write stuff here\dots
+
 \subsection{Problem statement}
-HotStuff is a Byzantine fault-tolerant consensus algorithm. It allows a group of parties to agree on some piece of information under adverse conditions where some messages can be lost and some parties are controlled by a malicious adversary. The main application of HotStuff is in permissioned blockchains. For example, one could create a cryptocurrency by using HotStuff to reach consensus on a log of transactions like ``Account X transfers account Y £10". By allowing a large number of devices to reach consensus on a ledger, one can develop a decentralised payment system. In general, blockchains can be applied in situations where there is some central authority (a bank, DNS server, government, etc.) to instead create a distributed and decentralised system that requires less trust from participants.
+give more formal definition of consensus and talk about safety and liveness\dots
 
-The protocol can be viewed as a solution to the Byzantine generals problem. In this problem, a group of generals must all agree to siege a castle at the same time, as a single army would be defeated on its own. The problem is that the generals can only communicate via messengers that take some time to arrive and can be captured en route. Additionally up to a third of the generals may be malicious, and try to prevent the other generals from reaching consensus on a time to attack. By following the HotStuff protocol the generals can ensure that they all attack together. In contrast to the generals problem, HotStuff is able to reach consensus on multiple values instead of just one, so instead of deciding a single value like ``Attack at dawn", HotStuff can agree on a log of multiple values. The key is that once a value is decided and appended to the log it can never be modified or erased, the log can only ever be extended.
-
-These conditions are described by the system model: partially synchronous, Byzantine, with reliable, authenticated, point-to-point delivery. This means that messages sent by one party will always be delivered to another within some bounded amount of time after GST has been reached and a message source cannot be spoofed. The Byzantine assumption means a maximum of n faulty nodes may be controlled by an adversary that is actively trying to prevent us from correctly reaching consensus, where $n = 3f + 1$ and n is the total number of parties.
+These conditions are described by the system model: partially synchronous, Byzantine, with reliable, authenticated, point-to-point delivery. This means that messages sent by one party will always be delivered to another within some bounded amount of time after global synchronisation time (GST) has been reached and a message source cannot be spoofed. The Byzantine assumption means a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent us from correctly reaching consensus, where $n = 3f + 1$ and $n$ is the total number of parties.
 
 \subsection{Non-Byzantine case}
 We will start by describing an algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a Byzantine one. Examples of similar algorithms include Raft and multi-shot Paxos. Such an algorithm must ensure that once a value is decided and appended to the log, it cannot be modified or erased. In each view, a leader proposes some log which it aims to decide upon with a group of replicas. Our implementation assigns leaders to views using a round-robin system.
@@ -197,34 +199,6 @@ Unit testing was carried out using `expect tests', which compare the outputted p
 The Memtrace library and viewer were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
 
 % mention mininet for evaluation?
-% Clone github.com/cjen1/reckon
-
-% ```
-% # This is likely to take a while
-% make reckon-mininet
-
-% docker run -it --privileged -e DISPLAY --network host --name reckon-mininet cjen1/reckon:latest bash
-
-% # Set up mininet net with a single switch and 3 nodes
-% # drops you into a cli (you can also use python scripting)
-% mn --topo single,3
-
-% # observe no delay between nodes
-% mininet> h1 ping h2
-% mininet> <Ctrl-C>/<Ctrl-D> to exit
-
-% # syntax is `mininet> <node> <command>`
-% # I run screens on each node and then attach to those from outside mininet to run the tests in different terminal screens. (Tmux doesn't work correctly afaicr)
-
-% mininet> h1 screen -dmS node_h1 bash
-
-% #Then in another terminal session
-% docker exec -it reckon-mininet bash
-% screen -r node_h1
-% <whatever commands you want to run on that emulated node>
-
-% #Similarly for the other nodes
-% ```
 
 Due to the distributed nature of the program, normal debugging tools and profilers are not useful for debugging deadlocks and performance issues. This is because the cause of deadlocks and performance issues is often some process waiting or a backlog of work forming, but this cannot be detected by tools that just track things like CPU usage. Instead, I had to rely on manual inspection of the program trace and commands that measure the real time taken for some part of the program to run.
 

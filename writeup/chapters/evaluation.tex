@@ -113,7 +113,7 @@ blah blah node counts
 \end{figure}
 
 \subsection{Ablation study}
-blah blah ablation
+blah blah ablation.
 
 Versions:
 \begin{enumerate}
@@ -127,17 +127,46 @@ Versions:
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{ablation/throughputgoodput_ablation.png}
-\caption{Benchmarking of goodput for varying throughputs and implementation versions, run for 10s}
+\caption{Benchmarking of goodput for varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size.}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{ablation/throughputlatency_ablation.png}
-\caption{Benchmarking of mean latency while varying throughputs and implementation versions, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
+\caption{Benchmarking of mean latency while varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size. Discarded result if goodput was not within 5\% of target throughput.}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{ablation/throughputlost_ablation.png}
-\caption{Benchmarking of \% requests lost while varying throughputs and implementation versions, run for 10s.}
+\caption{Benchmarking of \% requests lost while varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size.}
 \end{figure}
+
+% Clone github.com/cjen1/reckon
+
+% ```
+% # This is likely to take a while
+% make reckon-mininet
+
+% docker run -it --privileged -e DISPLAY --network host --name reckon-mininet cjen1/reckon:latest bash
+
+% # Set up mininet net with a single switch and 3 nodes
+% # drops you into a cli (you can also use python scripting)
+% mn --topo single,3
+
+% # observe no delay between nodes
+% mininet> h1 ping h2
+% mininet> <Ctrl-C>/<Ctrl-D> to exit
+
+% # syntax is `mininet> <node> <command>`
+% # I run screens on each node and then attach to those from outside mininet to run the tests in different terminal screens. (Tmux doesn't work correctly afaicr)
+
+% mininet> h1 screen -dmS node_h1 bash
+
+% #Then in another terminal session
+% docker exec -it reckon-mininet bash
+% screen -r node_h1
+% <whatever commands you want to run on that emulated node>
+
+% #Similarly for the other nodes
+% ```
