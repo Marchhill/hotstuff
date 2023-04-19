@@ -16,21 +16,25 @@ Write stuff here\dots
 \section{Starting point}
 I had some experience using OCaml from the IA course but had never used it in a project. I also had some background in distributed systems from the IB course, which briefly covered Raft, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus and from developing a wallet application for Ethereum; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
 
+% the whole implementation was written from scratch??
+
 \section{HotStuff algorithm}
 Write stuff here\dots
 
 \subsection{Problem statement}
 give more formal definition of consensus and talk about safety and liveness\dots
+Describe what a view is, and a leader
 
-These conditions are described by the system model: partially synchronous, Byzantine, with reliable, authenticated, point-to-point delivery. This means that messages sent by one party will always be delivered to another within some bounded amount of time after global synchronisation time (GST) has been reached and a message source cannot be spoofed. The Byzantine assumption means a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent us from correctly reaching consensus, where $n = 3f + 1$ and $n$ is the total number of parties.
+These conditions are described by the system model: partially synchronous, byzantine, with reliable, authenticated, point-to-point delivery. This means that messages sent by one party will always be delivered to another within some bounded amount of time after global synchronisation time (GST) has been reached and a message source cannot be spoofed. The Byzantine assumption means a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent us from correctly reaching consensus, where $n = 3f + 1$ and $n$ is the total number of parties.
 
-\subsection{Non-Byzantine case}
-We will start by describing an algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a Byzantine one. Examples of similar algorithms include Raft and multi-shot Paxos. Such an algorithm must ensure that once a value is decided and appended to the log, it cannot be modified or erased. In each view, a leader proposes some log which it aims to decide upon with a group of replicas. Our implementation assigns leaders to views using a round-robin system.
+\subsection{Non-byzantine case}
+We will start by describing an algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft and multi-shot Paxos. Such an algorithm must ensure that once a value is decided and appended to the log, it cannot be modified or erased. In each view, a leader proposes some log which it aims to decide upon with a group of replicas. Our implementation assigns leaders to views using a round-robin system.
 
-Each view can be broken into two phases; phase 1 allows the leader to learn of previously decided values, and in phase 2 it decides on a value. Phase 1 is initiated by the leader broadcasting the current view number to the replicas, which respond by sending their longest accepted log (the one with the highest corresponding view number). Once the leader has a quorum of responses, it initiates phase 2: it selects the longest log that has been sent to it and broadcasts it to the replicas. The leader may also extend the log at this point with its own values, or create a new log if it did not receive anything. Finally, the replica updates its log to the value sent by the leader and sends an acknowledgement. Once the leader receives a quorum of acknowledgements it can commit the new log. This algorithm satisfies our requirement that a committed log can only be extended.
+Each view can be broken into two phases; phase 1 allows the leader to learn of previously decided values, and in phase 2 it decides on a value. Phase 1 is initiated by the leader broadcasting the current view number to the replicas, which respond by sending their longest accepted log (the one with the highest corresponding view number). Once the leader has a quorum of responses, it initiates phase 2: it selects the longest log that has been sent to it and broadcasts it to the replicas. The leader may also extend the log at this point with its own values, or create a new log if it did not receive anything. Finally, each replica updates its log to the value sent by the leader and sends an acknowledgement. Once the leader receives a quorum of acknowledgements it can commit the new log. This algorithm satisfies our requirement that a committed log can only be extended.
 
-We will refer to phase 1 as the \textit{new-view} stage, and phase 2 as the \textit{commit} phase to use the terminology of the HotStuff paper. These are followed by the \textit{decide} phase, in which the leader sends a decide message to replicas. Once they receive this message they can consider the log decided, and execute the new commands which have been added to the log.
-% *** replace with diagrams
+We will refer to phase 1 as the \textit{new-view} stage, and phase 2 as the \textit{commit} phase to use the terminology of the HotStuff paper. These are followed by the \textit{decide} phase, in which the leader sends a decide message to replicas. Once they receive this message they can consider the log decided, and execute the new commands which have been added to the log. See an example in figure \ref{nonbyzantineexample}.
+% *** replace with diagrams?
+\begin{figure}[h!] 
 \texttt{
 \begin{enumerate}
 \item New-view: 
@@ -50,6 +54,10 @@ We will refer to phase 1 as the \textit{new-view} stage, and phase 2 as the \tex
 	\end{enumerate}
 \end{enumerate}
 }
+\caption{Non-byzantine example}
+\label{nonbyzantineexample}
+\end{figure}
+
 \subsection{Byzantine case}
 In order to extend our algorithm to achieve consensus under a Byzantine threat model we must handle three threats that we will deal with in turn. To do this we must first introduce the concept of a `threshold signature'. Acknowledgements from replicas all contain a signature over the message to prove that they were actually sent by the correct node. The leader can create a threshold signature by combining $n - f $ ack messages' signatures to prove that they really received a quorum of acknowledgements. A collection of a quorum of votes with a threshold signature is known as a `quorum certificate'.
 
@@ -66,6 +74,10 @@ Solution: Replicas must lock on a value once it is committed and not accept a \t
 
 Solution: Add to the \textit{new-view} message a qc over \textit{prepare} acks from the original view in which the message was proposed as proof that it was indeed proposed.
 \end{enumerate}
+
+See an example in figure \ref{byzantineexample}.
+
+\begin{figure}[h!] 
 \texttt{
 \begin{enumerate}
 \item New-view: 
@@ -92,12 +104,18 @@ Solution: Add to the \textit{new-view} message a qc over \textit{prepare} acks f
 	\end{enumerate}
 \end{enumerate}
 }
+\caption{Byzantine example}
+\label{byzantineexample}
+\end{figure}
+
 \subsection{Optimistic responsiveness}
 Consider again the \textit{prepare} phase. In this phase, the leader selects the quorum certificate from the highest view that it hears about from the \textit{new-view} messages. However, there may be some honest replica that we do not hear from (perhaps their message was lost) that is locked on a higher-view proposal than the one that we choose to propose. When this replica receives our pre-proposal, it will reject it as it is locked on a higher-view proposal. This means that we could be prevented from making progress in this view by missing one replica in the \textit{new-view} phase.
 
 This means that our system doesn't have the `liveness' property, which means that it will make progress under synchronous conditions when a non-faulty leader is elected. It is possible that we repeatedly don't hear from this one honest replica and fail to make progress indefinitely. One solution to this problem is to introduce a timeout $\Delta$ that we must wait for before progressing to ensure that we have allowed sufficient time to pass such that we have heard from the honest replica. This solution has the disadvantage that our system is not `responsive', which means that the system can make progress as fast as network conditions allow when we have a non-faulty leader and does not depend on $\Delta$.
 
-In order to achieve responsiveness we can modify our algorithm by adding a \textit{pre-commit} phase in between \textit{prepare} and \textit{commit}. This ensures that if some honest replica becomes locked on a value in the \textit{commit} phase, then there are at least $f + 1$ honest nodes that have a `key' for that value from the \textit{pre-commit} phase. More specifically, they have a `key-proof' composed of a quorum certificate over \textit{pre-commit} acks. Replicas then send this key-proof with their \textit{new-view} message when a new view begins. The new leader selects the key-proof with the highest view proposal and sends it along with their \textit{prepare} message. Even if the leader does not receive a \textit{new-view} message from the replica which is locked on the highest view proposal, they must have received the key to this proposal from some honest replica, so their \textit{prepare} message will make progress.
+In order to achieve responsiveness we can modify our algorithm by adding a \textit{pre-commit} phase in between \textit{prepare} and \textit{commit}. This ensures that if some honest replica becomes locked on a value in the \textit{commit} phase, then there are at least $f + 1$ honest nodes that have a `key' for that value from the \textit{pre-commit} phase. More specifically, they have a `key-proof' composed of a quorum certificate over \textit{pre-commit} acks. Replicas then send this key-proof with their \textit{new-view} message when a new view begins. The new leader selects the key-proof with the highest view proposal and sends it along with their \textit{prepare} message. Even if the leader does not receive a \textit{new-view} message from the replica which is locked on the highest view proposal, they must have received the key to this proposal from some honest replica, so their \textit{prepare} message will make progress. See an example in figure \ref{responsiveeexample}.
+
+\begin{figure}[h!]
 \texttt{
 \begin{enumerate}
 \item New view: 
@@ -129,6 +147,10 @@ In order to achieve responsiveness we can modify our algorithm by adding a \text
 	\end{enumerate}
 \end{enumerate}
 }
+\caption{Responsive example}
+\label{responsiveeexample}
+\end{figure}
+
 \subsection{View-changes} \label{viewchange}
 If a leader fails to make progress within some timeout a view-change takes place and the next view begins. The HotStuff paper does not go into detail on how view-changes take place, so this explanation is based on a talk by one of its authors, Ittai Abraham \cite{ittai}.
 

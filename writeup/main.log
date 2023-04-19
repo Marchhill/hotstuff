@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  18 APR 2023 20:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  19 APR 2023 11:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -957,84 +957,110 @@ Overfull \hbox (14.85692pt too wide) in paragraph at lines 15--16
 
 [6
 
-]) [7] (./chapters/preparation.tex [8
+]) [7] (./chapters/preparation.tex
+Overfull \hbox (3.57568pt too wide) in paragraph at lines 25--27
+\T1/cmr/m/n/12 give more for-mal def-i-ni-tion of con-sen-sus and talk about safety and live-ness...Describe
+ []
+
+[8
 
 ]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 52.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 56.
  (/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-Overfull \hbox (10.8426pt too wide) in paragraph at lines 52--52
-[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``view = 2, log = [`hello', `world']", ... 
+Underfull \hbox (badness 10000) in paragraph at lines 56--56
+[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``view = 2, log = [`hello', `world']",
  []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [9]
-Overfull \hbox (4.66911pt too wide) in paragraph at lines 94--94
-[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``log = [`hello', `world'], qc = (prepare
- []
-
-[10]
-Overfull \hbox (10.8426pt too wide) in paragraph at lines 94--94
-[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``log = [`hello', `world', `!'] ack", ... 
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
+[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``log = [`hello', `world'], qc =
  []
 
 
-Overfull \hbox (41.71007pt too wide) in paragraph at lines 94--94
-[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``log = [`hello', `world', `!']", qc = (prepare
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
+[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``log = [`hello', `world', `!'] ack",
  []
 
 
-Overfull \hbox (4.66911pt too wide) in paragraph at lines 94--94
-[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``decide, qc = (commit acks from previous
- []
-
-[11]
-Overfull \hbox (41.71007pt too wide) in paragraph at lines 131--131
-[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``qc = (key-proof for view = 2, log = [`hello',
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
+[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``log = [`hello', `world', `!']", qc =
  []
 
 
-Overfull \hbox (47.88356pt too wide) in paragraph at lines 131--131
-[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``log = [`hello', `world', `!'], qc = (key-proof
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
+[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``decide, qc = (commit acks from
+ []
+
+[10
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.109 \end{figure}
+                  ] [11
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.115 
+      ]
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
+[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``qc = (key-proof for view = 2, log =
  []
 
 
-Overfull \hbox (10.8426pt too wide) in paragraph at lines 131--131
-[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``log = [`hello', `world', `!'] ack", ... 
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
+[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``log = [`hello', `world', `!'], qc =
  []
 
 
-Overfull \hbox (35.53658pt too wide) in paragraph at lines 131--131
-[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``qc = (prepare acks / key-proof from previous
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
+[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``log = [`hello', `world', `!'] ack",
  []
 
 
-Overfull \hbox (10.8426pt too wide) in paragraph at lines 131--131
-[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``log = [`hello', `world', `!'] ack", ... 
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
+[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``qc = (prepare acks / key-proof from
  []
 
 
-Overfull \hbox (29.36308pt too wide) in paragraph at lines 131--131
-[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``qc = (pre-commit acks from previous stage)" 
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
+[]\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``log = [`hello', `world', `!'] ack",
  []
 
 
-Overfull \hbox (4.66911pt too wide) in paragraph at lines 131--131
-[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``decide, qc = (commit acks from previous
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
+[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``qc = (pre-commit acks from previous
  []
 
-[12]
-<images//nchain.png, id=351, 1629.08624pt x 334.24875pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 149--149
+[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: ``decide, qc = (commit acks from
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[12] [13
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.164 
+      ]
+<images//nchain.png, id=362, 1629.08624pt x 334.24875pt>
 File: images//nchain.png Graphic file (type png)
 <use images//nchain.png>
-Package pdftex.def Info: images//nchain.png  used on input line 145.
+Package pdftex.def Info: images//nchain.png  used on input line 167.
 (pdftex.def)             Requested size: 488.72964pt x 100.27539pt.
 
-Overfull \hbox (61.9383pt too wide) in paragraph at lines 145--146
+Overfull \hbox (61.9383pt too wide) in paragraph at lines 167--168
  [][] 
  []
 
-[13 <./images//nchain.png>] [14] [15] [16]) [17] (./chapters/implementation.tex [18
+[14 <./images//nchain.png>] [15] [16]) [17] (./chapters/implementation.tex [18
 
 ]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 54.
@@ -1067,7 +1093,7 @@ LaTeX Font Info:    Trying to load font information for T1+cmss on input line 45
  (/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 ) [31] [32]) [33] (./chapters/evaluation.tex
-<images//dummy_test/throughputgoodput.png, id=511, 462.528pt x 346.896pt>
+<images//dummy_test/throughputgoodput.png, id=517, 462.528pt x 346.896pt>
 File: images//dummy_test/throughputgoodput.png Graphic file (type png)
 <use images//dummy_test/throughputgoodput.png>
 Package pdftex.def Info: images//dummy_test/throughputgoodput.png  used on input line 23.
@@ -1076,7 +1102,7 @@ Package pdftex.def Info: images//dummy_test/throughputgoodput.png  used on input
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//dummy_test/throughputlatency.png, id=512, 462.528pt x 346.896pt>
+<images//dummy_test/throughputlatency.png, id=518, 462.528pt x 346.896pt>
 File: images//dummy_test/throughputlatency.png Graphic file (type png)
 <use images//dummy_test/throughputlatency.png>
 Package pdftex.def Info: images//dummy_test/throughputlatency.png  used on input line 29.
@@ -1084,7 +1110,7 @@ Package pdftex.def Info: images//dummy_test/throughputlatency.png  used on input
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//dummy_test/throughputlost.png, id=513, 462.528pt x 346.896pt>
+<images//dummy_test/throughputlost.png, id=519, 462.528pt x 346.896pt>
 File: images//dummy_test/throughputlost.png Graphic file (type png)
 <use images//dummy_test/throughputlost.png>
 Package pdftex.def Info: images//dummy_test/throughputlost.png  used on input line 35.
@@ -1095,7 +1121,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//batch_size_test/throughputgoodput.png, id=514, 462.528pt x 346.896pt>
+<images//batch_size_test/throughputgoodput.png, id=520, 462.528pt x 346.896pt>
 File: images//batch_size_test/throughputgoodput.png Graphic file (type png)
 <use images//batch_size_test/throughputgoodput.png>
 Package pdftex.def Info: images//batch_size_test/throughputgoodput.png  used on input line 78.
@@ -1116,7 +1142,7 @@ l.80 \end{figure}
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//batch_size_test/throughputlatency.png, id=527, 462.528pt x 346.896pt>
+<images//batch_size_test/throughputlatency.png, id=533, 462.528pt x 346.896pt>
 File: images//batch_size_test/throughputlatency.png Graphic file (type png)
 <use images//batch_size_test/throughputlatency.png>
 Package pdftex.def Info: images//batch_size_test/throughputlatency.png  used on input line 84.
@@ -1124,7 +1150,7 @@ Package pdftex.def Info: images//batch_size_test/throughputlatency.png  used on 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//batch_size_test/throughputlost.png, id=528, 462.528pt x 346.896pt>
+<images//batch_size_test/throughputlost.png, id=534, 462.528pt x 346.896pt>
 File: images//batch_size_test/throughputlost.png Graphic file (type png)
 <use images//batch_size_test/throughputlost.png>
 Package pdftex.def Info: images//batch_size_test/throughputlost.png  used on input line 90.
@@ -1132,7 +1158,7 @@ Package pdftex.def Info: images//batch_size_test/throughputlost.png  used on inp
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//node_count_test/throughputgoodput_nodes.png, id=529, 462.528pt x 346.896pt>
+<images//node_count_test/throughputgoodput_nodes.png, id=535, 462.528pt x 346.896pt>
 File: images//node_count_test/throughputgoodput_nodes.png Graphic file (type png)
 <use images//node_count_test/throughputgoodput_nodes.png>
 Package pdftex.def Info: images//node_count_test/throughputgoodput_nodes.png  used on input line 99.
@@ -1140,7 +1166,7 @@ Package pdftex.def Info: images//node_count_test/throughputgoodput_nodes.png  us
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//node_count_test/throughputlatency_nodes.png, id=530, 462.528pt x 346.896pt>
+<images//node_count_test/throughputlatency_nodes.png, id=536, 462.528pt x 346.896pt>
 File: images//node_count_test/throughputlatency_nodes.png Graphic file (type png)
 <use images//node_count_test/throughputlatency_nodes.png>
 Package pdftex.def Info: images//node_count_test/throughputlatency_nodes.png  used on input line 105.
@@ -1148,7 +1174,7 @@ Package pdftex.def Info: images//node_count_test/throughputlatency_nodes.png  us
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//node_count_test/throughputlost_nodes.png, id=531, 462.528pt x 346.896pt>
+<images//node_count_test/throughputlost_nodes.png, id=537, 462.528pt x 346.896pt>
 File: images//node_count_test/throughputlost_nodes.png Graphic file (type png)
 <use images//node_count_test/throughputlost_nodes.png>
 Package pdftex.def Info: images//node_count_test/throughputlost_nodes.png  used on input line 111.
@@ -1197,12 +1223,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.9}) h
                                                   \__shipout_drop_firstpage_...
 l.121 	\item U
               nchained version - node truncation disabled, command filtering... <./images//node_count_test/throughputlatency_nodes.png> <./images//node_count_test/throughputlost_nodes.png>]
-<images//ablation/throughputgoodput_ablation.png, id=565, 462.528pt x 346.896pt>
+<images//ablation/throughputgoodput_ablation.png, id=571, 462.528pt x 346.896pt>
 File: images//ablation/throughputgoodput_ablation.png Graphic file (type png)
 <use images//ablation/throughputgoodput_ablation.png>
 Package pdftex.def Info: images//ablation/throughputgoodput_ablation.png  used on input line 129.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
-<images//ablation/throughputlatency_ablation.png, id=566, 462.528pt x 346.896pt>
+<images//ablation/throughputlatency_ablation.png, id=572, 462.528pt x 346.896pt>
 File: images//ablation/throughputlatency_ablation.png Graphic file (type png)
 <use images//ablation/throughputlatency_ablation.png>
 Package pdftex.def Info: images//ablation/throughputlatency_ablation.png  used on input line 135.
@@ -1211,7 +1237,7 @@ Package pdftex.def Info: images//ablation/throughputlatency_ablation.png  used o
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//ablation/throughputlost_ablation.png, id=567, 462.528pt x 346.896pt>
+<images//ablation/throughputlost_ablation.png, id=573, 462.528pt x 346.896pt>
 File: images//ablation/throughputlost_ablation.png Graphic file (type png)
 <use images//ablation/throughputlost_ablation.png>
 Package pdftex.def Info: images//ablation/throughputlost_ablation.png  used on input line 141.
@@ -1240,21 +1266,21 @@ l.124 \chapter
 
 ] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 8744E27B2555D07C375989C4B44E07D3;6163.
+(rerunfilecheck)             Checksum: BA69C0CD6A01B91AB686CD3AA329E1BD;6163.
  ) 
 Here is how much of TeX's memory you used:
- 39660 strings out of 478268
- 868776 string characters out of 5835366
- 1169936 words of memory out of 5000000
- 57125 multiletter control sequences out of 15000+600000
+ 39666 strings out of 478268
+ 868865 string characters out of 5835366
+ 1170073 words of memory out of 5000000
+ 57128 multiletter control sequences out of 15000+600000
  494145 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  130i,10n,142p,1660b,3605s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx3583.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (44 pages, 1238522 bytes).
+Output written on main.pdf (44 pages, 1239100 bytes).
 PDF statistics:
- 740 PDF objects out of 1000 (max. 8388607)
- 610 compressed objects within 7 object streams
- 170 named destinations out of 1000 (max. 500000)
+ 746 PDF objects out of 1000 (max. 8388607)
+ 616 compressed objects within 7 object streams
+ 173 named destinations out of 1000 (max. 500000)
  446 words of extra memory for PDF output out of 10000 (max. 10000000)
 

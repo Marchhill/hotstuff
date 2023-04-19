@@ -3,20 +3,20 @@
 \contentsline {section}{\numberline {2.1}Starting point}{8}{section.2.1}%
 \contentsline {section}{\numberline {2.2}HotStuff algorithm}{8}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Problem statement}{8}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Non-Byzantine case}{9}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Byzantine case}{10}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.2}Non-byzantine case}{9}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Byzantine case}{9}{subsection.2.2.3}%
 \contentsline {subsection}{\numberline {2.2.4}Optimistic responsiveness}{11}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}View-changes}{13}{subsection.2.2.5}%
+\contentsline {subsection}{\numberline {2.2.5}View-changes}{12}{subsection.2.2.5}%
 \contentsline {subsection}{\numberline {2.2.6}Chaining}{13}{subsection.2.2.6}%
 \contentsline {section}{\numberline {2.3}Tools \& Libraries}{14}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}OCaml}{14}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Lwt}{15}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{15}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{15}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{16}{subsection.2.3.4}%
 \contentsline {section}{\numberline {2.4}Requirements analysis}{16}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Software engineering practices}{16}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Development methodology}{16}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{16}{subsection.2.5.2}%
+\contentsline {section}{\numberline {2.5}Software engineering practices}{17}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Development methodology}{17}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{17}{subsection.2.5.2}%
 \contentsline {subsection}{\numberline {2.5.3}Source code management}{17}{subsection.2.5.3}%
 \contentsline {chapter}{Implementation}{18}{chapter*.6}%
 \contentsline {section}{\numberline {3.1}Overview}{18}{section.3.1}%
