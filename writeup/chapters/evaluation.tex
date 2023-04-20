@@ -26,7 +26,7 @@ I benchmarked the message sending functionality of Cap'n Proto. I did this with 
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{dummy_test/throughputlatency.png}
+\includegraphics[scale=0.75]{dummy_test/throughputflatency.png}
 \caption{Benchmarking of Cap'n Proto server latencies for varying throughputs and message sizes, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
 \end{figure}
 
@@ -81,7 +81,7 @@ blah blah batch sizes
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{batch_size_test/throughputlatency.png}
+\includegraphics[scale=0.75]{batch_size_test/throughputflatency.png}
 \caption{Benchmarking of mean latency while varying throughputs and batch sizes, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
 \end{figure}
 
@@ -89,6 +89,18 @@ blah blah batch sizes
 \centering
 \includegraphics[scale=0.75]{batch_size_test/throughputlost.png}
 \caption{Benchmarking of \% requests lost while varying throughputs and batch sizes, run for 10s.}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{mininet/throughputlatency.png}
+\caption{Benchmarking of mean latency while varying throughputs and batch sizes, run for 10s with 100ms network delay.}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.75]{mininet/10tpub_cumlatency.png}
+\caption{Cumulative latency plot for experiment with a throughput of 10req/s and unlimited batch size, run for 10s with 100ms network delay.}
 \end{figure}
 
 \subsection{Node counts}
@@ -102,7 +114,7 @@ blah blah node counts
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{node_count_test/throughputlatency_nodes.png}
+\includegraphics[scale=0.75]{node_count_test/throughputflatency_nodes.png}
 \caption{Benchmarking of mean latency while varying throughputs and node counts, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
 \end{figure}
 
@@ -117,11 +129,11 @@ blah blah ablation.
 
 Versions:
 \begin{enumerate}
-	\item Chained
-	\item Unchained version - node truncation disabled, command filtering disabled
-	\item Unchained version - node truncation disabled, command filtering enabled
-	\item Unchained version - node truncation enabled, command filtering disabled
-	\item Unchained version - node truncation enabled, command filtering enabled
+	\item Unchained version
+	\item Chained version - node truncation disabled, command filtering disabled
+	\item Chained version - node truncation disabled, command filtering enabled
+	\item Chained version - node truncation enabled, command filtering disabled
+	\item Chained version - node truncation enabled, command filtering enabled
 \end{enumerate}
 
 \begin{figure}[h!]
@@ -132,7 +144,7 @@ Versions:
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{ablation/throughputlatency_ablation.png}
+\includegraphics[scale=0.75]{ablation/throughputflatency_ablation.png}
 \caption{Benchmarking of mean latency while varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size. Discarded result if goodput was not within 5\% of target throughput.}
 \end{figure}
 

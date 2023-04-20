@@ -7,7 +7,7 @@
 \contentsline {subsection}{\numberline {2.2.3}Byzantine case}{9}{subsection.2.2.3}%
 \contentsline {subsection}{\numberline {2.2.4}Optimistic responsiveness}{11}{subsection.2.2.4}%
 \contentsline {subsection}{\numberline {2.2.5}View-changes}{12}{subsection.2.2.5}%
-\contentsline {subsection}{\numberline {2.2.6}Chaining}{13}{subsection.2.2.6}%
+\contentsline {subsection}{\numberline {2.2.6}Chaining}{12}{subsection.2.2.6}%
 \contentsline {section}{\numberline {2.3}Tools \& Libraries}{14}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}OCaml}{15}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Lwt}{15}{subsection.2.3.2}%
@@ -47,7 +47,7 @@
 \contentsline {subsection}{\numberline {4.3.1}Batch sizes}{37}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Node counts}{37}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}Ablation study}{39}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}View change}{41}{subsection.4.3.4}%
-\contentsline {chapter}{Conclusion}{44}{chapter*.16}%
-\contentsline {section}{\numberline {5.1}Future Work}{44}{section.5.1}%
-\contentsline {chapter}{Bibliography}{45}{chapter*.17}%
+\contentsline {subsection}{\numberline {4.3.4}View change}{42}{subsection.4.3.4}%
+\contentsline {chapter}{Conclusion}{45}{chapter*.16}%
+\contentsline {section}{\numberline {5.1}Future Work}{45}{section.5.1}%
+\contentsline {chapter}{Bibliography}{46}{chapter*.17}%
