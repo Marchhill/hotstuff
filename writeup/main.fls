@@ -1232,11 +1232,11 @@ INPUT ./chapters/preparation.tex
 INPUT chapters/preparation.tex
 INPUT ./chapters/preparation.tex
 INPUT chapters/preparation.tex
+INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1200.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm1728.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx1728.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm1440.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm
-INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1200.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd

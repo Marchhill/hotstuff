@@ -11,25 +11,24 @@
 % chubby (Google) - consensus is hard
 % related works
 
-Write stuff here\dots
+\textit{In this chapter we disclose my knowledge and experience prior to beginning this project [\ref{start}], give a theoretical basis for understanding the HotStuff algorithm [\ref{hotstufftheory}], outline the tools [\ref{tools}] and methodology [\ref{softwareeng}] deployed in implementation, and highlight the requirements that the implementation should meet [\ref{requirements}].}
 
-\section{Starting point}
+\section{Starting point} \label{start}
 I had some experience using OCaml from the IA course but had never used it in a project. I also had some background in distributed systems from the IB course, which briefly covered Raft, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus and from developing a wallet application for Ethereum; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
 
 % the whole implementation was written from scratch??
 
-\section{HotStuff algorithm}
-Write stuff here\dots
+\section{HotStuff algorithm} \label{hotstufftheory}
+A consensus algorithm allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a leader node proposes some value by sending it the the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that the log has been agreed upon up to that point and cannot be altered. Once the log is committed the leader can send `decide' to the replicas; if the log is a list of commands, then the new commands can safely be executed at this point. A consensus algorithm must have these properties:
 
-\subsection{Problem statement}
-give more formal definition of consensus and talk about safety and liveness\dots
-Describe what a view is, and a leader
+\begin{itemize}
+	\item Safety: Once a log has been committed it cannot be deleted or altered, only appended to.
+	\item Liveness: The system is guaranteed to make progress once a non-faulty leader is elected.
+\end{itemize}
 
-Such an algorithm must ensure that once a value is decided and appended to the log, it cannot be modified or erased. In each view, a leader proposes some log which it aims to decide upon with a group of replicas. Our implementation assigns leaders to views using a round-robin system.
+The adverse conditions that HotStuff can operate under are described by the system model: partially synchronous, byzantine, with reliable, authenticated, point-to-point delivery. This means that messages sent by one party will always be delivered to another within some bounded amount of time after global synchronisation time (GST) has been reached and a message source cannot be spoofed. The byzantine assumption means a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes.
 
-These conditions are described by the system model: partially synchronous, byzantine, with reliable, authenticated, point-to-point delivery. This means that messages sent by one party will always be delivered to another within some bounded amount of time after global synchronisation time (GST) has been reached and a message source cannot be spoofed. The Byzantine assumption means a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent us from correctly reaching consensus, where $n = 3f + 1$ and $n$ is the total number of parties.
-
-\subsection{Non-byzantine case}
+\subsection{Non-byzantine consensus}
 We will start by describing an algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft and multi-shot Paxos.
 
 Each view can be broken into two phases; phase 1 allows the leader to learn of previously decided values, and in phase 2 it decides on a value. Phase 1 is initiated by the leader broadcasting the current view number to the replicas, which respond by sending their longest accepted log (the one with the highest corresponding view number). Once the leader has a quorum of responses, it initiates phase 2: it selects the longest log that has been sent to it and broadcasts it to the replicas. The leader may also extend the log at this point with its own values, or create a new log if it did not receive anything. Finally, each replica updates its log to the value sent by the leader and sends an acknowledgement. Once the leader receives a quorum of acknowledgements it can commit the new log. This algorithm satisfies our requirement that a committed log can only be extended.
@@ -60,7 +59,7 @@ We will refer to phase 1 as the \textit{new-view} stage, and phase 2 as the \tex
 \label{nonbyzantineexample}
 \end{figure}
 
-\subsection{Byzantine case}
+\subsection{Byzantine consensus}
 In order to extend our algorithm to achieve consensus under a Byzantine threat model we must handle two threats that we will deal with in turn. To do this we must first introduce the concept of a `threshold signature'. Acknowledgements from replicas all contain a signature over the message to prove that they were actually sent by the correct node. The leader can create a threshold signature by combining $n - f$ ack messages' signatures to prove that they really received a quorum of acknowledgements. A collection of a quorum of votes with a threshold signature is known as a `quorum certificate' or `QC'.
 
 \begin{enumerate}
@@ -183,8 +182,8 @@ To reproduce the behaviour of the unchained algorithm, on receiving a proposal f
 \item three-chain: this is equivalent to the \textit{decide} phase, so the replica can execute the commands from the node at the start of the three-chain
 \end{itemize}
 
-\section{Tools \& Libraries}
-Add text here!
+\section{Tools \& libraries} \label{tools}
+\textit{In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.}
 
 \subsection{OCaml}
 I chose OCaml for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, and good library support. OCaml's multi-paradigm nature is suitable for implementing HotStuff, as the core state machine can be elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm. Additionally, the Tezos cryptocurrency is written in OCaml and contains a cryptography library that provides the functionality needed by HotStuff.
@@ -206,8 +205,9 @@ Cap'n Proto is an RPC framework that includes a library for sending and receivin
 \subsection{Tezos cryptography} \label{tezos}
 The Tezos cryptography library provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, aggregate several signatures into a single one, and check whether an aggregate signature is valid. The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature. Benchmarks for the library are presented in section \ref{tezosbenchmark}.
 
-\section{Requirements analysis}
-Add text here!!
+\section{Requirements analysis} \label{requirements}
+
+In order to be successful the implementation should conform to the following requirements:
 
 \begin{itemize}
 	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper \ref{hotstuff}. This can be established by testing the program trace for compliance with the algorithm specification [do I need to mention change from proposal here ***].
@@ -222,8 +222,9 @@ These requirements are similar to those presented in my proposal (Appendix X***)
 % Additionally the extension has been changed from adding support for network reconfiguration to describing how to implement verifiable anonymous identities. This is because this extension seemed like a more interesting direction for the project with more exciting applications.
 % mention how the reconfig extension was dropped for focusing on performance improvements
 
-\section{Software engineering practices}
-Text here!
+\section{Software engineering practices} \label{softwareeng}
+
+\textit{In this section we describe the professional software engineering methodology deployed during implementation.}
 
 \subsection{Development methodology}
 [should i say i used something like RAD and productivity tracking tools???]

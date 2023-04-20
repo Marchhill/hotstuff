@@ -34,9 +34,9 @@
 	folder icons/.default={12pt},
 }
 % ---
-Text here!
+\textit{In this chapter we describe the architecture of our implementation [\ref{overview}], present a specification and proof of correctness and liveness for our pacemaker [\ref{spec}], describe key optimisations implemented [\ref{performance}], present our load generator and experiment scripts which will be used in evaluation [\ref{benchcode}], and give an overview of the repository structure [\ref{repo}].}
 
-\section{Overview} \label{overview}
+\section{Architectural overview} \label{overview}
 % add diagram here
 %Present main program structure by modules: the consensus state machine and its interface, the server code \& main loop (including stream), communication schema
 % some of this is inspired by the OCons project, it was still in development
@@ -199,9 +199,9 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 %prove that it doesn't break safety
 %maybe try to prove liveness
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
-\section{Performance improvements} \label{deadlock}
+\section{Performance improvements} \label{performance}
 
-Text here!
+\textit{In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them.}
 % Batching \& limiting of batch sizes. deduplication in batching
 % Send to all
 
@@ -419,7 +419,7 @@ Python scripts are used to automate the running of experiments. These scripts st
 
 Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes all possible permutations of the input variables, duplicates them (so that each experiment is run multiple times to get better results), and runs them in a random order. By running experiments in a random order external factors that affect performance are somewhat mitigated. For example if the experiments were not run in a random order, the system may happen to experience interference when running experiments on 8 nodes, giving distorted results for this set of experiments. If instead the experiments were run randomly, the interference would affect some random group of experiments, and it would be more apparent that these results were anomalous.
 
-\section{Repository Overview}
+\section{Repository Overview} \label{repo}
 
 \begin{small}
 \begin{forest}
