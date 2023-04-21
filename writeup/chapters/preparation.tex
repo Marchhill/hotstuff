@@ -11,7 +11,7 @@
 % chubby (Google) - consensus is hard
 % related works
 
-\textit{In this chapter we disclose my knowledge and experience prior to beginning this project [\ref{start}], give a theoretical basis for understanding the HotStuff algorithm [\ref{hotstufftheory}], outline the tools [\ref{tools}] and methodology [\ref{softwareeng}] deployed in implementation, and highlight the requirements that the implementation should meet [\ref{requirements}].}
+\textit{In this chapter we disclose my knowledge and experience prior to beginning this project [\ref{start}], give a theoretical basis for understanding the HotStuff algorithm [\ref{hotstufftheory}], outline the tools, libraries [\ref{tools}], and methodology [\ref{softwareeng}] deployed in implementation, and highlight the requirements that the implementation should meet [\ref{requirements}].}
 
 \section{Starting point} \label{start}
 I had some experience using OCaml from the IA course but had never used it in a project. I also had some background in distributed systems from the IB course, which briefly covered Raft, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus and from developing a wallet application for Ethereum; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
@@ -19,10 +19,10 @@ I had some experience using OCaml from the IA course but had never used it in a 
 % the whole implementation was written from scratch??
 
 \section{HotStuff algorithm} \label{hotstufftheory}
-A consensus algorithm allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a leader node proposes some value by sending it the the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that the log has been agreed upon up to that point and cannot be altered. Once the log is committed the leader can send `decide' to the replicas; if the log is a list of commands, then the new commands can safely be executed at this point. A consensus algorithm must have these properties:
+A consensus algorithm allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a leader node proposes some value by sending it the the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that the log has been agreed upon up to that point and cannot be altered. Once the log is committed up to some point the leader can send `decide' to the replicas; if the log is a list of commands, then the new commands can safely be executed. A consensus algorithm must have these properties:
 
 \begin{itemize}
-	\item Safety: Once a log has been committed it cannot be deleted or altered, only appended to.
+	\item Safety: Once a log has been committed up to some point that part of the log is immutable, it can only appended to.
 	\item Liveness: The system is guaranteed to make progress once a non-faulty leader is elected.
 \end{itemize}
 
@@ -80,8 +80,8 @@ Solution: Replicas must \textit{lock} on a value once it is committed and not ac
 \item New-view: 
 	\begin{enumerate}
 	\item leader $\to$ replicas: ``view = 3" 
-	\item replicas $\to$ leader: ``log = [`hello', `world']", \dots
-	\item leader: waits $\Delta$ to hear from all replicas
+	\item replicas $\to$ leader: ``view = 2, log = [`hello', `world']", \dots
+	\item leader: waits $\Delta$ to hear from all non-faulty replicas
 	\end{enumerate}
 \item Prepare:
 	\begin{enumerate}
@@ -108,9 +108,9 @@ Solution: Replicas must \textit{lock} on a value once it is committed and not ac
 
 % REWRITE THIS SECTION ***
 \subsection{Optimistic responsiveness}
-A system is responsive if it is able to make progress as fast as conditions allow when a non-faulty leader is elected. If a system may have to wait for some timeout $\Delta$ to elapse before making progress then it is not responsive.
+A system is responsive if it is able to make progress as fast as conditions allow when a non-faulty leader is elected. If a system must wait for some timeout $\Delta$ to elapse before making progress then it is not responsive.
 
-The algorithm demonstrated in figure \ref{byzantineexample} is not responsive. In the \textit{new-view} phase the leader must wait to hear from $n - f$ replicas, and for a timeout of $\Delta$ to elapse. The timeout is necessary for the system to have the liveness property, so that it can always make progress when a non-faulty leader is elected. Consider again the \textit{prepare} phase; the leader includes in its pre-proposal the QC from the highest view that it hears about in the \textit{new-view} messages it receives. However, there may be some honest replica that the leader did not hear from (perhaps their message was lost) that is locked on a higher-view proposal than the one that the leader chooses to pre-propose. When this replica receives the pre-proposal, it will reject it as it is locked on a higher-view proposal, and the system will not make progress. This is why it is necessary to wait for a timeout $\Delta$, so that the leader waits a sufficient amount of time to receive a \textit{new-view} from all replicas.
+The algorithm demonstrated in figure \ref{byzantineexample} is not responsive. In the \textit{new-view} phase the leader must wait to hear from $n - f$ replicas, and for a timeout of $\Delta$ to elapse. The timeout is necessary for the system to have the liveness property, so that it can always make progress when a non-faulty leader is elected. Consider again the \textit{prepare} phase; the leader includes in its pre-proposal the QC from the highest view that it hears about in the \textit{new-view} messages it receives. However, there may be some honest replica [how???] that the leader did not hear from (perhaps their message was lost) that is locked on a higher-view proposal than the one that the leader chooses to pre-propose. When this replica receives the pre-proposal, it will reject it as it is locked on a higher-view proposal, and the system will not make progress. This is why it is necessary to wait for a timeout $\Delta$, so that the leader waits a sufficient amount of time to receive a \textit{new-view} from all replicas.
 
 In order to achieve responsiveness we can modify our algorithm by adding a \textit{pre-commit} phase in between \textit{prepare} and \textit{commit}, and removing the requirement for the leader to wait for a timeout in the \textit{new-view} phase. As before, there may be some honest replica that becomes locked on some proposal $x$ during the \textit{commit} phase. However, now there is a \textit{pre-commit} phase before this, where a quorum of replicas all store a \textit{key} for $x$, with this \textit{key} being a QC of \textit{prepare} acks. We now consider the next \textit{new-view} phase; the replicas now send their \textit{key} to the new leader, and the leader chooses what to propose based on the highest view \textit{key} it sees. Even if the leader does not receive a \textit{new-view} from the honest replica itself, it is guaranteed to hear about the proposal $x$, so it will be able to make progress. See an example in figure \ref{responsiveeexample}.
 

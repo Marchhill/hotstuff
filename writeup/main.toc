@@ -38,7 +38,7 @@
 \contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{28}{subsection.3.4.2}%
 \contentsline {section}{\numberline {3.5}Repository Overview}{29}{section.3.5}%
 \contentsline {chapter}{Evaluation}{31}{chapter*.15}%
-\contentsline {section}{\numberline {4.1}Setup}{31}{section.4.1}%
+\contentsline {section}{\numberline {4.1}Testing methodology}{31}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Library benchmarks}{31}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{31}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{31}{subsection.4.2.2}%

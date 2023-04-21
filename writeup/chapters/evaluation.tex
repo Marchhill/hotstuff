@@ -10,9 +10,12 @@
 % discuss the implications of the graph
 %base on evaluation chapter of papers!
 
-\section{Setup}
+Text here!
+
+\section{Testing methodology}
 % describe sofia server
 Evaluation was carried out on the computer laboratory's Sofia server (2x Xeon Gold 6230R chips, 768GB RAM). Carrying out experiments on the server should help to minimise interference from other processes on the system.
+reiterate somewhere that we use an open loop load generator
 
 \section{Library benchmarks}
 \subsection{Cap'n Proto} \label{capnpbenchmark}
@@ -37,9 +40,6 @@ I benchmarked the message sending functionality of Cap'n Proto. I did this with 
 \end{figure}
 
 The figures demonstrate that the framework has a severe drop in performance when sending large messages. For a message size of 600 the goodput goes to zero as the throughput increases, meaning that no messages are being responded to.
-
-% https://seaborn.pydata.org/tutorial/color_palettes.html
-[maybe add goodput / latency graph once it is in a reasonable state! ***]
 
 \subsection{Tezos Cryptography} \label{tezosbenchmark}
 I profiled the important functions of the library with Jane Street's Core\_bench module [citation needed***]. Core\_bench is a micro-benchmarking library used to estimate the cost of operations in OCaml, it runs the operation many times and uses linear regression to try to reduce the effect of high variance between runs.
