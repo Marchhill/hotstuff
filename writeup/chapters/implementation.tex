@@ -54,7 +54,7 @@ The main loop takes events from the message and request streams, prioritising in
 The actions that can be carried out are sending a message to other nodes, responding to a client request, and resetting a timer. In order to send a message we must convert the consensus state machine internal types into Cap'n Proto types, and construct an RPC that matches the schema. Messages are dispatched asynchronously in a new thread. The node maintains TCP connections with all other nodes that are reused every time a message is sent, and in the event of the connection breaking the node repeatedly attempts to reconnect with binary exponential back-off. When responding to a client request the committed command's unique identifier is used to lookup the callback to respond to the client, which is then called, sending a response to the client. The timer is implemented with Lwt promises, a new thread is created which waits for a timeout to elapse and then adds a TIMEOUT message to the message stream.
 
 \section{Pacemaker Specification} \label{spec}
-We present the pseudocode for the unchained algorithm given in the HotStuff paper (see algorithm \ref{hotstuff} \& \ref{pacemaker}) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), we will present these in section \ref{deadlock}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
+We present the pseudocode for the unchained algorithm given in the HotStuff paper (see algorithm \ref{hotstuff} \& \ref{pacemaker}) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), we will present these in section \ref{performance}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
 
 \begin{algorithm}[h!]
 	\caption{Modified HotStuff}\label{hotstuff}
@@ -239,9 +239,9 @@ In theory this change should result in much higher goodput without any significa
 
 \subsubsection{Probing effects}
 % development of logging framework, some details of what is logged
-I added timing and logging statements to key parts of the program, allowing me to better diagnose the source of the poor performance. Running a live test with print statements has the advantage that one can quickly see when progress is not being made, or when there are pauses, as the print statements stop. However, this benefit is outweighed by the sheer volume of logs and times being printed, it becomes difficult to manage when logs are in the millions of lines long.
+I added timing and logging statements to key parts of the program, allowing me to better diagnose the source of the poor performance. Running a live test with print statements has the advantage that one can quickly see when progress is not being made, or when there are pauses, as the print statements stop. However, this benefit is outweighed by the sheer volume of logs and times being printed, it becomes difficult to manage when logs are in the millions of lines long [cite appendix with a sample of the program trace with timing statements printed (roll back to the old versions! utm). include a short exposition about how it may be useful to compare to the examples of the byzantine consensus protocol \ref{byzantineexample}].
 
-Moreover, debugging by print statements had a bigger problem of inconsistencies between runs making it difficult to diagnose any problem. This was because the large volume of print statements being executed had a significant effect on the performance of the program. This is known as a \textit{probing effect}, the behaviour of a system is altered by the act of measuring it. I initially assumed that because the print statements were not in-between the timing statements they would not affect my measurements, but they are an expensive operation that can cause delays to happen in execution where one would not expect.
+Moreover, debugging by print statements had a bigger problem of inconsistencies between runs making it difficult to diagnose any problem. This was because the large volume of print statements being executed had a significant effect on the performance of the program. This is known as a \textit{probing effect}, the behaviour of a system is altered by the act of measuring it. I initially assumed that because the print statements were not in-between the timing statements they would not affect my measurements, but they are an expensive operation that can cause delays to happen in execution where one would not expect [cite???].
 
 This problem was overcome through the development of a simple logging framework. Key parts of the program such as the state machine advancing, actions being carried out, messages being sent, are all timed and added to lists. Critically, this list is stored and not printed out until the node is killed, so the printing cannot interfere with execution. Relevant statistics such as mean, standard deviation, and total time for each interval measured are outputted, providing crucial insight into the performance of the program.
 
@@ -252,7 +252,7 @@ This problem was overcome through the development of a simple logging framework.
 % development of architecture in overview
 % tried moving to non event-driven model
 % thought resource contention was issue, in fact it was async get function
-Initial analysis of timing data showed a large amount of time was spent by requests queuing on the node before they are delivered to the state machine. At this time the architecture presented in \ref{overview} had not been fully developed, specifically, there was only one stream that contained both internal messages and client requests.
+Initial analysis of timing data showed a large amount of time was spent by requests queuing on the node before they are delivered to the state machine. At this time the architecture presented in section \ref{overview} had not been fully developed, specifically, there was only one stream that contained both internal messages and client requests.
 
 \textbf{Hypothesis: } Internal messages are being starved by client requests. At large throughputs the stream quickly becomes filled with client requests, which may prevent internal messages being handled. Internal messages represent a backlog of work that we have not yet finished, so this should be handled before accepting more requests.
 
@@ -260,7 +260,9 @@ Initial analysis of timing data showed a large amount of time was spent by reque
 
 \textbf{Potential solution: } Split the stream into two separate streams for messages and requests, and always pick from the message stream over the request stream until the message stream is empty.
 
-Implementing the potential solution did not lead to a significant improvement in performance, so this was not the issue. However, this architectural model was retained as it is theoretically better and may lead to observable improvements later. Another potential cause of the issue was that internal messages are starving client requests, rather than the other way around. The modified implementation of the pacemaker (\ref{spec}) immediately begins a new view as soon as the previous one is finished, which causes a large amount of internal messages.
+Implementing the potential solution did not lead to a significant improvement in performance, so this was not the issue. However, this architectural model was retained as it is theoretically better and may lead to observable improvements later.
+
+Another potential cause of the issue was that internal messages are starving client requests, rather than the other way around. The modified implementation of the pacemaker (\ref{spec}) immediately begins a new view as soon as the previous one is finished, which causes a large amount of internal messages.
 
 \textbf{Hypothesis: } Because the state machine is constantly advancing at the fastest possible rate, the volume of internal messages may prevent new requests from being handled.
 
@@ -272,7 +274,7 @@ This potential solution was implemented; it involved checking a timer on every i
 
 \textbf{Potential solution: } Use a different method to take elements from the queue that is synchronous. This should stop the main loop blocking waiting for the queue to fill up.
 
-This change improved performance by reducing the amount of time spent waiting in the main loop, the difference is shown in an ablation study [reference evaluation ***]. However, performance was still not at a satisfactory level.
+This change improved performance by reducing the amount of time spent waiting in the main loop, the difference is shown in an ablation study (see section \ref{ablation}). However, performance was still not at a satisfactory level.
 
 \subsubsection{Send-to-all and deduplication} \label{sendtoall}
 % send to all weird graph: https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAM2hZuzkpUNIuGt2QHNZQvc%3D
@@ -281,7 +283,7 @@ This change improved performance by reducing the amount of time spent waiting in
 % first solution: deduplicate before commiting, use set instead of queue
 % second solution: deduplicate based on *seen* commands
 % could mention bug of reawaking the same promise in the hash table - this brought to my attention the deduplication issue!
-Further problems were uncovered by the implementation of send-to-all in the load generator (see \ref{benchcode}). Without this feature a client would randomly chose a node to send their request to, and the command would not be proposed until the round-robin system reached that node to become the leader. Send-to-all can reduce latency by instead broadcasting a request to all nodes, meaning that the next leader can propose the command without having to wait for the round-robin system to reach them.
+Further problems were uncovered by the implementation of send-to-all in the load generator (see section \ref{benchcode}). Without this feature a client would randomly chose a node to send their request to, and the command would not be proposed until the round-robin system reached that node to become the leader. Send-to-all can reduce latency by instead broadcasting a request to all nodes, meaning that the next leader can propose the command without having to wait for the round-robin system to reach them.
 
 Instead of reducing latency as expected the implementation of this feature actually led to dramatically increased latency, and some requests not being fulfilled at all within the time that the experiment ran. Heatmaps that show the distribution of latencies over the course of an experiment showed that latency increased exponentially over the course of the test.
 
@@ -360,6 +362,7 @@ Note the small optimisation on line \ref{smalloptimisation}, we can safely empty
 The effectiveness of filtering out commands to make proposals smaller implies that the size of a proposal has a significant impact on the performance of the program. Furthermore, analysis of the time data for sending messages showed that there was a high variance in time taken, with some messages taking on the order of milliseconds [verify ***] to be sent.
 
 \textbf{Hypothesis: } Large batches of commands cause messages to become larger, which causes them to be sent slowly due to limitations in the RPC framework.
+
 \textbf{Potential mitigation: } Limit the size of batches to prevent messages becoming too large.
 
 Implementing this feature required minimal changes to algorithm \ref{dedup2}, one simply has to take a subset of \textit{cmds} to propose instead of the whole set. This feature gave a significant performance improvement, and largely eliminated the exponential growth in latency that had been seen previously. There is a trade-off between sending larger batches (more commands are committed, but messages take longer to send) and sending smaller batches (less commands are committed, but messages are sent faster). This trade-off is explored more in our analysis of the system with different batch sizes [refer to evaluation***]. Fundamentally, there are limitations in the RPC framework that give an upper bound on the performance we can hope to achieve, these limitations are evident in our benchmarking of the Cap'n Proto framework (see \ref{capnpbenchmark}).
@@ -374,7 +377,7 @@ Implementing this feature required minimal changes to algorithm \ref{dedup2}, on
 % solution: include node hashes
 % fourth issue: size of sending all nodes
 % solution: TODO implement TCP
-This section concerns the difficulties of encoding nodes in the Cap'n Proto schema, and designing a suitable type to represent them. As mentioned in \ref{overview}, Cap'n Proto requires a schema to define the format of RPCs that can be sent, and one must convert between consensus state machine internal types and Cap'n Proto types in order to send messages.
+\textit{This section concerns the difficulties of encoding nodes in the Cap'n Proto schema, and designing a suitable type to represent them. As mentioned in \ref{overview}, Cap'n Proto requires a schema to define the format of RPCs that can be sent, and one must convert between consensus state machine internal types and Cap'n Proto types in order to send messages.}
 
 \subsubsection{Recursive types}
 The unchained HotStuff algorithm has a genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. Each node contains the fields \textit{parent}, \textit{cmd}, \textit{justify}, and \textit{height}, with the \textit{justify} field containing a quorum certificate with a `pointer' to another node in the chain (see \ref{chaining}). The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
@@ -443,12 +446,14 @@ The load generator is responsible for sending client requests to the nodes of th
 
 The load generator is open-loop (see figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (see figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator `waits' for the system, so cannot overload it.
 
+[clients have different semantics for sending to leaders, send-to-one, send-to-all, send-to-next\dots cite something? we implemented send-to-all to reduce latency]
+
 The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all (\ref{sendtoall}) the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, eliminating start-up effects.
 
 \subsection{Experiment scripts}
 Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
 
-Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes all possible permutations of the input variables, duplicates them (so that each experiment is run multiple times to get better results), and runs them in a random order. By running experiments in a random order external factors that affect performance are somewhat mitigated. For example if the experiments were not run in a random order, the system may happen to experience interference when running experiments on 8 nodes, giving distorted results for this set of experiments. If instead the experiments were run randomly, the interference would affect some random group of experiments, and it would be more apparent that these results were anomalous.
+Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes all possible permutations of the input variables, duplicates them (so that each experiment is run multiple times to get better results), and runs them in a random order. By running experiments in a random order external factors that affect performance are somewhat mitigated. For example if the experiments were not run in a random order, the system may happen to experience interference when running experiments on 8 nodes, giving distorted results for this set of experiments. If instead the experiments were run randomly, the interference would affect some random group of experiments, and it would be more apparent that these results were anomalous. [could be more concise]
 
 \section{Repository Overview} \label{repo}
 

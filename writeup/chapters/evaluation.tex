@@ -41,6 +41,8 @@ I benchmarked the message sending functionality of Cap'n Proto. I did this with 
 
 The figures demonstrate that the framework has a severe drop in performance when sending large messages. For a message size of 600 the goodput goes to zero as the throughput increases, meaning that no messages are being responded to.
 
+[``Fundamentally, there are limitations in the RPC framework that give an upper bound on the performance we can hope to achieve, these limitations are evident in our benchmarking of the Cap'n Proto framework\dots'']
+
 \subsection{Tezos Cryptography} \label{tezosbenchmark}
 I profiled the important functions of the library with Jane Street's Core\_bench module [citation needed***]. Core\_bench is a micro-benchmarking library used to estimate the cost of operations in OCaml, it runs the operation many times and uses linear regression to try to reduce the effect of high variance between runs.
 
@@ -124,10 +126,12 @@ blah blah node counts
 \caption{Benchmarking of \% requests lost while varying throughputs and node counts, run for 10s.}
 \end{figure}
 
-\subsection{Ablation study}
+\subsection{Ablation study} \label{ablation}
+[``This change improved performance by reducing the amount of time spent waiting in the main loop, the difference is shown in an ablation study'']
 blah blah ablation.
 
 Versions:
+[turn me into a table!! with caption ``versions'']
 \begin{enumerate}
 	\item Unchained version
 	\item Chained version - node truncation disabled, command filtering disabled
