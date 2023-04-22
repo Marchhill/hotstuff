@@ -82,19 +82,24 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 			\State $\text{EXECUTE}(\textit{b.cmd})$
 		\EndIf
 	\EndProcedure
-	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot)$}
+	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textit{qc})$}
 		\color{Green}
-		\If {$ \textit{m.view} = curView$}
-			\color{black}
-			\If{$\textit{b\textsubscript{new}.height} > \textit{vheight} \land (\textit{b\textsubscript{new}}\ \text{extends}\ \textit{b\textsubscript{lock}} \lor \textit{n.height} > \textit{b\textsubscript{lock}.height})$}
-				\State $\textit{vheight} \gets \textit{b\textsubscript{new}.height}$
-				\State $ \text{SEND}(\text{GET{\large L}EADER}(), \text{VOTE{\large M}SG}\textsubscript{\textit{u}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot))$
+		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view})$} %***check that they are leader of the view!!!
+			\If {$ \textit{m.view} > \textit{curView} \land \textit{m.view} = \textit{qc.view} + 1$} %***check that they are leader of the view!!!
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{m.view})$
 			\EndIf
-			\State $\text{UPDATE}(\textit{b\textsubscript{new}})$
-			\color{Green}
-			\State $\text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{MSG}\textsubscript{\textit{u}}(\text{NEW{\large V}IEW}, \bot, \textit{qc\textsubscript{high}}))$
-			\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $}
-				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{curview} + 1)$
+			\If {$ \textit{m.view} = curView$}
+				\color{black}
+				\If{$\textit{b\textsubscript{new}.height} > \textit{vheight} \land (\textit{b\textsubscript{new}}\ \text{extends}\ \textit{b\textsubscript{lock}} \lor \textit{n.height} > \textit{b\textsubscript{lock}.height})$}
+					\State $\textit{vheight} \gets \textit{b\textsubscript{new}.height}$
+					\State $ \text{SEND}(\text{GET{\large L}EADER}(), \text{VOTE{\large M}SG}\textsubscript{\textit{u}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot))$
+				\EndIf
+				\State $\text{UPDATE}(\textit{b\textsubscript{new}})$
+				\color{Green}
+				\State $\text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{MSG}\textsubscript{\textit{u}}(\text{NEW{\large V}IEW}, \bot, \textit{qc\textsubscript{high}}))$
+				\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $}
+					\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{curview} + 1)$
+				\EndIf
 			\EndIf
 		\EndIf
 		\color{black}
@@ -118,7 +123,7 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 	\EndProcedure
 	\Function{ON{\large P}ROPOSE}{$ \textit{b\textsubscript{leaf}}, \textit{cmd}, \textit{qc\textsubscript{high}}$}
 		\State $b\textsubscript{new} \gets \text{CREATE{\large L}EAF}(\textit{b\textsubscript{leaf}, \textit{cmd}, \textit{qc\textsubscript{high}}, \textit{b\textsubscript{leaf}.height} + 1})$
-		\State $ \text{BROADCAST}(\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot)) $
+		\State $ \text{BROADCAST}(\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textit{qc\textsubscript{high}})) $
 		\State \textbf{return} b\textsubscript{new}
 	\EndFunction
 	\end{algorithmic}
@@ -139,15 +144,15 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 		\EndIf
 	\EndProcedure
 	\Procedure{ON{\large B}EAT}{$\textit{cmd}$}
-		\If {$ \textit{u} = \text{GET{\large L}EADER}()$}
+		\If {$ \textit{u} = \text{GET{\large L}EADER}()$} %idk if this is still needed
 			\State $ \textit{b\textsubscript{leaf}} \gets \text{ON{\large P}ROPOSE}(\textit{b\textsubscript{leaf}}, \textit{cmd}, \textit{qc\textsubscript{high}})$
 		\EndIf
 	\EndProcedure
 	\Procedure{ON{\large N}EXT{\large S}YNC{\large V}IEW}{$\textit{view}$}
 		\color{Magenta}
 		\State $ \textit{curView} \gets \textit{view}$
-		\State $ \text{ON{\large B}EAT}(\textit{cmds.take()})$
 		\State $ \text{RESET{\large T}IMER}(\textit{curView})$
+		\State $ \text{ON{\large B}EAT}(\textit{cmds.take()})$
 		\color{black}
 	\EndProcedure
 	\Procedure{ON{\large R}ECEIVE{\large N}EW{\large V}IEW}{$ \text{MSG}\textsubscript{\textit{u}}(\text{NEW{\large V}IEW}, \bot, \textit{qc'\textsubscript{high}}) $}
@@ -173,7 +178,7 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 			\EndIf
 		\EndIf
 	\EndProcedure
-	\Procedure{ON{\large R}ECEIVE{\large N}EXT{\large V}IEW}{$ m = \text{MSG}(*, \bot, \textit{qc}) $}
+	\Procedure{ON{\large R}ECEIVE{\large N}EXT{\large V}IEW}{$ m = \text{MSG}(\text{NEXT{\large V}IEW}, \bot, \textit{qc}) $}
 		\If {$ \textit{qc.view} \ge \textit{curView}$}
 				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{qc.view} + 1)$
 		\EndIf
