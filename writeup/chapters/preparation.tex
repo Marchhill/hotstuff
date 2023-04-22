@@ -72,7 +72,9 @@ Solution: Add a new stage \textit{prepare} which happens just before the \textit
 Solution: Replicas must \textit{lock} on a value once it is committed and not accept a \textit{prepare} from a leader that contradicts that. They will store the QC that they receive during the \textit{commit} phase and will only accept a new \textit{prepare} if it extends from the node stored in the certificate.
 \end{enumerate}
 
-[*** quick inductive proof of hotstuff!] See an example in figure \ref{byzantineexample}.
+See an example in figure \ref{byzantineexample}.
+
+We give an informal inductive argument of the safety of this algorithm based on it solving these two threats. To be safe, we must have that if some log $\lambda$ is committed in view $v$, at no point in future will some conflicting log be committed. In view $v$ no log that conflicts with $\lambda$ may be committed, as we have prevented equivocation (threat 1). If we have in some view $v'$ that $\lambda$ (or some log extending it) is committed, then no conflicting log can be committed in view $v' + 1$. This holds because any log proposed in view $v' + 1$ must receive a quorum of $2f + 1$ votes in the \textit{prepare} phase; there must be at least one honest node in the intersection between this quorum, and the quorum of $2f + 1$ nodes that voted to commit $\lambda$ in view $v$. This honest replica is locked on $\lambda$ (solution 2), so would not accept a proposal that conflicts it. From this it follows that in no view from $v$ onwards will a log conflicting with $\lambda$ be committed.
 
 \begin{figure}[h!] 
 \texttt{

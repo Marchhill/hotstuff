@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  22 APR 2023 17:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  22 APR 2023 18:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -968,7 +968,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.2.1}) h
                                                   \__shipout_drop_firstpage_...
 l.64 
      ]
-Underfull \hbox (badness 10000) in paragraph at lines 104--104
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
 []\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: propose ``log = [`hello', `world', `!']", qc =
  []
 
@@ -976,41 +976,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 104--104
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 151--151
+Underfull \hbox (badness 10000) in paragraph at lines 153--153
 []\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``qc = (\T1/cmtt/m/it/12 key \T1/cmtt/m/n/12 for view = 2, log = [`hello',
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 151--151
+Underfull \hbox (badness 10000) in paragraph at lines 153--153
 []\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: pre-propose ``log = [`hello', `world', `!'], qc =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 151--151
+Underfull \hbox (badness 10000) in paragraph at lines 153--153
 []\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: propose ``qc = (\T1/cmtt/m/it/12 pre-commit \T1/cmtt/m/n/12 acks from previous
  []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [10
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.160 
-      ] [11
+l.156 \end{figure}
+                  ] [11
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.165 
-      ]
-<images//nchain.png, id=356, 1629.08624pt x 334.24875pt>
+l.163 T
+       he use of timeouts in this way is a type of failure detector, which i...]
+<images//nchain.png, id=357, 1629.08624pt x 334.24875pt>
 File: images//nchain.png Graphic file (type png)
 <use images//nchain.png>
-Package pdftex.def Info: images//nchain.png  used on input line 170.
+Package pdftex.def Info: images//nchain.png  used on input line 172.
 (pdftex.def)             Requested size: 488.72964pt x 100.27539pt.
 
-Overfull \hbox (5.03278pt too wide) in paragraph at lines 170--171
+Overfull \hbox (5.03278pt too wide) in paragraph at lines 172--173
  [][] 
  []
 
@@ -1018,11 +1015,11 @@ Overfull \hbox (5.03278pt too wide) in paragraph at lines 170--171
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.189 \subsection{OCaml}
-                         <./images//nchain.png>] [13] [14]) [15]
+l.186 \end{itemize}
+                    <./images//nchain.png>] [13] [14]) [15]
 Chapter 3.
 (./chapters/implementation.tex
-<images//nodediagram.png, id=393, 581.17125pt x 297.11pt>
+<images//nodediagram.png, id=394, 581.17125pt x 297.11pt>
 File: images//nodediagram.png Graphic file (type png)
 <use images//nodediagram.png>
 Package pdftex.def Info: images//nodediagram.png  used on input line 43.
@@ -1333,7 +1330,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  130i,10n,142p,1660b,3467s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx3583.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfit1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (42 pages, 1343270 bytes).
+Output written on main.pdf (42 pages, 1344747 bytes).
 PDF statistics:
  776 PDF objects out of 1000 (max. 8388607)
  632 compressed objects within 7 object streams
