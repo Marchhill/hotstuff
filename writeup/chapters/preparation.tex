@@ -55,7 +55,7 @@ We will refer to phase 1 as the \textit{new-view} stage, and phase 2 as the \tex
 	\end{enumerate}
 \end{enumerate}
 }
-\caption{Non-byzantine example}
+\caption{Example of crash-stop consensus algorithm.}
 \label{nonbyzantineexample}
 \end{figure}
 
@@ -102,7 +102,7 @@ Solution: Replicas must \textit{lock} on a value once it is committed and not ac
 	\end{enumerate}
 \end{enumerate}
 }
-\caption{Byzantine example}
+\caption{Example of byzantine fault-tolerant consensus algorithm.}
 \label{byzantineexample}
 \end{figure}
 
@@ -149,7 +149,7 @@ In order to achieve responsiveness we can modify our algorithm by adding a \text
 	\end{enumerate}
 \end{enumerate}
 }
-\caption{Responsive example}
+\caption{Example of responsive consensus algorithm.}
 \label{responsiveeexample}
 \end{figure}
 
@@ -168,6 +168,7 @@ In each view, some leader sends a proposal to all replicas, who send their repli
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.3]{nchain.png}
+\caption{Sequence of nodes forming a 2-chain.}
 \label{nchain}
 \end{figure}
 

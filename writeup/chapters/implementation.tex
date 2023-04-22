@@ -37,9 +37,14 @@
 \textit{In this chapter we describe the architecture of our implementation [\ref{overview}], present a specification and proof of correctness and liveness for our pacemaker [\ref{spec}], describe key optimisations implemented [\ref{performance}], present our load generator and experiment scripts which will be used in evaluation [\ref{benchcode}], and give an overview of the repository structure [\ref{repo}].}
 
 \section{Architectural overview} \label{overview}
-% add diagram here
-%Present main program structure by modules: the consensus state machine and its interface, the server code \& main loop (including stream), communication schema
-% some of this is inspired by the OCons project, it was still in development
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{nodediagram.png}
+\caption{Architecture of a node.}
+\label{nodediagram}
+\end{figure}
+
 The core implementation of the HotStuff algorithm (which we will give in section \ref{spec}) is implemented in the \textit{consensus} module. The main function provided by this module is \textit{advance}, which delivers some event (such as an incoming message, client request or timeout) to the consensus state machine and returns an updated state and a list of actions (such as sending a message to another node or responding to a client request) to be carried out. This architecture is inspired by the \href{https://github.com/Cjen1/OCons}{OCons }project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.}, which was developed by my project supervisor. The \textit{consensus} module contains both a chained and unchained implementation that share a common signature, so can be interchanged. The module uses the Tezos cryptography library (see section \ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
 
 Each node operates as a server waiting for messages from other nodes or requests from a client (or in the case of our experiments a load generator, which is described in section \ref{benchcode}). The format of RPCs is specified in a Cap'n Proto schema, in their \href{https://capnproto.org/language.html}{custom markdown language} [*** cite instead of link!]. A received RPC must be decoded, and the Cap'n Proto types converted into the internal types of the consensus state machine. Messages and requests are added to separate streams\footnote{A stream is thread-safe implementation of a queue in Lwt.} when they are received. When a request is received the callback function to respond to the request is stored in a hash table, so that it can be accessed when the command has been committed and the client request can be responded to.
@@ -198,9 +203,14 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 	\item ON{\large R}ECEIVE{\large N}EXT{\large V}IEW (Algorithm \ref{pacemaker}): N.B. the message type given is the wildcard operator, so this procedure is run on every message we receive. The function checks if the quorum received is from a greater view than \textit{curView}, if so then it is safe to transition to that view in order to catch up.
 \end{itemize}
 
-\subsection{Correctness Proof}
+\subsection{Proofs}
 
-\subsection{Liveness Proof}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{lemma1.png}
+\caption{Example of round-robin leader allocation for $f = 1$. Red rectangles denote byzantine leaders.}
+\label{lemma1diagram}
+\end{figure}
 %prove that it doesn't break safety
 %maybe try to prove liveness
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
@@ -404,18 +414,34 @@ There are some cases when the leader does not receive the latest \textit{b\texts
 % discuss open loop vs closed loop clients
 % avoid coordinated ommision by using open loop clients
 % section 3: https://dl.acm.org/doi/pdf/10.1145/3447851.3458739
+
+\textit{In this section we describe the infrastructure that will be used to evaluate our system in chapter \ref{evaluation}, including the scripting developed to automate running experiments.}
+
 \subsection{Load generator}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{openloop.png}
+\caption{Open-loop load generator.}
+\label{openloop}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{closedloop.png}
+\caption{Closed-loop load generator.}
+\label{closedloop}
+\end{figure}
+
 The load generator is responsible for sending client requests to the nodes of the system. One is able to vary the throughput that the load generator drives the system at, and the duration that it runs for before it sends a \textit{kill} messages to the nodes, ending the test. It is also responsible for timing and calculating statistics.
 
 \textbf{Throughput: } The number of requests sent by the load generator each second.
 
-\textbf{Goodput: } The number of requests that are responded to each second. This is calculated by number of responses divided by the time difference between the first and last response [change to end of test???].
+\textbf{Goodput: } The number of requests that are responded to each second. This is calculated by number of responses divided by the time difference between the first response and the end of the test.
 
 \textbf{Latency: } The amount of time it takes between sending a request and receiving a response. The load generator reports both mean and standard deviation of latencies.
 
-[*** diagram of open loop and closed loop load generators]
-
-The load generator is open-loop, which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator, which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator `waits' for the system, so cannot overload it.
+The load generator is open-loop (see figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (see figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator `waits' for the system, so cannot overload it.
 
 The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all (\ref{sendtoall}) the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, eliminating start-up effects.
 
@@ -434,9 +460,7 @@ Different experiments may vary input variables such as throughput, batch size, a
 	[src
 		[\ consensus,
 			[consensus\_chained\_impl.ml, is file]
-			[consensus\_chained\_test.ml, is file]
 			[consensus\_impl.ml, is file]
-			[consensus\_test.ml, is file]
 			[consensus.ml, is file]
 			[consensus.mli, is file]
 			[crypto.ml, is file]
@@ -467,6 +491,6 @@ Different experiments may vary input variables such as throughput, batch size, a
 \end{forest}
 \end{small}
 
-The \textit{src} directory contains the main server loop and the code for interacting with Cap'n Proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in \ref{spec}. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.
+The \textit{src} directory contains the main server loop and the code for interacting with Cap'n Proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in \ref{spec}. N.B. this folder also contains testing files that are omitted for conciseness. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.
 
 In order to run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \textit{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time. These scripts will run on Linux and MacOS, but will have to be modified to work on Windows.

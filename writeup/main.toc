@@ -1,43 +1,42 @@
-\contentsline {chapter}{Introduction}{6}{chapter*.4}%
-\contentsline {chapter}{Preparation}{8}{chapter*.5}%
-\contentsline {section}{\numberline {2.1}Starting point}{8}{section.2.1}%
-\contentsline {section}{\numberline {2.2}HotStuff algorithm}{8}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Non-byzantine consensus}{9}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{10}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{10}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}View-changes}{11}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}Chaining}{13}{subsection.2.2.5}%
-\contentsline {section}{\numberline {2.3}Tools \& libraries}{14}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}OCaml}{14}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Lwt}{14}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{15}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{15}{subsection.2.3.4}%
-\contentsline {section}{\numberline {2.4}Requirements analysis}{15}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Software engineering practices}{16}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Development methodology}{16}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{16}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Source code management}{16}{subsection.2.5.3}%
-\contentsline {chapter}{Implementation}{17}{chapter*.6}%
-\contentsline {section}{\numberline {3.1}Architectural overview}{17}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Pacemaker Specification}{18}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Correctness Proof}{21}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Liveness Proof}{21}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Performance improvements}{21}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Batching}{21}{subsection.3.3.1}%
-\contentsline {subsubsection}{Probing effects}{21}{subsubsection*.7}%
-\contentsline {subsubsection}{Architectural experimentation}{22}{subsubsection*.8}%
-\contentsline {subsubsection}{Send-to-all and deduplication}{23}{subsubsection*.9}%
-\contentsline {subsubsection}{Batch sizes}{25}{subsubsection*.10}%
+\contentsline {chapter}{\numberline {1}Introduction}{5}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Preparation}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Starting point}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}HotStuff algorithm}{7}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Non-byzantine consensus}{8}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{9}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{9}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}View-changes}{10}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Chaining}{12}{subsection.2.2.5}%
+\contentsline {section}{\numberline {2.3}Tools \& libraries}{13}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}OCaml}{13}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Lwt}{13}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{14}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{14}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Requirements analysis}{14}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Software engineering practices}{15}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Development methodology}{15}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{15}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Source code management}{15}{subsection.2.5.3}%
+\contentsline {chapter}{\numberline {3}Implementation}{16}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Architectural overview}{16}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Pacemaker Specification}{17}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Proofs}{20}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}Performance improvements}{20}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Batching}{20}{subsection.3.3.1}%
+\contentsline {subsubsection}{Probing effects}{21}{subsubsection*.4}%
+\contentsline {subsubsection}{Architectural experimentation}{21}{subsubsection*.5}%
+\contentsline {subsubsection}{Send-to-all and deduplication}{23}{subsubsection*.6}%
+\contentsline {subsubsection}{Batch sizes}{25}{subsubsection*.7}%
 \contentsline {subsection}{\numberline {3.3.2}Encoding of nodes}{25}{subsection.3.3.2}%
-\contentsline {subsubsection}{Recursive types}{26}{subsubsection*.11}%
-\contentsline {subsubsection}{Node offsets}{26}{subsubsection*.12}%
-\contentsline {subsubsection}{Node comparison}{26}{subsubsection*.13}%
-\contentsline {subsubsection}{Node truncation}{27}{subsubsection*.14}%
+\contentsline {subsubsection}{Recursive types}{25}{subsubsection*.8}%
+\contentsline {subsubsection}{Node offsets}{26}{subsubsection*.9}%
+\contentsline {subsubsection}{Node comparison}{26}{subsubsection*.10}%
+\contentsline {subsubsection}{Node truncation}{26}{subsubsection*.11}%
 \contentsline {section}{\numberline {3.4}Implementing for evaluation}{27}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Load generator}{27}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{28}{subsection.3.4.2}%
 \contentsline {section}{\numberline {3.5}Repository Overview}{29}{section.3.5}%
-\contentsline {chapter}{Evaluation}{31}{chapter*.15}%
+\contentsline {chapter}{\numberline {4}Evaluation}{31}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Testing methodology}{31}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Library benchmarks}{31}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{31}{subsection.4.2.1}%
@@ -47,6 +46,6 @@
 \contentsline {subsection}{\numberline {4.3.2}Node counts}{33}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}Ablation study}{33}{subsection.4.3.3}%
 \contentsline {subsection}{\numberline {4.3.4}View change}{36}{subsection.4.3.4}%
-\contentsline {chapter}{Conclusion}{40}{chapter*.16}%
+\contentsline {chapter}{\numberline {5}Conclusion}{40}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Future Work}{40}{section.5.1}%
-\contentsline {chapter}{Bibliography}{41}{chapter*.17}%
+\contentsline {chapter}{Bibliography}{41}{chapter*.12}%
