@@ -30,7 +30,8 @@ let reporter =
 
 let start_node id nodes batch_size verbose =
 	Lwt_main.run begin
-		let listen_address = `TCP ("0.0.0.0", 9000) in
+		(* let listen_address = `TCP ("0.0.0.0", 9000) in *)
+		let listen_address = `TCP ("127.0.0.1", 9000 + id) in
 		let config = Capnp_rpc_unix.Vat_config.create ~serve_tls:false ~secret_key listen_address in
 		let service_id = Capnp_rpc_net.Restorer.Id.public "" in
     let node_state = Hs.init id nodes timeout batch_size verbose in

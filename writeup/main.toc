@@ -24,7 +24,7 @@
 \contentsline {section}{\numberline {3.3}Performance improvements}{21}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Batching}{21}{subsection.3.3.1}%
 \contentsline {subsubsection}{Probing effects}{22}{subsubsection*.4}%
-\contentsline {subsubsection}{Architectural experimentation}{22}{subsubsection*.5}%
+\contentsline {subsubsection}{Architectural experimentation}{23}{subsubsection*.5}%
 \contentsline {subsubsection}{Send-to-all and deduplication}{24}{subsubsection*.6}%
 \contentsline {subsubsection}{Batch sizes}{26}{subsubsection*.7}%
 \contentsline {subsection}{\numberline {3.3.2}Encoding of nodes}{26}{subsection.3.3.2}%

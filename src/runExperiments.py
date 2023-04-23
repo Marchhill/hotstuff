@@ -34,11 +34,11 @@ with open(test_path + 'stats.csv', 'w') as f:
 	f.write('name, chained, nodes, throughput, goodput, mean, sd, rec, sent, batch_size, msg_size\n')
 
 # nodeCounts = [1, 2, 4, 7, 10, 13]
-nodeCounts = [7]
+nodeCounts = [4]
 # rates = [1, 10, 50, 100, 200, 400, 600, 800, 1000, 1500, 2000, 4000]
-rates = [100, 200]
+rates = [50, 100, 500, 1000, 2000]
 # batch_sizes = [1, 50, 100, 300, 450, 600]
-batch_sizes = [100, 300]
+batch_sizes = [300]
 experiment_time = 10
 repeats = 2
 
