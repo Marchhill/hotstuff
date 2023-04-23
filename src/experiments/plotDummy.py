@@ -43,28 +43,28 @@ stats = stats.merge(file_stats_df, on='name')
 
 ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='msg_size', palette = color, linestyle='--')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)', xscale = 'log', yscale = 'log')
-ax.legend(title = 'message size')
+ax.legend(title = 'commands')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputgoodput.png')
 plt.close(fig)
 
 ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='msg_size', palette = color, linestyle='--')
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'requests lost (%)', xscale = 'log')
-ax.legend(title = 'message size')
+ax.legend(title = 'commands')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlost.png')
 plt.close(fig)
 
 ax = sns.lineplot(x='throughputfiltered', y='meanlatency', data=stats, hue='msg_size', palette = color, linestyle='--') #err_style="band", estimator=np.median, ci='sd'
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (ms)', xscale = 'log')
-ax.legend(title = 'message size')
+ax.legend(title = 'commands')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputflatency.png')
 plt.close(fig)
 
 ax = sns.lineplot(x='throughput', y='meanlatency', data=stats, hue='msg_size', palette = color, linestyle='--') #err_style="band", estimator=np.median, ci='sd'
 ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (ms)', xscale = 'log')
-ax.legend(title = 'message size')
+ax.legend(title = 'commands')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlatency.png')
 plt.close(fig)

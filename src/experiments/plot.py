@@ -25,7 +25,7 @@ for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
 	times = pd.read_csv(f'./experiments/data/{test_name}/subtests/{filename}', skipinitialspace=True)
 	filename = os.path.splitext(filename)[0]
 	times['sent(s)'] = times['sent'] / 1_000_000_000
-	times['latency'] = (times['rec'] - times['sent']) / 1_000_000
+	times['latency'] = (times['rec'] - times['sent']) / 1_000_000_000
 	file_stats.append({
 		'name': filename,
 		'medianlatency': times['latency'].median(),
@@ -35,7 +35,7 @@ for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
 
 	# cumulative latency
 	ax = sns.ecdfplot(x='latency', data=times, palette = color)
-	ax.set(xlabel = 'latency (ms)', ylabel = 'fraction of requests', xscale = 'log')
+	ax.set(xlabel = 'latency (s)', ylabel = 'fraction of requests', xscale = 'log')
 	fig = ax.get_figure()
 	fig.savefig(f'{subtests_dir + filename}_cumlatency.png')
 	plt.close(fig)
@@ -44,8 +44,16 @@ for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
 	fig, ax = plt.subplots(1, 1, figsize=(10, 5), constrained_layout=True)
 	# ax = sns.histplot(times, x="sent(s)", y="latency", binwidth=(0.05, 10), ax=ax)
 	ax = sns.histplot(times, x="sent(s)", y="latency", bins = 50, ax=ax, palette = color)
-	ax.set(xlabel="time (s)", xlim=(0,10), ylabel = "latency (ms)")
+	ax.set(xlabel="time (s)", xlim=(0,10), ylabel = "latency (s)")
 	fig.savefig(f'{subtests_dir + filename}_timelatencyheatmap.png')
+	plt.close(fig)
+
+	# time / latency heatmap (log)
+	fig, ax = plt.subplots(1, 1, figsize=(10, 5), constrained_layout=True)
+	# ax = sns.histplot(times, x="sent(s)", y="latency", binwidth=(0.05, 10), ax=ax)
+	ax = sns.histplot(times, x="sent(s)", y="latency", bins = 50, ax=ax, palette = color)
+	ax.set(xlabel="time (s)", xlim=(0,10), ylabel = "latency (s)", yscale = 'log')
+	fig.savefig(f'{subtests_dir + filename}_timelatencyheatmap_log.png')
 	plt.close(fig)
 
 file_stats_df = pd.DataFrame(file_stats)
@@ -76,7 +84,7 @@ plt.close(fig)
 ax = sns.lineplot(x='throughput', y='meanlatency', data=stats, hue='batch_size', palette = color, linestyle='--')
 # u = stats.where(stats['batch_size'] == 'u')
 # ax.fill_between(['goodput'], stats['medianlatency'], stats['99latency'], alpha=0.2)
-ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (ms)')
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'mean latency (s)')
 ax.legend(title = 'batch size')
 fig = ax.get_figure()
 fig.savefig(graph_dir + 'throughputlatency.png')
