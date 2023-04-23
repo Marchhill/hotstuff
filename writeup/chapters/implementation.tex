@@ -216,9 +216,9 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Performance improvements} \label{performance}
 
-\textit{In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them.}
+\textit{In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle. see appendix (describe crazy bug about lexicographic ordering)]}
 
-[this is a hard problem, reference chubby again. bugs are subtle. see appendix (describe crazy bug about lexicographic ordering)]
+
 % Batching \& limiting of batch sizes. deduplication in batching
 % Send to all
 
@@ -230,7 +230,7 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 % 4. Memory usage massively increased due to recursive node functions, replaced with an offset
 % 5. Store a hash in each node and use it to compare nodes rather than checking their entire history
 % 6. Discarding messages from future views results in some leaders not progressing
-\subsection{Batching}
+\subsection{Batching} \label{batching}
 % mention send to all & send to one, 4x throughput
 % reference latency graphs from final
 One way to improve goodput (number of requests committed) is to `batch' requests, meaning a node may contain many commands instead of just one. This can dramatically increase goodput as now a single view can result in many commands being committed and executed instead of just one.
@@ -422,7 +422,7 @@ There are some cases when the leader does not receive the latest \textit{b\texts
 
 \textit{In this section we describe the infrastructure that will be used to evaluate our system in chapter \ref{evaluation}, including the scripting developed to automate running experiments.}
 
-\subsection{Load generator}
+\subsection{Load generator} \label{loadgenerator}
 
 \begin{figure}[h]
 \centering
@@ -452,7 +452,7 @@ The load generator is open-loop (see figure \ref{openloop}), which means that it
 
 The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all (\ref{sendtoall}) the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, eliminating start-up effects.
 
-\subsection{Experiment scripts}
+\subsection{Experiment scripts} \label{experimentscripts}
 Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
 
 Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes all possible permutations of the input variables, duplicates them (so that each experiment is run multiple times to get better results), and runs them in a random order. By running experiments in a random order external factors that affect performance are somewhat mitigated. For example if the experiments were not run in a random order, the system may happen to experience interference when running experiments on 8 nodes, giving distorted results for this set of experiments. If instead the experiments were run randomly, the interference would affect some random group of experiments, and it would be more apparent that these results were anomalous. [could be more concise]

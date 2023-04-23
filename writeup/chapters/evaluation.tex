@@ -10,16 +10,16 @@
 % discuss the implications of the graph
 %base on evaluation chapter of papers!
 
-Text here!
+\textit{In this section we highlight the methods and hardware used in evaluation [\ref{testingmethods}], benchmark the performance of Cap'n Proto and the Tezos cryptography library [\ref{librarybenchmarks}], and finally evaluate the performance of our HotStuff implementation [\ref{hotstuffbenchmarks}]}
 
-\section{Testing methodology}
+\section{Testing methodology} \label{testingmethods}
 % describe sofia server
 Evaluation was carried out on the computer laboratory's Sofia server (2x Xeon Gold 6230R chips, 768GB RAM). Carrying out experiments on the server should help to minimise interference from other processes on the system.
-reiterate somewhere that we use an open loop load generator
 
-\section{Library benchmarks}
+Experiments were driven by an open-loop load generator (see \ref{loadgenerator}), and were automated using Python scripts (see \ref{experimentscripts}). In all experiments the load generator was run for 10 seconds, with a further 10 seconds after this without the load generator running to wait for any slow responses.
+
+\section{Library benchmarks} \label{librarybenchmarks}
 \subsection{Cap'n Proto} \label{capnpbenchmark}
-I benchmarked the message sending functionality of Cap'n Proto. I did this with an open-loop load generator (which is described in \ref{benchcode}), running each experiment for 10s. I varied the size of messages sent in different tests to replicate the behaviour of the algorithm when sending `batches' of many commands, so a message size of 600 means that the message size is approximately that of a message containing 600 commands.
 
 \begin{figure}[h!]
 \centering
@@ -38,6 +38,9 @@ I benchmarked the message sending functionality of Cap'n Proto. I did this with 
 \includegraphics[scale=0.75]{dummy_test/throughputlost.png}
 \caption{Benchmarking of Cap'n Proto server \% of failed requests for varying throughputs and message sizes, run for 10s}
 \end{figure}
+
+[describe the experiment methodology, present argument, then back up with evidence from figures]
+We benchmarked the latency and goodput of sending messages in Cap'n Proto. We varied the size of messages sent in different tests to replicate the behaviour of the algorithm when sending `batches' of many commands, so a message size of 600 means that the message size is approximately that of a message containing 600 commands.
 
 The figures demonstrate that the framework has a severe drop in performance when sending large messages. For a message size of 600 the goodput goes to zero as the throughput increases, meaning that no messages are being responded to.
 
@@ -71,8 +74,16 @@ I profiled the important functions of the library with Jane Street's Core\_bench
 % │ agg_check_8 │ 1_180.61us │  75.00w │          │          │    100.00  │
 % └─────────────┴────────────┴─────────┴──────────┴──────────┴────────────┘
 
-\section{Benchmarking HotStuff implementation}
-\subsection{Batch sizes}
+\section{HotStuff implementation benchmarks} \label{hotstuffbenchmarks}
+Our implementation achieves a reasonable level of performance due to the optimisations described in section \ref{performance}, but is fundamentally limited in what it can achieve due to constraints on bandwidth from the Cap'n Proto library (see \ref{capnpbenchmark}), and on latency from the Tezos cryptography library (see \ref{tezosbenchmark}).
+
+We demonstrate the effectiveness of our performance improvements in an ablation study in section \ref{ablation}. There is further evidence for the effectiveness of batching (see section \ref{batching}); the system is able to achieve much higher goodputs with batch sizes greater than one (equivalent to not batching at all), as shown in section \ref{batchsizeseval}. 
+
+The constraints on bandwidth from using Cap'n Proto are evident in our comparisons of batch sizes (see section \ref{batchsizeseval}), and of node counts (see section \ref{nodecountseval}). The goodput that can be achieved increases with batch size before reaching a maximum and declining, as Cap'n Proto is unable to handle the higher bandwidth caused by larger batches. Increasing the node count increases the number of internal messages, so system performance declines for higher node counts, again due to poor message sending performance.
+
+The latency cost of Tezos cryptography is clear from the superior performance of the system with cryptography disabled, as shown in the ablation study (see section \ref{ablation}).
+% The system maintains a stable bound on latency up to a certain throughput [reference heatmap with stable latency], but experiences exponential growth in latency when it can no longer keep up with the volume of requests [reference heatmap with exponential latency]. This exponential growth is due to queues of requests building on each node; as the test progresses the length of the queues increases linearly, causing the wait time to grow exponentially??? throughput/latency?
+\subsection{Batch sizes} \label{batchsizeseval}
 blah blah batch sizes
 
 \begin{figure}[h!]
@@ -105,7 +116,7 @@ blah blah batch sizes
 \caption{Cumulative latency plot for experiment with a throughput of 10req/s and unlimited batch size, run for 10s with 100ms network delay.}
 \end{figure}
 
-\subsection{Node counts}
+\subsection{Node counts} \label{nodecountseval}
 blah blah node counts
 
 \begin{figure}[h!]
