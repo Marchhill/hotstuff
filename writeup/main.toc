@@ -24,7 +24,7 @@
 \contentsline {section}{\numberline {3.3}Performance improvements}{21}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Batching}{21}{subsection.3.3.1}%
 \contentsline {subsubsection}{Probing effects}{22}{subsubsection*.4}%
-\contentsline {subsubsection}{Architectural experimentation}{23}{subsubsection*.5}%
+\contentsline {subsubsection}{Architectural experimentation}{22}{subsubsection*.5}%
 \contentsline {subsubsection}{Send-to-all and deduplication}{24}{subsubsection*.6}%
 \contentsline {subsubsection}{Batch sizes}{26}{subsubsection*.7}%
 \contentsline {subsection}{\numberline {3.3.2}Encoding of nodes}{26}{subsection.3.3.2}%
@@ -40,12 +40,12 @@
 \contentsline {section}{\numberline {4.1}Testing methodology}{32}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Library benchmarks}{32}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{32}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{33}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Benchmarking HotStuff implementation}{34}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{34}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Node counts}{34}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Ablation study}{35}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}View change}{37}{subsection.4.3.4}%
-\contentsline {chapter}{\numberline {5}Conclusion}{41}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Future Work}{41}{section.5.1}%
-\contentsline {chapter}{Bibliography}{42}{chapter*.12}%
+\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{34}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{34}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{35}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Node counts}{35}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Ablation study}{36}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}View change}{38}{subsection.4.3.4}%
+\contentsline {chapter}{\numberline {5}Conclusion}{42}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Future Work}{42}{section.5.1}%
+\contentsline {chapter}{Bibliography}{43}{chapter*.12}%
