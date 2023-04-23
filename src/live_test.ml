@@ -25,9 +25,17 @@ let reporter =
   in
   { Logs.report = report }
 
+(* calculate delta between timestamps in seconds s*)
+let delta x y =
+	let open Base.Int63 in
+	(to_float (y - x)) /. 1_000_000_000.
 let sent = ref 0
+let callbacks = ref 1
 
-let gen_callback_id () =Random.bits64 ()
+let gen_callback_id () =
+	let x = Int64.of_int (!callbacks) in
+	callbacks := !callbacks + 1;
+	x
 
 (* wait until we send a request to some node and it is commited *)
 let rec await_first_commit i conn timeout retries =
@@ -85,7 +93,6 @@ let benchmark conns res rate timeout msg_size t =
 				let x = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
 				let* success = run_command conns timeout s msg_size in
 				let y = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
-				(* Fmt.pr "%d: success = %b at %s@." i success (to_string y); *)
 				let ret = if success then Some (x, y) else None in
 				Lwt.return (Array.set res i ret)
 			);
@@ -95,15 +102,9 @@ let benchmark conns res rate timeout msg_size t =
 	let* () = aux 0 t in
 	Lwt.return s
 
-(* calculate delta between timestamps in seconds s*)
-let delta x y =
-	let open Base.Int63 in
-	(to_float (y - x)) /. 1_000_000_000.
-
-let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size =
+let run_client nodes version time rate req_times_fp stats_fp msg_size batch_size =
 	Lwt_main.run begin
 		let conns = Net.open_conns nodes in
-		let promise, resolver = Lwt.wait () in
 		let* connected = await_connections conns 5. 10 in
 		if not connected then (
 			Fmt.epr "abort!@.";
@@ -114,57 +115,56 @@ let run_client nodes chained time rate req_times_fp stats_fp msg_size batch_size
 			Net.send_quit (List.hd conns)
 		); * view change experiment *)
 		Fmt.pr "connected to all!@.";
-		Lwt.async (fun () ->
-			let n = time * rate in (* calculate based on actual number sent (filter)*)
-			let res = Array.make n None in
-			let start_time = Time_now.nanoseconds_since_unix_epoch () in
-			let* stats = benchmark conns res (Float.of_int rate) 1000. msg_size start_time in
-	 		let end_time = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) start_time in
-			(* output request times to csv file*)
-			let name = match req_times_fp with
-				| Some s ->
-					Out_channel.with_open_text s (fun oc ->
-						Printf.fprintf oc "sent, rec\n";
-						for i = 0 to (n - 1) do
-							match res.(i) with
-								| Some r ->
-									let s = Base.Int63.to_string (fst r) in
-									let e = Base.Int63.to_string (snd r) in
-									Printf.fprintf oc "%s, %s\n" s e
-								| None -> ()
-						done
-					);
-					Filename.basename s |> Filename.remove_extension
-				| None -> ""
-			in
-			let success = Array.fold_left (fun acc -> function Some _ -> acc + 1 | None -> acc) 0  res in
-			let elapsed =
-				let open Base.Int63 in
-				let (lo, _) = Array.fold_left (fun (lo, hi) -> function Some (_, x) -> (min lo x, max hi x) | None -> (lo, hi)) (max_value, min_value) res in
-				delta lo end_time
-			in
-			let goodput = (Float.of_int success) /. elapsed in
-			let res = Array.map (function (Some (x, y)) -> delta x y | None -> 0.) res in
-			(* let goodput = (Float.of_int n) /. elapsed in *)
-			let sum = Array.fold_left (+.) 0. res in
-			let sum_sq = Array.fold_left (fun acc x -> acc +. (x *. x)) 0. res in
-			let mean = sum /. (Float.of_int n) in
-			let sd = Float.sqrt ((sum_sq /. (Float.of_int n)) -. (mean *. mean)) in
-			let chained = if chained then "y" else "n" in
-			Fmt.pr "\nname = %s\nchained = %s\nnodes = %d \n reqs = %d / %d\nthroughput = %dreq/s\ngoodput = %freq/s\nmean = %fs\nsd = %fs@." name chained nodes success n rate goodput mean sd;
-			Util.print_stats !(stats.connection_times) "req_conn" "s" 69;
-			Util.print_stats !(stats.send_times) "req_send" "s" 69;
-			(* append stats to csv file*)
-			(match stats_fp with
-				| Some s ->
-					Out_channel.with_open_gen [Open_append] 0o666 s (fun oc ->
-						Printf.fprintf oc "%s, %s, %d, %d, %f, %f, %f, %d, %d, %s, %d\n" name chained nodes rate goodput mean sd success n batch_size msg_size
-					)
-				| None -> ());
-			Lwt.wakeup resolver ();
-			Lwt.return_unit
-		);
-		let* () = Lwt.join [promise; Lwt_unix.sleep (Float.of_int time)] in (* wait until all requests send AND time complete*)
+		(* run and ignore results for 1s to allow batches to fill up *)
+		(* let startup = Array.make (1 * rate) None in *)
+		(* let* _ = benchmark conns startup (Float.of_int rate) 1000. msg_size (Base.Int63.zero) in *)
+		(* begin actual benchamrking*)
+		let n = time * rate in (* calculate based on actual number sent (filter)*)
+		let res = Array.make n None in
+		let start_time = Time_now.nanoseconds_since_unix_epoch () in
+		let* stats = benchmark conns res (Float.of_int rate) 1000. msg_size start_time in
+		(* wait 15 seconds to recieve any outstanding requests *)
+		let* () = Lwt_unix.sleep 15. in
+		(* output request times to csv file*)
+		let name = match req_times_fp with
+			| Some s ->
+				Out_channel.with_open_text s (fun oc ->
+					Printf.fprintf oc "sent, rec\n";
+					for i = 0 to (n - 1) do
+						match res.(i) with
+							| Some r ->
+								let s = Base.Int63.to_string (fst r) in
+								let e = Base.Int63.to_string (snd r) in
+								Printf.fprintf oc "%s, %s\n" s e
+							| None -> ()
+					done
+				);
+				Filename.basename s |> Filename.remove_extension
+			| None -> ""
+		in
+		let success = Array.fold_left (fun acc -> function Some _ -> acc + 1 | None -> acc) 0  res in
+		let elapsed =
+			let open Base.Int63 in
+			let (lo, hi) = Array.fold_left (fun (lo, hi) -> function Some (_, x) -> (min lo x, max hi x) | None -> (lo, hi)) (max_value, min_value) res in
+			delta lo hi
+		in
+		let goodput = (Float.of_int success) /. elapsed in
+		let res = Array.map (function (Some (x, y)) -> delta x y | None -> 0.) res in
+		let sum = Array.fold_left (+.) 0. res in
+		let sum_sq = Array.fold_left (fun acc x -> acc +. (x *. x)) 0. res in
+		let mean = sum /. (Float.of_int success) in
+		let sd = Float.sqrt ((sum_sq /. (Float.of_int success)) -. (mean *. mean)) in
+		let version = match version with Some v -> v | None -> "x" in
+		Fmt.pr "\nname = %s\nversion = %s\nnodes = %d \n reqs = %d / %d\nthroughput = %dreq/s\ngoodput = %freq/s\nmean = %fs\nsd = %fs@." name version nodes success n rate goodput mean sd;
+		Util.print_stats !(stats.connection_times) "req_conn" "s" 12345;
+		Util.print_stats !(stats.send_times) "req_send" "s" 12345;
+		(* append stats to csv file*)
+		(match stats_fp with
+			| Some s ->
+				Out_channel.with_open_gen [Open_append] 0o666 s (fun oc ->
+					Printf.fprintf oc "%s, %s, %d, %d, %f, %f, %f, %d, %d, %s, %d\n" name version nodes rate goodput mean sd success n batch_size msg_size
+				)
+			| None -> ());
 		let q = List.map (fun conn ->
 			Net.send_quit conn
 		) conns in
@@ -178,9 +178,9 @@ let nodes =
 	let doc = "Node count." in
 	Arg.(required & pos 0 (some int) None & info [] ~docv:"NODES" ~doc)
 
-let chained =
-	let doc = "Whether to use chained version." in
-	Arg.(value & flag & info ["c"; "chained"] ~docv:"CHAINED" ~doc)
+let version =
+	let doc = "Ablation version." in
+	Arg.(value & opt (some string) None & info ["v"; "version"] ~docv:"VERSION" ~doc)
 
 let req_times_fp =
 	let doc = "Filepath to append request times to." in
@@ -191,7 +191,7 @@ let stats_fp =
 	Arg.(value & opt (some string) None & info ["stats"] ~docv:"STATS" ~doc)
 
 let time =
-	let doc = "Time to run experiment for." in
+	let doc = "Time to run experiment for (in seconds)." in
 	Arg.(value & opt int 100 & info ["t"; "time"] ~docv:"TIME" ~doc)
 
 let throughput =
@@ -209,7 +209,7 @@ let batch_size =
 let connect_cmd =
 	let doc = "run the client" in
 	let info = Cmd.info "connect" ~doc in
-	Cmd.v info Term.(const run_client $ nodes $ chained $ time $ throughput $ req_times_fp $ stats_fp $ msg_size $ batch_size)
+	Cmd.v info Term.(const run_client $ nodes $ version $ time $ throughput $ req_times_fp $ stats_fp $ msg_size $ batch_size)
 
 let () =
 	Random.self_init ();

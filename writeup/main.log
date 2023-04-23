@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  23 APR 2023 11:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  23 APR 2023 17:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1040,11 +1040,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[18]
-
-LaTeX Warning: Text page 19 contains only floats.
-
-[19] [20]
+[18] [19] [20]
 Overfull \hbox (35.01292pt too wide) in paragraph at lines 202--203
 []\T1/cmr/m/n/12 ON\T1/cmr/m/n/14.4 R\T1/cmr/m/n/12 ECIEVE\T1/cmr/m/n/14.4 C\T1/cmr/m/n/12 OMPLAIN (Al-go-rithm []2[]): This func-tion is very sim-i-lar to ON\T1/cmr/m/n/14.4 R\T1/cmr/m/n/12 ECEIVE\T1/cmr/m/n/14.4 V\T1/cmr/m/n/12 OTE,
  []
@@ -1054,17 +1050,17 @@ File: images//lemma1.png Graphic file (type png)
 <use images//lemma1.png>
 Package pdftex.def Info: images//lemma1.png  used on input line 210.
 (pdftex.def)             Requested size: 115.03062pt x 71.06604pt.
-[21
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.238 I
-       n order to implement this change in algorithm \ref{pacemaker} one sim... <./images//lemma1.png>]
+
 Overfull \hbox (46.51099pt too wide) in paragraph at lines 238--239
 []\T1/cmr/m/n/12 In or-der to im-ple-ment this change in al-go-rithm []2[] one sim-ply has to mod-ify the ON\T1/cmr/m/n/14.4 N\T1/cmr/m/n/12 EXT\T1/cmr/m/n/14.4 S\T1/cmr/m/n/12 YNC\T1/cmr/m/n/14.4 V\T1/cmr/m/n/12 IEW
  []
 
-[22] [23]
+[21
+pdfTeX warning (ext4): destination with the same identifier (name{figure.3.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.239 
+       <./images//lemma1.png>] [22] [23]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -1206,37 +1202,37 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.133 V
-       ersions:
+l.133 
+      
 pdfTeX warning (ext4): destination with the same identifier (name{table.4.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.133 V
-       ersions: <./images//dummy_test/throughputlost.png>] [35
+l.133 
+       <./images//dummy_test/throughputlost.png>] [35
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.137 	\item C
+l.138 	\item C
               hained version - node truncation disabled, command filtering d...
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.5}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.137 	\item C
+l.138 	\item C
               hained version - node truncation disabled, command filtering d... <./images//batch_size_test/throughputgoodput.png> <./images//batch_size_test/throughputflatency.png>] [36
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.141 \end{enumerate}
+l.142 \end{enumerate}
                      
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.7}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.141 \end{enumerate}
+l.142 \end{enumerate}
                       <./images//batch_size_test/throughputlost.png> <./images//mininet/throughputlatency.png>]
 <images//ablation/throughputgoodput_ablation.png, id=590, 462.528pt x 346.896pt>
 File: images//ablation/throughputgoodput_ablation.png Graphic file (type png)
 <use images//ablation/throughputgoodput_ablation.png>
-Package pdftex.def Info: images//ablation/throughputgoodput_ablation.png  used on input line 145.
+Package pdftex.def Info: images//ablation/throughputgoodput_ablation.png  used on input line 146.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
 
 
@@ -1245,7 +1241,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <images//ablation/throughputflatency_ablation.png, id=591, 462.528pt x 346.896pt>
 File: images//ablation/throughputflatency_ablation.png Graphic file (type png)
 <use images//ablation/throughputflatency_ablation.png>
-Package pdftex.def Info: images//ablation/throughputflatency_ablation.png  used on input line 151.
+Package pdftex.def Info: images//ablation/throughputflatency_ablation.png  used on input line 152.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1253,7 +1249,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <images//ablation/throughputlost_ablation.png, id=592, 462.528pt x 346.896pt>
 File: images//ablation/throughputlost_ablation.png Graphic file (type png)
 <use images//ablation/throughputlost_ablation.png>
-Package pdftex.def Info: images//ablation/throughputlost_ablation.png  used on input line 157.
+Package pdftex.def Info: images//ablation/throughputlost_ablation.png  used on input line 158.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1261,7 +1257,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <images//viewchange/test7_100_7_100_timelatencyheatmap.png, id=593, 722.7pt x 361.35pt>
 File: images//viewchange/test7_100_7_100_timelatencyheatmap.png Graphic file (type png)
 <use images//viewchange/test7_100_7_100_timelatencyheatmap.png>
-Package pdftex.def Info: images//viewchange/test7_100_7_100_timelatencyheatmap.png  used on input line 164.
+Package pdftex.def Info: images//viewchange/test7_100_7_100_timelatencyheatmap.png  used on input line 165.
 (pdftex.def)             Requested size: 361.3491pt x 180.67456pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1323,9 +1319,9 @@ Here is how much of TeX's memory you used:
  56809 multiletter control sequences out of 15000+600000
  494460 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 130i,10n,142p,1660b,3467s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 130i,11n,142p,1660b,3467s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx3583.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfit1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (43 pages, 1345660 bytes).
+Output written on main.pdf (43 pages, 1345698 bytes).
 PDF statistics:
  784 PDF objects out of 1000 (max. 8388607)
  639 compressed objects within 7 object streams

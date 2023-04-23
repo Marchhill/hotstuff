@@ -31,16 +31,17 @@ os.mkdir(test_path + 'subtests')
 
 # create stats file
 with open(test_path + 'stats.csv', 'w') as f:
-	f.write('name, chained, nodes, throughput, goodput, mean, sd, rec, sent, batch_size, msg_size\n')
+	f.write('name, version, nodes, throughput, goodput, mean, sd, rec, sent, batch_size, msg_size\n')
 
 # nodeCounts = [1, 2, 4, 7, 10, 13]
 nodeCounts = [4]
-# rates = [1, 10, 50, 100, 200, 400, 600, 800, 1000, 1500, 2000, 4000]
-rates = [50, 100, 500, 1000, 2000]
-# batch_sizes = [1, 50, 100, 300, 450, 600]
-batch_sizes = [300]
+rates = [1, 10, 50, 100, 200, 400, 600, 800, 1000, 1500, 2000, 4000]
+# rates = [100, 200, 500, 1000, 2000, 4000]
+batch_sizes = [1, 50, 100, 300, 450, 600, 99999999]
+# batch_sizes = [100]
 experiment_time = 10
-repeats = 2
+repeats = 3
+version = "x"
 
 # randomise testing order
 test_iter = random.sample(list(itertools.product(rates, nodeCounts, batch_sizes)) * repeats, len(rates) * len(nodeCounts) * len(batch_sizes) * repeats)
@@ -50,12 +51,12 @@ x = 0
 for (rate, n, s) in test_iter:
 	succ = False
 	while not succ:
-		name = f'test{x}_{rate}_{n}_{s}'
+		name = f'{test_name}_{x}_{rate}_{n}_{s}'
 		print(f'running "{name}"')
 		for i in range(n):
 			processes.append(subprocess.Popen(f'ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build{str(i)} -- ./main.exe -i {str(i)} -n {str(n)} -b {str(s)}', shell=True, preexec_fn=os.setsid))
-		time.sleep(10)
-		completed = subprocess.run(f'eval $(opam env) dune exec -- ./live_test.exe {str(n)} -c -t {str(experiment_time)} -r {str(rate)} -b {str(s)} --times "{test_path + "subtests/" + name}.csv" --stats "{test_path}stats.csv"', shell=True)
+		time.sleep(5)
+		completed = subprocess.run(f'eval $(opam env) dune exec -- ./live_test.exe {str(n)} -v {version} -t {str(experiment_time)} -r {str(rate)} -b {str(s)} --times "{test_path + "subtests/" + name}.csv" --stats "{test_path}stats.csv"', shell=True)
 		if completed.returncode == 0:
 			succ = True
 		time.sleep(1)

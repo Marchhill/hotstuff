@@ -76,7 +76,7 @@ let update (state: t) (b_star : node) =
 
 let on_propose state cmds =
 	let b_new = create_leaf state state.s.b_leaf cmds state.s.qc_high in
-	let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = state.s.tcp_lens; msg_type = Generic; node = Some b_new; justify = None; partial_signature = None}) in
+	let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = state.s.tcp_lens; msg_type = Generic; node = Some b_new; justify = Some state.s.qc_high; partial_signature = None}) in
 	(b_new, [Broadcast broadcast_msg])
 
 let on_beat state cmds =
@@ -93,7 +93,12 @@ let on_next_sync_view state view =
 		let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i <= state.batch_size) filtered in
 		let state = {state with cmds = rest; seen = Cmd_set.empty} in
 		on_beat state cmds
-	) else (state, []) in
+	)
+  else (
+	  (* send new leader new-view message *)
+	  let new_view_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = state.s.tcp_lens; msg_type = NewView; node = None; justify = Some state.s.qc_high; partial_signature = None}) in
+    (state, [SendLeader new_view_msg])
+  ) in
 	(state, ResetTimer {id = state.id; view = view} :: actions)
 
 let safe_node state b_new n = ((get_node_height b_new) > state.s.vheight) && ((extends (Some b_new) (Some state.s.b_lock)) || ((get_node_height n) > (get_node_height state.s.b_lock)))
@@ -110,8 +115,6 @@ let on_recieve_proposal state (msg : msg) =
 	)
 	else (state, []) in
 	let (state, actions2) = update state b_new in
-	(* send next leader new-view message *)
-	let new_view_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = state.s.tcp_lens; msg_type = NewView; node = None; justify = Some state.s.qc_high; partial_signature = None}) in
 	(* transition to next state if not next leader as next leader has to collect ACKs first *)
 	let (state, actions3) =
 		if (is_leader (state.view + 1) state.id state.node_count) then
@@ -119,7 +122,7 @@ let on_recieve_proposal state (msg : msg) =
 		else
 			on_next_sync_view state (state.view + 1)
 	in
-	(state,  (SendNextLeader new_view_msg) :: actions1 @ actions2 @ actions3)
+	(state,  actions1 @ actions2 @ actions3)
 
 let on_recieve_new_view state (msg : msg) qc =
 	let state = update_qc_high state qc in
@@ -165,7 +168,7 @@ let advance (state : t) (event : event) =
 	let state, actions' = if is_signed then
 		(match event with
 			| GenericAck msg when (is_leader (msg.view + 1) state.id state.node_count) && msg.view >= state.view -> on_recieve_vote state event msg.view
-			| Generic msg when msg.view = state.view && (is_leader msg.view msg.id state.node_count)-> on_recieve_proposal state msg
+			| Generic msg when msg.view = state.view && (is_leader msg.view msg.id state.node_count) -> on_recieve_proposal state msg
 			| NewView msg -> (match qc with
 				| Some qc -> on_recieve_new_view state msg qc
 				| None -> (state, [])	

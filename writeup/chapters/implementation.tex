@@ -59,15 +59,15 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 \begin{algorithm}[h!]
 	\caption{Modified HotStuff}\label{hotstuff}
 	\begin{algorithmic}[1]
-	\color{Magenta}
 	\Function{CREATE{\large L}EAF}{\textit{parent, cmd, qc}}
+		\color{Magenta}
 		\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
 		\State $\textit{b.height} \gets \textit{curView} + 1$
+		\color{black}
 		\State $\textit{b.cmd} \gets \textit{cmd}$
 		\State $\textit{b.justify} \gets \textit{qc}$
 		\State \textbf{return} b
 	\EndFunction
-	\color{black}
 	\Procedure{UPDATE}{\textit{b\textsuperscript{*}}}
 		\State $\textit{b''} \gets \textit{b\textsuperscript{*}.justify.node}$
 		\State $\textit{b'} \gets \textit{b''.justify.node}$
@@ -87,11 +87,11 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 			\State $\text{EXECUTE}(\textit{b.cmd})$
 		\EndIf
 	\EndProcedure
-	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textit{qc})$}
+	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textcolor{Magenta}{\textit{qc}})$}
 		\color{Green}
-		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view})$} %***check that they are leader of the view!!!
-			\If {$ \textit{m.view} > \textit{curView} \land \textit{m.view} = \textit{qc.view} + 1$} %***check that they are leader of the view!!!
-				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{m.view})$
+		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view})$}
+			\If {$ \textit{qc.view} \ge \textit{curView}$}
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{qc.view} + 1)$
 			\EndIf
 			\If {$ \textit{m.view} = curView$}
 				\color{black}
@@ -101,7 +101,6 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 				\EndIf
 				\State $\text{UPDATE}(\textit{b\textsubscript{new}})$
 				\color{Green}
-				\State $\text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{MSG}\textsubscript{\textit{u}}(\text{NEW{\large V}IEW}, \bot, \textit{qc\textsubscript{high}}))$
 				\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $}
 					\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{curview} + 1)$
 				\EndIf
@@ -128,7 +127,7 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 	\EndProcedure
 	\Function{ON{\large P}ROPOSE}{$ \textit{b\textsubscript{leaf}}, \textit{cmd}, \textit{qc\textsubscript{high}}$}
 		\State $b\textsubscript{new} \gets \text{CREATE{\large L}EAF}(\textit{b\textsubscript{leaf}, \textit{cmd}, \textit{qc\textsubscript{high}}, \textit{b\textsubscript{leaf}.height} + 1})$
-		\State $ \text{BROADCAST}(\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textit{qc\textsubscript{high}})) $
+		\State $ \text{BROADCAST}(\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textcolor{Magenta}{\textit{qc\textsubscript{high}}})) $
 		\State \textbf{return} b\textsubscript{new}
 	\EndFunction
 	\end{algorithmic}
@@ -159,6 +158,7 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 		\State $ \text{RESET{\large T}IMER}(\textit{curView})$
 		\State $ \text{ON{\large B}EAT}(\textit{cmds.take()})$
 		\color{black}
+		\State $\text{SEND}(\text{GET{\large L}EADER}(), \text{MSG}\textsubscript{\textit{u}}(\text{NEW{\large V}IEW}, \bot, \textit{qc\textsubscript{high}}))$
 	\EndProcedure
 	\Procedure{ON{\large R}ECEIVE{\large N}EW{\large V}IEW}{$ \text{MSG}\textsubscript{\textit{u}}(\text{NEW{\large V}IEW}, \bot, \textit{qc'\textsubscript{high}}) $}
 		\State $ \text{UPDATE{\large Q}C{\large H}IGH}(\textit{qc'\textsubscript{high}}) $
