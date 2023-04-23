@@ -148,7 +148,7 @@ let run_client nodes version time rate req_times_fp stats_fp msg_size batch_size
 			let (lo, hi) = Array.fold_left (fun (lo, hi) -> function Some (_, x) -> (min lo x, max hi x) | None -> (lo, hi)) (max_value, min_value) res in
 			delta lo hi
 		in
-    let elapsed = min elapsed 10. in
+    let elapsed = max elapsed 10. in
 		let goodput = (Float.of_int success) /. elapsed in
 		let res = Array.map (function (Some (x, y)) -> delta x y | None -> 0.) res in
 		let sum = Array.fold_left (+.) 0. res in
