@@ -26,7 +26,7 @@
 \contentsline {subsubsection}{Probing effects}{23}{subsubsection*.4}%
 \contentsline {subsubsection}{Architectural experimentation}{24}{subsubsection*.5}%
 \contentsline {subsubsection}{Send-to-all and deduplication}{25}{subsubsection*.6}%
-\contentsline {subsubsection}{Batch sizes}{26}{subsubsection*.7}%
+\contentsline {subsubsection}{Batch sizes}{27}{subsubsection*.7}%
 \contentsline {subsection}{\numberline {3.3.2}Encoding of nodes}{27}{subsection.3.3.2}%
 \contentsline {subsubsection}{Recursive types}{27}{subsubsection*.8}%
 \contentsline {subsubsection}{Node offsets}{28}{subsubsection*.9}%

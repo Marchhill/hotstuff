@@ -54,12 +54,14 @@ The main loop takes events from the message and request streams, prioritising in
 The actions that can be carried out are sending a message to other nodes, responding to a client request, and resetting a timer. In order to send a message we must convert the consensus state machine internal types into Cap'n Proto types, and construct an RPC that matches the schema. Messages are dispatched asynchronously in a new thread. The node maintains TCP connections with all other nodes that are reused every time a message is sent, and in the event of the connection breaking the node repeatedly attempts to reconnect with binary exponential back-off. When responding to a client request the committed command's unique identifier is used to lookup the callback to respond to the client, which is then called, sending a response to the client. The timer is implemented with Lwt promises, a new thread is created which waits for a timeout to elapse and then adds a TIMEOUT message to the message stream.
 
 \section{Pacemaker Specification} \label{spec}
-We present the pseudocode for the unchained algorithm given in the HotStuff paper (see algorithm \ref{hotstuff} \& \ref{pacemaker}) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
+We present the pseudocode for the unchained algorithm given in the HotStuff paper (see algorithms \ref{hotstuff} \& \ref{pacemaker}) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable. We informally justify the changes, and then prove that they yield the desired behaviour.
+
+The model of collecting a quorum of COMPLAIN messages to transition to the next view is based on the pacemaker for LibraBFT [cite], and is described in section \ref{viewchange}. The rest of the pacemaker is designed to advance to the next view as soon as the system allows, and is based on ad-hoc fixes to deadlocks that were encountered during implementation.
 
 \begin{algorithm}[h!]
 	\caption{Modified HotStuff}\label{hotstuff}
 	\begin{algorithmic}[1]
-	\Function{CREATE{\large L}EAF}{\textit{parent, cmd, qc}}
+	\Function{CREATE{\large L}EAF}{\textit{parent, cmd, qc}} \label{code_createleaf}
 		\color{Magenta}
 		\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
 		\State $\textit{b.height} \gets \textit{curView} + 1$
@@ -87,9 +89,9 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 			\State $\text{EXECUTE}(\textit{b.cmd})$
 		\EndIf
 	\EndProcedure
-	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textcolor{Magenta}{\textit{qc}})$}
+	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textcolor{Magenta}{\textit{qc}})$} \label{code_onreceiveproposal}
 		\color{Green}
-		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view}) \land \textit{m.view} = curView$}
+		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view}) \land \textit{m.view} = curView$} \label{code_checkview}
 			\color{black}
 			\If{$\textit{b\textsubscript{new}.height} > \textit{vheight} \land (\textit{b\textsubscript{new}}\ \text{extends}\ \textit{b\textsubscript{lock}} \lor \textit{n.height} > \textit{b\textsubscript{lock}.height})$}
 				\State $\textit{vheight} \gets \textit{b\textsubscript{new}.height}$
@@ -97,15 +99,15 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 			\EndIf
 			\State $\text{UPDATE}(\textit{b\textsubscript{new}})$
 			\color{Green}
-			\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $}
+			\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $} \label{code_proposaltransition}
 				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{curview} + 1)$
 			\EndIf
 		\EndIf
 		\color{black}
 	\EndProcedure
-	\Procedure{ON{\large R}ECEIVE{\large V}OTE}{$\text{VOTE{\large M}SG}\textsubscript{\textit{v}}(\text{GENERIC{\large A}CK}, \textit{b}, \bot)$}
+	\Procedure{ON{\large R}ECEIVE{\large V}OTE}{$\text{VOTE{\large M}SG}\textsubscript{\textit{v}}(\text{GENERIC{\large A}CK}, \textit{b}, \bot)$} \label{code_onreceivevote}
 		\color{Green}
-		\If {$ \text{IS{\large L}EADER}(\textit{m.view} + 1) \land \textit{m.view} \ge curView$}
+		\If {$ \text{IS{\large L}EADER}(\textit{m.view} + 1) \land \textit{m.view} \ge curView$} \label{code_checkleader}
 			\color{black}
 			\If {$\exists(v, \sigma') \in V\textcolor{Magenta}{\textsubscript{m.view}}[b]$}
 				\State \textbf{return}
@@ -115,14 +117,14 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 				\State $qc \gets QC(\{ \sigma | (v', \sigma) \in V\textcolor{Magenta}{\textsubscript{m.view}}[b]\})$
 				\State $ \text{UPDATE{\large Q}C{\large H}IGH}(\textit{qc}) $
 				\color{Green}
-				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{m.view} + 1)$ \label{gotvotes}
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{m.view} + 1)$ \label{code_gotvotes}
 				\color{black}
 			\EndIf
 		\EndIf
 	\EndProcedure
-	\Function{ON{\large P}ROPOSE}{$ \textit{b\textsubscript{leaf}}, \textit{cmd}, \textit{qc\textsubscript{high}}$}
+	\Function{ON{\large P}ROPOSE}{$ \textit{b\textsubscript{leaf}}, \textit{cmd}, \textit{qc\textsubscript{high}}$} \label{code_onpropose}
 		\State $b\textsubscript{new} \gets \text{CREATE{\large L}EAF}(\textit{b\textsubscript{leaf}, \textit{cmd}, \textit{qc\textsubscript{high}}, \textit{b\textsubscript{leaf}.height} + 1})$
-		\State $ \text{BROADCAST}(\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textcolor{Magenta}{\textit{qc\textsubscript{high}}})) $
+		\State $ \text{BROADCAST}(\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textcolor{Magenta}{\textit{qc\textsubscript{high}}})) $ \label{code_propose}
 		\State \textbf{return} b\textsubscript{new}
 	\EndFunction
 	\end{algorithmic}
@@ -131,7 +133,7 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 \begin{algorithm}[h!]
 	\caption{Modified Pacemaker}\label{pacemaker}
 	\begin{algorithmic}[1]
-	\Function{GET{\large L}EADER}{}
+	\Function{GET{\large L}EADER}{} \label{code_getleader}
 		\color{Green}
 		\State $\textbf{return}\ \textit{curView}\ \text{mod}\ \textit{nodeCount}$
 		\color{black}
@@ -143,12 +145,12 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 		\EndIf
 	\EndProcedure
 	\Procedure{ON{\large B}EAT}{$\textit{cmd}$}
-		\If {$ \textit{u} = \text{GET{\large L}EADER}()$} %idk if this is still needed
+		\If {$ \textit{u} = \text{GET{\large L}EADER}()$}
 			\State $ \textit{b\textsubscript{leaf}} \gets \text{ON{\large P}ROPOSE}(\textit{b\textsubscript{leaf}}, \textit{cmd}, \textit{qc\textsubscript{high}})$
 		\EndIf
 	\EndProcedure
-	\Procedure{ON{\large N}EXT{\large S}YNC{\large V}IEW}{$\textit{view}$}
-		\color{Magenta}
+	\Procedure{ON{\large N}EXT{\large S}YNC{\large V}IEW}{$\textit{view}$} \label{code_onnextsyncview}
+		\color{Green}
 		\State $ \textit{curView} \gets \textit{view}$
 		\State $ \text{RESET{\large T}IMER}(\textit{curView})$
 		\State $ \text{ON{\large B}EAT}(\textit{cmds.take()})$
@@ -159,14 +161,14 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 		\State $ \text{UPDATE{\large Q}C{\large H}IGH}(\textit{qc'\textsubscript{high}}) $
 	\EndProcedure
 	\color{Green}
-	\Procedure{ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST}{\text{REQ}(\textit{cmd})}
+	\Procedure{ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST}{\text{REQ}(\textit{cmd})} \label{code_onreceiveclientreq}
 		\State $ \textit{cmds.add(cmd)} $
 	\EndProcedure
-	\Procedure{ON{\large T}IMEOUT}{$ \textit{view} $}
+	\Procedure{ON{\large T}IMEOUT}{$ \textit{view} $} \label{code_ontimeout}
 		\State $ \text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{MSG}(\text{COMPLAIN}, \bot, \bot)) $ \label{code_timeout}
 		\State $ \text{RESET{\large T}IMER}(\textit{view} + 1) $
 	\EndProcedure
-	\Procedure{ON{\large R}ECIEVE{\large C}OMPLAIN}{$ m = \text{MSG}(\text{COMPLAIN}, \bot, \bot) $}
+	\Procedure{ON{\large R}ECIEVE{\large C}OMPLAIN}{$ m = \text{MSG}(\text{COMPLAIN}, \bot, \bot) $} \label{code_onreceivecomplain}
 		\If {$ \text{IS{\large L}EADER}(\textit{m.view} + 1) \land \textit{m.view} \ge \textit{curView}$}
 			\If {$\exists(v, \sigma') \in C\textsubscript{m.view}[b]$}
 				\State \textbf{return}
@@ -178,31 +180,32 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 			\EndIf
 		\EndIf
 	\EndProcedure
-	\Procedure{ON{\large R}ECEIVE{\large A}NY}{$ m = \text{MSG}(*, *, \textit{qc}) $}
+	\Procedure{ON{\large R}ECEIVE{\large A}NY}{$ m = \text{MSG}(*, *, \textit{qc}) $} \label{code_onreceiveany}
 		\If {$ \textit{qc.view} \ge \textit{curView}$}
-				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{qc.view} + 1)$ \label{gotqc}
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{qc.view} + 1)$ \label{code_gotqc}
 		\EndIf
 	\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
 
 \begin{itemize}
-	\item CREATE{\large L}EAF (Algorithm \ref{hotstuff}): This function has been modified so that `dummy' nodes are inserted to maintain the invariant that the height of the chain is always one greater than the current view number. This is very similar to the CREATE{\large L}EAF function given for the chained version of the protocol in the HotStuff paper; it is unclear as to why this was changed for the unchained version [work out why it changed?].
-	\item ON{\large R}ECEIVE{\large P}ROPOSAL (Algorithm \ref{hotstuff}): The change on line 22 ensures that we only respond to a proposal from our current view, this is important for safety but was not explicitly included in the original pseudocode. The change on line 27 is that we send a NEW{\large V}IEW message to the next leader once we receive a proposal. This is in contrast to the original pseudocode where we send a NEW{\large V}IEW inside ON{\large N}EXT{\large S}YNC{\large V}IEW on receiving some unspecified interrupt. Finally, once we have received a proposal we can transition into the next view \textit{unless} we are the next leader, in which case we must wait to collect the VOTE{\large M}SGs before transitioning.
-	\item ON{\large R}ECEIVE{\large V}OTE (Algorithm \ref{hotstuff}): The change on line 31 ensures we ignore messages from earlier views, which is important for liveness, and that we are the correct destination for the vote message. Another change we make is dividing \textit{V} into different sets for messages from different views; this prevents votes from different views being used to form a quorum. The change on line 38 means that once a leader has received a quorum of messages, it can transition to the next view (which it starts by sending a proposal in ON{\large N}EXT{\large S}YNC{\large V}IEW)
-	\item GET{\large L}EADER (Algorithm \ref{pacemaker}): The original pseudocode states that this function is application specific. We have chosen to use a round-robin system to assign leaders to views.
-	\item ON{\large N}EXT{\large S}YNC{\large V}IEW (Algorithm \ref{pacemaker}): This function previously just sent a NEW{\large V}IEW message to the next leader. Our modified function updates the \textit{curView}, and resets the timer for the new view. Additionally it calls ON{\large B}EAT which causes a leader to propose a new value.
-	\item ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST (Algorithm \ref{pacemaker}): On receiving a client request we simply add it to a queue of commands waiting to be proposed.
-	\item ON{\large T}IMEOUT (Algorithm \ref{pacemaker}): When our current view times out we send a COMPLAIN to the next leader, and reset our timer for the next view. This behaviour is explained in \ref{viewchange}.
-	\item ON{\large R}ECIEVE{\large C}OMPLAIN (Algorithm \ref{pacemaker}): This function is very similar to ON{\large R}ECEIVE{\large V}OTE, except that we are collecting a quorum of COMPLAIN messages rather than votes. On achieving a quorum we can broadcast a NEXT{\large V}IEW message to get the replicas to transition to the next state, including the quorum of COMPLAINs as proof. This behaviour is explained in \ref{viewchange}.
-	\item ON{\large R}ECEIVE{\large N}EXT{\large V}IEW (Algorithm \ref{pacemaker}): N.B. the message type given is the wildcard operator, so this procedure is run on every message we receive. The function checks if the quorum received is from a greater view than \textit{curView}, if so then it is safe to transition to that view in order to catch up.
+	\item CREATE{\large L}EAF (algorithm \ref{hotstuff}, line \ref{code_createleaf}): This function has been modified so that `dummy' nodes are inserted to maintain the invariant that the height of the chain is always one greater than the current view number, as in the non-event driven pseudocode in the original paper.
+	\item ON{\large R}ECEIVE{\large P}ROPOSAL (algorithm \ref{hotstuff}, line \ref{code_onreceiveproposal}): The change on line \ref{code_checkview} ensures that replicas only respond to a proposal from the leader of the current view. The change on line \ref{code_proposaltransition} means that a replica transitions to the next view once it receives a proposal unless it is the next leader, in which case it waits to collect the VOTE{\large M}SGs before transitioning.
+	\item ON{\large R}ECEIVE{\large V}OTE (algorithm \ref{hotstuff}, line \ref{code_onreceivevote}): The change on line \ref{code_checkleader} ensures that a replica will ignore messages from earlier views, and it checks that it is the correct destination for a vote message. Another change we make is dividing \textit{V} into different sets for messages from different views; this prevents votes from different views being used to form a quorum. The change on line \ref{code_gotvotes} means that once a leader has received a quorum of messages, it can transition to the next view.
+	\item ON{\large P}ROPOSE (algorithm \ref{hotstuff}, line \ref{code_onpropose}): The change on line \ref{code_propose} includes a QC along with the proposal, allowing replicas to catch up if they are in a lower view.
+	\item GET{\large L}EADER (algorithm \ref{pacemaker}, line \ref{code_getleader}): The original pseudocode states that this function is application specific. We have chosen to use a round-robin system to assign leaders to views.
+	\item ON{\large N}EXT{\large S}YNC{\large V}IEW (algorithm \ref{pacemaker}, line \ref{code_onnextsyncview}): This function previously just sent a NEW{\large V}IEW message to the next leader. Our modified function also updates the \textit{curView}, and resets the timer for the new view. Additionally it calls ON{\large B}EAT which causes a leader to propose a new value.
+	\item ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST (algorithm \ref{pacemaker}, line \ref{code_onreceiveclientreq}): On receiving a client request we simply add it to a queue of commands waiting to be proposed.
+	\item ON{\large T}IMEOUT (algorithm \ref{pacemaker}, line \ref{code_ontimeout}): When the current view times out replicas will send a COMPLAIN to the next leader, and reset their timers for the next view. This behaviour is explained in \ref{viewchange}.
+	\item ON{\large R}ECIEVE{\large C}OMPLAIN (algorithm \ref{pacemaker}, line \ref{code_onreceivecomplain}): This function is very similar to ON{\large R}ECEIVE{\large V}OTE, except that a quorum of COMPLAIN messages is being collected rather than votes. On achieving a quorum the leader can broadcast a NEXT{\large V}IEW message to get the replicas to transition to the next state, including the quorum of COMPLAINs as proof. This behaviour is explained in \ref{viewchange}.
+	\item ON{\large R}ECEIVE{\large A}NY (algorithm \ref{pacemaker}, line \ref{code_onreceiveany}): N.B. the message type given is the wildcard operator, so this procedure is run on every message we receive. The function checks if the quorum received is from a greater view than \textit{curView}, if so then it is safe to transition to that view in order to catch up.
 \end{itemize}
 
 \subsection{Proofs}
 
 We now present a reasonably formal proof that the modified pacemaker possesses qualities that ensure the liveness of the system. The first property (theorem \ref{viewsync}) ensures that there will always be opportunities for the system to make progress, and the second that the pacemaker cannot be controlled by a byzantine node (theorem \ref{syncvalid}). These properties are presented by xyz in the Cogsworth paper [cite!!!], which formalised the notion of a pacemaker and what qualities it should possess.
 
-HotStuff works under a partially-synchronous system model (see \ref{hotstufftheory}), so the following proofs assume that global synchronisation time has been reached, and messages have a bounded latency of $\delta$.
+HotStuff works under a partially-synchronous system model (see section \ref{hotstufftheory}), so the following proofs assume that global synchronisation time has been reached, and messages have a bounded latency of $\delta$.
 
 \begin{theorem}[View synchronisation] \label{viewsync}
 	There exists infinite views with honest leaders that all honest replicas will be in simultaneously, and have enough time to make progress.
@@ -211,8 +214,8 @@ HotStuff works under a partially-synchronous system model (see \ref{hotstufftheo
 \begin{proof}
 	From lemma \ref{viewslemma} we have that we can always find future views $v_1$ and $v_2$ with honest leaders $l_1$ and $l_2$, and from lemma \ref{progressionlemma} we have that $l_1$ will eventually enter $v_1$. We argue that all honest replicas will simultaneously be in either $v_1$ or $v_2$. Consider the cases of how $l_1$ could have entered $v_1$:
 	\begin{enumerate}
-		\item $l_1$ received a quorum of votes (algorithm \ref{hotstuff}, line \ref{gotvotes}) --- $l_1$ will broadcast a QC of votes that will be received by all honest replicas within $\delta$. These replicas will transition to $v_2$, and send a vote to $l_2$ which will also transition once it receives a quorum of votes. Hence all honest replicas will simultaneously be in $v_2$.
-		\item $l_1$ receives QC of COMPLAINS from itself (algorithm \ref{hotstuff}, line \ref{gotqc}) --- $l_1$ must have broadcast the NEXT{\large V}IEW message to all honest replicas; they will receive it within $\delta$ and all enter $v_1$ simultaneously.
+		\item $l_1$ received a quorum of votes (algorithm \ref{hotstuff}, line \ref{code_gotvotes}) --- $l_1$ will broadcast a QC of votes that will be received by all honest replicas within $\delta$. These replicas will transition to $v_2$, and send a vote to $l_2$ which will also transition once it receives a quorum of votes. Hence all honest replicas will simultaneously be in $v_2$.
+		\item $l_1$ receives QC of COMPLAINS from itself (algorithm \ref{hotstuff}, line \ref{code_gotqc}) --- $l_1$ must have broadcast the NEXT{\large V}IEW message to all honest replicas; they will receive it within $\delta$ and all enter $v_1$ simultaneously.
 	\end{enumerate}
 	Once all honest replicas are in a view with an honest leader, they will only transition once they have made progress, or once they timeout, which shouldn't happen if the timeout is sufficiently long. Hence they will all be in the view long enough to make progress.
 \end{proof}
@@ -247,7 +250,7 @@ HotStuff works under a partially-synchronous system model (see \ref{hotstufftheo
 \begin{proof}
 	This holds trivially for the calls to ON{\large N}EXT{\large S}YNC{\large V}IEW in algorithm \ref{hotstuff}, as the view is advanced on the request of the consensus machine.
 
-	The only other way the view can be advanced, is on the receipt of a QC (algorithm \ref{pacemaker}, line \ref{gotqc}). For a QC to be formed a quorum of $n - f$ nodes must have complained or voted; at least one of these must have been an honest consensus machine that requested for the view to be advanced.
+	The only other way the view can be advanced, is on the receipt of a QC (algorithm \ref{pacemaker}, line \ref{code_gotqc}). For a QC to be formed a quorum of $n - f$ nodes must have complained or voted; at least one of these must have been an honest consensus machine that requested for the view to be advanced.
 \end{proof}
 
 %prove that it doesn't break safety
@@ -280,7 +283,7 @@ In theory this change should result in much higher goodput without any significa
 
 \subsubsection{Probing effects}
 % development of logging framework, some details of what is logged
-I added timing and logging statements to key parts of the program, allowing me to better diagnose the source of the poor performance. Running a live test with print statements has the advantage that one can quickly see when progress is not being made, or when there are pauses, as the print statements stop. However, this benefit is outweighed by the sheer volume of logs and times being printed, it becomes difficult to manage when logs are in the millions of lines long [cite appendix with a sample of the program trace with timing statements printed (roll back to the old versions! utm). include a short exposition about how it may be useful to compare to the examples of the byzantine consensus protocol \ref{byzantineexample}].
+I added timing and logging statements to key parts of the program, allowing me to better diagnose the source of the poor performance. Running a live test with print statements has the advantage that one can quickly see when progress is not being made, or when there are pauses, as the print statements stop. However, this benefit is outweighed by the sheer volume of logs and times being printed, it becomes difficult to manage when logs are in the millions of lines long.
 
 Moreover, debugging by print statements had a bigger problem of inconsistencies between runs making it difficult to diagnose any problem. This was because the large volume of print statements being executed had a significant effect on the performance of the program. This is known as a \textit{probing effect}, the behaviour of a system is altered by the act of measuring it. I initially assumed that because the print statements were not in-between the timing statements they would not affect my measurements, but they are an expensive operation that can cause delays to happen in execution where one would not expect [cite???].
 
