@@ -87,8 +87,7 @@ let on_beat state cmds =
 let on_next_sync_view state view =
 	let state = {state with view = view} in
 	let (state, actions) = if (is_leader state.view state.id state.node_count) then (
-		(*let filtered = Cmd_set.diff state.cmds state.seen in*)
-                let filtered = state.cmds in
+		let filtered = Cmd_set.diff state.cmds state.seen in
 		let i = ref 0 in
     	(* limit batch size *)
 		let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i <= state.batch_size) filtered in
