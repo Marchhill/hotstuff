@@ -89,21 +89,16 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 	\EndProcedure
 	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textcolor{Magenta}{\textit{qc}})$}
 		\color{Green}
-		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view})$}
-			\If {$ \textit{qc.view} \ge \textit{curView}$}
-				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{qc.view} + 1)$
+		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view}) \land \textit{m.view} = curView$}
+			\color{black}
+			\If{$\textit{b\textsubscript{new}.height} > \textit{vheight} \land (\textit{b\textsubscript{new}}\ \text{extends}\ \textit{b\textsubscript{lock}} \lor \textit{n.height} > \textit{b\textsubscript{lock}.height})$}
+				\State $\textit{vheight} \gets \textit{b\textsubscript{new}.height}$
+				\State $ \text{SEND}(\text{GET{\large L}EADER}(), \text{VOTE{\large M}SG}\textsubscript{\textit{u}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot))$
 			\EndIf
-			\If {$ \textit{m.view} = curView$}
-				\color{black}
-				\If{$\textit{b\textsubscript{new}.height} > \textit{vheight} \land (\textit{b\textsubscript{new}}\ \text{extends}\ \textit{b\textsubscript{lock}} \lor \textit{n.height} > \textit{b\textsubscript{lock}.height})$}
-					\State $\textit{vheight} \gets \textit{b\textsubscript{new}.height}$
-					\State $ \text{SEND}(\text{GET{\large L}EADER}(), \text{VOTE{\large M}SG}\textsubscript{\textit{u}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot))$
-				\EndIf
-				\State $\text{UPDATE}(\textit{b\textsubscript{new}})$
-				\color{Green}
-				\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $}
-					\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{curview} + 1)$
-				\EndIf
+			\State $\text{UPDATE}(\textit{b\textsubscript{new}})$
+			\color{Green}
+			\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $}
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{curview} + 1)$
 			\EndIf
 		\EndIf
 		\color{black}
@@ -120,7 +115,7 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 				\State $qc \gets QC(\{ \sigma | (v', \sigma) \in V\textcolor{Magenta}{\textsubscript{m.view}}[b]\})$
 				\State $ \text{UPDATE{\large Q}C{\large H}IGH}(\textit{qc}) $
 				\color{Green}
-				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{m.view} + 1)$
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{m.view} + 1)$ \label{gotvotes}
 				\color{black}
 			\EndIf
 		\EndIf
@@ -168,7 +163,7 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 		\State $ \textit{cmds.add(cmd)} $
 	\EndProcedure
 	\Procedure{ON{\large T}IMEOUT}{$ \textit{view} $}
-		\State $ \text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{MSG}(\text{COMPLAIN}, \bot, \bot)) $
+		\State $ \text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{MSG}(\text{COMPLAIN}, \bot, \bot)) $ \label{code_timeout}
 		\State $ \text{RESET{\large T}IMER}(\textit{view} + 1) $
 	\EndProcedure
 	\Procedure{ON{\large R}ECIEVE{\large C}OMPLAIN}{$ m = \text{MSG}(\text{COMPLAIN}, \bot, \bot) $}
@@ -179,13 +174,13 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 			\State $C\textsubscript{m.view}[b] \gets C[b] \cup \{(v, m.partialSig)\}$
 			\If{$ |C\textsubscript{m.view}[b]| = n - f$}
 				\State $qc \gets QC(\{ \sigma | (v', \sigma) \in C\textsubscript{m.view}[b]\})$
-				\State $\text{BROADCAST}(\text{MSG}(\text{NEXT{\large V}IEW}, \bot, \textit{qc}))$
+				\State $\text{BROADCAST}(\text{MSG}(\text{NEXT{\large V}IEW}, \bot, \textit{qc}))$ \label{code_nextviewmsg}
 			\EndIf
 		\EndIf
 	\EndProcedure
-	\Procedure{ON{\large R}ECEIVE{\large N}EXT{\large V}IEW}{$ m = \text{MSG}(\text{NEXT{\large V}IEW}, \bot, \textit{qc}) $}
+	\Procedure{ON{\large R}ECEIVE{\large A}NY}{$ m = \text{MSG}(*, *, \textit{qc}) $}
 		\If {$ \textit{qc.view} \ge \textit{curView}$}
-				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{qc.view} + 1)$
+				\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{qc.view} + 1)$ \label{gotqc}
 		\EndIf
 	\EndProcedure
 	\end{algorithmic}
@@ -205,18 +200,62 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 
 \subsection{Proofs}
 
+We now present a reasonably formal proof that the modified pacemaker possesses qualities that ensure the liveness of the system. The first property (theorem \ref{viewsync}) ensures that there will always be opportunities for the system to make progress, and the second that the pacemaker cannot be controlled by a byzantine node (theorem \ref{syncvalid}). These properties are presented by xyz in the Cogsworth paper [cite!!!], which formalised the notion of a pacemaker and what qualities it should possess.
+
+HotStuff works under a partially-synchronous system model (see \ref{hotstufftheory}), so the following proofs assume that global synchronisation time has been reached, and messages have a bounded latency of $\delta$.
+
+\begin{theorem}[View synchronisation] \label{viewsync}
+	There exists infinite views with honest leaders that all honest replicas will be in simultaneously, and have enough time to make progress.
+\end{theorem}
+
+\begin{proof}
+	From lemma \ref{viewslemma} we have that we can always find future views $v_1$ and $v_2$ with honest leaders $l_1$ and $l_2$, and from lemma \ref{progressionlemma} we have that $l_1$ will eventually enter $v_1$. We argue that all honest replicas will simultaneously be in either $v_1$ or $v_2$. Consider the cases of how $l_1$ could have entered $v_1$:
+	\begin{enumerate}
+		\item $l_1$ received a quorum of votes (algorithm \ref{hotstuff}, line \ref{gotvotes}) --- $l_1$ will broadcast a QC of votes that will be received by all honest replicas within $\delta$. These replicas will transition to $v_2$, and send a vote to $l_2$ which will also transition once it receives a quorum of votes. Hence all honest replicas will simultaneously be in $v_2$.
+		\item $l_1$ receives QC of COMPLAINS from itself (algorithm \ref{hotstuff}, line \ref{gotqc}) --- $l_1$ must have broadcast the NEXT{\large V}IEW message to all honest replicas; they will receive it within $\delta$ and all enter $v_1$ simultaneously.
+	\end{enumerate}
+	Once all honest replicas are in a view with an honest leader, they will only transition once they have made progress, or once they timeout, which shouldn't happen if the timeout is sufficiently long. Hence they will all be in the view long enough to make progress.
+\end{proof}
+
 \begin{figure}[h!]
-\centering
-\includegraphics[scale=0.6]{lemma1.png}
-\caption{Example of round-robin leader allocation for $f = 1$. Red rectangles denote byzantine leaders.}
-\label{lemma1diagram}
+	\centering
+	\includegraphics[scale=0.6]{lemma1.png}
+	\caption{Example of round-robin leader allocation for $f = 1$. Red rectangles denote byzantine leaders.}
+	\label{lemma1diagram}
 \end{figure}
+
+\begin{lemma} \label{viewslemma}
+	There exists an infinite number of consecutive assignments of two honest leaders to views. That is, we can always find future consecutive views $v_1$ and $v_2$ with honest leaders.
+\end{lemma}
+
+\begin{proof}
+	We use a round-robin system to allocate leaders to views. If we attempt to alternate honest and byzantine leaders, there will always be $f + 1$ consecutive honest leaders left over (see figure \ref{lemma1diagram}). Hence there will always be at least 2 consecutive honest leaders (the lemma holds trivially for $f = 0$).
+\end{proof}
+
+\begin{lemma} \label{progressionlemma}
+	An honest replica $x$ will eventually enter a view where it is leader.
+\end{lemma}
+
+\begin{proof}
+	In the event that a byzantine node is leader and tries to prevent honest nodes from transitioning to a higher view, the honest nodes will eventually timeout and send a COMPLAIN message to the next leader (algorithm \ref{pacemaker}, line \ref{code_timeout}). This may repeat if the next leader is also byzantine. Eventually the COMPLAINs will be sent to an honest leader, that will send a NEXT{\large V}IEW message and transition all replicas into a new view (algorithm \ref{pacemaker}, line \ref{code_nextviewmsg}). Since $x$ will always progress to a higher view, it will eventually reach a view where it is the leader.
+\end{proof}
+
+\begin{theorem}[Synchronisation validity] \label{syncvalid}
+	The pacemaker will only advance the view if at least one honest consensus machine\footnote{For this proof we consider the consensus machine (algorithm \ref{hotstuff}) and the pacemaker (algorithm \ref{pacemaker}), to be separate entities.} requests it to be advanced.
+\end{theorem}
+
+\begin{proof}
+	This holds trivially for the calls to ON{\large N}EXT{\large S}YNC{\large V}IEW in algorithm \ref{hotstuff}, as the view is advanced on the request of the consensus machine.
+
+	The only other way the view can be advanced, is on the receipt of a QC (algorithm \ref{pacemaker}, line \ref{gotqc}). For a QC to be formed a quorum of $n - f$ nodes must have complained or voted; at least one of these must have been an honest consensus machine that requested for the view to be advanced.
+\end{proof}
+
 %prove that it doesn't break safety
 %maybe try to prove liveness
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Performance improvements} \label{performance}
 
-\textit{In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle. see appendix (describe crazy bug about lexicographic ordering)]}
+\textit{In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle.]}
 
 
 % Batching \& limiting of batch sizes. deduplication in batching

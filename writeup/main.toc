@@ -21,31 +21,31 @@
 \contentsline {section}{\numberline {3.1}Architectural overview}{17}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Pacemaker Specification}{18}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Proofs}{21}{subsection.3.2.1}%
-\contentsline {section}{\numberline {3.3}Performance improvements}{21}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Batching}{21}{subsection.3.3.1}%
-\contentsline {subsubsection}{Probing effects}{22}{subsubsection*.4}%
-\contentsline {subsubsection}{Architectural experimentation}{22}{subsubsection*.5}%
-\contentsline {subsubsection}{Send-to-all and deduplication}{24}{subsubsection*.6}%
+\contentsline {section}{\numberline {3.3}Performance improvements}{22}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Batching}{23}{subsection.3.3.1}%
+\contentsline {subsubsection}{Probing effects}{23}{subsubsection*.4}%
+\contentsline {subsubsection}{Architectural experimentation}{24}{subsubsection*.5}%
+\contentsline {subsubsection}{Send-to-all and deduplication}{25}{subsubsection*.6}%
 \contentsline {subsubsection}{Batch sizes}{26}{subsubsection*.7}%
-\contentsline {subsection}{\numberline {3.3.2}Encoding of nodes}{26}{subsection.3.3.2}%
-\contentsline {subsubsection}{Recursive types}{26}{subsubsection*.8}%
-\contentsline {subsubsection}{Node offsets}{27}{subsubsection*.9}%
-\contentsline {subsubsection}{Node comparison}{27}{subsubsection*.10}%
-\contentsline {subsubsection}{Node truncation}{27}{subsubsection*.11}%
-\contentsline {section}{\numberline {3.4}Implementing for evaluation}{28}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Load generator}{28}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{29}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Repository Overview}{30}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Evaluation}{32}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Testing methodology}{32}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Library benchmarks}{32}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{32}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{34}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{34}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{35}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Node counts}{35}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Ablation study}{36}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}View change}{38}{subsection.4.3.4}%
-\contentsline {chapter}{\numberline {5}Conclusion}{42}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Future Work}{42}{section.5.1}%
-\contentsline {chapter}{Bibliography}{43}{chapter*.12}%
+\contentsline {subsection}{\numberline {3.3.2}Encoding of nodes}{27}{subsection.3.3.2}%
+\contentsline {subsubsection}{Recursive types}{27}{subsubsection*.8}%
+\contentsline {subsubsection}{Node offsets}{28}{subsubsection*.9}%
+\contentsline {subsubsection}{Node comparison}{28}{subsubsection*.10}%
+\contentsline {subsubsection}{Node truncation}{28}{subsubsection*.11}%
+\contentsline {section}{\numberline {3.4}Implementing for evaluation}{29}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Load generator}{29}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{30}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Repository Overview}{31}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Evaluation}{33}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Testing methodology}{33}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Library benchmarks}{33}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{33}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{35}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{35}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{36}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Node counts}{36}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Ablation study}{37}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}View change}{39}{subsection.4.3.4}%
+\contentsline {chapter}{\numberline {5}Conclusion}{43}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Future Work}{43}{section.5.1}%
+\contentsline {chapter}{Bibliography}{44}{chapter*.12}%
