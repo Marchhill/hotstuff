@@ -298,7 +298,7 @@ This problem was overcome through the development of a simple logging framework.
 % thought resource contention was issue, in fact it was async get function
 Initial analysis of timing data showed a large amount of time was spent by requests queuing on the node before they are delivered to the state machine. At this time the architecture presented in section \ref{overview} had not been fully developed, specifically, there was only one stream that contained both internal messages and client requests.
 
-\textbf{Hypothesis: } Internal messages are being starved by client requests. At large throughputs the stream quickly becomes filled with client requests, which may prevent internal messages being handled. Internal messages represent a backlog of work that we have not yet finished, so this should be handled before accepting more requests.
+\textbf{Hypothesis: } Internal messages are being starved by client requests. At large throughputs the stream quickly becomes filled with client requests, which may prevent internal messages being handled. Internal messages represent a backlog of work that is not yet finished, so this should be handled before accepting more requests.
 
 \textbf{Design principle: } The system should prioritise clearing its backlog of work before accepting new work.
 
@@ -318,7 +318,7 @@ This potential solution was implemented; it involved checking a timer on every i
 
 \textbf{Potential solution: } Use a different method to take elements from the queue that is synchronous. This should stop the main loop blocking waiting for the queue to fill up.
 
-This change improved performance by reducing the amount of time spent waiting in the main loop, the difference is shown in an ablation study (see section \ref{ablation}). However, performance was still not at a satisfactory level.
+This change improved performance by reducing the amount of time spent waiting in the main loop.
 
 \subsubsection{Send-to-all and deduplication} \label{sendtoall}
 % send to all weird graph: https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAM2hZuzkpUNIuGt2QHNZQvc%3D
@@ -356,10 +356,9 @@ One way to implement this is to maintain a set of commands that have been commit
 	\EndProcedure
 	\Procedure{ON{\large N}EXT{\large S}YNC{\large V}IEW}{$\textit{view}$}
 		\State $ \textit{curView} \gets \textit{view}$
-		\State $ \textit{toPropose} \gets \textit{cmds} \setminus \textit{commited}$
+		\State $ \text{ON{\large B}EAT}(\textit{cmds} \setminus \textit{commited})$
 		\State $ \textit{cmds} = \{\}$
-		\State $ \text{ON{\large B}EAT}(\textit{toPropose})$
-		\State $ \text{RESET{\large T}IMER}(\textit{curView})$
+		\State \textcolor{gray}{//\ \dots}
 	\EndProcedure
 	\Procedure{ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST}{\text{REQ}(\textit{cmd})}
 		\State $ \textit{cmds} \gets \textit{cmds} \cup \{\textit{cmd}\} $
@@ -373,23 +372,22 @@ This implementation did not lead to the desired reduction in latency, the system
 
 \textbf{Experimentation: } Count the elements that are filtered out from being proposed by measuring the value $|\textit{cmds}| - |\textit{toPropose}|$. This value was small, which supports the hypothesis that filtering was largely ineffective.
 
-\textbf{Potential solution: } Screen incoming commands more aggressively by instead maintaining a set of any commands that we have \textit{seen}. Only filter out commands when they are being proposed rather than when thet are being committed, as there is no evidence that screening at commit time gives any tangible benefit.
+\textbf{Potential solution: } Screen incoming commands more aggressively by instead maintaining a set of any commands that have been \textit{seen}. Only filter out commands when they are being proposed rather than when they are being committed, as there is no evidence that screening at commit time gives any tangible benefit.
 
 \begin{algorithm}[h!]
 	\caption{Deduplication implementation \#2} \label{dedup2}
 	\begin{algorithmic}[1]
-	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot)$}
-		\If {$ \textit{m.view} = curView$}
+	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textit{qc})$}
+		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view}) \land \textit{m.view} = curView$}
 			\State $ \textit{seen} \gets \textit{seen} \cup \textit{b\textsubscript{new}.cmds}$
-			\State \textcolor{gray}{//\text{ ... the rest is as before, see algorithm \ref{hotstuff}}}
+			\State \textcolor{gray}{//\ \dots}
 		\EndIf
 	\EndProcedure
 	\Procedure{ON{\large N}EXT{\large S}YNC{\large V}IEW}{$\textit{view}$}
 		\State $ \textit{curView} \gets \textit{view}$
-		\State $ \textit{toPropose} \gets \textit{cmds} \setminus \textit{seen}$
+		\State $ \text{ON{\large B}EAT}(\textit{cmds} \setminus \textit{seen})$
 		\State $ \textit{cmds} = \textit{seen} = \{\}$ \label{smalloptimisation}
-		\State $ \text{ON{\large B}EAT}(\textit{toPropose})$
-		\State $ \text{RESET{\large T}IMER}(\textit{curView})$
+		\State \textcolor{gray}{//\ \dots}
 	\EndProcedure
 	\Procedure{ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST}{\text{REQ}(\textit{cmd})}
 		\State $ \textit{cmds} \gets \textit{cmds} \cup \{\textit{cmd}\} $
@@ -397,7 +395,7 @@ This implementation did not lead to the desired reduction in latency, the system
 	\end{algorithmic}
 \end{algorithm}
 
-Note the small optimisation on line \ref{smalloptimisation}, we can safely empty the \textit{seen} set as we will not try to propose this value again; this reduces the amount of computation required to calculate the set difference next time. The second implementation was much more effective at screening requests and resulted in a significant reduction in latency. The effectiveness of this change led to further insight into what the bottlenecks for performance were.
+Note the small optimisation on line \ref{smalloptimisation}, the \textit{seen} can safely be emptied as the commands have already been filtered; this reduces the amount of computation required to calculate the set difference next time. The second implementation was much more effective at screening requests and resulted in a significant reduction in latency. The difference is demonstrated in an ablation study (see section \ref{ablation}) The effectiveness of this change led to further insight into what the bottlenecks for performance were.
 
 \subsubsection{Batch sizes} \label{batchsizes}
 % insight: track batch sizes
@@ -439,13 +437,13 @@ A solution to this problem is to store an offset to a node inside the \textit{ju
 Memtrace profiling also showed that the equality function for nodes was memory intensive. The solution to this was including a \textit{digest} field in the node that is a hash over all of the other fields. Notably we can compute this hash over the \textit{digest} field of the parent node rather than recursing through the whole chain. This means that we can also compare two nodes by comparing their digests without having to recurse through each chain; the digests being equal cryptographically guarantees that the whole chains are equal.
 
 \subsubsection{Node truncation}
-Our current approach sends the entire node inside internal messages, which becomes expensive as the chain grows. As highlighted in \ref{batchsizes}, the size of messages being sent is a bottleneck in the system, making this particularly expensive.
+Our current approach sends the entire node inside internal messages, which becomes expensive as the chain grows. As highlighted in section \ref{batchsizes}, the size of messages being sent is a bottleneck in the system, making this particularly expensive.
 
-In order to overcome this problem, one can truncate the node before sending it, cutting off the node's parent link at some chosen depth. The entire node can then be reconstructed at the receiver, the received node can be `spliced' back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. However, we must ensure that we do not truncate the log too much, so that there is a gap between what we send and \textit{b\textsubscript{exec}} at the receiver, leading to commands being missed out and not executed. This is a problem in the event that some node becomes isolated from the rest; it must be able to catch up to the others once the network partition is healed.
+In order to overcome this problem, one can truncate the node before sending it, cutting off the node's parent link at some chosen depth. The entire node can then be reconstructed at the receiver, the received node can be `spliced' back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. However, we must ensure not to truncate the log too much, so that there is a gap between what we send and \textit{b\textsubscript{exec}} at the receiver, leading to commands being missed out and not executed. This is a problem in the event that some node becomes isolated from the rest; it must be able to catch up to the others once the network partition is healed.
 
 To overcome this problem we use a TCP-style approach. We include a field containing the height of the \textit{b\textsubscript{exec}} node to the \textit{PROPOSE}, \textit{NEW{\large V}IEW}, and \textit{COMPLAIN} messages. Each node maintains a list of the \textit{b\textsubscript{exec}} height of every other node. When making a proposal, the leader takes the minimum height from this list, and truncates the node up to that depth. This ensures that every node that receives the proposal has enough information to reconstruct the entire log.
 
-There are some cases when the leader does not receive the latest \textit{b\textsubscript{exec}} of every other node before it makes a proposal. This means that the leader will not truncate the node as much as it could have. One can optimise by having a node send the entire list of all stored \textit{b\textsubscript{exec}} heights rather than just its own, allowing the heights to propagate around the system more quickly.
+There are some cases when the leader does not receive the latest \textit{b\textsubscript{exec}} of every other node before it makes a proposal. This means that the leader will not truncate the node as much as it could have. We optimised this by having a node send the entire list of all stored \textit{b\textsubscript{exec}} heights rather than just its own, allowing the heights to propagate around the system more quickly.
 
 % \subsection{Connections}
 % talk about capabilities?
@@ -489,8 +487,6 @@ The load generator is responsible for sending client requests to the nodes of th
 \textbf{Latency: } The amount of time it takes between sending a request and receiving a response. The load generator reports both mean and standard deviation of latencies.
 
 The load generator is open-loop (see figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (see figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator `waits' for the system, so cannot overload it.
-
-[clients have different semantics for sending to leaders, send-to-one, send-to-all, send-to-next\dots cite something? we implemented send-to-all to reduce latency]
 
 The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all (\ref{sendtoall}) the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, eliminating start-up effects.
 
