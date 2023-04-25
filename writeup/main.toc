@@ -25,7 +25,7 @@
 \contentsline {subsection}{\numberline {3.3.1}Batching}{23}{subsection.3.3.1}%
 \contentsline {subsubsection}{Probing effects}{23}{subsubsection*.4}%
 \contentsline {subsubsection}{Architectural experimentation}{24}{subsubsection*.5}%
-\contentsline {subsubsection}{Send-to-all and deduplication}{25}{subsubsection*.6}%
+\contentsline {subsubsection}{Send-to-all and filtering}{25}{subsubsection*.6}%
 \contentsline {subsubsection}{Batch sizes}{27}{subsubsection*.7}%
 \contentsline {subsection}{\numberline {3.3.2}Encoding of nodes}{27}{subsection.3.3.2}%
 \contentsline {subsubsection}{Recursive types}{27}{subsubsection*.8}%
@@ -43,9 +43,9 @@
 \contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{35}{subsection.4.2.2}%
 \contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{35}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Batch sizes}{36}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Node counts}{36}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Ablation study}{37}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}View change}{39}{subsection.4.3.4}%
-\contentsline {chapter}{\numberline {5}Conclusion}{43}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Future Work}{43}{section.5.1}%
-\contentsline {chapter}{Bibliography}{44}{chapter*.12}%
+\contentsline {subsection}{\numberline {4.3.2}Node counts}{38}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Ablation study}{40}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}View change}{40}{subsection.4.3.4}%
+\contentsline {chapter}{\numberline {5}Conclusion}{42}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Future Work}{42}{section.5.1}%
+\contentsline {chapter}{Bibliography}{43}{chapter*.12}%

@@ -320,7 +320,7 @@ This potential solution was implemented; it involved checking a timer on every i
 
 This change improved performance by reducing the amount of time spent waiting in the main loop.
 
-\subsubsection{Send-to-all and deduplication} \label{sendtoall}
+\subsubsection{Send-to-all and filtering} \label{sendtoall}
 % send to all weird graph: https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAM2hZuzkpUNIuGt2QHNZQvc%3D
 % exponential growth with end to all https://imgur.com/a/wDlhbn9 28/03 pseudocode
 % theory: nodes reproposing same values
@@ -337,14 +337,14 @@ Instead of reducing latency as expected the implementation of this feature actua
 
 \textbf{Further evidence: } Implementing this feature resulted in Lwt errors being thrown. As described in \ref{overview}, in order to respond to client requests, the node maintains a hash table of promises that can be awakened when the consensus state machine has successfully committed and can respond to the client. The Lwt error was caused by promises stored in the hash table being awoken multiple times, which causes an error. This provides further evidence that the same commands are being committed and responded to multiple times, which is wasted work.
 
-\textbf{Potential solution: } Deduplicate commands in the system to minimise the number of commands that are proposed by multiple nodes.
+\textbf{Potential solution: } Filter commands in the system to minimise the number of commands that are proposed by multiple nodes.
 
 \textbf{Design principle: } Attempt to minimise the amount of redundant work that the system carries out by screening incoming work to check that it actually needs to be done.
 
 One way to implement this is to maintain a set of commands that have been committed, and before proposing or committing a node, calculating the set difference with the \textit{commited} set to filter out redundant commands. Instead of nodes containing a list of commands, as in our naive implementation of batching, we now use a set to enable efficient computation of the difference.
 
 \begin{algorithm}[h!]
-	\caption{Deduplication implementation \#1}
+	\caption{Filtering implementation \#1}
 	\begin{algorithmic}[1]
 	\Procedure{ON{\large C}OMMIT}{\textit{b}}
 		\If{$\textit{b\textsubscript{exec}.height} < \textit{b.height}$}
@@ -375,7 +375,7 @@ This implementation did not lead to the desired reduction in latency, the system
 \textbf{Potential solution: } Screen incoming commands more aggressively by instead maintaining a set of any commands that have been \textit{seen}. Only filter out commands when they are being proposed rather than when they are being committed, as there is no evidence that screening at commit time gives any tangible benefit.
 
 \begin{algorithm}[h!]
-	\caption{Deduplication implementation \#2} \label{dedup2}
+	\caption{Filtering implementation \#2} \label{dedup2}
 	\begin{algorithmic}[1]
 	\Procedure{ON{\large R}ECEIVE{\large P}ROPOSAL}{$\text{MSG}\textsubscript{\textit{v}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \textit{qc})$}
 		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view}) \land \textit{m.view} = curView$}
@@ -436,7 +436,7 @@ A solution to this problem is to store an offset to a node inside the \textit{ju
 \subsubsection{Node comparison}
 Memtrace profiling also showed that the equality function for nodes was memory intensive. The solution to this was including a \textit{digest} field in the node that is a hash over all of the other fields. Notably we can compute this hash over the \textit{digest} field of the parent node rather than recursing through the whole chain. This means that we can also compare two nodes by comparing their digests without having to recurse through each chain; the digests being equal cryptographically guarantees that the whole chains are equal.
 
-\subsubsection{Node truncation}
+\subsubsection{Node truncation} \label{truncation}
 Our current approach sends the entire node inside internal messages, which becomes expensive as the chain grows. As highlighted in section \ref{batchsizes}, the size of messages being sent is a bottleneck in the system, making this particularly expensive.
 
 In order to overcome this problem, one can truncate the node before sending it, cutting off the node's parent link at some chosen depth. The entire node can then be reconstructed at the receiver, the received node can be `spliced' back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. However, we must ensure not to truncate the log too much, so that there is a gap between what we send and \textit{b\textsubscript{exec}} at the receiver, leading to commands being missed out and not executed. This is a problem in the event that some node becomes isolated from the rest; it must be able to catch up to the others once the network partition is healed.

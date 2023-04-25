@@ -16,7 +16,7 @@
 % describe sofia server
 Evaluation was carried out on the computer laboratory's Sofia server (2x Xeon Gold 6230R chips, 768GB RAM). Carrying out experiments on the server should help to minimise interference from other processes on the system.
 
-Experiments were driven by an open-loop load generator (see \ref{loadgenerator}), and were automated using Python scripts (see \ref{experimentscripts}). In all experiments the load generator was run for 10 seconds, with a further 10 seconds after this without the load generator running to wait for any slow responses.
+Experiments were driven by an open-loop load generator (see \ref{loadgenerator}), and were automated using Python scripts (see \ref{experimentscripts}). In order to reduce the effect of interference, experiments were repeated 3 times, and the order of experiments was randomly permuted. In all experiments the load generator was run for 10 seconds, with a further 15 seconds after this without the load generator running to wait for any slow responses.
 
 \section{Library benchmarks} \label{librarybenchmarks}
 \subsection{Cap'n Proto} \label{capnpbenchmark}
@@ -24,13 +24,13 @@ Experiments were driven by an open-loop load generator (see \ref{loadgenerator})
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{dummy_test/throughputgoodput.png}
-\caption{Benchmarking of Cap'n Proto server goodput for varying throughputs and message sizes, run for 10s}
+\caption{Benchmarking of Cap'n Proto server goodput for varying throughputs and message sizes.}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{dummy_test/throughputflatency.png}
-\caption{Benchmarking of Cap'n Proto server latencies for varying throughputs and message sizes, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
+\caption{Benchmarking of Cap'n Proto server latencies for varying throughputs and message sizes. Discarded result if goodput was not within 5\% of target throughput.}
 \end{figure}
 
 \begin{figure}[h!]
@@ -75,33 +75,26 @@ I profiled the important functions of the library with Jane Street's Core\_bench
 % └─────────────┴────────────┴─────────┴──────────┴──────────┴────────────┘
 
 \section{HotStuff implementation benchmarks} \label{hotstuffbenchmarks}
-Our implementation achieves a reasonable level of performance due to the optimisations described in section \ref{performance}, but is fundamentally limited in what it can achieve due to constraints on bandwidth from the Cap'n Proto library (see \ref{capnpbenchmark}), and on latency from the Tezos cryptography library (see \ref{tezosbenchmark}).
+The optimisations described in section \ref{performance} were effective in increasing the goodput, and reducing the latency of the system. In our ablation study (section \ref{ablation}) we compare the performance of the system with different optimisations enabled, demonstrating their effectiveness. In our comparison of batch sizes (section \ref{batchsizeseval}) there is evidence that the system is able to achieve much greater goodput with batching enabled (this optimisation is described in section \ref{batching}).
 
-We demonstrate the effectiveness of our performance improvements in an ablation study in section \ref{ablation}. There is further evidence for the effectiveness of batching (see section \ref{batching}); the system is able to achieve much higher goodputs with batch sizes greater than one (equivalent to not batching at all), as shown in section \ref{batchsizeseval}. 
+The systems performance is fundamentally bottlenecked by the high latency of Cap'n Proto serialisation, particularly for larger messages (see the library benchmarks in section \ref{capnpbenchmark}). Since HotStuff is a partially synchronous protocol (see section \ref{hotstufftheory}), an increase in latency also causes a decrease in goodput. At larger throughputs message sizes grow quickly as batches fill up, and latency grows exponentially due to the cost of serialisation (see figure [heatmap!!]). Our study of batch sizes (section \ref{batchsizeseval}) demonstrates a trade-off between batching more requests into each node, and nodes becoming too large and message sending latency growing. Our study of node counts (section \ref{nodecountseval}) gives further evidence that message serialisation is a bottleneck; higher node counts mean more internal messages being sent, causing a decline in performance due to serialisation costs.
 
-The constraints on bandwidth from using Cap'n Proto are evident in our comparisons of batch sizes (see section \ref{batchsizeseval}), and of node counts (see section \ref{nodecountseval}). The goodput that can be achieved increases with batch size before reaching a maximum and declining, as Cap'n Proto is unable to handle the higher bandwidth caused by larger batches. Increasing the node count increases the number of internal messages, so system performance declines for higher node counts, again due to poor message sending performance.
-
-The latency cost of Tezos cryptography is clear from the superior performance of the system with cryptography disabled, as shown in the ablation study (see section \ref{ablation}).
+Another system bottleneck is cryptography, which was demonstrated to be slow in our benchmarking of the Tezos cryptography library (section \ref{tezosbenchmark}). This bottleneck is clear from the superior performance of the system with cryptography disabled, as shown in the ablation study (see section \ref{ablation}).
 % The system maintains a stable bound on latency up to a certain throughput [reference heatmap with stable latency], but experiences exponential growth in latency when it can no longer keep up with the volume of requests [reference heatmap with exponential latency]. This exponential growth is due to queues of requests building on each node; as the test progresses the length of the queues increases linearly, causing the wait time to grow exponentially??? throughput/latency?
 \subsection{Batch sizes} \label{batchsizeseval}
-blah blah batch sizes
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{batch_size_test/throughputgoodput.png}
-\caption{Benchmarking of goodput for varying throughputs and batch sizes, run for 10s}
+\caption{Benchmarking of goodput for varying throughputs and batch sizes.}
+\label{throughputgoodputbatch}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{batch_size_test/throughputflatency.png}
-\caption{Benchmarking of mean latency while varying throughputs and batch sizes, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
-\end{figure}
-
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.75]{batch_size_test/throughputlost.png}
-\caption{Benchmarking of \% requests lost while varying throughputs and batch sizes, run for 10s.}
+\caption{Benchmarking of mean latency while varying throughputs and batch sizes. Discarded result if goodput was not within 5\% of target throughput.}
+\label{throughputlatencybatch}
 \end{figure}
 
 \begin{figure}[h!]
@@ -116,41 +109,55 @@ blah blah batch sizes
 \caption{Cumulative latency plot for experiment with a throughput of 10req/s and unlimited batch size, run for 10s with 100ms network delay.}
 \end{figure}
 
+This study compares the performance of the system for varying limits on batch sizes (see section \ref{batchsizes}). All experiments were run on a network of 4 nodes.
+
+Figure \ref{throughputgoodputbatch} shows an initial period of linear growth between throughput and goodput. This demonstrates that the system is able to respond to all incoming requests, so the rate of responses is equal to the rate of requests. After this period the goodput flattens out, as the system has reached the maximum throughput that it can handle and becomes overloaded. The system continues to respond to requests at slightly less than its maximum goodput rate (except for with unlimited batch sizes), and any additional requests queue on the nodes.
+
+There is a trade-off between having larger batches to process more commands, and messages becoming too large and increasing serialisation latency, which is apparent from figure \ref{throughputgoodputbatch}. With small batch sizes each view only commits a small number of commands, leading to low goodputs; an extreme example of this is a batch size of 1 (equivalent to no batching). As batch sizes increase the goodput reached also increases, with goodput peaking at around 700req/s with a batch size of 300 commands. At this point increasing batch size further causes goodput to decrease due to the increased latency of serialising large messages; each view takes longer so less nodes are committed per second (even though each node contains more commands). When the batch size is unlimited messages grow very large as throughput increases, and increased serialisation latency causes goodput to decline.
+
+Figure \ref{throughputlatencybatch} shows that latency scales linearly with throughput while the system is not overloaded, that is, when the goodput is within 5\% of the target throughput. This is because larger throughputs result in larger message sizes, and increased latency due to serialisation time. 
+
+[replot mininet graphs and talk about]
+
 \subsection{Node counts} \label{nodecountseval}
-blah blah node counts
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{node_count_test/throughputgoodput_nodes.png}
-\caption{Benchmarking of goodput for varying throughputs and node counts, run for 10s}
+\caption{Benchmarking of goodput for varying throughputs and node counts.}
+\label{throughputgoodputnodes}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{node_count_test/throughputflatency_nodes.png}
-\caption{Benchmarking of mean latency while varying throughputs and node counts, run for 10s. Discarded result if goodput was not within 5\% of target throughput.}
+\caption{Benchmarking of mean latency while varying throughputs and node counts. Discarded result if goodput was not within 5\% of target throughput.}
+\label{throughputlatencynodes}
 \end{figure}
 
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.75]{node_count_test/throughputlost_nodes.png}
-\caption{Benchmarking of \% requests lost while varying throughputs and node counts, run for 10s.}
-\end{figure}
+This study compares the performance of the system for varying node counts. Node counts were chosen such that $n = 3f + 1$ for some $f$, as choosing another value would decrease performance without any benefit of increased fault-tolerance\footnote{A node count of 2 was also tested as it is the smallest node count where internal messages are exchanged.}. All experiments were run with a batch size of 300.
+
+Figure \ref{throughputlatencynodes} shows that as node count increases, latency increases. This is because larger node counts mean that each view requires more internal messages to be sent to progress. Sending internal messages is expensive due to the latency of serialisation and cryptography, so this results in increased overall latency. Additionally, increasing the node count increases the number of messages that must be signed, and makes aggregating signatures slower (see section \ref{tezosbenchmark}). As in our study of batch sizes (see section \ref{batchsizeseval}), latency also increases linearly with throughput while the system is not overloaded. Notably the latency for a system of 1 node increases slowly, as there are no internal messages, just client requests and responses.
+
+Figure \ref{throughputgoodputnodes} shows that the larger the node count, the lower the maximum goodput. This is again due to larger node counts resulting in more internal messages, causing more latency since this is a bottleneck. Increased latency causes each view to take longer, reducing the number of requests that can be committed and responded to each second.
 
 \subsection{Ablation study} \label{ablation}
-[``This change (changing the pull function) improved performance by reducing the amount of time spent waiting in the main loop, the difference is shown in an ablation study'']
-blah blah ablation.
-[run with crypto disabled for comparison]
 
-Versions:
-[turn me into a table!! with caption ``versions'']
-\begin{enumerate}
-	\item Unchained version
-	\item Chained version - node truncation disabled, command filtering disabled
-	\item Chained version - node truncation disabled, command filtering enabled
-	\item Chained version - node truncation enabled, command filtering disabled
-	\item Chained version - node truncation enabled, command filtering enabled
-\end{enumerate}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Version & Chained & Truncation & Filtering & Crypto \\ \hline
+1 & \xmark & \xmark & \xmark & \cmark \\ \hline
+2 & \cmark & \xmark & \xmark & \cmark \\ \hline
+3 & \cmark & \xmark & \cmark & \cmark \\ \hline
+4 & \cmark & \cmark & \xmark & \cmark \\ \hline
+5 & \cmark & \cmark & \cmark & \cmark \\ \hline
+6 & \cmark & \cmark & \cmark & \xmark \\ \hline
+\end{tabular}
+\caption{Features enabled in different versions.}
+\label{versiontable}
+\end{table}
 
 \begin{figure}[h!]
 \centering
@@ -164,13 +171,11 @@ Versions:
 \caption{Benchmarking of mean latency while varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size. Discarded result if goodput was not within 5\% of target throughput.}
 \end{figure}
 
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.75]{ablation/throughputlost_ablation.png}
-\caption{Benchmarking of \% requests lost while varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size.}
-\end{figure}
+This study compares the performance of different versions of the system with different optimisations enabled. The optimisations explored are chaining (section \ref{chaining}), node truncation (section \ref{truncation}), and command filtering (section \ref{sendtoall}). We also compare performance with cryptography disabled. The mapping from version numbers to which features are enabled is given in table \ref{versiontable}. All experiments were run with a network of 4 nodes, and unlimited batch sizes.
+
 
 \subsection{View change}
+
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.5]{viewchange/test7_100_7_100_timelatencyheatmap.png}
