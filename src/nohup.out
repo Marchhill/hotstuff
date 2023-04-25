@@ -60791,3 +60791,2780 @@ running "ablation6r_nocrypto_34_200_4_9999999999"
 eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "6" -r 200 -b 9999999999 --times "./experiments/data/ablation6r_nocrypto/subtests/ablation6r_nocrypto_34_200_4_9999999999.csv" --stats "./experiments/data/ablation6r_nocrypto/stats.csv"
 running "ablation6r_nocrypto_35_200_4_9999999999"
 eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "6" -r 200 -b 9999999999 --times "./experiments/data/ablation6r_nocrypto/subtests/ablation6r_nocrypto_35_200_4_9999999999.csv" --stats "./experiments/data/ablation6r_nocrypto/stats.csv"
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.200000...
+backed off 0.200000...
+backed off 0.200000...
+backed off 0.200000...
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+backed off 0.400000...
+backed off 0.100000...
+backed off 0.400000...
+backed off 0.400000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_0_4000_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 1114 / 40000
+throughput = 4000req/s
+goodput = 111.400000req/s
+mean = 3.931168s
+sd = 2.211767s
+12345: req_conn mean = 0.000001s, sd = 0.000020s, count = 4456, sum = 0.003073
+12345: req_send mean = 4.813929s, sd = 3.672496s, count = 4456, sum = 21450.868576
+2: view mean = 0.201140s, sd = 0.627041s, count = 68, sum = 13.677508
+2: send mean = 0.132218s, sd = 0.420046s, count = 184, sum = 24.328083
+2: conn mean = 0.007980s, sd = 0.076111s, count = 184, sum = 1.468294
+2: advance mean = 0.000103s, sd = 0.012014s, count = 40187, sum = 4.123739
+2: action mean = 0.000037s, sd = 0.004593s, count = 40187, sum = 1.494899
+2: recv_msg mean = 0.000349s, sd = 0.001452s, count = 186, sum = 0.064906
+2: recv_req mean = 0.000001s, sd = 0.000030s, count = 40001, sum = 0.042654
+2: res_times mean = 4.263615s, sd = 2.463049s, count = 1115, sum = 4753.931091
+2: req_queue_times mean = 0.310515s, sd = 0.698311s, count = 40001, sum = 12420.903044
+2: msg_queue_times mean = 0.089649s, sd = 0.562518s, count = 186, sum = 16.674683
+0: view mean = 0.187024s, sd = 0.546340s, count = 69, sum = 12.904627
+0: send mean = 0.080278s, sd = 0.181119s, count = 186, sum = 14.931632
+0: conn mean = 0.014353s, sd = 0.098145s, count = 186, sum = 2.669673
+0: advance mean = 0.000022s, sd = 0.001069s, count = 40180, sum = 0.873270
+0: action mean = 0.000021s, sd = 0.002308s, count = 40180, sum = 0.856744
+0: recv_msg mean = 0.000255s, sd = 0.001356s, count = 179, sum = 0.045642
+0: recv_req mean = 0.000002s, sd = 0.000037s, count = 40001, sum = 0.061647
+0: res_times mean = 3.898903s, sd = 2.211573s, count = 1115, sum = 4347.276865
+0: req_queue_times mean = 0.027797s, sd = 0.073296s, count = 40001, sum = 1111.892355
+0: msg_queue_times mean = 0.012371s, sd = 0.034431s, count = 179, sum = 2.214453
+1: view mean = 0.185598s, sd = 0.571729s, count = 68, sum = 12.620670
+1: send mean = 0.093433s, sd = 0.209914s, count = 185, sum = 17.285187
+1: conn mean = 0.000001s, sd = 0.000001s, count = 185, sum = 0.000205
+1: advance mean = 0.000034s, sd = 0.002744s, count = 40186, sum = 1.377406
+1: action mean = 0.000024s, sd = 0.002707s, count = 40186, sum = 0.964873
+1: recv_msg mean = 0.000655s, sd = 0.005124s, count = 185, sum = 0.121144
+1: recv_req mean = 0.000001s, sd = 0.000032s, count = 40001, sum = 0.048802
+1: res_times mean = 4.108096s, sd = 2.325382s, count = 1115, sum = 4580.527253
+1: req_queue_times mean = 0.066216s, sd = 0.175767s, count = 40001, sum = 2648.700064
+1: msg_queue_times mean = 0.024881s, sd = 0.118654s, count = 185, sum = 4.603048
+3: view mean = 0.468076s, sd = 2.775866s, count = 68, sum = 31.829149
+3: send mean = 0.130945s, sd = 0.507361s, count = 182, sum = 23.831980
+3: conn mean = 0.009068s, sd = 0.086007s, count = 182, sum = 1.650318
+3: advance mean = 0.000509s, sd = 0.066217s, count = 37265, sum = 18.965517
+3: action mean = 0.000086s, sd = 0.012141s, count = 37265, sum = 3.199076
+3: recv_msg mean = 0.001243s, sd = 0.008793s, count = 187, sum = 0.232408
+3: recv_req mean = 0.000002s, sd = 0.000046s, count = 40001, sum = 0.066575
+3: res_times mean = 6.823666s, sd = 5.656855s, count = 1115, sum = 7608.387323
+3: req_queue_times mean = 4.340726s, sd = 7.913904s, count = 37080, sum = 160954.116106
+3: msg_queue_times mean = 0.299628s, sd = 2.063609s, count = 185, sum = 55.431201
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_1_10_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 100 / 100
+throughput = 10req/s
+goodput = 10.000000req/s
+mean = 0.292823s
+sd = 0.098910s
+12345: req_conn mean = 0.000002s, sd = 0.000001s, count = 400, sum = 0.000730
+12345: req_send mean = 0.305575s, sd = 0.104105s, count = 400, sum = 122.229894
+2: view mean = 0.061935s, sd = 0.033634s, count = 483, sum = 29.914400
+2: send mean = 0.043494s, sd = 0.021782s, count = 1321, sum = 57.455359
+2: conn mean = 0.000188s, sd = 0.004791s, count = 1321, sum = 0.248022
+2: advance mean = 0.002931s, sd = 0.001462s, count = 1428, sum = 4.185112
+2: action mean = 0.001002s, sd = 0.002618s, count = 1428, sum = 1.430653
+2: recv_msg mean = 0.000133s, sd = 0.000363s, count = 1327, sum = 0.175959
+2: recv_req mean = 0.000004s, sd = 0.000002s, count = 101, sum = 0.000425
+2: res_times mean = 0.287490s, sd = 0.096314s, count = 101, sum = 29.036446
+2: req_queue_times mean = 0.013104s, sd = 0.019326s, count = 101, sum = 1.323521
+2: msg_queue_times mean = 0.005257s, sd = 0.003317s, count = 1327, sum = 6.975391
+1: view mean = 0.061926s, sd = 0.035677s, count = 483, sum = 29.910317
+1: send mean = 0.044940s, sd = 0.025688s, count = 1323, sum = 59.455309
+1: conn mean = 0.000099s, sd = 0.003567s, count = 1323, sum = 0.131127
+1: advance mean = 0.002976s, sd = 0.001488s, count = 1428, sum = 4.250178
+1: action mean = 0.001055s, sd = 0.002745s, count = 1428, sum = 1.507145
+1: recv_msg mean = 0.000127s, sd = 0.000384s, count = 1327, sum = 0.168717
+1: recv_req mean = 0.000004s, sd = 0.000002s, count = 101, sum = 0.000412
+1: res_times mean = 0.287388s, sd = 0.114420s, count = 101, sum = 29.026176
+1: req_queue_times mean = 0.013911s, sd = 0.023947s, count = 101, sum = 1.404984
+1: msg_queue_times mean = 0.005526s, sd = 0.003490s, count = 1327, sum = 7.333227
+0: view mean = 0.061681s, sd = 0.037575s, count = 485, sum = 29.915112
+0: send mean = 0.044327s, sd = 0.024176s, count = 1326, sum = 58.777072
+0: conn mean = 0.000210s, sd = 0.005331s, count = 1326, sum = 0.278220
+0: advance mean = 0.002946s, sd = 0.001473s, count = 1421, sum = 4.185560
+0: action mean = 0.001059s, sd = 0.002780s, count = 1421, sum = 1.504304
+0: recv_msg mean = 0.000136s, sd = 0.000365s, count = 1320, sum = 0.180075
+0: recv_req mean = 0.000005s, sd = 0.000002s, count = 101, sum = 0.000472
+0: res_times mean = 0.284119s, sd = 0.104367s, count = 101, sum = 28.695980
+0: req_queue_times mean = 0.013200s, sd = 0.020098s, count = 101, sum = 1.333232
+0: msg_queue_times mean = 0.005448s, sd = 0.003455s, count = 1320, sum = 7.191070
+3: view mean = 0.061867s, sd = 0.032438s, count = 483, sum = 29.881975
+3: send mean = 0.043662s, sd = 0.021798s, count = 1323, sum = 57.765035
+3: conn mean = 0.000186s, sd = 0.004740s, count = 1323, sum = 0.245433
+3: advance mean = 0.002983s, sd = 0.001490s, count = 1424, sum = 4.247671
+3: action mean = 0.001059s, sd = 0.002739s, count = 1424, sum = 1.508222
+3: recv_msg mean = 0.000138s, sd = 0.000373s, count = 1324, sum = 0.183234
+3: recv_req mean = 0.000004s, sd = 0.000002s, count = 101, sum = 0.000410
+3: res_times mean = 0.287269s, sd = 0.085408s, count = 101, sum = 29.014201
+3: req_queue_times mean = 0.013553s, sd = 0.018807s, count = 101, sum = 1.368901
+3: msg_queue_times mean = 0.005657s, sd = 0.005796s, count = 1323, sum = 7.484635
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 3!
+connected to 0!
+connected to 1!
+connected to 2!
+connected to all!
+
+name = ablation4r_unfiltered_2_1000_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 4158 / 10000
+throughput = 1000req/s
+goodput = 252.807361req/s
+mean = 5.864435s
+sd = 4.537787s
+12345: req_conn mean = 0.000001s, sd = 0.000014s, count = 16632, sum = 0.009194
+12345: req_send mean = 6.305936s, sd = 5.136579s, count = 16632, sum = 104880.322939
+1: view mean = 0.301135s, sd = 0.892883s, count = 72, sum = 21.681715
+1: send mean = 0.154376s, sd = 0.551710s, count = 195, sum = 30.103393
+1: conn mean = 0.000001s, sd = 0.000001s, count = 195, sum = 0.000242
+1: advance mean = 0.000383s, sd = 0.018846s, count = 10198, sum = 3.904162
+0: view mean = 0.290745s, sd = 0.836208s, count = 73, sum = 21.224372
+1: action mean = 0.000368s, sd = 0.013340s, count = 10198, sum = 3.752269
+0: send mean = 0.116449s, sd = 0.317829s, count = 197, sum = 22.940400
+0: conn mean = 0.003789s, sd = 0.026311s, count = 197, sum = 0.746503
+1: recv_msg mean = 0.000865s, sd = 0.002601s, count = 197, sum = 0.170372
+1: recv_req mean = 0.000001s, sd = 0.000022s, count = 10001, sum = 0.010010
+0: advance mean = 0.000209s, sd = 0.008333s, count = 10191, sum = 2.128766
+0: action mean = 0.000295s, sd = 0.009758s, count = 10191, sum = 3.007723
+0: recv_msg mean = 0.000695s, sd = 0.002352s, count = 190, sum = 0.132087
+1: res_times mean = 5.984437s, sd = 4.677431s, count = 4159, sum = 24889.273467
+1: req_queue_times mean = 0.241109s, sd = 0.729005s, count = 10001, sum = 2411.333276
+1: msg_queue_times mean = 0.027136s, sd = 0.113192s, count = 197, sum = 5.345797
+0: recv_req mean = 0.000001s, sd = 0.000028s, count = 10001, sum = 0.014413
+0: res_times mean = 5.797036s, sd = 4.533699s, count = 4159, sum = 24109.874491
+0: req_queue_times mean = 0.097189s, sd = 0.269692s, count = 10001, sum = 971.988795
+0: msg_queue_times mean = 0.046248s, sd = 0.213954s, count = 190, sum = 8.787048
+2: view mean = 0.301084s, sd = 1.014437s, count = 72, sum = 21.678040
+2: send mean = 0.189131s, sd = 0.573435s, count = 195, sum = 36.880544
+2: conn mean = 0.000001s, sd = 0.000001s, count = 195, sum = 0.000260
+2: advance mean = 0.000537s, sd = 0.027252s, count = 10198, sum = 5.481212
+2: action mean = 0.000365s, sd = 0.014117s, count = 10198, sum = 3.725173
+2: recv_msg mean = 0.000956s, sd = 0.002799s, count = 197, sum = 0.188303
+2: recv_req mean = 0.000001s, sd = 0.000020s, count = 10001, sum = 0.011026
+2: res_times mean = 5.986504s, sd = 4.558400s, count = 4159, sum = 24897.871755
+2: req_queue_times mean = 0.038162s, sd = 0.106936s, count = 10001, sum = 381.660999
+2: msg_queue_times mean = 0.048658s, sd = 0.220624s, count = 197, sum = 9.585537
+3: view mean = 0.438801s, sd = 1.843269s, count = 72, sum = 31.593688
+3: send mean = 0.220352s, sd = 0.842342s, count = 193, sum = 42.527990
+3: conn mean = 0.000001s, sd = 0.000001s, count = 193, sum = 0.000261
+3: advance mean = 0.001109s, sd = 0.062591s, count = 10195, sum = 11.309848
+3: action mean = 0.000437s, sd = 0.019749s, count = 10195, sum = 4.453524
+3: recv_msg mean = 0.001061s, sd = 0.003026s, count = 194, sum = 0.205883
+3: recv_req mean = 0.000001s, sd = 0.000034s, count = 10001, sum = 0.013944
+3: res_times mean = 7.107733s, sd = 6.320341s, count = 4159, sum = 29561.059987
+3: req_queue_times mean = 0.053220s, sd = 0.168257s, count = 10001, sum = 532.255856
+3: msg_queue_times mean = 0.185730s, sd = 1.116343s, count = 194, sum = 36.031629
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 0!
+connected to 1!
+connected to 2!
+connected to 3!
+connected to all!
+
+name = ablation4r_unfiltered_3_4000_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 1779 / 40000
+throughput = 4000req/s
+goodput = 177.900000req/s
+mean = 5.981933s
+sd = 3.813160s
+12345: req_conn mean = 0.000000s, sd = 0.000011s, count = 7116, sum = 0.002876
+12345: req_send mean = 6.270018s, sd = 4.011213s, count = 7116, sum = 44617.445030
+3: view mean = 0.213084s, sd = 0.876312s, count = 79, sum = 16.833655
+3: send mean = 0.070148s, sd = 0.106420s, count = 213, sum = 14.941620
+3: conn mean = 0.000001s, sd = 0.000001s, count = 213, sum = 0.000276
+3: advance mean = 0.000027s, sd = 0.001228s, count = 40212, sum = 1.070989
+3: action mean = 0.000034s, sd = 0.003533s, count = 40212, sum = 1.351554
+3: recv_msg mean = 0.000276s, sd = 0.001727s, count = 211, sum = 0.058143
+1: view mean = 0.208981s, sd = 0.901689s, count = 79, sum = 16.509509
+1: send mean = 0.085605s, sd = 0.173389s, count = 215, sum = 18.405103
+1: conn mean = 0.000002s, sd = 0.000001s, count = 215, sum = 0.000353
+3: recv_req mean = 0.000001s, sd = 0.000033s, count = 40001, sum = 0.055659
+3: res_times mean = 6.404725s, sd = 4.053523s, count = 1780, sum = 11400.410276
+1: advance mean = 0.000159s, sd = 0.019371s, count = 40219, sum = 6.390609
+3: req_queue_times mean = 0.023957s, sd = 0.084379s, count = 40001, sum = 958.318066
+3: msg_queue_times mean = 0.018764s, sd = 0.080842s, count = 211, sum = 3.959114
+1: action mean = 0.000050s, sd = 0.006172s, count = 40219, sum = 2.010683
+1: recv_msg mean = 0.000323s, sd = 0.001546s, count = 218, sum = 0.070417
+1: recv_req mean = 0.000001s, sd = 0.000028s, count = 40001, sum = 0.042231
+1: res_times mean = 6.129944s, sd = 3.992609s, count = 1780, sum = 10911.300867
+1: req_queue_times mean = 0.752501s, sd = 1.548156s, count = 40001, sum = 30100.781703
+1: msg_queue_times mean = 0.109113s, sd = 0.744459s, count = 218, sum = 23.786685
+0: view mean = 0.201040s, sd = 0.803554s, count = 80, sum = 16.083199
+0: send mean = 0.079050s, sd = 0.162670s, count = 217, sum = 17.153918
+0: conn mean = 0.002657s, sd = 0.021400s, count = 217, sum = 0.576559
+0: advance mean = 0.000049s, sd = 0.004658s, count = 40211, sum = 1.982031
+0: action mean = 0.000040s, sd = 0.004484s, count = 40211, sum = 1.605924
+0: recv_msg mean = 0.000402s, sd = 0.002433s, count = 210, sum = 0.084316
+0: recv_req mean = 0.000001s, sd = 0.000033s, count = 40001, sum = 0.047489
+0: res_times mean = 5.979403s, sd = 3.797776s, count = 1780, sum = 10643.338082
+0: req_queue_times mean = 0.140125s, sd = 0.334577s, count = 40001, sum = 5605.136171
+0: msg_queue_times mean = 0.031259s, sd = 0.176540s, count = 210, sum = 6.564365
+2: view mean = 0.675320s, sd = 4.937311s, count = 79, sum = 53.350259
+2: send mean = 0.279710s, sd = 2.773225s, count = 214, sum = 59.857973
+2: conn mean = 0.001167s, sd = 0.011999s, count = 214, sum = 0.249690
+2: advance mean = 0.000921s, sd = 0.128934s, count = 40219, sum = 37.048276
+2: action mean = 0.000128s, sd = 0.016691s, count = 40219, sum = 5.145695
+2: recv_msg mean = 0.000730s, sd = 0.003307s, count = 218, sum = 0.159175
+2: recv_req mean = 0.000002s, sd = 0.000038s, count = 40001, sum = 0.061864
+2: res_times mean = 6.376734s, sd = 4.190499s, count = 1780, sum = 11350.586664
+2: req_queue_times mean = 0.012093s, sd = 0.042831s, count = 40001, sum = 483.732251
+2: msg_queue_times mean = 0.680483s, sd = 4.723294s, count = 218, sum = 148.345388
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 3!
+connected to 0!
+connected to 1!
+connected to 2!
+connected to all!
+
+name = ablation4r_unfiltered_4_400_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 4000 / 4000
+throughput = 400req/s
+goodput = 336.362737req/s
+mean = 1.462545s
+sd = 0.653077s
+12345: req_conn mean = 0.000001s, sd = 0.000037s, count = 16000, sum = 0.022548
+12345: req_send mean = 1.532034s, sd = 0.682566s, count = 16000, sum = 24512.549599
+3: view mean = 0.153937s, sd = 0.149166s, count = 200, sum = 30.787439
+3: send mean = 0.110969s, sd = 0.119071s, count = 542, sum = 60.145217
+3: conn mean = 0.000001s, sd = 0.000002s, count = 542, sum = 0.000764
+3: advance mean = 0.000579s, sd = 0.003850s, count = 4543, sum = 2.629442
+3: action mean = 0.002227s, sd = 0.018688s, count = 4543, sum = 10.117844
+3: recv_msg mean = 0.000924s, sd = 0.001978s, count = 542, sum = 0.500812
+3: recv_req mean = 0.000001s, sd = 0.000011s, count = 4001, sum = 0.004265
+3: res_times mean = 1.520644s, sd = 0.699499s, count = 4001, sum = 6084.094918
+3: req_queue_times mean = 0.028063s, sd = 0.052313s, count = 4001, sum = 112.278431
+3: msg_queue_times mean = 0.014858s, sd = 0.037700s, count = 542, sum = 8.052797
+2: view mean = 0.153303s, sd = 0.151689s, count = 201, sum = 30.813888
+2: send mean = 0.108079s, sd = 0.108514s, count = 547, sum = 59.118977
+2: conn mean = 0.000001s, sd = 0.000001s, count = 547, sum = 0.000641
+2: advance mean = 0.000644s, sd = 0.005017s, count = 4550, sum = 2.931625
+2: action mean = 0.002380s, sd = 0.019702s, count = 4550, sum = 10.827657
+2: recv_msg mean = 0.000976s, sd = 0.001961s, count = 549, sum = 0.536053
+2: recv_req mean = 0.000001s, sd = 0.000015s, count = 4001, sum = 0.004588
+2: res_times mean = 1.482259s, sd = 0.675543s, count = 4001, sum = 5930.517497
+2: req_queue_times mean = 0.041148s, sd = 0.077185s, count = 4001, sum = 164.634792
+2: msg_queue_times mean = 0.018197s, sd = 0.056066s, count = 549, sum = 9.989926
+1: view mean = 0.153727s, sd = 0.145295s, count = 200, sum = 30.745415
+1: send mean = 0.105404s, sd = 0.097291s, count = 544, sum = 57.339840
+1: conn mean = 0.000001s, sd = 0.000002s, count = 544, sum = 0.000783
+1: advance mean = 0.000589s, sd = 0.004372s, count = 4549, sum = 2.677507
+1: action mean = 0.002290s, sd = 0.019035s, count = 4549, sum = 10.415566
+1: recv_msg mean = 0.000928s, sd = 0.001896s, count = 548, sum = 0.508469
+1: recv_req mean = 0.000001s, sd = 0.000015s, count = 4001, sum = 0.004466
+1: res_times mean = 1.450493s, sd = 0.658392s, count = 4001, sum = 5803.420970
+1: req_queue_times mean = 0.030918s, sd = 0.054740s, count = 4001, sum = 123.704045
+1: msg_queue_times mean = 0.016430s, sd = 0.054989s, count = 548, sum = 9.003482
+0: view mean = 0.152912s, sd = 0.150471s, count = 201, sum = 30.735363
+0: send mean = 0.098402s, sd = 0.081478s, count = 542, sum = 53.333718
+0: conn mean = 0.001371s, sd = 0.015891s, count = 542, sum = 0.743269
+0: advance mean = 0.000584s, sd = 0.004374s, count = 4541, sum = 2.652312
+0: action mean = 0.002298s, sd = 0.018828s, count = 4541, sum = 10.433660
+0: recv_msg mean = 0.000950s, sd = 0.002006s, count = 540, sum = 0.512892
+0: recv_req mean = 0.000001s, sd = 0.000018s, count = 4001, sum = 0.004366
+0: res_times mean = 1.441454s, sd = 0.643520s, count = 4001, sum = 5767.256417
+0: req_queue_times mean = 0.038187s, sd = 0.066091s, count = 4001, sum = 152.784973
+0: msg_queue_times mean = 0.016342s, sd = 0.039236s, count = 540, sum = 8.824802
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 2!
+connected to 3!
+connected to 0!
+connected to 1!
+connected to all!
+
+name = ablation4r_unfiltered_5_600_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 5194 / 6000
+throughput = 600req/s
+goodput = 249.304636req/s
+mean = 6.108307s
+sd = 4.436967s
+12345: req_conn mean = 0.000001s, sd = 0.000022s, count = 20776, sum = 0.019665
+12345: req_send mean = 6.388334s, sd = 4.614269s, count = 20776, sum = 132724.026821
+2: view mean = 0.258877s, sd = 0.743690s, count = 109, sum = 28.217621
+2: send mean = 0.129963s, sd = 0.393232s, count = 294, sum = 38.208979
+2: conn mean = 0.000829s, sd = 0.010004s, count = 294, sum = 0.243835
+2: advance mean = 0.000810s, sd = 0.025396s, count = 6297, sum = 5.097512
+2: action mean = 0.000765s, sd = 0.019273s, count = 6297, sum = 4.817447
+2: recv_msg mean = 0.000678s, sd = 0.001836s, count = 296, sum = 0.200543
+2: recv_req mean = 0.000001s, sd = 0.000017s, count = 6001, sum = 0.006224
+2: res_times mean = 6.470842s, sd = 4.713741s, count = 5195, sum = 33616.024444
+2: req_queue_times mean = 0.067258s, sd = 0.166616s, count = 6001, sum = 403.613512
+2: msg_queue_times mean = 0.055053s, sd = 0.336786s, count = 296, sum = 16.295830
+1: view mean = 0.256539s, sd = 0.706135s, count = 109, sum = 27.962770
+1: send mean = 0.112074s, sd = 0.337764s, count = 294, sum = 32.949721
+1: conn mean = 0.000502s, sd = 0.008562s, count = 294, sum = 0.147495
+1: advance mean = 0.000492s, sd = 0.013095s, count = 6297, sum = 3.095973
+1: action mean = 0.000693s, sd = 0.017268s, count = 6297, sum = 4.365236
+1: recv_msg mean = 0.000657s, sd = 0.002048s, count = 296, sum = 0.194553
+1: recv_req mean = 0.000001s, sd = 0.000021s, count = 6001, sum = 0.007723
+1: res_times mean = 6.259801s, sd = 4.638876s, count = 5195, sum = 32519.668304
+1: req_queue_times mean = 0.035287s, sd = 0.084793s, count = 6001, sum = 211.755543
+1: msg_queue_times mean = 0.022516s, sd = 0.125363s, count = 296, sum = 6.664705
+3: view mean = 0.255730s, sd = 0.809758s, count = 109, sum = 27.874586
+3: send mean = 0.153949s, sd = 0.461035s, count = 297, sum = 45.722935
+3: conn mean = 0.000001s, sd = 0.000001s, count = 297, sum = 0.000384
+3: advance mean = 0.000966s, sd = 0.031193s, count = 6298, sum = 6.084801
+3: action mean = 0.000709s, sd = 0.017898s, count = 6298, sum = 4.465585
+3: recv_msg mean = 0.000733s, sd = 0.001994s, count = 297, sum = 0.217689
+3: recv_req mean = 0.000001s, sd = 0.000028s, count = 6001, sum = 0.008792
+3: res_times mean = 6.338802s, sd = 4.481038s, count = 5195, sum = 32930.075384
+3: req_queue_times mean = 0.085079s, sd = 0.218640s, count = 6001, sum = 510.557510
+3: msg_queue_times mean = 0.051661s, sd = 0.298739s, count = 297, sum = 15.343270
+0: view mean = 0.289626s, sd = 1.016722s, count = 110, sum = 31.858875
+0: send mean = 0.095451s, sd = 0.141827s, count = 299, sum = 28.539948
+0: conn mean = 0.001418s, sd = 0.015070s, count = 299, sum = 0.424122
+0: advance mean = 0.001054s, sd = 0.036387s, count = 6293, sum = 6.630111
+0: action mean = 0.000722s, sd = 0.017545s, count = 6293, sum = 4.541617
+0: recv_msg mean = 0.001119s, sd = 0.005500s, count = 296, sum = 0.331170
+0: recv_req mean = 0.000001s, sd = 0.000019s, count = 6001, sum = 0.006318
+0: res_times mean = 6.050150s, sd = 4.443225s, count = 5195, sum = 31430.530648
+0: req_queue_times mean = 0.105255s, sd = 0.233992s, count = 6001, sum = 631.637203
+0: msg_queue_times mean = 0.050803s, sd = 0.307982s, count = 292, sum = 14.834580
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 2!
+connected to 3!
+connected to 0!
+connected to 1!
+connected to all!
+
+name = ablation4r_unfiltered_6_2000_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 3223 / 20000
+throughput = 2000req/s
+goodput = 166.378253req/s
+mean = 9.021652s
+sd = 7.334569s
+12345: req_conn mean = 0.000001s, sd = 0.000021s, count = 12892, sum = 0.009217
+12345: req_send mean = 9.560207s, sd = 7.542071s, count = 12892, sum = 123250.194179
+3: view mean = 0.399546s, sd = 1.828972s, count = 61, sum = 24.372328
+3: send mean = 0.258132s, sd = 0.958238s, count = 165, sum = 42.591733
+3: conn mean = 0.000001s, sd = 0.000001s, count = 165, sum = 0.000198
+3: advance mean = 0.000530s, sd = 0.044717s, count = 20166, sum = 10.694193
+3: action mean = 0.000152s, sd = 0.012329s, count = 20166, sum = 3.056978
+3: recv_msg mean = 0.000948s, sd = 0.003512s, count = 165, sum = 0.156367
+3: recv_req mean = 0.000002s, sd = 0.000039s, count = 20001, sum = 0.031845
+3: res_times mean = 10.379729s, sd = 7.547276s, count = 3224, sum = 33464.245569
+3: req_queue_times mean = 1.646278s, sd = 3.651236s, count = 20001, sum = 32927.214633
+3: msg_queue_times mean = 0.192710s, sd = 1.174458s, count = 165, sum = 31.797193
+2: view mean = 0.401106s, sd = 1.657452s, count = 61, sum = 24.467470
+2: send mean = 0.182244s, sd = 0.555621s, count = 164, sum = 29.887960
+2: conn mean = 0.000002s, sd = 0.000003s, count = 164, sum = 0.000281
+1: view mean = 0.397348s, sd = 1.618918s, count = 61, sum = 24.238257
+1: send mean = 0.136401s, sd = 0.454376s, count = 165, sum = 22.506237
+1: conn mean = 0.000001s, sd = 0.000001s, count = 165, sum = 0.000233
+1: advance mean = 0.000077s, sd = 0.004636s, count = 20166, sum = 1.560455
+2: advance mean = 0.000183s, sd = 0.013838s, count = 20164, sum = 3.697374
+2: action mean = 0.000114s, sd = 0.007423s, count = 20164, sum = 2.307668
+2: recv_msg mean = 0.000675s, sd = 0.002766s, count = 163, sum = 0.109969
+1: action mean = 0.000109s, sd = 0.006579s, count = 20166, sum = 2.202610
+1: recv_msg mean = 0.000652s, sd = 0.003084s, count = 165, sum = 0.107621
+1: recv_req mean = 0.000004s, sd = 0.000473s, count = 20001, sum = 0.082849
+1: res_times mean = 9.256653s, sd = 7.535389s, count = 3224, sum = 29843.449607
+2: recv_req mean = 0.000001s, sd = 0.000019s, count = 20001, sum = 0.018247
+2: res_times mean = 9.317844s, sd = 7.647304s, count = 3224, sum = 30040.728635
+1: req_queue_times mean = 0.103406s, sd = 0.242683s, count = 20001, sum = 2068.216341
+1: msg_queue_times mean = 0.035250s, sd = 0.150836s, count = 165, sum = 5.816292
+2: req_queue_times mean = 0.234504s, sd = 0.604039s, count = 20001, sum = 4690.312011
+2: msg_queue_times mean = 0.057506s, sd = 0.340100s, count = 163, sum = 9.373414
+0: view mean = 0.890066s, sd = 5.475810s, count = 62, sum = 55.184064
+0: send mean = 0.141078s, sd = 0.426405s, count = 165, sum = 23.277831
+0: conn mean = 0.004521s, sd = 0.028677s, count = 165, sum = 0.746031
+0: advance mean = 0.001601s, sd = 0.144893s, count = 20165, sum = 32.288898
+0: action mean = 0.000223s, sd = 0.020453s, count = 20165, sum = 4.501178
+0: recv_msg mean = 0.001219s, sd = 0.004106s, count = 164, sum = 0.199874
+0: recv_req mean = 0.000002s, sd = 0.000040s, count = 20001, sum = 0.033460
+0: res_times mean = 8.964625s, sd = 7.341790s, count = 3224, sum = 28901.951204
+0: req_queue_times mean = 0.045797s, sd = 0.119361s, count = 20001, sum = 915.992149
+0: msg_queue_times mean = 0.696262s, sd = 4.164133s, count = 164, sum = 114.186973
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_7_1000_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 3342 / 10000
+throughput = 1000req/s
+goodput = 254.629369req/s
+mean = 5.215509s
+sd = 3.691825s
+12345: req_conn mean = 0.000001s, sd = 0.000030s, count = 13368, sum = 0.010105
+12345: req_send mean = 5.682164s, sd = 4.321140s, count = 13368, sum = 75959.167963
+3: view mean = 0.294981s, sd = 0.780774s, count = 63, sum = 18.583775
+3: send mean = 0.187243s, sd = 0.622340s, count = 168, sum = 31.456817
+3: conn mean = 0.000002s, sd = 0.000004s, count = 168, sum = 0.000318
+3: advance mean = 0.000200s, sd = 0.008271s, count = 10168, sum = 2.036973
+3: action mean = 0.000261s, sd = 0.009995s, count = 10168, sum = 2.654997
+3: recv_msg mean = 0.000713s, sd = 0.002485s, count = 167, sum = 0.119048
+3: recv_req mean = 0.000002s, sd = 0.000034s, count = 10001, sum = 0.016891
+3: res_times mean = 5.592574s, sd = 3.971089s, count = 3343, sum = 18695.974684
+3: req_queue_times mean = 0.148240s, sd = 0.370867s, count = 10001, sum = 1482.545769
+3: msg_queue_times mean = 0.064366s, sd = 0.265895s, count = 167, sum = 10.749105
+0: view mean = 0.442827s, sd = 1.524271s, count = 65, sum = 28.783778
+0: send mean = 0.103852s, sd = 0.182454s, count = 174, sum = 18.070246
+0: conn mean = 0.004232s, sd = 0.027582s, count = 174, sum = 0.736437
+0: advance mean = 0.000238s, sd = 0.011257s, count = 10169, sum = 2.418007
+0: action mean = 0.000310s, sd = 0.011671s, count = 10169, sum = 3.152128
+0: recv_msg mean = 0.000781s, sd = 0.002587s, count = 168, sum = 0.131166
+0: recv_req mean = 0.000001s, sd = 0.000009s, count = 10001, sum = 0.007288
+0: res_times mean = 9.548160s, sd = 7.758641s, count = 4608, sum = 43997.920952
+0: req_queue_times mean = 0.159447s, sd = 0.399672s, count = 10001, sum = 1594.627586
+0: msg_queue_times mean = 0.064097s, sd = 0.279594s, count = 168, sum = 10.768269
+2: view mean = 0.436784s, sd = 1.822562s, count = 63, sum = 27.517411
+2: send mean = 0.113424s, sd = 0.216596s, count = 169, sum = 19.168599
+2: conn mean = 0.000001s, sd = 0.000001s, count = 169, sum = 0.000217
+2: advance mean = 0.001033s, sd = 0.058781s, count = 10174, sum = 10.507917
+2: action mean = 0.000372s, sd = 0.019274s, count = 10174, sum = 3.783620
+2: recv_msg mean = 0.000817s, sd = 0.002439s, count = 173, sum = 0.141354
+2: recv_req mean = 0.000001s, sd = 0.000019s, count = 10001, sum = 0.010317
+2: res_times mean = 6.348704s, sd = 5.458099s, count = 3343, sum = 21223.716266
+2: req_queue_times mean = 0.052984s, sd = 0.150985s, count = 10001, sum = 529.888652
+2: msg_queue_times mean = 0.196600s, sd = 1.118324s, count = 173, sum = 34.011731
+1: view mean = 0.457071s, sd = 1.573990s, count = 64, sum = 29.252573
+1: send mean = 0.127671s, sd = 0.245785s, count = 173, sum = 22.087130
+1: conn mean = 0.000001s, sd = 0.000002s, count = 173, sum = 0.000237
+1: advance mean = 0.000497s, sd = 0.026823s, count = 10175, sum = 5.060075
+1: action mean = 0.000354s, sd = 0.013545s, count = 10175, sum = 3.598723
+1: recv_msg mean = 0.000905s, sd = 0.002766s, count = 174, sum = 0.157496
+1: recv_req mean = 0.000002s, sd = 0.000034s, count = 10001, sum = 0.015733
+1: res_times mean = 9.758872s, sd = 7.935573s, count = 4608, sum = 44968.880617
+1: req_queue_times mean = 0.262388s, sd = 0.957023s, count = 10001, sum = 2624.139352
+1: msg_queue_times mean = 0.068101s, sd = 0.386808s, count = 174, sum = 11.849575
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 2!
+connected to 3!
+connected to 0!
+connected to 1!
+connected to all!
+
+name = ablation4r_unfiltered_8_1_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 10 / 10
+throughput = 1req/s
+goodput = 1.000000req/s
+mean = 0.483913s
+sd = 0.237801s
+12345: req_conn mean = 0.000002s, sd = 0.000001s, count = 40, sum = 0.000081
+12345: req_send mean = 0.504556s, sd = 0.236351s, count = 40, sum = 20.182223
+1: view mean = 0.066646s, sd = 0.053438s, count = 444, sum = 29.590889
+1: send mean = 0.046356s, sd = 0.039191s, count = 1218, sum = 56.461711
+1: conn mean = 0.000101s, sd = 0.003498s, count = 1218, sum = 0.123622
+1: advance mean = 0.003130s, sd = 0.001305s, count = 1228, sum = 3.843801
+1: action mean = 0.000594s, sd = 0.001399s, count = 1228, sum = 0.729419
+1: recv_msg mean = 0.000116s, sd = 0.000311s, count = 1217, sum = 0.141093
+1: recv_req mean = 0.000007s, sd = 0.000001s, count = 11, sum = 0.000074
+1: res_times mean = 0.504529s, sd = 0.228335s, count = 11, sum = 5.549823
+1: req_queue_times mean = 0.062410s, sd = 0.044151s, count = 11, sum = 0.686506
+1: msg_queue_times mean = 0.005368s, sd = 0.006903s, count = 1217, sum = 6.533290
+0: view mean = 0.066445s, sd = 0.052394s, count = 445, sum = 29.567866
+0: send mean = 0.048204s, sd = 0.039009s, count = 1218, sum = 58.712298
+0: conn mean = 0.000351s, sd = 0.007547s, count = 1218, sum = 0.427783
+0: advance mean = 0.003145s, sd = 0.001296s, count = 1220, sum = 3.836450
+0: action mean = 0.000588s, sd = 0.001383s, count = 1220, sum = 0.717302
+0: recv_msg mean = 0.000108s, sd = 0.000309s, count = 1209, sum = 0.130054
+0: recv_req mean = 0.000006s, sd = 0.000002s, count = 11, sum = 0.000070
+0: res_times mean = 0.502046s, sd = 0.219196s, count = 11, sum = 5.522502
+0: req_queue_times mean = 0.066553s, sd = 0.076079s, count = 11, sum = 0.732078
+0: msg_queue_times mean = 0.005165s, sd = 0.003790s, count = 1209, sum = 6.244371
+3: view mean = 0.066654s, sd = 0.052254s, count = 444, sum = 29.594450
+3: send mean = 0.048687s, sd = 0.039652s, count = 1212, sum = 59.008079
+3: conn mean = 0.000001s, sd = 0.000001s, count = 1212, sum = 0.001208
+3: advance mean = 0.003174s, sd = 0.001316s, count = 1231, sum = 3.906963
+3: action mean = 0.000616s, sd = 0.001608s, count = 1231, sum = 0.758159
+3: recv_msg mean = 0.000113s, sd = 0.000311s, count = 1220, sum = 0.138106
+3: recv_req mean = 0.000005s, sd = 0.000001s, count = 11, sum = 0.000057
+3: res_times mean = 0.480487s, sd = 0.188950s, count = 11, sum = 5.285362
+3: req_queue_times mean = 0.067289s, sd = 0.060741s, count = 11, sum = 0.740183
+3: msg_queue_times mean = 0.005519s, sd = 0.003516s, count = 1220, sum = 6.732888
+2: view mean = 0.066587s, sd = 0.053897s, count = 445, sum = 29.631388
+2: send mean = 0.045959s, sd = 0.034341s, count = 1219, sum = 56.023990
+2: conn mean = 0.000204s, sd = 0.005006s, count = 1219, sum = 0.248888
+2: advance mean = 0.003190s, sd = 0.001325s, count = 1230, sum = 3.923460
+2: action mean = 0.000607s, sd = 0.001478s, count = 1230, sum = 0.746481
+2: recv_msg mean = 0.000113s, sd = 0.000320s, count = 1219, sum = 0.137313
+2: recv_req mean = 0.000007s, sd = 0.000001s, count = 11, sum = 0.000080
+2: res_times mean = 0.477617s, sd = 0.184339s, count = 11, sum = 5.253784
+2: req_queue_times mean = 0.076321s, sd = 0.059072s, count = 11, sum = 0.839532
+2: msg_queue_times mean = 0.005499s, sd = 0.003450s, count = 1219, sum = 6.703015
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 0!
+connected to 1!
+connected to 2!
+connected to 3!
+connected to all!
+
+name = ablation4r_unfiltered_9_400_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 4000 / 4000
+throughput = 400req/s
+goodput = 369.324139req/s
+mean = 0.855182s
+sd = 0.185763s
+12345: req_conn mean = 0.000002s, sd = 0.000038s, count = 16000, sum = 0.024065
+12345: req_send mean = 0.898760s, sd = 0.201555s, count = 16000, sum = 14380.156610
+1: view mean = 0.143392s, sd = 0.088407s, count = 199, sum = 28.535084
+1: send mean = 0.105034s, sd = 0.083220s, count = 541, sum = 56.823199
+1: conn mean = 0.000002s, sd = 0.000025s, count = 541, sum = 0.001306
+1: advance mean = 0.000458s, sd = 0.001722s, count = 4546, sum = 2.080383
+1: action mean = 0.002553s, sd = 0.018632s, count = 4546, sum = 11.604173
+1: recv_msg mean = 0.001061s, sd = 0.001933s, count = 545, sum = 0.578146
+1: recv_req mean = 0.000001s, sd = 0.000009s, count = 4001, sum = 0.003675
+1: res_times mean = 0.844699s, sd = 0.192918s, count = 4001, sum = 3379.641350
+1: req_queue_times mean = 0.025009s, sd = 0.034137s, count = 4001, sum = 100.061689
+1: msg_queue_times mean = 0.014060s, sd = 0.028168s, count = 545, sum = 7.662743
+2: view mean = 0.143484s, sd = 0.085573s, count = 199, sum = 28.553363
+2: send mean = 0.107874s, sd = 0.080708s, count = 539, sum = 58.144347
+2: conn mean = 0.000002s, sd = 0.000011s, count = 539, sum = 0.000867
+2: advance mean = 0.000435s, sd = 0.001485s, count = 4544, sum = 1.978242
+2: action mean = 0.002537s, sd = 0.018550s, count = 4544, sum = 11.529317
+2: recv_msg mean = 0.001025s, sd = 0.001956s, count = 543, sum = 0.556312
+2: recv_req mean = 0.000001s, sd = 0.000021s, count = 4001, sum = 0.004472
+2: res_times mean = 0.862766s, sd = 0.194189s, count = 4001, sum = 3451.927836
+2: req_queue_times mean = 0.021251s, sd = 0.032686s, count = 4001, sum = 85.024505
+2: msg_queue_times mean = 0.012650s, sd = 0.026162s, count = 543, sum = 6.869213
+0: view mean = 0.142611s, sd = 0.099429s, count = 200, sum = 28.522120
+0: send mean = 0.103786s, sd = 0.077927s, count = 542, sum = 56.251921
+0: conn mean = 0.001363s, sd = 0.015794s, count = 542, sum = 0.738778
+0: advance mean = 0.000455s, sd = 0.001798s, count = 4540, sum = 2.063470
+0: action mean = 0.002652s, sd = 0.019167s, count = 4540, sum = 12.040961
+0: recv_msg mean = 0.001077s, sd = 0.001937s, count = 539, sum = 0.580360
+0: recv_req mean = 0.000001s, sd = 0.000004s, count = 4001, sum = 0.003101
+0: res_times mean = 0.824275s, sd = 0.190068s, count = 4001, sum = 3297.923741
+0: req_queue_times mean = 0.027185s, sd = 0.036220s, count = 4001, sum = 108.768222
+0: msg_queue_times mean = 0.012802s, sd = 0.026503s, count = 539, sum = 6.900505
+3: view mean = 0.143331s, sd = 0.086280s, count = 199, sum = 28.522790
+3: send mean = 0.118686s, sd = 0.092511s, count = 538, sum = 63.853236
+3: conn mean = 0.000001s, sd = 0.000001s, count = 538, sum = 0.000624
+3: advance mean = 0.000465s, sd = 0.001803s, count = 4539, sum = 2.108655
+3: action mean = 0.002608s, sd = 0.018997s, count = 4539, sum = 11.839853
+3: recv_msg mean = 0.001088s, sd = 0.002030s, count = 538, sum = 0.585103
+3: recv_req mean = 0.000001s, sd = 0.000012s, count = 4001, sum = 0.003923
+3: res_times mean = 0.879933s, sd = 0.202754s, count = 4001, sum = 3520.611339
+3: req_queue_times mean = 0.027125s, sd = 0.039735s, count = 4001, sum = 108.525704
+3: msg_queue_times mean = 0.016841s, sd = 0.034366s, count = 538, sum = 9.060583
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_10_800_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 4360 / 8000
+throughput = 800req/s
+goodput = 225.356521req/s
+mean = 6.788677s
+sd = 5.111339s
+12345: req_conn mean = 0.000000s, sd = 0.000012s, count = 17440, sum = 0.008714
+12345: req_send mean = 7.007085s, sd = 5.194388s, count = 17440, sum = 122203.558926
+0: view mean = 0.255976s, sd = 0.984694s, count = 103, sum = 26.365569
+0: send mean = 0.097488s, sd = 0.201696s, count = 279, sum = 27.199045
+0: conn mean = 0.002572s, sd = 0.021316s, count = 279, sum = 0.717700
+3: view mean = 0.260544s, sd = 0.879054s, count = 102, sum = 26.575470
+3: send mean = 0.139560s, sd = 0.411376s, count = 277, sum = 38.658203
+3: conn mean = 0.000001s, sd = 0.000001s, count = 277, sum = 0.000339
+3: advance mean = 0.000517s, sd = 0.019943s, count = 8277, sum = 4.278434
+3: action mean = 0.000413s, sd = 0.013376s, count = 8277, sum = 3.417728
+3: recv_msg mean = 0.000570s, sd = 0.001986s, count = 276, sum = 0.157366
+0: advance mean = 0.000854s, sd = 0.037415s, count = 8277, sum = 7.071370
+3: recv_req mean = 0.000001s, sd = 0.000026s, count = 8001, sum = 0.010142
+0: action mean = 0.000493s, sd = 0.017192s, count = 8277, sum = 4.079751
+0: recv_msg mean = 0.000624s, sd = 0.002057s, count = 276, sum = 0.172274
+0: recv_req mean = 0.000002s, sd = 0.000060s, count = 8001, sum = 0.018752
+0: res_times mean = 6.755765s, sd = 5.040664s, count = 4361, sum = 29461.890168
+0: req_queue_times mean = 0.064463s, sd = 0.150115s, count = 8001, sum = 515.765594
+0: msg_queue_times mean = 0.099034s, sd = 0.612898s, count = 276, sum = 27.333411
+3: res_times mean = 7.168256s, sd = 5.225163s, count = 4361, sum = 31260.764758
+3: req_queue_times mean = 0.175910s, sd = 0.559807s, count = 8001, sum = 1407.458842
+3: msg_queue_times mean = 0.050538s, sd = 0.272939s, count = 276, sum = 13.948546
+2: view mean = 0.261696s, sd = 0.869927s, count = 102, sum = 26.693006
+2: send mean = 0.101285s, sd = 0.244221s, count = 277, sum = 28.055914
+2: conn mean = 0.000001s, sd = 0.000001s, count = 277, sum = 0.000363
+2: advance mean = 0.000348s, sd = 0.011550s, count = 8277, sum = 2.882635
+2: action mean = 0.000388s, sd = 0.012210s, count = 8277, sum = 3.214692
+2: recv_msg mean = 0.000523s, sd = 0.002022s, count = 276, sum = 0.144243
+2: recv_req mean = 0.000001s, sd = 0.000024s, count = 8001, sum = 0.009405
+2: res_times mean = 6.963057s, sd = 5.303871s, count = 4361, sum = 30365.889413
+2: req_queue_times mean = 0.128510s, sd = 0.359266s, count = 8001, sum = 1028.208723
+2: msg_queue_times mean = 0.033176s, sd = 0.162993s, count = 276, sum = 9.156505
+1: view mean = 0.330669s, sd = 1.492419s, count = 102, sum = 33.728277
+1: send mean = 0.095219s, sd = 0.199200s, count = 279, sum = 26.566126
+1: conn mean = 0.000001s, sd = 0.000001s, count = 279, sum = 0.000410
+1: advance mean = 0.001140s, sd = 0.053128s, count = 8282, sum = 9.445462
+1: action mean = 0.000527s, sd = 0.020486s, count = 8282, sum = 4.362710
+1: recv_msg mean = 0.000840s, sd = 0.002784s, count = 282, sum = 0.236830
+1: recv_req mean = 0.000002s, sd = 0.000039s, count = 8001, sum = 0.014430
+1: res_times mean = 6.755534s, sd = 5.106724s, count = 4361, sum = 29460.885840
+1: req_queue_times mean = 0.061507s, sd = 0.165010s, count = 8001, sum = 492.116127
+1: msg_queue_times mean = 0.126979s, sd = 0.873669s, count = 281, sum = 35.681238
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 0!
+connected to 1!
+connected to 2!
+connected to 3!
+connected to all!
+
+name = ablation4r_unfiltered_11_10_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 100 / 100
+throughput = 10req/s
+goodput = 10.000000req/s
+mean = 0.278126s
+sd = 0.044026s
+12345: req_conn mean = 0.000002s, sd = 0.000001s, count = 400, sum = 0.000690
+12345: req_send mean = 0.291289s, sd = 0.053065s, count = 400, sum = 116.515405
+0: view mean = 0.061068s, sd = 0.031843s, count = 465, sum = 28.396623
+0: send mean = 0.046108s, sd = 0.023329s, count = 1273, sum = 58.694861
+0: conn mean = 0.000595s, sd = 0.010578s, count = 1273, sum = 0.757608
+0: advance mean = 0.002946s, sd = 0.001490s, count = 1368, sum = 4.029820
+0: action mean = 0.001024s, sd = 0.002600s, count = 1368, sum = 1.400213
+0: recv_msg mean = 0.000140s, sd = 0.000384s, count = 1267, sum = 0.176946
+0: recv_req mean = 0.000005s, sd = 0.000002s, count = 101, sum = 0.000498
+0: res_times mean = 0.279224s, sd = 0.063716s, count = 101, sum = 28.201578
+0: req_queue_times mean = 0.011829s, sd = 0.012327s, count = 101, sum = 1.194774
+0: msg_queue_times mean = 0.005433s, sd = 0.003472s, count = 1267, sum = 6.883722
+1: view mean = 0.061184s, sd = 0.030493s, count = 465, sum = 28.450785
+1: send mean = 0.043102s, sd = 0.020365s, count = 1274, sum = 54.912584
+1: conn mean = 0.000001s, sd = 0.000001s, count = 1274, sum = 0.001495
+1: advance mean = 0.002941s, sd = 0.001494s, count = 1374, sum = 4.040661
+1: action mean = 0.001063s, sd = 0.002643s, count = 1374, sum = 1.460364
+1: recv_msg mean = 0.000128s, sd = 0.000336s, count = 1273, sum = 0.163434
+1: recv_req mean = 0.000005s, sd = 0.000002s, count = 101, sum = 0.000490
+1: res_times mean = 0.276730s, sd = 0.062439s, count = 101, sum = 27.949694
+1: req_queue_times mean = 0.013057s, sd = 0.012015s, count = 101, sum = 1.318801
+1: msg_queue_times mean = 0.005230s, sd = 0.003143s, count = 1273, sum = 6.657265
+3: view mean = 0.061298s, sd = 0.033683s, count = 464, sum = 28.442096
+3: send mean = 0.044062s, sd = 0.021846s, count = 1268, sum = 55.870587
+3: conn mean = 0.000001s, sd = 0.000001s, count = 1268, sum = 0.001337
+3: advance mean = 0.002976s, sd = 0.001494s, count = 1375, sum = 4.091534
+3: action mean = 0.001050s, sd = 0.002764s, count = 1375, sum = 1.443731
+3: recv_msg mean = 0.000133s, sd = 0.000367s, count = 1274, sum = 0.169639
+3: recv_req mean = 0.000005s, sd = 0.000002s, count = 101, sum = 0.000455
+3: res_times mean = 0.281019s, sd = 0.075448s, count = 101, sum = 28.382924
+3: req_queue_times mean = 0.013291s, sd = 0.013345s, count = 101, sum = 1.342357
+3: msg_queue_times mean = 0.005497s, sd = 0.005430s, count = 1274, sum = 7.003585
+2: view mean = 0.061224s, sd = 0.033088s, count = 465, sum = 28.468968
+2: send mean = 0.045724s, sd = 0.025173s, count = 1274, sum = 58.252357
+2: conn mean = 0.000001s, sd = 0.000001s, count = 1274, sum = 0.001352
+2: advance mean = 0.002982s, sd = 0.001502s, count = 1377, sum = 4.105615
+2: action mean = 0.001047s, sd = 0.002699s, count = 1377, sum = 1.441403
+2: recv_msg mean = 0.000127s, sd = 0.000333s, count = 1276, sum = 0.162387
+2: recv_req mean = 0.000005s, sd = 0.000003s, count = 101, sum = 0.000536
+2: res_times mean = 0.282799s, sd = 0.090163s, count = 101, sum = 28.562676
+2: req_queue_times mean = 0.015360s, sd = 0.023211s, count = 101, sum = 1.551408
+2: msg_queue_times mean = 0.005670s, sd = 0.003741s, count = 1276, sum = 7.234332
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 2!
+connected to 3!
+connected to 0!
+connected to 1!
+connected to all!
+
+name = ablation4r_unfiltered_12_100_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 1000 / 1000
+throughput = 100req/s
+goodput = 100.000000req/s
+mean = 0.325984s
+sd = 0.120083s
+12345: req_conn mean = 0.000002s, sd = 0.000030s, count = 4000, sum = 0.008893
+12345: req_send mean = 0.339201s, sd = 0.122807s, count = 4000, sum = 1356.804109
+2: view mean = 0.070390s, sd = 0.042070s, count = 438, sum = 30.830992
+2: send mean = 0.056715s, sd = 0.034973s, count = 1198, sum = 67.944098
+2: conn mean = 0.000208s, sd = 0.005066s, count = 1198, sum = 0.249515
+2: advance mean = 0.001756s, sd = 0.001862s, count = 2199, sum = 3.862257
+2: action mean = 0.002926s, sd = 0.010256s, count = 2199, sum = 6.434626
+2: recv_msg mean = 0.000317s, sd = 0.000678s, count = 1198, sum = 0.379677
+2: recv_req mean = 0.000002s, sd = 0.000006s, count = 1001, sum = 0.001557
+2: res_times mean = 0.310562s, sd = 0.122854s, count = 1001, sum = 310.873033
+2: req_queue_times mean = 0.013193s, sd = 0.012495s, count = 1001, sum = 13.206014
+2: msg_queue_times mean = 0.006993s, sd = 0.012875s, count = 1198, sum = 8.377676
+1: view mean = 0.070469s, sd = 0.040658s, count = 438, sum = 30.865304
+1: send mean = 0.056471s, sd = 0.034711s, count = 1198, sum = 67.652530
+1: conn mean = 0.000001s, sd = 0.000006s, count = 1198, sum = 0.001537
+1: advance mean = 0.001753s, sd = 0.001861s, count = 2205, sum = 3.864603
+1: action mean = 0.002921s, sd = 0.010302s, count = 2205, sum = 6.440374
+1: recv_msg mean = 0.000328s, sd = 0.000735s, count = 1204, sum = 0.394675
+1: recv_req mean = 0.000001s, sd = 0.000001s, count = 1001, sum = 0.001204
+1: res_times mean = 0.309731s, sd = 0.125105s, count = 1001, sum = 310.040530
+1: req_queue_times mean = 0.013644s, sd = 0.012672s, count = 1001, sum = 13.657370
+1: msg_queue_times mean = 0.006445s, sd = 0.005344s, count = 1204, sum = 7.760362
+3: view mean = 0.070362s, sd = 0.040394s, count = 439, sum = 30.888862
+3: send mean = 0.056408s, sd = 0.033127s, count = 1202, sum = 67.802968
+3: conn mean = 0.000207s, sd = 0.005039s, count = 1202, sum = 0.249013
+3: advance mean = 0.001729s, sd = 0.001830s, count = 2200, sum = 3.803589
+3: action mean = 0.002861s, sd = 0.010029s, count = 2200, sum = 6.295040
+3: recv_msg mean = 0.000318s, sd = 0.000768s, count = 1199, sum = 0.381340
+3: recv_req mean = 0.000001s, sd = 0.000002s, count = 1001, sum = 0.001365
+3: res_times mean = 0.308534s, sd = 0.102429s, count = 1001, sum = 308.842450
+3: req_queue_times mean = 0.014186s, sd = 0.013734s, count = 1001, sum = 14.200157
+3: msg_queue_times mean = 0.006270s, sd = 0.005242s, count = 1199, sum = 7.518260
+0: view mean = 0.070188s, sd = 0.047009s, count = 440, sum = 30.882917
+0: send mean = 0.055127s, sd = 0.033240s, count = 1203, sum = 66.317870
+0: conn mean = 0.000355s, sd = 0.007600s, count = 1203, sum = 0.427070
+0: advance mean = 0.001731s, sd = 0.001838s, count = 2200, sum = 3.807570
+0: action mean = 0.002891s, sd = 0.010290s, count = 2200, sum = 6.359503
+0: recv_msg mean = 0.000342s, sd = 0.000769s, count = 1199, sum = 0.410075
+0: recv_req mean = 0.000002s, sd = 0.000022s, count = 1001, sum = 0.002068
+0: res_times mean = 0.311447s, sd = 0.121937s, count = 1001, sum = 311.758290
+0: req_queue_times mean = 0.012699s, sd = 0.010777s, count = 1001, sum = 12.711303
+0: msg_queue_times mean = 0.006193s, sd = 0.005506s, count = 1199, sum = 7.425343
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 0!
+connected to 1!
+connected to 2!
+connected to 3!
+connected to all!
+
+name = ablation4r_unfiltered_13_4000_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 1515 / 40000
+throughput = 4000req/s
+goodput = 92.271195req/s
+mean = 11.097519s
+sd = 7.640281s
+12345: req_conn mean = 0.000000s, sd = 0.000008s, count = 6060, sum = 0.002047
+12345: req_send mean = 11.541271s, sd = 7.971580s, count = 6060, sum = 69940.103394
+3: view mean = 0.342892s, sd = 1.681779s, count = 71, sum = 24.345339
+3: send mean = 0.075980s, sd = 0.134182s, count = 189, sum = 14.360214
+3: conn mean = 0.000001s, sd = 0.000002s, count = 189, sum = 0.000270
+3: advance mean = 0.000026s, sd = 0.001380s, count = 40189, sum = 1.027189
+3: action mean = 0.000046s, sd = 0.005144s, count = 40189, sum = 1.857808
+3: recv_msg mean = 0.000356s, sd = 0.002436s, count = 188, sum = 0.066934
+1: view mean = 0.335846s, sd = 1.780971s, count = 71, sum = 23.845034
+1: send mean = 0.101839s, sd = 0.241776s, count = 193, sum = 19.654972
+1: conn mean = 0.000002s, sd = 0.000001s, count = 193, sum = 0.000296
+3: recv_req mean = 0.000001s, sd = 0.000036s, count = 40001, sum = 0.052311
+3: res_times mean = 11.863246s, sd = 8.196717s, count = 1516, sum = 17984.680196
+3: req_queue_times mean = 0.045809s, sd = 0.140905s, count = 40001, sum = 1832.392899
+3: msg_queue_times mean = 0.018386s, sd = 0.075785s, count = 188, sum = 3.456494
+1: advance mean = 0.000304s, sd = 0.040761s, count = 40197, sum = 12.206540
+1: action mean = 0.000072s, sd = 0.008821s, count = 40197, sum = 2.885183
+1: recv_msg mean = 0.000614s, sd = 0.003114s, count = 196, sum = 0.120276
+1: recv_req mean = 0.000001s, sd = 0.000033s, count = 40001, sum = 0.047637
+1: res_times mean = 11.459639s, sd = 8.038939s, count = 1516, sum = 17372.813304
+1: req_queue_times mean = 1.590877s, sd = 3.753339s, count = 40001, sum = 63636.662698
+1: msg_queue_times mean = 0.230757s, sd = 1.535749s, count = 196, sum = 45.228302
+0: view mean = 0.319788s, sd = 1.571765s, count = 72, sum = 23.024723
+0: send mean = 0.095349s, sd = 0.195790s, count = 194, sum = 18.497748
+0: conn mean = 0.003769s, sd = 0.025963s, count = 194, sum = 0.731104
+0: advance mean = 0.000074s, sd = 0.008337s, count = 40190, sum = 2.979662
+0: action mean = 0.000042s, sd = 0.004336s, count = 40190, sum = 1.702508
+0: recv_msg mean = 0.000427s, sd = 0.002452s, count = 189, sum = 0.080706
+0: recv_req mean = 0.000001s, sd = 0.000033s, count = 40001, sum = 0.054080
+0: res_times mean = 11.054322s, sd = 7.652217s, count = 1516, sum = 16758.351816
+0: req_queue_times mean = 0.280835s, sd = 0.628859s, count = 40001, sum = 11233.668666
+0: msg_queue_times mean = 0.059694s, sd = 0.322165s, count = 189, sum = 11.282076
+2: view mean = 1.168191s, sd = 8.570066s, count = 71, sum = 82.941579
+2: send mean = 0.445095s, sd = 4.572073s, count = 192, sum = 85.458296
+2: conn mean = 0.000001s, sd = 0.000001s, count = 192, sum = 0.000253
+2: advance mean = 0.001483s, sd = 0.198844s, count = 40194, sum = 59.607232
+2: action mean = 0.000134s, sd = 0.019819s, count = 40194, sum = 5.371451
+2: recv_msg mean = 0.000964s, sd = 0.004195s, count = 195, sum = 0.188045
+2: recv_req mean = 0.000001s, sd = 0.000028s, count = 40001, sum = 0.051838
+2: res_times mean = 11.596369s, sd = 7.995785s, count = 1516, sum = 17580.094829
+2: req_queue_times mean = 0.025251s, sd = 0.079505s, count = 40001, sum = 1010.075724
+2: msg_queue_times mean = 0.618260s, sd = 5.099114s, count = 193, sum = 119.324168
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 3!
+connected to 0!
+connected to 1!
+connected to 2!
+connected to all!
+
+name = ablation4r_unfiltered_14_100_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 1000 / 1000
+throughput = 100req/s
+goodput = 100.000000req/s
+mean = 0.292665s
+sd = 0.063815s
+12345: req_conn mean = 0.000002s, sd = 0.000033s, count = 4000, sum = 0.007994
+12345: req_send mean = 0.304196s, sd = 0.064811s, count = 4000, sum = 1216.782071
+2: view mean = 0.068684s, sd = 0.034320s, count = 407, sum = 27.954544
+2: send mean = 0.055343s, sd = 0.031372s, count = 1113, sum = 61.596472
+1: view mean = 0.068663s, sd = 0.034757s, count = 407, sum = 27.945820
+2: conn mean = 0.000001s, sd = 0.000001s, count = 1113, sum = 0.001117
+1: send mean = 0.053850s, sd = 0.028353s, count = 1114, sum = 59.988617
+1: conn mean = 0.000001s, sd = 0.000001s, count = 1114, sum = 0.001252
+2: advance mean = 0.001696s, sd = 0.001859s, count = 2114, sum = 3.585451
+2: action mean = 0.003100s, sd = 0.010730s, count = 2114, sum = 6.554346
+1: advance mean = 0.001677s, sd = 0.001837s, count = 2120, sum = 3.555490
+2: recv_msg mean = 0.000317s, sd = 0.000706s, count = 1113, sum = 0.352288
+1: action mean = 0.002893s, sd = 0.009993s, count = 2120, sum = 6.132934
+2: recv_req mean = 0.000001s, sd = 0.000001s, count = 1001, sum = 0.001306
+2: res_times mean = 0.279359s, sd = 0.063964s, count = 1001, sum = 279.638252
+1: recv_msg mean = 0.000340s, sd = 0.000744s, count = 1119, sum = 0.380832
+2: req_queue_times mean = 0.013134s, sd = 0.010108s, count = 1001, sum = 13.146977
+2: msg_queue_times mean = 0.007110s, sd = 0.008162s, count = 1113, sum = 7.913298
+1: recv_req mean = 0.000001s, sd = 0.000002s, count = 1001, sum = 0.001397
+1: res_times mean = 0.276607s, sd = 0.064288s, count = 1001, sum = 276.883972
+1: req_queue_times mean = 0.012122s, sd = 0.009504s, count = 1001, sum = 12.134347
+1: msg_queue_times mean = 0.005848s, sd = 0.004329s, count = 1119, sum = 6.544266
+0: view mean = 0.068383s, sd = 0.036638s, count = 408, sum = 27.900333
+0: send mean = 0.053775s, sd = 0.025953s, count = 1116, sum = 60.012551
+0: conn mean = 0.000668s, sd = 0.011111s, count = 1116, sum = 0.744940
+0: advance mean = 0.001672s, sd = 0.001835s, count = 2114, sum = 3.534134
+0: action mean = 0.002940s, sd = 0.010129s, count = 2114, sum = 6.215698
+0: recv_msg mean = 0.000336s, sd = 0.000739s, count = 1113, sum = 0.374150
+0: recv_req mean = 0.000001s, sd = 0.000002s, count = 1001, sum = 0.001408
+0: res_times mean = 0.278944s, sd = 0.066633s, count = 1001, sum = 279.222952
+0: req_queue_times mean = 0.012365s, sd = 0.009919s, count = 1001, sum = 12.377759
+0: msg_queue_times mean = 0.006203s, sd = 0.004777s, count = 1113, sum = 6.903453
+3: view mean = 0.068661s, sd = 0.034951s, count = 407, sum = 27.945128
+3: send mean = 0.055232s, sd = 0.029516s, count = 1111, sum = 61.362964
+3: conn mean = 0.000001s, sd = 0.000001s, count = 1111, sum = 0.001073
+3: advance mean = 0.001694s, sd = 0.001854s, count = 2114, sum = 3.580839
+3: action mean = 0.003078s, sd = 0.010701s, count = 2114, sum = 6.507434
+3: recv_msg mean = 0.000326s, sd = 0.000696s, count = 1113, sum = 0.362375
+3: recv_req mean = 0.000002s, sd = 0.000022s, count = 1001, sum = 0.001870
+3: res_times mean = 0.279662s, sd = 0.063316s, count = 1001, sum = 279.942056
+3: req_queue_times mean = 0.012856s, sd = 0.010010s, count = 1001, sum = 12.869132
+3: msg_queue_times mean = 0.006808s, sd = 0.005605s, count = 1113, sum = 7.577686
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_15_800_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 4829 / 8000
+throughput = 800req/s
+goodput = 247.847425req/s
+mean = 5.822203s
+sd = 4.726422s
+12345: req_conn mean = 0.000002s, sd = 0.000054s, count = 19316, sum = 0.030136
+12345: req_send mean = 6.022544s, sd = 4.785912s, count = 19316, sum = 116331.460108
+2: view mean = 0.247504s, sd = 0.792658s, count = 106, sum = 26.235380
+2: send mean = 0.097917s, sd = 0.192120s, count = 287, sum = 28.102088
+2: conn mean = 0.000002s, sd = 0.000003s, count = 287, sum = 0.000446
+2: advance mean = 0.000337s, sd = 0.010235s, count = 8287, sum = 2.795725
+2: action mean = 0.000380s, sd = 0.010651s, count = 8287, sum = 3.148558
+2: recv_msg mean = 0.000579s, sd = 0.001800s, count = 286, sum = 0.165611
+2: recv_req mean = 0.000001s, sd = 0.000017s, count = 8001, sum = 0.007527
+2: res_times mean = 5.954666s, sd = 4.765176s, count = 4830, sum = 28761.037343
+2: req_queue_times mean = 0.140918s, sd = 0.315520s, count = 8001, sum = 1127.485337
+2: msg_queue_times mean = 0.028836s, sd = 0.131625s, count = 286, sum = 8.247007
+0: view mean = 0.245516s, sd = 0.948676s, count = 107, sum = 26.270171
+0: send mean = 0.098850s, sd = 0.190274s, count = 292, sum = 28.864313
+0: conn mean = 0.002352s, sd = 0.019944s, count = 292, sum = 0.686722
+0: advance mean = 0.000849s, sd = 0.036319s, count = 8287, sum = 7.035443
+0: action mean = 0.000522s, sd = 0.016612s, count = 8287, sum = 4.328661
+0: recv_msg mean = 0.000734s, sd = 0.002052s, count = 286, sum = 0.209821
+0: recv_req mean = 0.000002s, sd = 0.000037s, count = 8001, sum = 0.013205
+0: res_times mean = 5.765880s, sd = 4.687089s, count = 4830, sum = 27849.202078
+0: req_queue_times mean = 0.046563s, sd = 0.119427s, count = 8001, sum = 372.553558
+0: msg_queue_times mean = 0.090172s, sd = 0.571287s, count = 286, sum = 25.789229
+3: view mean = 0.250942s, sd = 0.847560s, count = 106, sum = 26.599826
+3: send mean = 0.115288s, sd = 0.241462s, count = 287, sum = 33.087632
+3: conn mean = 0.000001s, sd = 0.000001s, count = 287, sum = 0.000337
+3: advance mean = 0.000524s, sd = 0.019138s, count = 8288, sum = 4.342933
+3: action mean = 0.000413s, sd = 0.011638s, count = 8288, sum = 3.423387
+3: recv_msg mean = 0.000645s, sd = 0.001937s, count = 287, sum = 0.185015
+3: recv_req mean = 0.000001s, sd = 0.000022s, count = 8001, sum = 0.010416
+3: res_times mean = 6.173458s, sd = 4.869109s, count = 4830, sum = 29817.804318
+3: req_queue_times mean = 0.206437s, sd = 0.662414s, count = 8001, sum = 1651.703761
+3: msg_queue_times mean = 0.054506s, sd = 0.282410s, count = 287, sum = 15.643236
+1: view mean = 0.312909s, sd = 1.391767s, count = 106, sum = 33.168368
+1: send mean = 0.093337s, sd = 0.188233s, count = 290, sum = 27.067770
+1: conn mean = 0.000001s, sd = 0.000001s, count = 290, sum = 0.000353
+1: advance mean = 0.001086s, sd = 0.049131s, count = 8295, sum = 9.008401
+1: action mean = 0.000573s, sd = 0.019239s, count = 8295, sum = 4.756857
+1: recv_msg mean = 0.000784s, sd = 0.002361s, count = 294, sum = 0.230359
+1: recv_req mean = 0.000001s, sd = 0.000001s, count = 8001, sum = 0.004995
+1: res_times mean = 5.862305s, sd = 4.725455s, count = 4830, sum = 28314.931745
+1: req_queue_times mean = 0.064664s, sd = 0.161594s, count = 8001, sum = 517.379547
+1: msg_queue_times mean = 0.112804s, sd = 0.773183s, count = 294, sum = 33.164295
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 2!
+connected to 3!
+connected to 0!
+connected to 1!
+connected to all!
+
+name = ablation4r_unfiltered_16_1500_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 2585 / 15000
+throughput = 1500req/s
+goodput = 255.048009req/s
+mean = 4.146267s
+sd = 3.218222s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 10340, sum = 0.003330
+12345: req_send mean = 4.711945s, sd = 4.173942s, count = 10340, sum = 48721.514055
+1: view mean = 0.475952s, sd = 1.899040s, count = 60, sum = 28.557100
+1: send mean = 0.149976s, sd = 0.400283s, count = 161, sum = 24.146078
+1: conn mean = 0.000002s, sd = 0.000001s, count = 161, sum = 0.000271
+1: advance mean = 0.000288s, sd = 0.020110s, count = 15164, sum = 4.369367
+1: action mean = 0.000221s, sd = 0.011164s, count = 15164, sum = 3.349817
+1: recv_msg mean = 0.000931s, sd = 0.003310s, count = 163, sum = 0.151801
+1: recv_req mean = 0.000001s, sd = 0.000024s, count = 15001, sum = 0.015831
+1: res_times mean = 10.841867s, sd = 9.266174s, count = 4010, sum = 43475.884669
+1: req_queue_times mean = 0.635439s, sd = 1.154262s, count = 15001, sum = 9532.214987
+1: msg_queue_times mean = 0.100692s, sd = 0.508922s, count = 163, sum = 16.412850
+0: view mean = 0.468158s, sd = 1.909888s, count = 61, sum = 28.557660
+0: send mean = 0.118867s, sd = 0.282666s, count = 159, sum = 18.899839
+0: conn mean = 0.004575s, sd = 0.028470s, count = 159, sum = 0.727426
+0: advance mean = 0.000146s, sd = 0.008379s, count = 15158, sum = 2.211605
+0: action mean = 0.000215s, sd = 0.011124s, count = 15158, sum = 3.259034
+0: recv_msg mean = 0.000800s, sd = 0.003543s, count = 157, sum = 0.125627
+0: recv_req mean = 0.000001s, sd = 0.000029s, count = 15001, sum = 0.018256
+0: res_times mean = 10.737122s, sd = 9.305963s, count = 4010, sum = 43055.858515
+0: req_queue_times mean = 0.113558s, sd = 0.332894s, count = 15001, sum = 1703.488987
+0: msg_queue_times mean = 0.063379s, sd = 0.284512s, count = 157, sum = 9.950495
+2: view mean = 0.481836s, sd = 2.165501s, count = 60, sum = 28.910162
+2: send mean = 0.182554s, sd = 0.745710s, count = 161, sum = 29.391189
+2: conn mean = 0.000001s, sd = 0.000001s, count = 161, sum = 0.000194
+2: advance mean = 0.000826s, sd = 0.058690s, count = 15164, sum = 12.527316
+2: action mean = 0.000264s, sd = 0.016834s, count = 15164, sum = 4.001964
+2: recv_msg mean = 0.001071s, sd = 0.003427s, count = 163, sum = 0.174626
+2: recv_req mean = 0.000001s, sd = 0.000019s, count = 15001, sum = 0.015848
+2: res_times mean = 11.803069s, sd = 9.409265s, count = 4010, sum = 47330.308325
+2: req_queue_times mean = 0.030862s, sd = 0.099960s, count = 15001, sum = 462.960662
+2: msg_queue_times mean = 0.223152s, sd = 1.310744s, count = 163, sum = 36.373735
+3: view mean = 0.264672s, sd = 0.797874s, count = 59, sum = 15.615654
+3: send mean = 0.122580s, sd = 0.284716s, count = 158, sum = 19.367714
+3: conn mean = 0.000001s, sd = 0.000001s, count = 158, sum = 0.000195
+3: advance mean = 0.000082s, sd = 0.003599s, count = 15157, sum = 1.243693
+3: action mean = 0.000194s, sd = 0.010634s, count = 15157, sum = 2.935675
+3: recv_msg mean = 0.000918s, sd = 0.003658s, count = 157, sum = 0.144155
+3: recv_req mean = 0.000002s, sd = 0.000034s, count = 15001, sum = 0.024306
+3: res_times mean = 11.503370s, sd = 9.858020s, count = 4010, sum = 46128.514884
+3: req_queue_times mean = 0.054108s, sd = 0.152428s, count = 15001, sum = 811.675857
+3: msg_queue_times mean = 0.034130s, sd = 0.133560s, count = 156, sum = 5.324226
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_17_1000_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 4130 / 10000
+throughput = 1000req/s
+goodput = 212.983629req/s
+mean = 6.930580s
+sd = 5.585041s
+12345: req_conn mean = 0.000000s, sd = 0.000010s, count = 16520, sum = 0.007220
+12345: req_send mean = 7.098759s, sd = 5.625692s, count = 16520, sum = 117271.506661
+3: view mean = 0.258583s, sd = 1.090619s, count = 101, sum = 26.116895
+3: send mean = 0.185811s, sd = 0.688587s, count = 275, sum = 51.097928
+3: conn mean = 0.000002s, sd = 0.000001s, count = 275, sum = 0.000413
+3: advance mean = 0.000702s, sd = 0.035442s, count = 10273, sum = 7.211835
+3: action mean = 0.000372s, sd = 0.014981s, count = 10273, sum = 3.818283
+3: recv_msg mean = 0.000833s, sd = 0.003013s, count = 272, sum = 0.226514
+3: recv_req mean = 0.000001s, sd = 0.000029s, count = 10001, sum = 0.013460
+3: res_times mean = 7.089718s, sd = 5.520472s, count = 4131, sum = 29287.626427
+3: req_queue_times mean = 0.040804s, sd = 0.116920s, count = 10001, sum = 408.080400
+3: msg_queue_times mean = 0.116217s, sd = 0.771240s, count = 272, sum = 31.611014
+1: view mean = 0.257794s, sd = 0.917799s, count = 101, sum = 26.037218
+1: send mean = 0.106151s, sd = 0.255568s, count = 274, sum = 29.085292
+1: conn mean = 0.000001s, sd = 0.000001s, count = 274, sum = 0.000384
+1: advance mean = 0.000229s, sd = 0.008619s, count = 10276, sum = 2.356182
+1: action mean = 0.000322s, sd = 0.011600s, count = 10276, sum = 3.304684
+1: recv_msg mean = 0.001151s, sd = 0.010359s, count = 275, sum = 0.316473
+1: recv_req mean = 0.000001s, sd = 0.000028s, count = 10001, sum = 0.014822
+1: res_times mean = 7.009184s, sd = 5.648185s, count = 4131, sum = 28954.937735
+1: req_queue_times mean = 0.093054s, sd = 0.241307s, count = 10001, sum = 930.632178
+1: msg_queue_times mean = 0.019888s, sd = 0.113803s, count = 275, sum = 5.469113
+2: view mean = 0.259136s, sd = 0.951972s, count = 101, sum = 26.172708
+2: send mean = 0.138042s, sd = 0.389064s, count = 274, sum = 37.823392
+2: conn mean = 0.000001s, sd = 0.000001s, count = 274, sum = 0.000402
+2: advance mean = 0.000414s, sd = 0.019278s, count = 10276, sum = 4.249466
+2: action mean = 0.000321s, sd = 0.011934s, count = 10276, sum = 3.298788
+2: recv_msg mean = 0.001206s, sd = 0.007385s, count = 275, sum = 0.331650
+2: recv_req mean = 0.000001s, sd = 0.000017s, count = 10001, sum = 0.010517
+2: res_times mean = 7.001053s, sd = 5.642374s, count = 4131, sum = 28921.348972
+2: req_queue_times mean = 0.240747s, sd = 0.746250s, count = 10001, sum = 2407.712634
+2: msg_queue_times mean = 0.045529s, sd = 0.269779s, count = 275, sum = 12.520592
+0: view mean = 0.379600s, sd = 2.089511s, count = 102, sum = 38.719197
+0: send mean = 0.099083s, sd = 0.245263s, count = 276, sum = 27.346946
+0: conn mean = 0.002624s, sd = 0.021625s, count = 276, sum = 0.724152
+0: advance mean = 0.001417s, sd = 0.076543s, count = 10276, sum = 14.559190
+0: action mean = 0.000489s, sd = 0.020331s, count = 10276, sum = 5.020433
+0: recv_msg mean = 0.000838s, sd = 0.002871s, count = 276, sum = 0.231408
+0: recv_req mean = 0.000001s, sd = 0.000027s, count = 10001, sum = 0.012357
+0: res_times mean = 6.894130s, sd = 5.578371s, count = 4131, sum = 28479.649743
+0: req_queue_times mean = 0.087115s, sd = 0.233050s, count = 10001, sum = 871.234718
+0: msg_queue_times mean = 0.182047s, sd = 1.307656s, count = 275, sum = 50.062943
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 0!
+connected to 1!
+connected to 2!
+connected to 3!
+connected to all!
+
+name = ablation4r_unfiltered_18_600_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 6000 / 6000
+throughput = 600req/s
+goodput = 256.954084req/s
+mean = 5.936150s
+sd = 4.954061s
+12345: req_conn mean = 0.000001s, sd = 0.000039s, count = 24000, sum = 0.028048
+12345: req_send mean = 6.130919s, sd = 5.080029s, count = 24000, sum = 147142.048474
+2: view mean = 0.373139s, sd = 1.003364s, count = 76, sum = 28.358557
+2: send mean = 0.150242s, sd = 0.240811s, count = 205, sum = 30.799632
+2: conn mean = 0.000001s, sd = 0.000002s, count = 205, sum = 0.000304
+2: advance mean = 0.000827s, sd = 0.026184s, count = 6209, sum = 5.132222
+2: action mean = 0.000809s, sd = 0.017408s, count = 6209, sum = 5.023665
+2: recv_msg mean = 0.001294s, sd = 0.002510s, count = 208, sum = 0.269119
+2: recv_req mean = 0.000002s, sd = 0.000043s, count = 6001, sum = 0.010449
+2: res_times mean = 6.036149s, sd = 5.011854s, count = 6001, sum = 36222.929734
+2: req_queue_times mean = 0.094958s, sd = 0.216584s, count = 6001, sum = 569.844699
+2: msg_queue_times mean = 0.078760s, sd = 0.344791s, count = 208, sum = 16.382146
+1: view mean = 0.368434s, sd = 0.944307s, count = 76, sum = 28.000972
+1: send mean = 0.123679s, sd = 0.212066s, count = 207, sum = 25.601485
+1: conn mean = 0.000001s, sd = 0.000001s, count = 207, sum = 0.000260
+1: advance mean = 0.000867s, sd = 0.031026s, count = 6208, sum = 5.382056
+1: action mean = 0.000820s, sd = 0.017783s, count = 6208, sum = 5.090116
+1: recv_msg mean = 0.001125s, sd = 0.002232s, count = 207, sum = 0.232843
+1: recv_req mean = 0.000001s, sd = 0.000025s, count = 6001, sum = 0.007797
+1: res_times mean = 5.963250s, sd = 5.013144s, count = 6001, sum = 35785.463004
+1: req_queue_times mean = 0.050930s, sd = 0.116792s, count = 6001, sum = 305.632002
+1: msg_queue_times mean = 0.102187s, sd = 0.535484s, count = 207, sum = 21.152760
+0: view mean = 0.360097s, sd = 0.857653s, count = 77, sum = 27.727492
+0: send mean = 0.110433s, sd = 0.166869s, count = 208, sum = 22.970031
+0: conn mean = 0.003527s, sd = 0.025178s, count = 208, sum = 0.733672
+0: advance mean = 0.000595s, sd = 0.018336s, count = 6202, sum = 3.692309
+0: action mean = 0.000777s, sd = 0.016227s, count = 6202, sum = 4.819667
+0: recv_msg mean = 0.001027s, sd = 0.002113s, count = 201, sum = 0.206414
+0: recv_req mean = 0.000001s, sd = 0.000020s, count = 6001, sum = 0.007680
+0: res_times mean = 5.872488s, sd = 4.933989s, count = 6001, sum = 35240.800728
+0: req_queue_times mean = 0.043614s, sd = 0.109198s, count = 6001, sum = 261.724832
+0: msg_queue_times mean = 0.066148s, sd = 0.273195s, count = 201, sum = 13.295750
+3: view mean = 0.411302s, sd = 1.050684s, count = 76, sum = 31.258960
+3: send mean = 0.180701s, sd = 0.427198s, count = 205, sum = 37.043686
+3: conn mean = 0.000001s, sd = 0.000001s, count = 205, sum = 0.000257
+3: advance mean = 0.000962s, sd = 0.028412s, count = 6207, sum = 5.972701
+3: action mean = 0.000891s, sd = 0.018957s, count = 6207, sum = 5.528995
+3: recv_msg mean = 0.001136s, sd = 0.002356s, count = 206, sum = 0.234115
+3: recv_req mean = 0.000001s, sd = 0.000011s, count = 6001, sum = 0.005243
+3: res_times mean = 6.263636s, sd = 5.175841s, count = 6001, sum = 37588.081261
+3: req_queue_times mean = 0.043793s, sd = 0.095851s, count = 6001, sum = 262.799541
+3: msg_queue_times mean = 0.101744s, sd = 0.413111s, count = 206, sum = 20.959283
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_19_1_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 10 / 10
+throughput = 1req/s
+goodput = 1.000000req/s
+mean = 0.443171s
+sd = 0.085373s
+12345: req_conn mean = 0.000002s, sd = 0.000001s, count = 40, sum = 0.000071
+12345: req_send mean = 0.465918s, sd = 0.089776s, count = 40, sum = 18.636725
+2: view mean = 0.067941s, sd = 0.045264s, count = 443, sum = 30.098065
+0: view mean = 0.067683s, sd = 0.042597s, count = 444, sum = 30.051324
+2: send mean = 0.047909s, sd = 0.030507s, count = 1210, sum = 57.970083
+2: conn mean = 0.000203s, sd = 0.004968s, count = 1210, sum = 0.245861
+0: send mean = 0.049260s, sd = 0.039973s, count = 1215, sum = 59.850690
+0: conn mean = 0.000200s, sd = 0.004998s, count = 1215, sum = 0.242959
+2: advance mean = 0.003143s, sd = 0.001321s, count = 1226, sum = 3.853271
+2: action mean = 0.000574s, sd = 0.001386s, count = 1226, sum = 0.704207
+0: advance mean = 0.003138s, sd = 0.001300s, count = 1220, sum = 3.828815
+0: action mean = 0.000626s, sd = 0.002011s, count = 1220, sum = 0.763658
+2: recv_msg mean = 0.000108s, sd = 0.000331s, count = 1215, sum = 0.131807
+2: recv_req mean = 0.000005s, sd = 0.000001s, count = 11, sum = 0.000053
+2: res_times mean = 0.497552s, sd = 0.166754s, count = 11, sum = 5.473071
+2: req_queue_times mean = 0.071015s, sd = 0.072613s, count = 11, sum = 0.781167
+2: msg_queue_times mean = 0.005518s, sd = 0.004811s, count = 1215, sum = 6.704363
+0: recv_msg mean = 0.000118s, sd = 0.000340s, count = 1209, sum = 0.142592
+0: recv_req mean = 0.000005s, sd = 0.000002s, count = 11, sum = 0.000060
+0: res_times mean = 0.502339s, sd = 0.235111s, count = 11, sum = 5.525733
+0: req_queue_times mean = 0.072782s, sd = 0.074719s, count = 11, sum = 0.800601
+0: msg_queue_times mean = 0.005342s, sd = 0.004027s, count = 1209, sum = 6.458719
+1: view mean = 0.067833s, sd = 0.049642s, count = 444, sum = 30.118029
+1: send mean = 0.047255s, sd = 0.028606s, count = 1215, sum = 57.414261
+1: conn mean = 0.000107s, sd = 0.003702s, count = 1215, sum = 0.130356
+1: advance mean = 0.003174s, sd = 0.001334s, count = 1227, sum = 3.893994
+1: action mean = 0.000580s, sd = 0.001418s, count = 1227, sum = 0.711854
+1: recv_msg mean = 0.000124s, sd = 0.000376s, count = 1216, sum = 0.150872
+1: recv_req mean = 0.000005s, sd = 0.000001s, count = 11, sum = 0.000058
+1: res_times mean = 0.487498s, sd = 0.148442s, count = 11, sum = 5.362482
+1: req_queue_times mean = 0.065230s, sd = 0.045802s, count = 11, sum = 0.717535
+1: msg_queue_times mean = 0.005781s, sd = 0.007048s, count = 1216, sum = 7.030293
+3: view mean = 0.067955s, sd = 0.046603s, count = 442, sum = 30.036307
+3: send mean = 0.050484s, sd = 0.047463s, count = 1206, sum = 60.883943
+3: conn mean = 0.000203s, sd = 0.004951s, count = 1206, sum = 0.244831
+3: advance mean = 0.003179s, sd = 0.001312s, count = 1222, sum = 3.884976
+3: action mean = 0.000561s, sd = 0.001325s, count = 1222, sum = 0.685837
+3: recv_msg mean = 0.000134s, sd = 0.000371s, count = 1211, sum = 0.162872
+3: recv_req mean = 0.000005s, sd = 0.000001s, count = 11, sum = 0.000055
+3: res_times mean = 0.508764s, sd = 0.215463s, count = 11, sum = 5.596405
+3: req_queue_times mean = 0.069858s, sd = 0.069205s, count = 11, sum = 0.768441
+3: msg_queue_times mean = 0.005552s, sd = 0.006466s, count = 1211, sum = 6.723900
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 3!
+connected to 0!
+connected to 1!
+connected to 2!
+connected to all!
+
+name = ablation4r_unfiltered_20_2000_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 2786 / 20000
+throughput = 2000req/s
+goodput = 241.228291req/s
+mean = 5.409801s
+sd = 4.003640s
+12345: req_conn mean = 0.000000s, sd = 0.000012s, count = 11144, sum = 0.004964
+12345: req_send mean = 5.659035s, sd = 4.119821s, count = 11144, sum = 63064.283625
+3: view mean = 0.289487s, sd = 1.059214s, count = 57, sum = 16.500739
+3: send mean = 0.148121s, sd = 0.507093s, count = 152, sum = 22.514465
+3: conn mean = 0.000001s, sd = 0.000001s, count = 152, sum = 0.000227
+3: advance mean = 0.000275s, sd = 0.022472s, count = 20155, sum = 5.538535
+3: action mean = 0.000109s, sd = 0.008211s, count = 20155, sum = 2.194985
+1: view mean = 0.284032s, sd = 0.899704s, count = 57, sum = 16.189801
+1: send mean = 0.100213s, sd = 0.227814s, count = 154, sum = 15.432840
+1: conn mean = 0.000001s, sd = 0.000001s, count = 154, sum = 0.000172
+3: recv_msg mean = 0.000707s, sd = 0.002364s, count = 154, sum = 0.108933
+3: recv_req mean = 0.000001s, sd = 0.000030s, count = 20001, sum = 0.026302
+1: advance mean = 0.000065s, sd = 0.003635s, count = 20152, sum = 1.301217
+3: res_times mean = 5.851425s, sd = 4.134034s, count = 2787, sum = 16307.921929
+3: req_queue_times mean = 0.545205s, sd = 1.436148s, count = 20001, sum = 10904.649327
+3: msg_queue_times mean = 0.104879s, sd = 0.634195s, count = 154, sum = 16.151350
+1: action mean = 0.000082s, sd = 0.004999s, count = 20152, sum = 1.655373
+1: recv_msg mean = 0.000526s, sd = 0.002118s, count = 151, sum = 0.079449
+1: recv_req mean = 0.000001s, sd = 0.000022s, count = 20001, sum = 0.021721
+2: view mean = 0.289732s, sd = 0.937732s, count = 57, sum = 16.514736
+2: send mean = 0.140806s, sd = 0.326486s, count = 153, sum = 21.543304
+2: conn mean = 0.000001s, sd = 0.000001s, count = 153, sum = 0.000212
+1: res_times mean = 5.523592s, sd = 4.077828s, count = 2787, sum = 15394.251784
+1: req_queue_times mean = 0.071747s, sd = 0.189323s, count = 20001, sum = 1435.010607
+1: msg_queue_times mean = 0.035298s, sd = 0.147137s, count = 151, sum = 5.329968
+2: advance mean = 0.000132s, sd = 0.009528s, count = 20155, sum = 2.660824
+2: action mean = 0.000107s, sd = 0.007115s, count = 20155, sum = 2.164630
+2: recv_msg mean = 0.000637s, sd = 0.002376s, count = 154, sum = 0.098074
+2: recv_req mean = 0.000002s, sd = 0.000048s, count = 20001, sum = 0.033254
+2: res_times mean = 5.671109s, sd = 4.204926s, count = 2787, sum = 15805.380998
+2: req_queue_times mean = 0.213630s, sd = 0.552138s, count = 20001, sum = 4272.812701
+2: msg_queue_times mean = 0.059370s, sd = 0.302883s, count = 154, sum = 9.142978
+0: view mean = 0.528479s, sd = 2.714030s, count = 58, sum = 30.651761
+0: send mean = 0.113537s, sd = 0.240197s, count = 155, sum = 17.598173
+0: conn mean = 0.004705s, sd = 0.028896s, count = 155, sum = 0.729201
+0: advance mean = 0.000765s, sd = 0.068316s, count = 20154, sum = 15.410696
+0: action mean = 0.000166s, sd = 0.014614s, count = 20154, sum = 3.340553
+0: recv_msg mean = 0.001113s, sd = 0.004072s, count = 154, sum = 0.171472
+0: recv_req mean = 0.000001s, sd = 0.000032s, count = 20001, sum = 0.027752
+0: res_times mean = 5.369576s, sd = 4.000519s, count = 2787, sum = 14965.006979
+0: req_queue_times mean = 0.021183s, sd = 0.069133s, count = 20001, sum = 423.677317
+0: msg_queue_times mean = 0.365539s, sd = 2.111299s, count = 153, sum = 55.927420
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 0!
+connected to 1!
+connected to 2!
+connected to 3!
+connected to all!
+
+name = ablation4r_unfiltered_21_800_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 4680 / 8000
+throughput = 800req/s
+goodput = 197.785427req/s
+mean = 7.795284s
+sd = 6.338078s
+12345: req_conn mean = 0.000002s, sd = 0.000104s, count = 17864, sum = 0.030769
+12345: req_send mean = 7.424233s, sd = 6.023361s, count = 17864, sum = 132626.493059
+1: view mean = 0.306435s, sd = 1.274721s, count = 99, sum = 30.337082
+1: send mean = 0.140306s, sd = 0.565097s, count = 271, sum = 38.023061
+1: conn mean = 0.000125s, sd = 0.002023s, count = 271, sum = 0.033781
+1: advance mean = 0.001047s, sd = 0.046460s, count = 8274, sum = 8.663053
+1: action mean = 0.000567s, sd = 0.018618s, count = 8274, sum = 4.694169
+1: recv_msg mean = 0.000737s, sd = 0.002329s, count = 273, sum = 0.201081
+1: recv_req mean = 0.000001s, sd = 0.000015s, count = 8001, sum = 0.006954
+1: res_times mean = 7.725641s, sd = 6.243254s, count = 4681, sum = 36163.724289
+1: req_queue_times mean = 0.051774s, sd = 0.133717s, count = 8001, sum = 414.243786
+1: msg_queue_times mean = 0.038846s, sd = 0.267649s, count = 273, sum = 10.605065
+0: view mean = 0.302372s, sd = 1.106790s, count = 100, sum = 30.237195
+0: send mean = 0.135988s, sd = 0.569198s, count = 271, sum = 36.852712
+0: conn mean = 0.001534s, sd = 0.015612s, count = 271, sum = 0.415618
+0: advance mean = 0.000674s, sd = 0.028843s, count = 8267, sum = 5.573837
+0: action mean = 0.000515s, sd = 0.016830s, count = 8267, sum = 4.259021
+0: recv_msg mean = 0.000723s, sd = 0.002364s, count = 266, sum = 0.192252
+0: recv_req mean = 0.000001s, sd = 0.000026s, count = 8001, sum = 0.009947
+0: res_times mean = 7.681004s, sd = 6.311738s, count = 4681, sum = 35954.777751
+0: req_queue_times mean = 0.044729s, sd = 0.116621s, count = 8001, sum = 357.875386
+0: msg_queue_times mean = 0.051547s, sd = 0.311142s, count = 266, sum = 13.711566
+3: view mean = 0.313101s, sd = 1.094470s, count = 99, sum = 30.997047
+3: send mean = 0.111570s, sd = 0.276632s, count = 264, sum = 29.454418
+3: conn mean = 0.000925s, sd = 0.010572s, count = 264, sum = 0.244163
+3: advance mean = 0.000404s, sd = 0.013843s, count = 8266, sum = 3.340139
+3: action mean = 0.000438s, sd = 0.013846s, count = 8266, sum = 3.620080
+3: recv_msg mean = 0.000596s, sd = 0.002140s, count = 265, sum = 0.158060
+3: recv_req mean = 0.000001s, sd = 0.000028s, count = 8001, sum = 0.009854
+3: res_times mean = 8.138626s, sd = 6.522476s, count = 4681, sum = 38096.909324
+3: req_queue_times mean = 0.204946s, sd = 0.537580s, count = 8001, sum = 1639.776923
+3: msg_queue_times mean = 0.042864s, sd = 0.228667s, count = 265, sum = 11.359084
+2: view mean = 0.397891s, sd = 1.858320s, count = 99, sum = 39.391173
+2: send mean = 0.201374s, sd = 0.972918s, count = 268, sum = 53.968260
+2: conn mean = 0.000913s, sd = 0.010515s, count = 268, sum = 0.244784
+2: advance mean = 0.001275s, sd = 0.058513s, count = 8272, sum = 10.550240
+2: action mean = 0.000672s, sd = 0.023620s, count = 8272, sum = 5.560613
+2: recv_msg mean = 0.000850s, sd = 0.002676s, count = 273, sum = 0.232010
+2: recv_req mean = 0.000001s, sd = 0.000031s, count = 8001, sum = 0.010925
+2: res_times mean = 7.977425s, sd = 6.461010s, count = 4681, sum = 37342.325181
+2: req_queue_times mean = 0.083257s, sd = 0.221965s, count = 8001, sum = 666.139959
+2: msg_queue_times mean = 0.092520s, sd = 0.732201s, count = 271, sum = 25.072903
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 0!
+connected to 1!
+connected to 2!
+connected to 3!
+connected to all!
+
+name = ablation4r_unfiltered_22_100_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 1000 / 1000
+throughput = 100req/s
+goodput = 100.000000req/s
+mean = 0.311710s
+sd = 0.110695s
+12345: req_conn mean = 0.000002s, sd = 0.000034s, count = 4000, sum = 0.008362
+12345: req_send mean = 0.324293s, sd = 0.112877s, count = 4000, sum = 1297.171352
+3: view mean = 0.070794s, sd = 0.037003s, count = 405, sum = 28.671585
+3: send mean = 0.056198s, sd = 0.032939s, count = 1100, sum = 61.817703
+3: conn mean = 0.000001s, sd = 0.000001s, count = 1100, sum = 0.001068
+3: advance mean = 0.001689s, sd = 0.001851s, count = 2111, sum = 3.564851
+3: action mean = 0.003080s, sd = 0.010711s, count = 2111, sum = 6.501071
+3: recv_msg mean = 0.000336s, sd = 0.000718s, count = 1110, sum = 0.373276
+3: recv_req mean = 0.000001s, sd = 0.000001s, count = 1001, sum = 0.001127
+3: res_times mean = 0.300361s, sd = 0.108842s, count = 1001, sum = 300.661301
+3: req_queue_times mean = 0.013774s, sd = 0.011684s, count = 1001, sum = 13.787821
+3: msg_queue_times mean = 0.007285s, sd = 0.008931s, count = 1110, sum = 8.086096
+0: view mean = 0.070641s, sd = 0.041928s, count = 405, sum = 28.609592
+1: view mean = 0.070851s, sd = 0.041829s, count = 404, sum = 28.623764
+0: send mean = 0.053276s, sd = 0.028408s, count = 1110, sum = 59.136470
+1: send mean = 0.054457s, sd = 0.026746s, count = 1105, sum = 60.174557
+0: conn mean = 0.000662s, sd = 0.010989s, count = 1110, sum = 0.734799
+0: advance mean = 0.001664s, sd = 0.001830s, count = 2105, sum = 3.502644
+0: action mean = 0.002899s, sd = 0.010034s, count = 2105, sum = 6.101628
+0: recv_msg mean = 0.000319s, sd = 0.000676s, count = 1104, sum = 0.352724
+0: recv_req mean = 0.000001s, sd = 0.000002s, count = 1001, sum = 0.001429
+0: res_times mean = 0.296565s, sd = 0.113953s, count = 1001, sum = 296.861712
+0: req_queue_times mean = 0.011292s, sd = 0.009342s, count = 1001, sum = 11.303062
+0: msg_queue_times mean = 0.005842s, sd = 0.004100s, count = 1104, sum = 6.449021
+1: conn mean = 0.000001s, sd = 0.000001s, count = 1105, sum = 0.001409
+1: advance mean = 0.001665s, sd = 0.001831s, count = 2111, sum = 3.514198
+1: action mean = 0.003004s, sd = 0.010464s, count = 2111, sum = 6.342453
+1: recv_msg mean = 0.000338s, sd = 0.000744s, count = 1110, sum = 0.375529
+1: recv_req mean = 0.000002s, sd = 0.000006s, count = 1001, sum = 0.001629
+1: res_times mean = 0.291883s, sd = 0.101201s, count = 1001, sum = 292.174670
+1: req_queue_times mean = 0.012821s, sd = 0.011113s, count = 1001, sum = 12.833886
+1: msg_queue_times mean = 0.006959s, sd = 0.009986s, count = 1110, sum = 7.724691
+2: view mean = 0.070768s, sd = 0.038399s, count = 405, sum = 28.660915
+2: send mean = 0.056373s, sd = 0.029265s, count = 1108, sum = 62.461659
+2: conn mean = 0.000001s, sd = 0.000001s, count = 1108, sum = 0.001118
+2: advance mean = 0.001697s, sd = 0.001860s, count = 2105, sum = 3.572787
+2: action mean = 0.002974s, sd = 0.010256s, count = 2105, sum = 6.259265
+2: recv_msg mean = 0.000342s, sd = 0.000790s, count = 1104, sum = 0.377371
+2: recv_req mean = 0.000002s, sd = 0.000021s, count = 1001, sum = 0.002075
+2: res_times mean = 0.298177s, sd = 0.106018s, count = 1001, sum = 298.475094
+2: req_queue_times mean = 0.015274s, sd = 0.020388s, count = 1001, sum = 15.289073
+2: msg_queue_times mean = 0.006481s, sd = 0.005091s, count = 1104, sum = 7.154650
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 2!
+connected to 3!
+connected to 0!
+connected to 1!
+connected to all!
+
+name = ablation4r_unfiltered_23_200_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 2000 / 2000
+throughput = 200req/s
+goodput = 200.000000req/s
+mean = 0.417168s
+sd = 0.166979s
+12345: req_conn mean = 0.000002s, sd = 0.000083s, count = 8000, sum = 0.017367
+12345: req_send mean = 0.434849s, sd = 0.171224s, count = 8000, sum = 3478.788010
+1: view mean = 0.086984s, sd = 0.051129s, count = 353, sum = 30.705357
+1: send mean = 0.071016s, sd = 0.045787s, count = 965, sum = 68.530833
+1: conn mean = 0.000001s, sd = 0.000001s, count = 965, sum = 0.001013
+1: advance mean = 0.001054s, sd = 0.001678s, count = 2970, sum = 3.130752
+1: action mean = 0.003090s, sd = 0.014372s, count = 2970, sum = 9.177450
+1: recv_msg mean = 0.000504s, sd = 0.001108s, count = 969, sum = 0.488068
+1: recv_req mean = 0.000001s, sd = 0.000020s, count = 2001, sum = 0.002971
+1: res_times mean = 0.400182s, sd = 0.168977s, count = 2001, sum = 800.764619
+1: req_queue_times mean = 0.018117s, sd = 0.016587s, count = 2001, sum = 36.252133
+1: msg_queue_times mean = 0.008517s, sd = 0.013382s, count = 969, sum = 8.253209
+0: view mean = 0.087056s, sd = 0.055099s, count = 355, sum = 30.905051
+0: send mean = 0.068759s, sd = 0.050327s, count = 963, sum = 66.214451
+0: conn mean = 0.000764s, sd = 0.011816s, count = 963, sum = 0.735998
+0: advance mean = 0.001037s, sd = 0.001650s, count = 2968, sum = 3.078955
+0: action mean = 0.003014s, sd = 0.014072s, count = 2968, sum = 8.945507
+0: recv_msg mean = 0.000513s, sd = 0.001119s, count = 967, sum = 0.495698
+0: recv_req mean = 0.000001s, sd = 0.000020s, count = 2001, sum = 0.002921
+0: res_times mean = 0.392405s, sd = 0.156862s, count = 2001, sum = 785.201836
+0: req_queue_times mean = 0.020360s, sd = 0.019728s, count = 2001, sum = 40.740974
+0: msg_queue_times mean = 0.008283s, sd = 0.014237s, count = 967, sum = 8.009444
+2: view mean = 0.087181s, sd = 0.051976s, count = 354, sum = 30.861957
+2: send mean = 0.069467s, sd = 0.045648s, count = 967, sum = 67.174161
+2: conn mean = 0.000002s, sd = 0.000014s, count = 967, sum = 0.001719
+2: advance mean = 0.001060s, sd = 0.001688s, count = 2965, sum = 3.141917
+2: action mean = 0.003191s, sd = 0.014595s, count = 2965, sum = 9.459862
+2: recv_msg mean = 0.000511s, sd = 0.001153s, count = 964, sum = 0.492260
+2: recv_req mean = 0.000001s, sd = 0.000005s, count = 2001, sum = 0.002064
+2: res_times mean = 0.400937s, sd = 0.171126s, count = 2001, sum = 802.273953
+2: req_queue_times mean = 0.021388s, sd = 0.018185s, count = 2001, sum = 42.797790
+2: msg_queue_times mean = 0.007756s, sd = 0.009078s, count = 964, sum = 7.476665
+3: view mean = 0.087289s, sd = 0.052395s, count = 354, sum = 30.900450
+3: send mean = 0.071738s, sd = 0.048089s, count = 965, sum = 69.227162
+3: conn mean = 0.000001s, sd = 0.000001s, count = 965, sum = 0.001311
+3: advance mean = 0.001046s, sd = 0.001694s, count = 2962, sum = 3.099456
+3: action mean = 0.002970s, sd = 0.013795s, count = 2962, sum = 8.798504
+3: recv_msg mean = 0.000489s, sd = 0.001045s, count = 961, sum = 0.469661
+3: recv_req mean = 0.000001s, sd = 0.000014s, count = 2001, sum = 0.002501
+3: res_times mean = 0.397425s, sd = 0.135725s, count = 2001, sum = 795.247417
+3: req_queue_times mean = 0.020813s, sd = 0.025447s, count = 2001, sum = 41.646549
+3: msg_queue_times mean = 0.008753s, sd = 0.011544s, count = 961, sum = 8.411986
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_24_50_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 500 / 500
+throughput = 50req/s
+goodput = 50.000000req/s
+mean = 0.281169s
+sd = 0.039913s
+12345: req_conn mean = 0.000003s, sd = 0.000034s, count = 2000, sum = 0.005704
+12345: req_send mean = 0.291736s, sd = 0.041295s, count = 2000, sum = 583.471797
+2: view mean = 0.062915s, sd = 0.031808s, count = 452, sum = 28.437375
+2: send mean = 0.048146s, sd = 0.023192s, count = 1235, sum = 59.460420
+2: conn mean = 0.000001s, sd = 0.000001s, count = 1235, sum = 0.001364
+2: advance mean = 0.002245s, sd = 0.001778s, count = 1740, sum = 3.906734
+2: action mean = 0.002215s, sd = 0.006628s, count = 1740, sum = 3.854360
+2: recv_msg mean = 0.000200s, sd = 0.000469s, count = 1239, sum = 0.247466
+2: recv_req mean = 0.000002s, sd = 0.000002s, count = 501, sum = 0.001075
+2: res_times mean = 0.270313s, sd = 0.046548s, count = 501, sum = 135.426758
+2: req_queue_times mean = 0.009172s, sd = 0.008996s, count = 501, sum = 4.594924
+2: msg_queue_times mean = 0.006076s, sd = 0.004266s, count = 1239, sum = 7.527920
+1: view mean = 0.062887s, sd = 0.033026s, count = 452, sum = 28.425025
+1: send mean = 0.046352s, sd = 0.022395s, count = 1238, sum = 57.384342
+1: conn mean = 0.000001s, sd = 0.000001s, count = 1238, sum = 0.001213
+1: advance mean = 0.002286s, sd = 0.001816s, count = 1741, sum = 3.980494
+1: action mean = 0.002239s, sd = 0.006719s, count = 1741, sum = 3.897613
+1: recv_msg mean = 0.000212s, sd = 0.000512s, count = 1241, sum = 0.262930
+1: recv_req mean = 0.000002s, sd = 0.000002s, count = 501, sum = 0.001025
+1: res_times mean = 0.267299s, sd = 0.044639s, count = 501, sum = 133.916941
+1: req_queue_times mean = 0.010287s, sd = 0.009926s, count = 501, sum = 5.153777
+1: msg_queue_times mean = 0.005922s, sd = 0.004482s, count = 1240, sum = 7.343567
+3: view mean = 0.062962s, sd = 0.031603s, count = 452, sum = 28.458752
+3: send mean = 0.047321s, sd = 0.024440s, count = 1236, sum = 58.488278
+3: conn mean = 0.000001s, sd = 0.000001s, count = 1236, sum = 0.001398
+3: advance mean = 0.002258s, sd = 0.001788s, count = 1739, sum = 3.926459
+3: action mean = 0.002236s, sd = 0.006697s, count = 1739, sum = 3.887595
+3: recv_msg mean = 0.000194s, sd = 0.000455s, count = 1238, sum = 0.239779
+3: recv_req mean = 0.000003s, sd = 0.000009s, count = 501, sum = 0.001272
+3: res_times mean = 0.271393s, sd = 0.046311s, count = 501, sum = 135.968138
+3: req_queue_times mean = 0.009384s, sd = 0.010355s, count = 501, sum = 4.701371
+3: msg_queue_times mean = 0.005622s, sd = 0.003746s, count = 1238, sum = 6.959971
+0: view mean = 0.062765s, sd = 0.031977s, count = 453, sum = 28.432704
+0: send mean = 0.050572s, sd = 0.025656s, count = 1237, sum = 62.557814
+0: conn mean = 0.000594s, sd = 0.010403s, count = 1237, sum = 0.734229
+0: advance mean = 0.002285s, sd = 0.001813s, count = 1734, sum = 3.961640
+0: action mean = 0.002314s, sd = 0.006894s, count = 1734, sum = 4.013002
+0: recv_msg mean = 0.000227s, sd = 0.000606s, count = 1234, sum = 0.280082
+0: recv_req mean = 0.000002s, sd = 0.000002s, count = 501, sum = 0.001023
+0: res_times mean = 0.267420s, sd = 0.048120s, count = 501, sum = 133.977623
+0: req_queue_times mean = 0.010276s, sd = 0.008404s, count = 501, sum = 5.148481
+0: msg_queue_times mean = 0.006003s, sd = 0.004322s, count = 1233, sum = 7.401241
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_25_1500_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 4035 / 15000
+throughput = 1500req/s
+goodput = 173.943880req/s
+mean = 10.787351s
+sd = 8.366194s
+12345: req_conn mean = 0.000001s, sd = 0.000035s, count = 16140, sum = 0.014721
+12345: req_send mean = 11.022221s, sd = 8.473705s, count = 16140, sum = 177898.642851
+3: view mean = 0.310270s, sd = 1.576074s, count = 97, sum = 30.096198
+3: send mean = 0.155350s, sd = 0.825008s, count = 262, sum = 40.701755
+3: conn mean = 0.000001s, sd = 0.000001s, count = 262, sum = 0.000327
+3: advance mean = 0.000701s, sd = 0.047953s, count = 15265, sum = 10.693359
+3: action mean = 0.000251s, sd = 0.015306s, count = 15265, sum = 3.837203
+3: recv_msg mean = 0.000912s, sd = 0.003929s, count = 264, sum = 0.240683
+3: recv_req mean = 0.000001s, sd = 0.000025s, count = 15001, sum = 0.017872
+3: res_times mean = 10.966767s, sd = 8.283407s, count = 4036, sum = 44261.870649
+3: req_queue_times mean = 0.029525s, sd = 0.092121s, count = 15001, sum = 442.910899
+3: msg_queue_times mean = 0.186687s, sd = 1.251383s, count = 264, sum = 49.285253
+1: view mean = 0.307617s, sd = 1.336370s, count = 97, sum = 29.838819
+1: send mean = 0.075382s, sd = 0.120157s, count = 263, sum = 19.825562
+1: conn mean = 0.000002s, sd = 0.000002s, count = 263, sum = 0.000431
+1: advance mean = 0.000164s, sd = 0.008942s, count = 15265, sum = 2.496297
+1: action mean = 0.000192s, sd = 0.010486s, count = 15265, sum = 2.936655
+1: recv_msg mean = 0.000520s, sd = 0.002610s, count = 264, sum = 0.137327
+1: recv_req mean = 0.000001s, sd = 0.000029s, count = 15001, sum = 0.020483
+1: res_times mean = 10.784830s, sd = 8.343359s, count = 4036, sum = 43527.573236
+1: req_queue_times mean = 0.148402s, sd = 0.369980s, count = 15001, sum = 2226.173890
+1: msg_queue_times mean = 0.033357s, sd = 0.181775s, count = 264, sum = 8.806352
+2: view mean = 0.317097s, sd = 1.451362s, count = 97, sum = 30.758440
+2: send mean = 0.101683s, sd = 0.347444s, count = 262, sum = 26.641005
+2: conn mean = 0.000002s, sd = 0.000001s, count = 262, sum = 0.000403
+2: advance mean = 0.000315s, sd = 0.019982s, count = 15265, sum = 4.815068
+2: action mean = 0.000217s, sd = 0.011718s, count = 15265, sum = 3.309401
+2: recv_msg mean = 0.000575s, sd = 0.002814s, count = 264, sum = 0.151686
+2: recv_req mean = 0.000001s, sd = 0.000019s, count = 15001, sum = 0.013286
+2: res_times mean = 11.126646s, sd = 8.713173s, count = 4036, sum = 44907.144917
+2: req_queue_times mean = 0.340884s, sd = 0.996633s, count = 15001, sum = 5113.598184
+2: msg_queue_times mean = 0.077628s, sd = 0.518973s, count = 264, sum = 20.493814
+0: view mean = 0.613237s, sd = 4.266427s, count = 98, sum = 60.097275
+0: send mean = 0.213737s, sd = 2.051755s, count = 266, sum = 56.854093
+0: conn mean = 0.002740s, sd = 0.022161s, count = 266, sum = 0.728712
+0: advance mean = 0.002060s, sd = 0.148170s, count = 15260, sum = 31.428347
+0: action mean = 0.000380s, sd = 0.024867s, count = 15260, sum = 5.797785
+0: recv_msg mean = 0.000920s, sd = 0.003921s, count = 261, sum = 0.240101
+0: recv_req mean = 0.000001s, sd = 0.000020s, count = 15001, sum = 0.013539
+0: res_times mean = 10.852039s, sd = 8.473850s, count = 4036, sum = 43798.831303
+0: req_queue_times mean = 0.045219s, sd = 0.135443s, count = 15001, sum = 678.332081
+0: msg_queue_times mean = 0.168384s, sd = 1.372281s, count = 259, sum = 43.611495
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 3!
+connected to 0!
+connected to 1!
+connected to 2!
+connected to all!
+
+name = ablation4r_unfiltered_26_200_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 2000 / 2000
+throughput = 200req/s
+goodput = 200.000000req/s
+mean = 0.356061s
+sd = 0.040290s
+12345: req_conn mean = 0.000002s, sd = 0.000077s, count = 8000, sum = 0.019071
+12345: req_send mean = 0.371371s, sd = 0.042029s, count = 8000, sum = 2970.969951
+2: view mean = 0.086791s, sd = 0.041831s, count = 326, sum = 28.293919
+2: send mean = 0.070380s, sd = 0.040461s, count = 888, sum = 62.497787
+2: conn mean = 0.000001s, sd = 0.000001s, count = 888, sum = 0.000966
+2: advance mean = 0.000999s, sd = 0.001654s, count = 2891, sum = 2.889550
+2: action mean = 0.003218s, sd = 0.014404s, count = 2891, sum = 9.304103
+2: recv_msg mean = 0.000540s, sd = 0.001128s, count = 890, sum = 0.480273
+2: recv_req mean = 0.000001s, sd = 0.000002s, count = 2001, sum = 0.001815
+2: res_times mean = 0.348138s, sd = 0.045056s, count = 2001, sum = 696.623905
+2: req_queue_times mean = 0.018558s, sd = 0.016375s, count = 2001, sum = 37.133802
+2: msg_queue_times mean = 0.008022s, sd = 0.009860s, count = 890, sum = 7.139458
+1: view mean = 0.086787s, sd = 0.045836s, count = 327, sum = 28.379501
+1: send mean = 0.067211s, sd = 0.038245s, count = 892, sum = 59.952308
+1: conn mean = 0.000001s, sd = 0.000004s, count = 892, sum = 0.001277
+1: advance mean = 0.000981s, sd = 0.001618s, count = 2897, sum = 2.841160
+1: action mean = 0.003063s, sd = 0.013906s, count = 2897, sum = 8.874873
+1: recv_msg mean = 0.000545s, sd = 0.001178s, count = 897, sum = 0.488680
+1: recv_req mean = 0.000001s, sd = 0.000001s, count = 2001, sum = 0.001925
+1: res_times mean = 0.340049s, sd = 0.045271s, count = 2001, sum = 680.438739
+1: req_queue_times mean = 0.015442s, sd = 0.015087s, count = 2001, sum = 30.900036
+1: msg_queue_times mean = 0.008262s, sd = 0.013604s, count = 896, sum = 7.403114
+0: view mean = 0.086417s, sd = 0.047448s, count = 328, sum = 28.344917
+0: send mean = 0.068879s, sd = 0.040329s, count = 898, sum = 61.853478
+0: conn mean = 0.000815s, sd = 0.012159s, count = 898, sum = 0.731433
+0: advance mean = 0.000982s, sd = 0.001623s, count = 2890, sum = 2.837834
+0: action mean = 0.003197s, sd = 0.014509s, count = 2890, sum = 9.240753
+0: recv_msg mean = 0.000524s, sd = 0.001077s, count = 889, sum = 0.465748
+0: recv_req mean = 0.000001s, sd = 0.000001s, count = 2001, sum = 0.001809
+3: view mean = 0.086837s, sd = 0.043987s, count = 326, sum = 28.308749
+3: send mean = 0.072058s, sd = 0.042384s, count = 889, sum = 64.059405
+3: conn mean = 0.000001s, sd = 0.000001s, count = 889, sum = 0.000905
+0: res_times mean = 0.337466s, sd = 0.045422s, count = 2001, sum = 675.269656
+3: advance mean = 0.001000s, sd = 0.001658s, count = 2892, sum = 2.893413
+0: req_queue_times mean = 0.017806s, sd = 0.016236s, count = 2001, sum = 35.629390
+3: action mean = 0.003240s, sd = 0.014595s, count = 2892, sum = 9.369016
+0: msg_queue_times mean = 0.007618s, sd = 0.008987s, count = 889, sum = 6.772727
+3: recv_msg mean = 0.000559s, sd = 0.001168s, count = 891, sum = 0.497885
+3: recv_req mean = 0.000001s, sd = 0.000001s, count = 2001, sum = 0.001692
+3: res_times mean = 0.348677s, sd = 0.043353s, count = 2001, sum = 697.702800
+3: req_queue_times mean = 0.016639s, sd = 0.015981s, count = 2001, sum = 33.294641
+3: msg_queue_times mean = 0.009073s, sd = 0.010676s, count = 891, sum = 8.083931
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_27_200_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 2000 / 2000
+throughput = 200req/s
+goodput = 200.000000req/s
+mean = 0.469982s
+sd = 0.268022s
+12345: req_conn mean = 0.000002s, sd = 0.000104s, count = 8000, sum = 0.019304
+12345: req_send mean = 0.488909s, sd = 0.274496s, count = 8000, sum = 3911.269271
+2: view mean = 0.086842s, sd = 0.059787s, count = 356, sum = 30.915796
+2: send mean = 0.067767s, sd = 0.037354s, count = 975, sum = 66.072747
+2: conn mean = 0.000001s, sd = 0.000001s, count = 975, sum = 0.001170
+2: advance mean = 0.001044s, sd = 0.001666s, count = 2977, sum = 3.109209
+2: action mean = 0.003128s, sd = 0.014392s, count = 2977, sum = 9.311649
+2: recv_msg mean = 0.000508s, sd = 0.001098s, count = 976, sum = 0.495532
+3: view mean = 0.086989s, sd = 0.054536s, count = 356, sum = 30.968158
+2: recv_req mean = 0.000002s, sd = 0.000024s, count = 2001, sum = 0.003732
+3: send mean = 0.070279s, sd = 0.045814s, count = 968, sum = 68.030067
+3: conn mean = 0.000001s, sd = 0.000001s, count = 968, sum = 0.001002
+2: res_times mean = 0.452086s, sd = 0.255656s, count = 2001, sum = 904.625061
+2: req_queue_times mean = 0.020015s, sd = 0.020974s, count = 2001, sum = 40.049180
+2: msg_queue_times mean = 0.007375s, sd = 0.008689s, count = 976, sum = 7.197679
+3: advance mean = 0.001063s, sd = 0.001687s, count = 2973, sum = 3.159113
+3: action mean = 0.003151s, sd = 0.014491s, count = 2973, sum = 9.366582
+3: recv_msg mean = 0.000498s, sd = 0.001085s, count = 972, sum = 0.484126
+3: recv_req mean = 0.000001s, sd = 0.000004s, count = 2001, sum = 0.001901
+3: res_times mean = 0.458763s, sd = 0.264717s, count = 2001, sum = 917.984251
+3: req_queue_times mean = 0.017212s, sd = 0.017990s, count = 2001, sum = 34.441464
+3: msg_queue_times mean = 0.008152s, sd = 0.009230s, count = 972, sum = 7.923609
+1: view mean = 0.086806s, sd = 0.056250s, count = 356, sum = 30.903097
+1: send mean = 0.067252s, sd = 0.044160s, count = 973, sum = 65.436582
+1: conn mean = 0.000001s, sd = 0.000002s, count = 973, sum = 0.001211
+1: advance mean = 0.001043s, sd = 0.001657s, count = 2977, sum = 3.103622
+1: action mean = 0.003025s, sd = 0.013844s, count = 2977, sum = 9.004089
+1: recv_msg mean = 0.000513s, sd = 0.001124s, count = 976, sum = 0.500607
+1: recv_req mean = 0.000001s, sd = 0.000002s, count = 2001, sum = 0.001950
+1: res_times mean = 0.452887s, sd = 0.259822s, count = 2001, sum = 906.226724
+1: req_queue_times mean = 0.015751s, sd = 0.016349s, count = 2001, sum = 31.517096
+1: msg_queue_times mean = 0.006982s, sd = 0.009091s, count = 976, sum = 6.814313
+0: view mean = 0.086689s, sd = 0.055352s, count = 357, sum = 30.948099
+0: send mean = 0.068946s, sd = 0.046130s, count = 973, sum = 67.084932
+0: conn mean = 0.000751s, sd = 0.011671s, count = 973, sum = 0.730696
+0: advance mean = 0.001059s, sd = 0.001689s, count = 2969, sum = 3.145047
+0: action mean = 0.003209s, sd = 0.014689s, count = 2969, sum = 9.528133
+0: recv_msg mean = 0.000510s, sd = 0.001118s, count = 969, sum = 0.494058
+0: recv_req mean = 0.000001s, sd = 0.000015s, count = 2001, sum = 0.002432
+0: res_times mean = 0.451148s, sd = 0.263915s, count = 2001, sum = 902.746823
+0: req_queue_times mean = 0.020580s, sd = 0.019885s, count = 2001, sum = 41.180408
+0: msg_queue_times mean = 0.008141s, sd = 0.010515s, count = 968, sum = 7.880771
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 2!
+connected to 3!
+connected to 0!
+connected to 1!
+connected to all!
+
+name = ablation4r_unfiltered_28_400_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 4000 / 4000
+throughput = 400req/s
+goodput = 386.149660req/s
+mean = 0.636465s
+sd = 0.090139s
+12345: req_conn mean = 0.000002s, sd = 0.000057s, count = 16000, sum = 0.029108
+12345: req_send mean = 0.673902s, sd = 0.097652s, count = 16000, sum = 10782.424741
+3: view mean = 0.129167s, sd = 0.070150s, count = 223, sum = 28.804182
+3: send mean = 0.114577s, sd = 0.080732s, count = 606, sum = 69.433371
+3: conn mean = 0.000001s, sd = 0.000001s, count = 606, sum = 0.000688
+3: advance mean = 0.000442s, sd = 0.001224s, count = 4605, sum = 2.033336
+3: action mean = 0.002633s, sd = 0.018084s, count = 4605, sum = 12.125414
+3: recv_msg mean = 0.001077s, sd = 0.002246s, count = 604, sum = 0.650613
+3: recv_req mean = 0.000001s, sd = 0.000021s, count = 4001, sum = 0.004403
+3: res_times mean = 0.653948s, sd = 0.093848s, count = 4001, sum = 2616.444726
+3: req_queue_times mean = 0.022595s, sd = 0.028895s, count = 4001, sum = 90.404133
+3: msg_queue_times mean = 0.013752s, sd = 0.023376s, count = 604, sum = 8.306110
+2: view mean = 0.128910s, sd = 0.071697s, count = 224, sum = 28.875923
+2: send mean = 0.098772s, sd = 0.068541s, count = 611, sum = 60.349502
+2: conn mean = 0.000001s, sd = 0.000001s, count = 611, sum = 0.000773
+2: advance mean = 0.000439s, sd = 0.001211s, count = 4614, sum = 2.024856
+0: view mean = 0.128552s, sd = 0.073485s, count = 224, sum = 28.795599
+0: send mean = 0.099919s, sd = 0.072837s, count = 608, sum = 60.750805
+2: action mean = 0.002481s, sd = 0.017457s, count = 4614, sum = 11.448531
+0: conn mean = 0.001213s, sd = 0.014888s, count = 608, sum = 0.737341
+2: recv_msg mean = 0.000986s, sd = 0.001863s, count = 614, sum = 0.605337
+2: recv_req mean = 0.000001s, sd = 0.000001s, count = 4001, sum = 0.002754
+0: advance mean = 0.000433s, sd = 0.001201s, count = 4607, sum = 1.996838
+2: res_times mean = 0.640678s, sd = 0.099655s, count = 4001, sum = 2563.353482
+2: req_queue_times mean = 0.022231s, sd = 0.027507s, count = 4001, sum = 88.944890
+2: msg_queue_times mean = 0.010182s, sd = 0.016844s, count = 613, sum = 6.241600
+0: action mean = 0.002565s, sd = 0.017860s, count = 4607, sum = 11.817061
+0: recv_msg mean = 0.000996s, sd = 0.001856s, count = 606, sum = 0.603603
+0: recv_req mean = 0.000001s, sd = 0.000015s, count = 4001, sum = 0.004126
+0: res_times mean = 0.608613s, sd = 0.096171s, count = 4001, sum = 2435.061073
+0: req_queue_times mean = 0.020766s, sd = 0.027533s, count = 4001, sum = 83.085970
+0: msg_queue_times mean = 0.009981s, sd = 0.018645s, count = 606, sum = 6.048232
+1: view mean = 0.128974s, sd = 0.067807s, count = 224, sum = 28.890212
+1: send mean = 0.102949s, sd = 0.074364s, count = 613, sum = 63.107434
+1: conn mean = 0.000055s, sd = 0.001322s, count = 613, sum = 0.033432
+1: advance mean = 0.000446s, sd = 0.001231s, count = 4614, sum = 2.056373
+1: action mean = 0.002769s, sd = 0.018900s, count = 4614, sum = 12.776657
+1: recv_msg mean = 0.001085s, sd = 0.002003s, count = 613, sum = 0.665102
+1: recv_req mean = 0.000002s, sd = 0.000040s, count = 4001, sum = 0.006368
+1: res_times mean = 0.623896s, sd = 0.097041s, count = 4001, sum = 2496.208746
+1: req_queue_times mean = 0.027283s, sd = 0.032307s, count = 4001, sum = 109.160868
+1: msg_queue_times mean = 0.013099s, sd = 0.025926s, count = 613, sum = 8.029866
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 2!
+connected to 3!
+connected to 0!
+connected to 1!
+connected to all!
+
+name = ablation4r_unfiltered_29_50_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 500 / 500
+throughput = 50req/s
+goodput = 50.000000req/s
+mean = 0.331197s
+sd = 0.141310s
+12345: req_conn mean = 0.000002s, sd = 0.000024s, count = 2000, sum = 0.004338
+12345: req_send mean = 0.351220s, sd = 0.167341s, count = 2000, sum = 702.440347
+3: view mean = 0.065105s, sd = 0.042455s, count = 470, sum = 30.599296
+3: send mean = 0.049489s, sd = 0.026917s, count = 1286, sum = 63.642362
+3: conn mean = 0.000001s, sd = 0.000001s, count = 1286, sum = 0.001452
+3: advance mean = 0.002282s, sd = 0.001789s, count = 1792, sum = 4.088454
+3: action mean = 0.002226s, sd = 0.006899s, count = 1792, sum = 3.989180
+3: recv_msg mean = 0.000224s, sd = 0.000671s, count = 1291, sum = 0.288962
+3: recv_req mean = 0.000002s, sd = 0.000002s, count = 501, sum = 0.001038
+3: res_times mean = 0.329725s, sd = 0.187308s, count = 501, sum = 165.192204
+3: req_queue_times mean = 0.013449s, sd = 0.018843s, count = 501, sum = 6.738097
+3: msg_queue_times mean = 0.005867s, sd = 0.004594s, count = 1291, sum = 7.574878
+2: view mean = 0.065017s, sd = 0.040179s, count = 472, sum = 30.687979
+2: send mean = 0.050203s, sd = 0.031163s, count = 1291, sum = 64.811872
+2: conn mean = 0.000001s, sd = 0.000001s, count = 1291, sum = 0.001421
+2: advance mean = 0.002332s, sd = 0.001822s, count = 1794, sum = 4.183444
+2: action mean = 0.002231s, sd = 0.006780s, count = 1794, sum = 4.003307
+2: recv_msg mean = 0.000210s, sd = 0.000481s, count = 1293, sum = 0.271854
+2: recv_req mean = 0.000002s, sd = 0.000003s, count = 501, sum = 0.001170
+2: res_times mean = 0.315553s, sd = 0.137778s, count = 501, sum = 158.092036
+2: req_queue_times mean = 0.011182s, sd = 0.013586s, count = 501, sum = 5.601972
+2: msg_queue_times mean = 0.006017s, sd = 0.004445s, count = 1293, sum = 7.779531
+0: view mean = 0.064830s, sd = 0.040796s, count = 473, sum = 30.664569
+0: send mean = 0.050600s, sd = 0.034767s, count = 1291, sum = 65.324783
+0: conn mean = 0.000566s, sd = 0.010134s, count = 1291, sum = 0.730630
+0: advance mean = 0.002313s, sd = 0.001806s, count = 1788, sum = 4.136336
+0: action mean = 0.002295s, sd = 0.007005s, count = 1788, sum = 4.103822
+0: recv_msg mean = 0.000203s, sd = 0.000488s, count = 1287, sum = 0.261220
+0: recv_req mean = 0.000002s, sd = 0.000002s, count = 501, sum = 0.000922
+0: res_times mean = 0.322387s, sd = 0.175428s, count = 501, sum = 161.515644
+0: req_queue_times mean = 0.012591s, sd = 0.017991s, count = 501, sum = 6.307938
+0: msg_queue_times mean = 0.005945s, sd = 0.004970s, count = 1287, sum = 7.651265
+1: view mean = 0.065012s, sd = 0.037582s, count = 472, sum = 30.685440
+1: send mean = 0.049073s, sd = 0.032516s, count = 1295, sum = 63.549197
+1: conn mean = 0.000001s, sd = 0.000001s, count = 1295, sum = 0.001565
+1: advance mean = 0.002275s, sd = 0.001778s, count = 1794, sum = 4.081435
+1: action mean = 0.002200s, sd = 0.006730s, count = 1794, sum = 3.947179
+1: recv_msg mean = 0.000211s, sd = 0.000501s, count = 1293, sum = 0.272273
+1: recv_req mean = 0.000002s, sd = 0.000002s, count = 501, sum = 0.001250
+1: res_times mean = 0.316470s, sd = 0.138744s, count = 501, sum = 158.551372
+1: req_queue_times mean = 0.010382s, sd = 0.013046s, count = 501, sum = 5.201402
+1: msg_queue_times mean = 0.005811s, sd = 0.004148s, count = 1293, sum = 7.514268
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 3!
+connected to 0!
+connected to 1!
+connected to 2!
+connected to all!
+
+name = ablation4r_unfiltered_30_600_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 5608 / 6000
+throughput = 600req/s
+goodput = 266.008929req/s
+mean = 5.274693s
+sd = 4.166828s
+12345: req_conn mean = 0.000001s, sd = 0.000024s, count = 22432, sum = 0.020048
+12345: req_send mean = 5.474882s, sd = 4.288256s, count = 22432, sum = 122812.563084
+1: view mean = 0.304978s, sd = 0.810199s, count = 87, sum = 26.533116
+1: send mean = 0.129398s, sd = 0.271763s, count = 236, sum = 30.537915
+1: conn mean = 0.000001s, sd = 0.000001s, count = 236, sum = 0.000292
+1: advance mean = 0.000825s, sd = 0.026536s, count = 6241, sum = 5.151650
+1: action mean = 0.000842s, sd = 0.018067s, count = 6241, sum = 5.253004
+1: recv_msg mean = 0.001042s, sd = 0.002329s, count = 240, sum = 0.249988
+1: recv_req mean = 0.000001s, sd = 0.000028s, count = 6001, sum = 0.008158
+1: res_times mean = 5.256111s, sd = 4.105556s, count = 5609, sum = 29481.524834
+1: req_queue_times mean = 0.071004s, sd = 0.153278s, count = 6001, sum = 426.093096
+1: msg_queue_times mean = 0.049035s, sd = 0.277787s, count = 240, sum = 11.768362
+3: view mean = 0.311448s, sd = 0.740897s, count = 87, sum = 27.095979
+3: send mean = 0.192128s, sd = 0.543572s, count = 233, sum = 44.765708
+3: conn mean = 0.000001s, sd = 0.000001s, count = 233, sum = 0.000291
+3: advance mean = 0.000560s, sd = 0.016613s, count = 6232, sum = 3.488364
+3: action mean = 0.000782s, sd = 0.017159s, count = 6232, sum = 4.872887
+3: recv_msg mean = 0.001008s, sd = 0.002338s, count = 231, sum = 0.232923
+3: recv_req mean = 0.000001s, sd = 0.000014s, count = 6001, sum = 0.005382
+3: res_times mean = 5.622848s, sd = 4.442683s, count = 5609, sum = 31538.556500
+3: req_queue_times mean = 0.046903s, sd = 0.120844s, count = 6001, sum = 281.466956
+3: msg_queue_times mean = 0.048888s, sd = 0.211371s, count = 231, sum = 11.293206
+0: view mean = 0.297017s, sd = 0.752386s, count = 88, sum = 26.137454
+0: send mean = 0.103627s, sd = 0.143828s, count = 238, sum = 24.663157
+0: conn mean = 0.003106s, sd = 0.023742s, count = 238, sum = 0.739133
+0: advance mean = 0.000665s, sd = 0.021162s, count = 6233, sum = 4.145200
+0: action mean = 0.000747s, sd = 0.017192s, count = 6233, sum = 4.653536
+0: recv_msg mean = 0.000945s, sd = 0.002264s, count = 232, sum = 0.219295
+0: recv_req mean = 0.000001s, sd = 0.000021s, count = 6001, sum = 0.006744
+0: res_times mean = 5.222729s, sd = 4.144226s, count = 5609, sum = 29294.288998
+0: req_queue_times mean = 0.049698s, sd = 0.116015s, count = 6001, sum = 298.240115
+0: msg_queue_times mean = 0.055654s, sd = 0.309523s, count = 232, sum = 12.911660
+2: view mean = 0.371422s, sd = 1.189679s, count = 87, sum = 32.313698
+2: send mean = 0.185805s, sd = 0.568557s, count = 236, sum = 43.849941
+2: conn mean = 0.000002s, sd = 0.000002s, count = 236, sum = 0.000370
+2: advance mean = 0.001313s, sd = 0.047771s, count = 6238, sum = 8.193075
+2: action mean = 0.000811s, sd = 0.016919s, count = 6238, sum = 5.059511
+2: recv_msg mean = 0.000983s, sd = 0.002179s, count = 239, sum = 0.235053
+2: recv_req mean = 0.000002s, sd = 0.000037s, count = 6001, sum = 0.010070
+2: res_times mean = 5.399129s, sd = 4.267386s, count = 5609, sum = 30283.712701
+2: req_queue_times mean = 0.091068s, sd = 0.271962s, count = 6001, sum = 546.501644
+2: msg_queue_times mean = 0.057910s, sd = 0.289753s, count = 237, sum = 13.724650
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 0!
+connected to 1!
+connected to 2!
+connected to 3!
+connected to all!
+
+name = ablation4r_unfiltered_31_1_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 10 / 10
+throughput = 1req/s
+goodput = 1.000000req/s
+mean = 0.504281s
+sd = 0.282230s
+12345: req_conn mean = 0.000002s, sd = 0.000001s, count = 40, sum = 0.000075
+12345: req_send mean = 0.536036s, sd = 0.283735s, count = 40, sum = 21.441442
+0: view mean = 0.068176s, sd = 0.057554s, count = 437, sum = 29.793104
+0: send mean = 0.050723s, sd = 0.046689s, count = 1195, sum = 60.614264
+0: conn mean = 0.000608s, sd = 0.010468s, count = 1195, sum = 0.726362
+0: advance mean = 0.003139s, sd = 0.001294s, count = 1199, sum = 3.764191
+0: action mean = 0.000541s, sd = 0.001248s, count = 1199, sum = 0.648460
+0: recv_msg mean = 0.000116s, sd = 0.000311s, count = 1188, sum = 0.137269
+0: recv_req mean = 0.000006s, sd = 0.000001s, count = 11, sum = 0.000071
+0: res_times mean = 0.515272s, sd = 0.273148s, count = 11, sum = 5.667988
+0: req_queue_times mean = 0.064830s, sd = 0.074548s, count = 11, sum = 0.713132
+0: msg_queue_times mean = 0.005148s, sd = 0.003283s, count = 1188, sum = 6.116018
+1: view mean = 0.068346s, sd = 0.058032s, count = 437, sum = 29.867003
+1: send mean = 0.049891s, sd = 0.042692s, count = 1196, sum = 59.670157
+1: conn mean = 0.000001s, sd = 0.000001s, count = 1196, sum = 0.001236
+1: advance mean = 0.003171s, sd = 0.001317s, count = 1209, sum = 3.834060
+1: action mean = 0.000586s, sd = 0.001394s, count = 1209, sum = 0.708255
+1: recv_msg mean = 0.000115s, sd = 0.000315s, count = 1198, sum = 0.137568
+1: recv_req mean = 0.000007s, sd = 0.000005s, count = 11, sum = 0.000074
+1: res_times mean = 0.563649s, sd = 0.282273s, count = 11, sum = 6.200138
+1: req_queue_times mean = 0.063768s, sd = 0.058429s, count = 11, sum = 0.701448
+1: msg_queue_times mean = 0.005232s, sd = 0.003618s, count = 1198, sum = 6.268083
+2: view mean = 0.068344s, sd = 0.062487s, count = 437, sum = 29.866390
+2: send mean = 0.047499s, sd = 0.033793s, count = 1194, sum = 56.713894
+2: conn mean = 0.000001s, sd = 0.000001s, count = 1194, sum = 0.001384
+2: advance mean = 0.003127s, sd = 0.001290s, count = 1208, sum = 3.777318
+2: action mean = 0.000584s, sd = 0.001401s, count = 1208, sum = 0.705656
+2: recv_msg mean = 0.000116s, sd = 0.000328s, count = 1197, sum = 0.138880
+2: recv_req mean = 0.000006s, sd = 0.000001s, count = 11, sum = 0.000062
+2: res_times mean = 0.495568s, sd = 0.197116s, count = 11, sum = 5.451248
+2: req_queue_times mean = 0.065889s, sd = 0.064518s, count = 11, sum = 0.724779
+2: msg_queue_times mean = 0.005341s, sd = 0.003615s, count = 1197, sum = 6.393707
+3: view mean = 0.068418s, sd = 0.056896s, count = 437, sum = 29.898744
+3: send mean = 0.048660s, sd = 0.042769s, count = 1193, sum = 58.051385
+3: conn mean = 0.000001s, sd = 0.000001s, count = 1193, sum = 0.001217
+3: advance mean = 0.003184s, sd = 0.001322s, count = 1206, sum = 3.839641
+3: action mean = 0.000570s, sd = 0.001356s, count = 1206, sum = 0.687509
+3: recv_msg mean = 0.000124s, sd = 0.000374s, count = 1195, sum = 0.148097
+3: recv_req mean = 0.000007s, sd = 0.000005s, count = 11, sum = 0.000078
+3: res_times mean = 0.558823s, sd = 0.291674s, count = 11, sum = 6.147050
+3: req_queue_times mean = 0.064672s, sd = 0.064462s, count = 11, sum = 0.711396
+3: msg_queue_times mean = 0.005623s, sd = 0.009825s, count = 1195, sum = 6.719414
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 1!
+connected to 2!
+connected to 3!
+connected to 0!
+connected to all!
+
+name = ablation4r_unfiltered_32_50_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 500 / 500
+throughput = 50req/s
+goodput = 50.000000req/s
+mean = 0.277608s
+sd = 0.039573s
+12345: req_conn mean = 0.000002s, sd = 0.000024s, count = 2000, sum = 0.004294
+12345: req_send mean = 0.289622s, sd = 0.043998s, count = 2000, sum = 579.244163
+0: view mean = 0.064541s, sd = 0.044215s, count = 459, sum = 29.624153
+0: send mean = 0.047999s, sd = 0.022250s, count = 1250, sum = 59.998811
+0: conn mean = 0.000596s, sd = 0.010506s, count = 1250, sum = 0.745355
+0: advance mean = 0.002305s, sd = 0.001831s, count = 1751, sum = 4.035363
+0: action mean = 0.002220s, sd = 0.006736s, count = 1751, sum = 3.886464
+0: recv_msg mean = 0.000200s, sd = 0.000467s, count = 1250, sum = 0.250509
+0: recv_req mean = 0.000002s, sd = 0.000002s, count = 501, sum = 0.000901
+0: res_times mean = 0.265012s, sd = 0.063095s, count = 501, sum = 132.770792
+0: req_queue_times mean = 0.010973s, sd = 0.012246s, count = 501, sum = 5.497682
+0: msg_queue_times mean = 0.006359s, sd = 0.007778s, count = 1250, sum = 7.948307
+2: view mean = 0.064679s, sd = 0.037787s, count = 458, sum = 29.622801
+2: send mean = 0.048347s, sd = 0.030851s, count = 1249, sum = 60.385863
+2: conn mean = 0.000001s, sd = 0.000002s, count = 1249, sum = 0.001299
+2: advance mean = 0.002253s, sd = 0.001778s, count = 1753, sum = 3.950069
+2: action mean = 0.002223s, sd = 0.006729s, count = 1753, sum = 3.897242
+2: recv_msg mean = 0.000202s, sd = 0.000477s, count = 1253, sum = 0.253012
+2: recv_req mean = 0.000002s, sd = 0.000001s, count = 501, sum = 0.000920
+2: res_times mean = 0.268760s, sd = 0.064145s, count = 501, sum = 134.648721
+2: req_queue_times mean = 0.011452s, sd = 0.013317s, count = 501, sum = 5.737389
+2: msg_queue_times mean = 0.005572s, sd = 0.003876s, count = 1252, sum = 6.975679
+3: view mean = 0.064648s, sd = 0.038602s, count = 458, sum = 29.608871
+3: send mean = 0.049312s, sd = 0.029431s, count = 1251, sum = 61.689507
+3: conn mean = 0.000001s, sd = 0.000001s, count = 1251, sum = 0.001290
+3: advance mean = 0.002301s, sd = 0.001820s, count = 1754, sum = 4.036704
+3: action mean = 0.002244s, sd = 0.006740s, count = 1754, sum = 3.936136
+3: recv_msg mean = 0.000211s, sd = 0.000560s, count = 1254, sum = 0.265195
+3: recv_req mean = 0.000003s, sd = 0.000016s, count = 501, sum = 0.001360
+3: res_times mean = 0.268852s, sd = 0.064730s, count = 501, sum = 134.695060
+3: req_queue_times mean = 0.010543s, sd = 0.010063s, count = 501, sum = 5.282051
+3: msg_queue_times mean = 0.006129s, sd = 0.004350s, count = 1253, sum = 7.679464
+1: view mean = 0.064762s, sd = 0.038555s, count = 458, sum = 29.660904
+1: send mean = 0.050936s, sd = 0.030914s, count = 1256, sum = 63.975216
+1: conn mean = 0.000001s, sd = 0.000002s, count = 1256, sum = 0.001581
+1: advance mean = 0.002256s, sd = 0.001777s, count = 1756, sum = 3.961238
+1: action mean = 0.002202s, sd = 0.006706s, count = 1756, sum = 3.866674
+1: recv_msg mean = 0.000233s, sd = 0.000529s, count = 1255, sum = 0.292522
+1: recv_req mean = 0.000002s, sd = 0.000002s, count = 501, sum = 0.001193
+1: res_times mean = 0.266796s, sd = 0.060463s, count = 501, sum = 133.664607
+1: req_queue_times mean = 0.009287s, sd = 0.008212s, count = 501, sum = 4.653029
+1: msg_queue_times mean = 0.005708s, sd = 0.003824s, count = 1255, sum = 7.163901
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 3!
+connected to 0!
+connected to 1!
+connected to 2!
+connected to all!
+
+name = ablation4r_unfiltered_33_1500_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 3045 / 15000
+throughput = 1500req/s
+goodput = 201.267671req/s
+mean = 8.253551s
+sd = 5.714349s
+12345: req_conn mean = 0.000001s, sd = 0.000025s, count = 12180, sum = 0.007307
+12345: req_send mean = 8.620857s, sd = 5.823672s, count = 12180, sum = 105002.038678
+2: view mean = 0.229714s, sd = 0.888061s, count = 98, sum = 22.511973
+2: send mean = 0.091922s, sd = 0.236831s, count = 266, sum = 24.451145
+2: conn mean = 0.000001s, sd = 0.000001s, count = 266, sum = 0.000339
+2: advance mean = 0.000127s, sd = 0.005486s, count = 15266, sum = 1.941814
+3: view mean = 0.233756s, sd = 0.942315s, count = 98, sum = 22.908096
+3: send mean = 0.096455s, sd = 0.259560s, count = 266, sum = 25.657074
+3: conn mean = 0.000001s, sd = 0.000002s, count = 266, sum = 0.000374
+2: action mean = 0.000149s, sd = 0.008342s, count = 15266, sum = 2.275633
+2: recv_msg mean = 0.000366s, sd = 0.001932s, count = 265, sum = 0.096925
+2: recv_req mean = 0.000001s, sd = 0.000036s, count = 15001, sum = 0.022411
+2: res_times mean = 8.658470s, sd = 5.909133s, count = 3046, sum = 26373.700395
+3: advance mean = 0.000259s, sd = 0.014995s, count = 15265, sum = 3.949154
+3: action mean = 0.000163s, sd = 0.009922s, count = 15265, sum = 2.489210
+3: recv_msg mean = 0.000479s, sd = 0.002095s, count = 264, sum = 0.126500
+2: req_queue_times mean = 0.092588s, sd = 0.226997s, count = 15001, sum = 1388.917572
+2: msg_queue_times mean = 0.022343s, sd = 0.103430s, count = 265, sum = 5.921018
+3: recv_req mean = 0.000003s, sd = 0.000181s, count = 15001, sum = 0.040468
+3: res_times mean = 8.947205s, sd = 5.989193s, count = 3046, sum = 27253.185149
+3: req_queue_times mean = 0.334747s, sd = 0.808934s, count = 15001, sum = 5021.536304
+3: msg_queue_times mean = 0.047299s, sd = 0.303552s, count = 264, sum = 12.487003
+0: view mean = 0.223311s, sd = 1.036428s, count = 99, sum = 22.107829
+0: send mean = 0.099410s, sd = 0.260064s, count = 269, sum = 26.741224
+0: conn mean = 0.002709s, sd = 0.022036s, count = 269, sum = 0.728670
+0: advance mean = 0.000460s, sd = 0.032843s, count = 15266, sum = 7.021101
+0: action mean = 0.000157s, sd = 0.010646s, count = 15266, sum = 2.392188
+0: recv_msg mean = 0.000497s, sd = 0.002205s, count = 265, sum = 0.131752
+0: recv_req mean = 0.000001s, sd = 0.000024s, count = 15001, sum = 0.018379
+0: res_times mean = 8.223604s, sd = 5.680685s, count = 3046, sum = 25049.099289
+0: req_queue_times mean = 0.489510s, sd = 1.587745s, count = 15001, sum = 7343.141451
+0: msg_queue_times mean = 0.101346s, sd = 0.721831s, count = 265, sum = 26.856675
+1: view mean = 0.420675s, sd = 2.690466s, count = 98, sum = 41.226148
+1: send mean = 0.099827s, sd = 0.266934s, count = 267, sum = 26.653936
+1: conn mean = 0.000001s, sd = 0.000001s, count = 267, sum = 0.000308
+1: advance mean = 0.001338s, sd = 0.101566s, count = 15273, sum = 20.430656
+1: action mean = 0.000273s, sd = 0.020686s, count = 15273, sum = 4.166077
+1: recv_msg mean = 0.000661s, sd = 0.002867s, count = 272, sum = 0.179674
+1: recv_req mean = 0.000002s, sd = 0.000050s, count = 15001, sum = 0.023293
+1: res_times mean = 8.289192s, sd = 5.681429s, count = 3046, sum = 25248.878606
+1: req_queue_times mean = 0.041884s, sd = 0.112803s, count = 15001, sum = 628.300618
+1: msg_queue_times mean = 0.266149s, sd = 2.066821s, count = 272, sum = 72.392563
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 0!
+connected to 1!
+connected to 2!
+connected to 3!
+connected to all!
+
+name = ablation4r_unfiltered_34_10_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 100 / 100
+throughput = 10req/s
+goodput = 10.000000req/s
+mean = 0.272057s
+sd = 0.037018s
+12345: req_conn mean = 0.000002s, sd = 0.000001s, count = 400, sum = 0.000679
+12345: req_send mean = 0.284040s, sd = 0.042225s, count = 400, sum = 113.615921
+0: view mean = 0.062215s, sd = 0.036669s, count = 465, sum = 28.929999
+0: send mean = 0.045443s, sd = 0.028165s, count = 1272, sum = 57.803705
+0: conn mean = 0.000585s, sd = 0.010402s, count = 1272, sum = 0.744611
+0: advance mean = 0.002937s, sd = 0.001485s, count = 1369, sum = 4.021015
+0: action mean = 0.001023s, sd = 0.002655s, count = 1369, sum = 1.400486
+0: recv_msg mean = 0.000133s, sd = 0.000367s, count = 1268, sum = 0.169098
+0: recv_req mean = 0.000005s, sd = 0.000002s, count = 101, sum = 0.000465
+0: res_times mean = 0.267836s, sd = 0.046801s, count = 101, sum = 27.051425
+0: req_queue_times mean = 0.013579s, sd = 0.017624s, count = 101, sum = 1.371432
+0: msg_queue_times mean = 0.005371s, sd = 0.003554s, count = 1268, sum = 6.810074
+1: view mean = 0.062374s, sd = 0.036650s, count = 465, sum = 29.003759
+1: send mean = 0.043189s, sd = 0.021021s, count = 1276, sum = 55.109212
+1: conn mean = 0.000001s, sd = 0.000001s, count = 1276, sum = 0.001192
+1: advance mean = 0.002967s, sd = 0.001499s, count = 1376, sum = 4.083185
+1: action mean = 0.001029s, sd = 0.002642s, count = 1376, sum = 1.416339
+1: recv_msg mean = 0.000124s, sd = 0.000329s, count = 1275, sum = 0.157724
+1: recv_req mean = 0.000004s, sd = 0.000001s, count = 101, sum = 0.000424
+1: res_times mean = 0.275148s, sd = 0.084665s, count = 101, sum = 27.789948
+1: req_queue_times mean = 0.013391s, sd = 0.012836s, count = 101, sum = 1.352508
+1: msg_queue_times mean = 0.005541s, sd = 0.010396s, count = 1275, sum = 7.064256
+3: view mean = 0.062419s, sd = 0.035885s, count = 465, sum = 29.024824
+3: send mean = 0.044899s, sd = 0.026129s, count = 1271, sum = 57.066226
+3: conn mean = 0.000001s, sd = 0.000001s, count = 1271, sum = 0.001254
+3: advance mean = 0.002971s, sd = 0.001492s, count = 1377, sum = 4.090721
+3: action mean = 0.001004s, sd = 0.002610s, count = 1377, sum = 1.382355
+3: recv_msg mean = 0.000129s, sd = 0.000336s, count = 1276, sum = 0.164697
+3: recv_req mean = 0.000004s, sd = 0.000002s, count = 101, sum = 0.000418
+3: res_times mean = 0.275390s, sd = 0.095553s, count = 101, sum = 27.814388
+3: req_queue_times mean = 0.014224s, sd = 0.017431s, count = 101, sum = 1.436662
+3: msg_queue_times mean = 0.006081s, sd = 0.008508s, count = 1276, sum = 7.758756
+2: view mean = 0.062390s, sd = 0.035586s, count = 465, sum = 29.011465
+2: send mean = 0.043693s, sd = 0.025824s, count = 1276, sum = 55.752869
+2: conn mean = 0.000002s, sd = 0.000013s, count = 1276, sum = 0.002245
+2: advance mean = 0.002930s, sd = 0.001483s, count = 1375, sum = 4.028405
+2: action mean = 0.000982s, sd = 0.002558s, count = 1375, sum = 1.350905
+2: recv_msg mean = 0.000124s, sd = 0.000336s, count = 1274, sum = 0.158385
+2: recv_req mean = 0.000004s, sd = 0.000002s, count = 101, sum = 0.000446
+2: res_times mean = 0.272720s, sd = 0.088545s, count = 101, sum = 27.544742
+2: req_queue_times mean = 0.012243s, sd = 0.015995s, count = 101, sum = 1.236536
+2: msg_queue_times mean = 0.005220s, sd = 0.003138s, count = 1274, sum = 6.650366
+Server ID=1 running. Connect to URI "capnp://insecure@127.0.0.1:9001".
+Server ID=3 running. Connect to URI "capnp://insecure@127.0.0.1:9003".
+Server ID=2 running. Connect to URI "capnp://insecure@127.0.0.1:9002".
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+backed off 0.100000...
+connected to 2!
+connected to 3!
+connected to 0!
+connected to 1!
+connected to all!
+
+name = ablation4r_unfiltered_35_2000_4_9999999999
+version = 4
+nodes = 4 
+ reqs = 3731 / 20000
+throughput = 2000req/s
+goodput = 156.929911req/s
+mean = 14.302732s
+sd = 9.738774s
+12345: req_conn mean = 0.000001s, sd = 0.000040s, count = 8864, sum = 0.009829
+12345: req_send mean = 8.425192s, sd = 8.397252s, count = 8864, sum = 74680.898051
+0: view mean = 0.312082s, sd = 1.519014s, count = 97, sum = 30.271941
+0: send mean = 0.095898s, sd = 0.324356s, count = 260, sum = 24.933511
+0: conn mean = 0.002877s, sd = 0.023006s, count = 260, sum = 0.748066
+0: advance mean = 0.000102s, sd = 0.005593s, count = 20256, sum = 2.059567
+0: action mean = 0.000120s, sd = 0.007846s, count = 20256, sum = 2.426273
+0: recv_msg mean = 0.000441s, sd = 0.002468s, count = 255, sum = 0.112329
+0: recv_req mean = 0.000001s, sd = 0.000018s, count = 20001, sum = 0.017649
+0: res_times mean = 14.210280s, sd = 9.689099s, count = 3732, sum = 53032.766758
+0: req_queue_times mean = 0.102380s, sd = 0.277385s, count = 20001, sum = 2047.709734
+0: msg_queue_times mean = 0.031745s, sd = 0.174600s, count = 255, sum = 8.094893
+2: view mean = 0.321924s, sd = 1.832130s, count = 96, sum = 30.904718
+2: send mean = 0.092579s, sd = 0.351122s, count = 257, sum = 23.792807
+2: conn mean = 0.000001s, sd = 0.000001s, count = 257, sum = 0.000371
+2: advance mean = 0.000652s, sd = 0.057209s, count = 20263, sum = 13.220439
+2: action mean = 0.000171s, sd = 0.013800s, count = 20263, sum = 3.462006
+2: recv_msg mean = 0.000590s, sd = 0.002663s, count = 262, sum = 0.154532
+2: recv_req mean = 0.000001s, sd = 0.000025s, count = 20001, sum = 0.022561
+2: res_times mean = 14.568510s, sd = 9.855835s, count = 3732, sum = 54369.680022
+2: req_queue_times mean = 0.039702s, sd = 0.117253s, count = 20001, sum = 794.079016
+2: msg_queue_times mean = 0.157726s, sd = 1.122464s, count = 262, sum = 41.324105
+1: view mean = 0.324567s, sd = 1.605428s, count = 96, sum = 31.158470
+1: send mean = 0.112909s, sd = 0.450007s, count = 258, sum = 29.130441
+1: conn mean = 0.000001s, sd = 0.000001s, count = 258, sum = 0.000296
+1: advance mean = 0.000265s, sd = 0.021230s, count = 20262, sum = 5.363528
+1: action mean = 0.000145s, sd = 0.009840s, count = 20262, sum = 2.937211
+1: recv_msg mean = 0.000579s, sd = 0.003119s, count = 261, sum = 0.151187
+1: recv_req mean = 0.000001s, sd = 0.000038s, count = 20001, sum = 0.023326
+1: res_times mean = 14.741869s, sd = 10.173884s, count = 3732, sum = 55016.654433
+1: req_queue_times mean = 0.471729s, sd = 1.095170s, count = 20001, sum = 9435.045865
+1: msg_queue_times mean = 0.080646s, sd = 0.557017s, count = 261, sum = 21.048527
+3: view mean = 0.175299s, sd = 0.630667s, count = 95, sum = 16.653422
+3: send mean = 0.101248s, sd = 0.429343s, count = 257, sum = 26.020830
+3: conn mean = 0.000001s, sd = 0.000001s, count = 257, sum = 0.000325
+3: advance mean = 0.000604s, sd = 0.076352s, count = 20256, sum = 12.233777
+3: action mean = 0.000094s, sd = 0.006831s, count = 20256, sum = 1.899234
+3: recv_msg mean = 0.000432s, sd = 0.002355s, count = 257, sum = 0.111091
+3: recv_req mean = 0.000009s, sd = 0.001017s, count = 20001, sum = 0.170601
+3: res_times mean = 4.143843s, sd = 2.994380s, count = 1712, sum = 7094.259586
+3: req_queue_times mean = 0.040730s, sd = 0.117404s, count = 20001, sum = 814.635935
+3: msg_queue_times mean = 0.020920s, sd = 0.096116s, count = 255, sum = 5.334521
+./experiments/plot.py:71: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='batch_size', palette = color, linestyle='--')
+./experiments/plot.py:78: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='batch_size', palette = color, linestyle='--')
+./experiments/plot.py:85: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='goodput', y='latencyfiltered', data=stats, hue='batch_size', palette = color, linestyle='--')
+./experiments/plot.py:92: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='batch_size', palette = color, linestyle='--')
+./experiments/plot.py:99: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='nodes', palette = color, linestyle='--')
+./experiments/plot.py:105: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='nodes', palette = color, linestyle='--')
+./experiments/plot.py:111: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='nodes', palette = color, linestyle='--')
+./experiments/plot.py:117: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='goodput', y='latencyfiltered', data=stats, hue='nodes', palette = color, linestyle='--')
+./experiments/plot.py:123: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='version', palette = color, linestyle='--')
+./experiments/plot.py:130: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='throughput', y='lost', data=stats, hue='version', palette = color, linestyle='--')
+./experiments/plot.py:137: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='throughputfiltered', y='mean', data=stats, hue='version', palette = color, linestyle='--')
+./experiments/plot.py:144: UserWarning: The palette list has more values (10) than needed (1), which may not be intended.
+  ax = sns.lineplot(x='goodput', y='latencyfiltered', data=stats, hue='version', palette = color, linestyle='--')
+running "ablation4r_unfiltered_0_4000_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 4000 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_0_4000_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_1_10_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 10 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_1_10_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_2_1000_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 1000 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_2_1000_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_3_4000_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 4000 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_3_4000_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_4_400_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 400 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_4_400_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_5_600_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 600 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_5_600_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_6_2000_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 2000 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_6_2000_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_7_1000_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 1000 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_7_1000_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_8_1_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 1 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_8_1_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_9_400_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 400 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_9_400_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_10_800_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 800 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_10_800_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_11_10_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 10 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_11_10_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_12_100_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 100 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_12_100_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_13_4000_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 4000 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_13_4000_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_14_100_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 100 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_14_100_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_15_800_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 800 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_15_800_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_16_1500_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 1500 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_16_1500_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_17_1000_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 1000 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_17_1000_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_18_600_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 600 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_18_600_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_19_1_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 1 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_19_1_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_20_2000_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 2000 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_20_2000_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_21_800_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 800 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_21_800_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_22_100_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 100 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_22_100_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_23_200_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 200 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_23_200_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_24_50_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 50 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_24_50_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_25_1500_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 1500 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_25_1500_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_26_200_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 200 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_26_200_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_27_200_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 200 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_27_200_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_28_400_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 400 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_28_400_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_29_50_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 50 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_29_50_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_30_600_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 600 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_30_600_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_31_1_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 1 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_31_1_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_32_50_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 50 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_32_50_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_33_1500_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 1500 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_33_1500_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_34_10_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 10 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_34_10_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
+running "ablation4r_unfiltered_35_2000_4_9999999999"
+eval $(opam env) dune exec -- ./live_test.exe 4 -t 10 --version "4" -r 2000 -b 9999999999 --times "./experiments/data/ablation4r_unfiltered/subtests/ablation4r_unfiltered_35_2000_4_9999999999.csv" --stats "./experiments/data/ablation4r_unfiltered/stats.csv"
