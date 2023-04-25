@@ -6,7 +6,7 @@ module Cmd_set = Set.Make(struct type t = cmd let compare = (fun c1 c2 -> Int64.
 
 type node_justify = {node_offset: int; view: int; signature: Tezos_crypto.Aggregate_signature.t option; msg_type: msg_type; ids: int list} 
 type node_internal = {justify: node_justify; height: int}
-type node = {cmds: Cmd_set.t; parent: node option; i: node_internal option; digest: Tezos_crypto.Hacl.Blake2b.hash}
+type node = {cmds: Cmd_set.t; parent: node option; i: node_internal option; digest: Tezos_crypto.Hacl.Blake2b.t}
 type qc = {node: node option; view: int; signature: Tezos_crypto.Aggregate_signature.t option; msg_type: msg_type; ids: int list}
 
 type msg = {id: int; msg_type: msg_type; view: int; tcp_lens: int list; node: node option; justify: qc option; partial_signature: Tezos_crypto.Aggregate_signature.t option}

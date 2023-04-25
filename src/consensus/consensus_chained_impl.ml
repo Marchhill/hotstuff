@@ -39,7 +39,7 @@ let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) =
 	let parent = add_dummy_nodes parent offset in
 	let justify = {node_offset = offset + 1; view = qc.view; signature = qc.signature; msg_type = qc.msg_type; ids = qc.ids} in (* ??? change offset if skipped? *)
 	let n = make_node cmds (Some parent) (Some {justify = justify; height = state.view + 1}) in
-        trim_node n (state.view + 1 - cutoff) (* only send nodes that will be used *)
+  trim_node n (state.view + 1 - cutoff) (* only send nodes that will be used *)
 
 let rec on_commit (state : t) = function
 	| Some b ->
@@ -110,7 +110,7 @@ let on_recieve_proposal state (msg : msg) =
 	let n = get_node_from_qc (qc_from_node_justify b_new) in
 	let state = {state with seen = (Cmd_set.union state.seen n.cmds)} in (* keep track of seen commands *)
 	let (state, actions1) = if safe_node state b_new n then (
-		let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = GenericAck; node = Some b_new; justify = None; partial_signature = None}) in
+		let vote_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = GenericAck; node = msg.node; justify = None; partial_signature = None}) in
 		({state with s = {state.s with vheight = (get_node_height b_new)}}, [SendNextLeader vote_msg])
 	)
 	else (state, []) in

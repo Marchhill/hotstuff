@@ -57,7 +57,8 @@ let api_node_to_node (api_node : Api.Reader.Node.t) =
 		None
 	in
 	let i = Consensus.create_node_internal height justify in
-	let digest = Tezos_crypto.Hacl.Blake2b.Hash (String.to_bytes (Api.Reader.Node.digest_get api_node)) in
+	(* let digest = Tezos_crypto.Hacl.Blake2b.Hash (String.to_bytes (Api.Reader.Node.digest_get api_node)) in *)
+	let digest = String.to_bytes (Api.Reader.Node.digest_get api_node) in
 	({cmds = cmds; parent = None; i = i; digest = digest} : Consensus.node)
 
 let rec api_node_list_to_node = function
@@ -132,8 +133,8 @@ let node_to_api_node (builder : Api.Builder.Node.t) (node : Consensus.node) =
 		| None -> -1
 	) in
 	Api.Builder.Node.height_set builder height;
-	let Tezos_crypto.Hacl.Blake2b.Hash digest = node.digest in
-	Api.Builder.Node.digest_set builder (String.of_bytes digest)
+	(* let Tezos_crypto.Hacl.Blake2b.Hash digest = node.digest in *)
+	Api.Builder.Node.digest_set builder (String.of_bytes node.digest)
 
 let rec node_to_api_node_list = function
 	| None -> [] 

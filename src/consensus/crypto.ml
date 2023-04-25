@@ -26,7 +26,9 @@ let threshold_qc crypto events =
 let sign crypto msg =
 	match crypto with
 		| Some crypto ->
-			let s = String.to_bytes ((msg_type_to_string msg.msg_type) ^ ":" ^ (Int.to_string msg.view) ^ ":" ^ (node_to_string msg.node)) in
+			let node_digest = match msg.node with Some n -> n.digest | None -> Bytes.empty in 
+			let s = String.to_bytes ((msg_type_to_string msg.msg_type) ^ ":" ^ (Int.to_string msg.view) ^ ":") in
+			let s = Bytes.concat s [node_digest] in
 			let partial_signature = Some (Tezos_crypto.Aggregate_signature.sign crypto.sk s) in
 			{msg with partial_signature = partial_signature}
 		| None -> msg
@@ -38,7 +40,10 @@ let verify_partial_signature crypto event =
 				| Some crypto ->
 					(match msg.partial_signature with
 						| Some p ->
-							let s = String.to_bytes ((get_event_type event) ^ ":" ^ (Int.to_string msg.view) ^ ":" ^ (node_to_string msg.node)) in
+			        		let node_digest = match msg.node with Some n -> n.digest | None -> Bytes.empty in 
+							(* let s = String.to_bytes ((get_event_type event) ^ ":" ^ (Int.to_string msg.view) ^ ":" ^ (node_to_string msg.node)) in *)
+							let s = String.to_bytes ((msg_type_to_string msg.msg_type) ^ ":" ^ (Int.to_string msg.view) ^ ":") in
+							let s = Bytes.concat s [node_digest] in
 							let pk = (List.nth crypto.pks msg.id) in
 							Tezos_crypto.Aggregate_signature.check pk p s
 						| None -> false
@@ -58,7 +63,10 @@ let verify_threshold_qc crypto node_count qc_0 qc =
 						if is_quorum_length qc.ids node_count then
 							(match qc.signature with
 								| Some signature ->
-									let s = String.to_bytes ((msg_type_to_string qc.msg_type) ^ ":" ^ (Int.to_string qc.view) ^ ":" ^ (node_to_string qc.node)) in
+			        				let node_digest = match qc.node with Some n -> n.digest | None -> Bytes.empty in 
+									(* let s = String.to_bytes ((msg_type_to_string qc.msg_type) ^ ":" ^ (Int.to_string qc.view) ^ ":" ^ (node_to_string qc.node)) in *)
+									let s = String.to_bytes ((msg_type_to_string qc.msg_type) ^ ":" ^ (Int.to_string qc.view) ^ ":") in
+									let s = Bytes.concat s [node_digest] in
 									let agg = List.map (fun i -> (List.nth crypto.pks i, None, s)) qc.ids in
 									Tezos_crypto.Aggregate_signature.aggregate_check agg signature
 								| None -> false
