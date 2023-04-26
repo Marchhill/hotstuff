@@ -1,51 +1,52 @@
-\contentsline {chapter}{\numberline {1}Introduction}{5}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Preparation}{7}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Starting point}{7}{section.2.1}%
-\contentsline {section}{\numberline {2.2}HotStuff algorithm}{7}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Non-byzantine consensus}{8}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{9}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{9}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}View-changes}{11}{subsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.2.5}Chaining}{12}{subsection.2.2.5}%
-\contentsline {section}{\numberline {2.3}Tools \& libraries}{13}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}OCaml}{13}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Lwt}{13}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{14}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{14}{subsection.2.3.4}%
-\contentsline {section}{\numberline {2.4}Requirements analysis}{14}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Software engineering practices}{15}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Development methodology}{15}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{15}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Source code management}{16}{subsection.2.5.3}%
-\contentsline {chapter}{\numberline {3}Implementation}{17}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Architectural overview}{17}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Pacemaker Specification}{18}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Proofs}{21}{subsection.3.2.1}%
-\contentsline {section}{\numberline {3.3}Performance improvements}{22}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Batching}{23}{subsection.3.3.1}%
-\contentsline {subsubsection}{Probing effects}{23}{subsubsection*.4}%
-\contentsline {subsubsection}{Architectural experimentation}{24}{subsubsection*.5}%
-\contentsline {subsubsection}{Send-to-all and filtering}{25}{subsubsection*.6}%
-\contentsline {subsubsection}{Batch sizes}{27}{subsubsection*.7}%
-\contentsline {subsection}{\numberline {3.3.2}Encoding of nodes}{27}{subsection.3.3.2}%
-\contentsline {subsubsection}{Recursive types}{27}{subsubsection*.8}%
-\contentsline {subsubsection}{Node offsets}{28}{subsubsection*.9}%
-\contentsline {subsubsection}{Node comparison}{28}{subsubsection*.10}%
-\contentsline {subsubsection}{Node truncation}{28}{subsubsection*.11}%
-\contentsline {section}{\numberline {3.4}Implementing for evaluation}{29}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Load generator}{29}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{30}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Repository Overview}{31}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Evaluation}{33}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Testing methodology}{33}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Library benchmarks}{33}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{33}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{35}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{35}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{36}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Node counts}{38}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Ablation study}{40}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}View change}{40}{subsection.4.3.4}%
-\contentsline {chapter}{\numberline {5}Conclusion}{42}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Future Work}{42}{section.5.1}%
-\contentsline {chapter}{Bibliography}{43}{chapter*.12}%
+\contentsline {chapter}{\numberline {1}Introduction}{6}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Preparation}{8}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Starting point}{8}{section.2.1}%
+\contentsline {section}{\numberline {2.2}HotStuff algorithm}{8}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Non-byzantine consensus}{9}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{10}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{10}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}View-changes}{12}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}Chaining}{13}{subsection.2.2.5}%
+\contentsline {section}{\numberline {2.3}Tools \& libraries}{14}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}OCaml}{14}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Lwt}{14}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{15}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{15}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Requirements analysis}{15}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Software engineering practices}{16}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Development methodology}{16}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{16}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Source code management}{17}{subsection.2.5.3}%
+\contentsline {chapter}{\numberline {3}Implementation}{18}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Architectural overview}{18}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Pacemaker Specification}{19}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Proofs}{22}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}Performance improvements}{23}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Batching}{24}{subsection.3.3.1}%
+\contentsline {subsubsection}{Probing effects}{24}{subsubsection*.4}%
+\contentsline {subsubsection}{Architectural experimentation}{25}{subsubsection*.5}%
+\contentsline {subsubsection}{Send-to-all and filtering}{26}{subsubsection*.6}%
+\contentsline {subsubsection}{Batch sizes}{28}{subsubsection*.7}%
+\contentsline {subsection}{\numberline {3.3.2}Encoding of nodes}{28}{subsection.3.3.2}%
+\contentsline {subsubsection}{Recursive types}{28}{subsubsection*.8}%
+\contentsline {subsubsection}{Node offsets}{29}{subsubsection*.9}%
+\contentsline {subsubsection}{Node comparison}{29}{subsubsection*.10}%
+\contentsline {subsubsection}{Node truncation}{29}{subsubsection*.11}%
+\contentsline {section}{\numberline {3.4}Implementing for evaluation}{30}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Load generator}{30}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{31}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Repository Overview}{32}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Evaluation}{34}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Testing methodology}{34}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Library benchmarks}{34}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{34}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{36}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{36}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{37}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Node counts}{40}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Ablation study}{41}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Mininet simulation}{42}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}View change}{42}{subsection.4.3.5}%
+\contentsline {chapter}{\numberline {5}Conclusion}{44}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Future Work}{44}{section.5.1}%
+\contentsline {chapter}{Bibliography}{45}{chapter*.12}%

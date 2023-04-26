@@ -75,9 +75,14 @@ I profiled the important functions of the library with Jane Street's Core\_bench
 % └─────────────┴────────────┴─────────┴──────────┴──────────┴────────────┘
 
 \section{HotStuff implementation benchmarks} \label{hotstuffbenchmarks}
+We now analyse the performance and behaviour of the system with different parameters, and under different conditions. We argue that the optimisations described in section \ref{performance} were effective in improving system performance, but there are fundamental limitations caused by the latency costs of Cap'n Proto serialisation (see section \ref{capnpbenchmark}) and cryptography (see section \ref{tezosbenchmark}).
+
+In most cases, the system exhibits stable latency while goodput is equal to throughput (meaning the system is not overloaded); this is visible in figure [heatmap]. When the throughput exceeds the amount the system can keep up with, there is linear growth in latency as commands queue on the nodes (see figure [heatmap]). Since HotStuff is a partially synchronous protocol (see section \ref{hotstufftheory}), an increase in latency also causes a decrease in goodput. Once the system is overloaded, the goodput levels off at around its maximum value as throughput is increased.
+
+[break down by section!]
 The optimisations described in section \ref{performance} were effective in increasing the goodput, and reducing the latency of the system. In our ablation study (section \ref{ablation}) we compare the performance of the system with different optimisations enabled, demonstrating their effectiveness. In our comparison of batch sizes (section \ref{batchsizeseval}) there is evidence that the system is able to achieve much greater goodput with batching enabled (this optimisation is described in section \ref{batching}).
 
-The systems performance is fundamentally bottlenecked by the high latency of Cap'n Proto serialisation, particularly for larger messages (see the library benchmarks in section \ref{capnpbenchmark}). Since HotStuff is a partially synchronous protocol (see section \ref{hotstufftheory}), an increase in latency also causes a decrease in goodput. At larger throughputs message sizes grow quickly as batches fill up, and latency grows exponentially due to the cost of serialisation (see figure [heatmap!!]). Our study of batch sizes (section \ref{batchsizeseval}) demonstrates a trade-off between batching more requests into each node, and nodes becoming too large and message sending latency growing. Our study of node counts (section \ref{nodecountseval}) gives further evidence that message serialisation is a bottleneck; higher node counts mean more internal messages being sent, causing a decline in performance due to serialisation costs.
+The systems performance is fundamentally bottlenecked by the high latency of Cap'n Proto serialisation, particularly for larger messages . Since HotStuff is a partially synchronous protocol (see section \ref{hotstufftheory}), an increase in latency also causes a decrease in goodput. At larger throughputs message sizes grow quickly as batches fill up, and latency grows exponentially due to the cost of serialisation (see figure [heatmap!!]). Our study of batch sizes (section \ref{batchsizeseval}) demonstrates a trade-off between batching more requests into each node, and nodes becoming too large and message sending latency growing. Our study of node counts (section \ref{nodecountseval}) gives further evidence that message serialisation is a bottleneck; higher node counts mean more internal messages being sent, causing a decline in performance due to serialisation costs.
 
 Another system bottleneck is cryptography, which was demonstrated to be slow in our benchmarking of the Tezos cryptography library (section \ref{tezosbenchmark}). This bottleneck is clear from the superior performance of the system with cryptography disabled, as shown in the ablation study (see section \ref{ablation}).
 % The system maintains a stable bound on latency up to a certain throughput [reference heatmap with stable latency], but experiences exponential growth in latency when it can no longer keep up with the volume of requests [reference heatmap with exponential latency]. This exponential growth is due to queues of requests building on each node; as the test progresses the length of the queues increases linearly, causing the wait time to grow exponentially??? throughput/latency?
@@ -173,6 +178,9 @@ Version & Chained & Truncation & Filtering & Crypto \\ \hline
 
 This study compares the performance of different versions of the system with different optimisations enabled. The optimisations explored are chaining (section \ref{chaining}), node truncation (section \ref{truncation}), and command filtering (section \ref{sendtoall}). We also compare performance with cryptography disabled. The mapping from version numbers to which features are enabled is given in table \ref{versiontable}. All experiments were run with a network of 4 nodes, and unlimited batch sizes.
 
+\subsection{Mininet simulation} \label{minineteval}
+
+[Give ablation graphs comparing the performance with 100ms delay, and without.]
 
 \subsection{View change}
 
