@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  26 APR 2023 18:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  26 APR 2023 19:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1231,12 +1231,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.8}) h
                                                   \__shipout_drop_firstpage_...
 l.134 O
        nce throughput is increased enough, batches begin to be filled up and...]
-<images//node_count_test/throughputgoodput_nodes.png, id=662, 462.528pt x 346.896pt>
+<images//node_count_test/throughputgoodput_nodes.png, id=665, 462.528pt x 346.896pt>
 File: images//node_count_test/throughputgoodput_nodes.png Graphic file (type png)
 <use images//node_count_test/throughputgoodput_nodes.png>
 Package pdftex.def Info: images//node_count_test/throughputgoodput_nodes.png  used on input line 146.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
-<images//node_count_test/throughputflatency_nodes.png, id=663, 462.528pt x 346.896pt>
+<images//node_count_test/throughputflatency_nodes.png, id=666, 462.528pt x 346.896pt>
 File: images//node_count_test/throughputflatency_nodes.png Graphic file (type png)
 <use images//node_count_test/throughputflatency_nodes.png>
 Package pdftex.def Info: images//node_count_test/throughputflatency_nodes.png  used on input line 153.
@@ -1251,7 +1251,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.9}) h
                                                   \__shipout_drop_firstpage_...
 l.161 
        <./images//node_count_test/throughputgoodput_nodes.png>]
-<images//ablation/throughputgoodput_ablation.png, id=678, 462.528pt x 346.896pt>
+<images//ablation/throughputgoodput_ablation.png, id=680, 462.528pt x 346.896pt>
 File: images//ablation/throughputgoodput_ablation.png Graphic file (type png)
 <use images//ablation/throughputgoodput_ablation.png>
 Package pdftex.def Info: images//ablation/throughputgoodput_ablation.png  used on input line 184.
@@ -1260,7 +1260,7 @@ Package pdftex.def Info: images//ablation/throughputgoodput_ablation.png  used o
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//ablation/throughputflatency_ablation.png, id=679, 462.528pt x 346.896pt>
+<images//ablation/throughputflatency_ablation.png, id=681, 462.528pt x 346.896pt>
 File: images//ablation/throughputflatency_ablation.png Graphic file (type png)
 <use images//ablation/throughputflatency_ablation.png>
 Package pdftex.def Info: images//ablation/throughputflatency_ablation.png  used on input line 190.
@@ -1279,7 +1279,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{table.4.2}) ha
                                                   \__shipout_drop_firstpage_...
 l.195 
        <./images//node_count_test/throughputflatency_nodes.png>]
-<images//mininet/throughputlatency.png, id=691, 462.528pt x 346.896pt>
+<images//mininet/throughputlatency.png, id=693, 462.528pt x 346.896pt>
 File: images//mininet/throughputlatency.png Graphic file (type png)
 <use images//mininet/throughputlatency.png>
 Package pdftex.def Info: images//mininet/throughputlatency.png  used on input line 200.
@@ -1295,12 +1295,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.12}) 
                                                   \__shipout_drop_firstpage_...
 l.202 \end{figure}
                    <./images//ablation/throughputgoodput_ablation.png> <./images//ablation/throughputflatency_ablation.png>]
-<images//mininet/10tpub_cumlatency.png, id=701, 462.528pt x 346.896pt>
+<images//mininet/10tpub_cumlatency.png, id=703, 462.528pt x 346.896pt>
 File: images//mininet/10tpub_cumlatency.png Graphic file (type png)
 <use images//mininet/10tpub_cumlatency.png>
 Package pdftex.def Info: images//mininet/10tpub_cumlatency.png  used on input line 206.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
-<images//viewchange/test7_100_7_100_timelatencyheatmap.png, id=702, 722.7pt x 361.35pt>
+<images//viewchange/test7_100_7_100_timelatencyheatmap.png, id=704, 722.7pt x 361.35pt>
 File: images//viewchange/test7_100_7_100_timelatencyheatmap.png Graphic file (type png)
 <use images//viewchange/test7_100_7_100_timelatencyheatmap.png>
 Package pdftex.def Info: images//viewchange/test7_100_7_100_timelatencyheatmap.png  used on input line 216.
@@ -1343,10 +1343,10 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  130i,11n,142p,1660b,3467s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx3583.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfit1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on main.pdf (47 pages, 1206680 bytes).
+Output written on main.pdf (47 pages, 1206649 bytes).
 PDF statistics:
- 880 PDF objects out of 1000 (max. 8388607)
- 734 compressed objects within 8 object streams
+ 882 PDF objects out of 1000 (max. 8388607)
+ 736 compressed objects within 8 object streams
  189 named destinations out of 1000 (max. 500000)
  466 words of extra memory for PDF output out of 10000 (max. 10000000)
 
