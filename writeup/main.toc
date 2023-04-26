@@ -42,11 +42,11 @@
 \contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{34}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{36}{subsection.4.2.2}%
 \contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{36}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{37}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{38}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Node counts}{40}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}Ablation study}{41}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Mininet simulation}{42}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}View change}{42}{subsection.4.3.5}%
-\contentsline {chapter}{\numberline {5}Conclusion}{44}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Future Work}{44}{section.5.1}%
-\contentsline {chapter}{Bibliography}{45}{chapter*.12}%
+\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{43}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}View-changes}{43}{subsection.4.3.5}%
+\contentsline {chapter}{\numberline {5}Conclusion}{45}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Future Work}{45}{section.5.1}%
+\contentsline {chapter}{Bibliography}{46}{chapter*.12}%

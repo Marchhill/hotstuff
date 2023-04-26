@@ -44,7 +44,7 @@ for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
 	fig, ax = plt.subplots(1, 1, figsize=(10, 5), constrained_layout=True)
 	# ax = sns.histplot(times, x="sent(s)", y="latency", binwidth=(0.05, 10), ax=ax)
 	ax = sns.histplot(times, x="sent(s)", y="latency", bins = 50, ax=ax, palette = color)
-	ax.set(xlabel="time (s)", xlim=(0,10), ylabel = "latency (s)")
+	ax.set(xlabel="time (s)", xlim=(0,20), ylabel = "latency (s)")
 	fig.savefig(f'{subtests_dir + filename}_timelatencyheatmap.png')
 	plt.close(fig)
 
@@ -52,12 +52,12 @@ for file in os.listdir(f'./experiments/data/{test_name}/subtests'):
 	fig, ax = plt.subplots(1, 1, figsize=(10, 5), constrained_layout=True)
 	# ax = sns.histplot(times, x="sent(s)", y="latency", binwidth=(0.05, 10), ax=ax)
 	ax = sns.histplot(times, x="sent(s)", y="latency", bins = 50, ax=ax, palette = color)
-	ax.set(xlabel="time (s)", xlim=(0,10), ylabel = "latency (s)", yscale = 'log')
+	ax.set(xlabel="time (s)", xlim=(0,20), ylabel = "latency (s)", yscale = 'log')
 	fig.savefig(f'{subtests_dir + filename}_timelatencyheatmap_log.png')
 	plt.close(fig)
 
-file_stats_df = pd.DataFrame(file_stats)
-print(file_stats_df)
+# file_stats_df = pd.DataFrame(file_stats)
+# print(file_stats_df)
 
 # open stats file and add column
 stats = pd.read_csv(f'./experiments/data/{test_name}/stats.csv', skipinitialspace=True)
@@ -82,7 +82,8 @@ ax.legend(title = 'batch size')
 fig.savefig(graph_dir + 'throughputlost.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='goodput', y='latencyfiltered', data=stats, hue='batch_size', palette = color, linestyle='--')
+stats.sort_values('throughput')
+ax = sns.lineplot(x='goodput', y='latencyfiltered', sort = False, data=stats, hue='batch_size', palette = color, linestyle='--')
 ax.set(xlabel = 'goodput (req/s)', ylabel = 'mean latency (s)')
 ax.legend(title = 'batch size')
 ax.invert_yaxis()

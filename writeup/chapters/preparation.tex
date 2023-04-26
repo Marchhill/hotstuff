@@ -232,16 +232,21 @@ These requirements are similar to those presented in my proposal (Appendix X***)
 \textit{In this section we describe the professional software engineering methodology deployed during implementation.}
 
 \subsection{Development methodology}
+
 [waterfall model based on timetable]
+
 \subsection{Testing \& debugging methodology} \label{testing}
+
 Unit testing was carried out using `expect tests', which compare a program trace to the correct output. A testing suite of expect tests verifies that the program behaves as specified in the HotStuff paper. This suite has 100\% code coverage\footnote{The report says 97.89\% coverage, but the only uncovered code is the testing code itself.} of the consensus state machine code, the coverage report is at \textit{\_coverage/index.html}.
 
 The Memtrace library and viewer were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
 
-% mention mininet for evaluation?
+[talk about mininet!]
 
 Due to the distributed nature of the program, normal debugging tools and profilers are not useful for debugging deadlocks and performance issues. This is because the cause of deadlocks and performance issues is often some process waiting or a backlog of work forming, but this cannot be detected by tools that just track things like CPU usage. Instead, I had to rely on manual inspection of the program trace and commands that measure the real time taken for some part of the program to run.
 
-[implement CI???]
+[CI???]
+
 \subsection{Source code management}
+
 I used Git for version control and regularly pushed my local changes to a private GitHub repository.
