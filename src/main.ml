@@ -2,7 +2,7 @@ open Cmdliner
 open Lwt.Syntax
 
 let secret_key = `Ephemeral
-let timeout = 20.
+let timeout = 1000.
 
 (* Verbose logging *)
 
