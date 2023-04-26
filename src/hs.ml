@@ -80,7 +80,7 @@ let init id nodes timeout batch_size verbose =
 	let actions = reset_timer_action :: new_view_actions in
 	let s = {
 		state_machine = ref initial_state;
-	alive = ref true;
+		alive = ref true;
 		verbose = verbose; conns = conns;
 		client_callbacks = client_callbacks;
 		reset_timer = reset_timer;
@@ -125,14 +125,12 @@ let local s =
 			let t1 = Time_now.nanoseconds_since_unix_epoch () in
 			(* get parameters *)
 			let api_cmd = Params.cmd_get params in
-			let data = Api.Reader.Cmd.data_get api_cmd in
-			let callback_id = Api.Reader.Cmd.id_get api_cmd in
 			release_param_caps ();
 			(* create a consensus command from the client's request*)
-			let cmd = ({data = data; callback_id = callback_id} : Consensus.cmd) in
+			let cmd = api_cmd_to_cmd api_cmd in
 			(* store callback so we can respond to client later *)
 			let res, callback = Lwt.wait () in
-			Hashtbl.add s.client_callbacks callback_id (Some callback);
+			Hashtbl.add s.client_callbacks cmd.callback_id (Some callback);
 			(* create a consensus event from the client's command *)
 			let event = (ClientCmd cmd : Consensus.event) in
 			(* add event to stream *)

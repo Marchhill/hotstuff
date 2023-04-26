@@ -1,7 +1,7 @@
 (* message types we can send *)
 type msg_type = Generic | GenericAck | NewView | Prepare | PrepareAck | PreCommit | PreCommitAck | Commit | CommitAck | Decide | Complain | NextView
 
-type cmd = {data: string; callback_id: Int64.t}
+type cmd = {data: string; callback_id: int}
 module Cmd_set : Set.S with type elt = cmd
 
 type node_justify = {node_offset: int; view: int; signature: Tezos_crypto.Aggregate_signature.t option; msg_type: msg_type; ids: int list} 
@@ -15,7 +15,7 @@ type action =
 	| Broadcast of msg
 	| SendLeader of msg
 	| SendNextLeader of msg
-	| SendClient of {id: int; callback_id: Int64.t; success: bool}
+	| SendClient of {id: int; callback_id: int; success: bool}
 	| Execute of {id: int; node: node}
 	| ResetTimer of {id: int; view: int}
 

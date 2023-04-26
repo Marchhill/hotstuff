@@ -101,7 +101,7 @@ let print_action = function
 	| Broadcast m -> Fmt.pr "%d: broadcast %s@." m.id (msg_to_string m)
 	| SendLeader m -> Fmt.pr "%d: send_leader %s@." m.id (msg_to_string m)
 	| SendNextLeader m -> Fmt.pr "%d: send_next_leader %s@." m.id (msg_to_string m)
-	| SendClient m -> Fmt.pr "%d: send_client success=%b callback_id=\"%s\"@." m.id m.success (Int64.to_string m.callback_id)
+	| SendClient m -> Fmt.pr "%d: send_client success=%b callback_id=\"%s\"@." m.id m.success (Int.to_string m.callback_id)
 	| Execute m -> Fmt.pr "%d: execute node=%s@." m.id (node_to_string_short (Some m.node))
 	| ResetTimer m -> Fmt.pr "%d: reset_timer view=%d@." m.id m.view
 
@@ -117,7 +117,7 @@ let print_event = function
 	| NextView m -> Fmt.pr "next_view %s@." (msg_to_string m)
 	| Generic m -> Fmt.pr "generic %s@." (msg_to_string m)
 	| GenericAck m -> Fmt.pr "generic_ack %s@." (msg_to_string m)
-	| ClientCmd cmd -> Fmt.pr "client_cmd data=\"%s\" callback_id=\"%s\"@." cmd.data (Int64.to_string cmd.callback_id)
+	| ClientCmd cmd -> Fmt.pr "client_cmd data=\"%s\" callback_id=\"%s\"@." cmd.data (Int.to_string cmd.callback_id)
 	| Timeout x -> Fmt.pr "timeout %d@." x.view
 	| Complain m -> Fmt.pr "complain %s@." (msg_to_string m)
 
@@ -134,7 +134,7 @@ let make_node (cmds : Cmd_set.t) parent (i : node_internal option) =
 	(* ??? make sure padding is unambiguous!! *)
 	let parent_digest = (match parent with Some p -> (String.of_bytes p.digest) | None -> "") in
 	let i_str = (match i with Some i -> Fmt.str "%s:%d" (node_justify_to_string (Some i.justify)) i.height | None -> "") in
-	let cmds_str = Cmd_set.fold (fun cmd acc -> acc ^ cmd.data ^ ":" ^ (Int64.to_string cmd.callback_id) ^ ",") cmds "" in
+	let cmds_str = Cmd_set.fold (fun cmd acc -> acc ^ cmd.data ^ ":" ^ (Int.to_string cmd.callback_id) ^ ",") cmds "" in
 	let digest = Tezos_crypto.Blake2B.hash_string [cmds_str; parent_digest; i_str] in
 	{cmds = cmds; parent = parent; i = i; digest = (Tezos_crypto.Blake2B.to_bytes digest)}
 

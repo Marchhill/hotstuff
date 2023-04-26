@@ -39,13 +39,14 @@ let api_node_justify_to_node_justify (api_node_justify : Api.Reader.NodeJustify.
 	let ids = List.map Int32.to_int (Api.Reader.NodeJustify.ids_get_list api_node_justify) in
 	({node_offset = node_offset; view = view; signature = signature; msg_type = msg_type; ids = ids} : Consensus.node_justify)
 
+let api_cmd_to_cmd (api_cmd : Api.Reader.Cmd.t) =
+	let cmd_data = Api.Reader.Cmd.data_get api_cmd in
+	let cmd_id = Int32.to_int (Api.Reader.Cmd.id_get api_cmd) in
+	({data = cmd_data; callback_id = cmd_id} : Consensus.cmd)
+
 let api_node_to_node (api_node : Api.Reader.Node.t) =
 	let api_cmds = Api.Reader.Node.cmd_get_list api_node in
-	let cmds = Consensus.Cmd_set.of_list (List.map (fun api_cmd ->
-		let cmd_data = Api.Reader.Cmd.data_get api_cmd in
-		let cmd_id = Api.Reader.Cmd.id_get api_cmd in
-		({data = cmd_data; callback_id = cmd_id} : Consensus.cmd)
-	) api_cmds) in
+	let cmds = Consensus.Cmd_set.of_list (List.map api_cmd_to_cmd api_cmds) in
 	let height = match Int32.to_int (Api.Reader.Node.height_get api_node) with
 		| -1 -> None
 		| x -> Some x
@@ -57,7 +58,6 @@ let api_node_to_node (api_node : Api.Reader.Node.t) =
 		None
 	in
 	let i = Consensus.create_node_internal height justify in
-	(* let digest = Tezos_crypto.Hacl.Blake2b.Hash (String.to_bytes (Api.Reader.Node.digest_get api_node)) in *)
 	let digest = String.to_bytes (Api.Reader.Node.digest_get api_node) in
 	({cmds = cmds; parent = None; i = i; digest = digest} : Consensus.node)
 
@@ -113,12 +113,15 @@ let node_justify_to_api_node_justify (builder : Api.Builder.NodeJustify.t) (node
 		| None -> ()
 	)
 
+let cmd_to_api_cmd (builder : Api.Builder.Cmd.t) (cmd : Consensus.cmd) =
+	Api.Builder.Cmd.data_set builder cmd.data;
+	Api.Builder.Cmd.id_set builder (Int32.of_int cmd.callback_id)
+
 let node_to_api_node (builder : Api.Builder.Node.t) (node : Consensus.node) =
 	(* let cmd_builder = Api.Builder.Node.cmd_get builder in *)
 	let cmd_builders = List.map (fun (cmd : Consensus.cmd) ->
 		let builder = Api.Builder.Cmd.init_root () in
-		Api.Builder.Cmd.data_set builder cmd.data;
-		Api.Builder.Cmd.id_set builder cmd.callback_id;
+		cmd_to_api_cmd builder cmd;
 		builder
 	) (Consensus.Cmd_set.elements node.cmds) in
 	let _ = Api.Builder.Node.cmd_set_list builder cmd_builders in

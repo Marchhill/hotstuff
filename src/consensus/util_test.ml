@@ -6,14 +6,14 @@ let%expect_test "node justify to string of None." =
 	[%expect {||}]
 
 let%expect_test "get event type." =
-	Fmt.pr "%s@." (get_event_type (ClientCmd {data = ""; callback_id = Int64.zero}));
+	Fmt.pr "%s@." (get_event_type (ClientCmd {data = ""; callback_id = 0}));
 	Fmt.pr "%s@." (get_event_type (Timeout {view = 10}));
 	[%expect {|
   client_cmd
   timeout |}]
 
 let%expect_test "print action" =
-	print_action (SendClient {id = 0; callback_id = Int64.zero; success = true});
+	print_action (SendClient {id = 0; callback_id = 0; success = true});
 	[%expect {| 0: send_client success=true callback_id="0" |}]
 
 let%expect_test "print event" =
@@ -30,7 +30,7 @@ let%expect_test "print event" =
 	print_event (Complain m);
 	print_event (Generic m);
 	print_event (GenericAck m);
-	print_event (ClientCmd {data = ""; callback_id = Int64.zero});
+	print_event (ClientCmd {data = ""; callback_id = 0});
 	print_event (Timeout {view = 10});
 	[%expect {|
   new_view view=99 src=0 type=new_view node=(⊥) justify=() sig=(⊥)

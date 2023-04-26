@@ -72,7 +72,7 @@ let rec do_actions nodes = function
 		let (nodes, actions') = do_actions nodes xs in
 		(nodes, actions @ actions')
 	| (SendClient m) :: xs ->
-		Fmt.pr "send_client id=\"%s\"@." (Int64.to_string m.callback_id);
+		Fmt.pr "send_client id=\"%s\"@." (Int.to_string m.callback_id);
 		do_actions nodes xs
 	| (Execute m) :: xs ->
 		Fmt.pr "exec (%s)@." (node_to_string (Some m.node));
@@ -95,7 +95,7 @@ let rec views nodes a = function
 (* deliver a command to be commited *)
 let sent = ref 0
 let deliver_command id nodes =
-	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = (Int64.of_int !sent)}] in (* ??? callback id*)
+	let nodes, _ = advance_leader id nodes [ClientCmd {data = (Fmt.str "hello%d#%d" id (!sent)); callback_id = !sent}] in (* ??? callback id*)
 	sent := !sent + 1;
 	nodes
 
@@ -1111,7 +1111,7 @@ let%expect_test "New view with no justify ignored" =
 let%expect_test "conflicting proposal not voted for." =
 	let nodes, actions = create_nodes 4 ~use_crypto:true in 
 	let leader = List.hd nodes in
-	let n = create_leaf leader b_0 (Cmd_set.singleton {data = "conflict!"; callback_id = Int64.zero}) qc_0 in
+	let n = create_leaf leader b_0 (Cmd_set.singleton {data = "conflict!"; callback_id = 0}) qc_0 in
 	let nodes, actions = views nodes actions 7 in
 	List.iter print_state nodes;
 	List.iter print_action actions;
@@ -1168,10 +1168,10 @@ let%expect_test "Ignore proposal without node." =
 
 let%expect_test "safe node allows chain of greater height" =
 	let s, _ = create_state_machine 0 4 100 in
-	let n_lock = create_leaf s b_0 (Cmd_set.singleton {data = "lock!"; callback_id = Int64.zero}) qc_0 in
+	let n_lock = create_leaf s b_0 (Cmd_set.singleton {data = "lock!"; callback_id = 0}) qc_0 in
 	let s = {s with s = {s.s with b_lock = n_lock}} in
-	let n1 = create_leaf s b_0 (Cmd_set.singleton {data = "conflict!"; callback_id = Int64.zero}) qc_0 in
+	let n1 = create_leaf s b_0 (Cmd_set.singleton {data = "conflict!"; callback_id = 0}) qc_0 in
 	let s = {s with view = 2} in
-	let n2 = create_leaf s n1 (Cmd_set.singleton {data = "conflict2!"; callback_id = Int64.zero}) qc_0 in
+	let n2 = create_leaf s n1 (Cmd_set.singleton {data = "conflict2!"; callback_id = 0}) qc_0 in
 	Fmt.pr "%b@." (safe_node s n2 n2);
 	[%expect {| true |}]

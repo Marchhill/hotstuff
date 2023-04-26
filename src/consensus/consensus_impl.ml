@@ -127,7 +127,7 @@ let as_leader state event =
 							let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = Decide; node = None; justify = commitQC; partial_signature = None}) in
 							let cmds = match msg.node with Some n -> n.cmds | None -> Cmd_set.empty in
 							let actions = (Broadcast broadcast_msg) :: (Cmd_set.fold (fun cmd acc ->
-								if cmd.callback_id = Int64.zero then
+								if cmd.callback_id = 0 then
 									acc
 								else
 									(SendClient {id = state.id; callback_id = cmd.callback_id; success = true})::acc

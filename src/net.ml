@@ -67,8 +67,7 @@ let send_req conn (cmd : Consensus.cmd) _t stats =
 		let open Api.Client.Hs.ClientReq in
 		let request, params = Capability.Request.create Params.init_pointer in
 		let cmd_builder = Params.cmd_get params in
-		Api.Builder.Cmd.data_set cmd_builder cmd.data;
-		Api.Builder.Cmd.id_set cmd_builder cmd.callback_id;
+		cmd_to_api_cmd cmd_builder cmd;
 		let* res = Capability.call_for_value cap method_id request in
 		let success = match res with
 			| Ok r -> Results.success_get r

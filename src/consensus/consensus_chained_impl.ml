@@ -45,7 +45,7 @@ let rec on_commit (state : t) = function
 	| Some b ->
 		if (get_node_height b) > (get_node_height state.s.b_exec) then (
 			let actions = (Execute {id = state.id; node = b}) :: (Cmd_set.fold (fun cmd acc ->
-				if (cmd.callback_id = Int64.zero) then
+				if (cmd.callback_id = 0) then
 					acc
 				else
 					(SendClient {id = state.id; callback_id = cmd.callback_id; success = true})::acc

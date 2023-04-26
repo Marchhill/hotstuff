@@ -17,7 +17,7 @@ enum MsgType {
 
 struct Cmd {
 	data @0 :Data;
-	id @1 :Int64;
+	id @1 :Int32;
 }
 
 struct Node {

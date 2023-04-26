@@ -30,12 +30,9 @@ let delta x y =
 	let open Base.Int63 in
 	(to_float (y - x)) /. 1_000_000_000.
 let sent = ref 0
-let callbacks = ref 1
+let callbacks = ref 0
 
-let gen_callback_id () =
-	let x = Int64.of_int (!callbacks) in
-	callbacks := !callbacks + 1;
-	x
+let gen_callback_id () = callbacks := !callbacks + 1; !callbacks
 
 (* wait until we send a request to some node and it is commited *)
 let rec await_first_commit i conn timeout retries =
@@ -62,13 +59,13 @@ let await_connections conns timeout retries =
 let run_command conns timeout stats msg_size =
 	(* let id = !sent mod (List.length conns) in
 	let conn = List.nth conns id in *)
-	let data = Fmt.str "c%d" !sent in
+	let data = "" in
 	let callback_id = gen_callback_id () in
 	(* simulate the size of a batch *)
 	let data = if msg_size = 1 then
 		data
 	else
-		List.fold_left (fun acc x -> acc ^ x) "" (List.init msg_size (fun _ -> data ^ (Int64.to_string callback_id)))
+		List.fold_left (fun acc x -> acc ^ x) "" (List.init msg_size (fun _ -> data ^ (Int.to_string callback_id)))
 	in
 	sent := !sent + 1;
 	let res = List.map (fun conn ->
