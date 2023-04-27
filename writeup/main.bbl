@@ -1,9 +1,58 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{noauthor_async_nodate}
+async.
+
+\bibitem{noauthor_capn_nodate}
+Cap'n {Proto}.
+
+\bibitem{noauthor_memtrace_nodate}
+Memtrace.
+
+\bibitem{noauthor_mininet_nodate}
+Mininet.
+
+\bibitem{noauthor_mirageos_nodate}
+{MirageOS}.
+
+\bibitem{noauthor_tezos_nodate}
+Tezos cryptography.
+
+\bibitem{noauthor_ocaml_nodate}
+Welcome to a {World} of {OCaml}.
+
+\bibitem{noauthor_eio_2023}
+Eio -- {Effects}-{Based} {Parallel} {IO} for {OCaml}, Apr. 2023.
+\newblock original-date: 2021-03-02T14:20:04Z.
+
+\bibitem{noauthor_lwt_2023}
+Lwt, Apr. 2023.
+\newblock original-date: 2013-07-29T20:47:51Z.
 
 \bibitem{ittai}
 {\sc Abraham, I.}
 \newblock \href{https://www.youtube.com/watch?v=Uoo2cOvQVN0}{Byzantine fault
   tolerance, state machine replication and blockchains}.
+
+\bibitem{baudet_state_nodate}
+{\sc Baudet, M., Ching, A., Chursin, A., Danezis, G., Garillot, F., Li, Z.,
+  Malkhi, D., Naor, O., Perelman, D., and Sonnino, A.}
+\newblock State {Machine} {Replication} in the {Libra} {Blockchain}.
+
+\bibitem{buterin_casper_2019}
+{\sc Buterin, V., and Griffith, V.}
+\newblock Casper the {Friendly} {Finality} {Gadget}, Jan. 2019.
+\newblock arXiv:1710.09437 [cs].
+
+\bibitem{cachin_random_2005}
+{\sc Cachin, C., Kursawe, K., and Shoup, V.}
+\newblock Random {Oracles} in {Constantinople}: {Practical} {Asynchronous}
+  {Byzantine} {Agreement} {Using} {Cryptography}.
+\newblock {\em Journal of Cryptology 18}, 3 (July 2005), 219--246.
+
+\bibitem{castro_practical_nodate}
+{\sc Castro, M., and Liskov, B.}
+\newblock Practical {Byzantine} {Fault} {Tolerance}.
 
 \bibitem{chubby}
 {\sc Chandra, T., Griesemer, R., and Redstone, J.}
@@ -11,6 +60,83 @@
   \href{https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/paper2-1.pdf}{Paxos
   made live: An engineering perspective}.
 \newblock pp.~398--407.
+
+\bibitem{chandra_unreliable_1996}
+{\sc Chandra, T.~D., and Toueg, S.}
+\newblock Unreliable failure detectors for reliable distributed systems.
+\newblock {\em Journal of the ACM 43}, 2 (Mar. 1996), 225--267.
+
+\bibitem{dwork_consensus_nodate}
+{\sc Dwork, C., Lynch, N., Stockmeyer, L., and Jose, S.}
+\newblock {CONSENSUS} {IN} {THE} {PRESENCE} {OF} {PARTIAL} {SYNCHRON}¥.
+
+\bibitem{fischer_easy_nodate}
+{\sc Fischer, M.~J., Lynch, N.~A., and Merritt, M.}
+\newblock Easy impossibility proofs for distributed consensus problems.
+
+\bibitem{golan_gueta_sbft_2019}
+{\sc Golan~Gueta, G., Abraham, I., Grossman, S., Malkhi, D., Pinkas, B.,
+  Reiter, M., Seredinschi, D.-A., Tamir, O., and Tomescu, A.}
+\newblock {SBFT}: {A} {Scalable} and {Decentralized} {Trust} {Infrastructure}.
+\newblock In {\em 2019 49th {Annual} {IEEE}/{IFIP} {International} {Conference}
+  on {Dependable} {Systems} and {Networks} ({DSN})\/} (June 2019),
+  pp.~568--580.
+\newblock ISSN: 1530-0889.
+
+\bibitem{jensen_ocons_2023}
+{\sc Jensen, C.}
+\newblock {OCons}, Mar. 2023.
+\newblock original-date: 2019-07-27T10:56:32Z.
+
+\bibitem{kwon_tendermint_nodate}
+{\sc Kwon, J.}
+\newblock Tendermint: {Consensus} without {Mining}.
+
+\bibitem{lamport_part-time_1998}
+{\sc Lamport, L.}
+\newblock The part-time parliament.
+\newblock {\em ACM Transactions on Computer Systems 16}, 2 (May 1998),
+  133--169.
+
+\bibitem{lamport_paxos_2001}
+{\sc Lamport, L.}
+\newblock Paxos {Made} {Simple}.
+
+\bibitem{lamport_byzantine_nodate}
+{\sc Lamport, L., Shostak, R., and Pease, M.}
+\newblock The {Byzantine} {Generals} {Problem}.
+\newblock {\em ACM Transactions on Programming Languages and Systems 4}, 3.
+
+\bibitem{nakamoto_bitcoin_nodate}
+{\sc Nakamoto, S.}
+\newblock Bitcoin: {A} {Peer}-to-{Peer} {Electronic} {Cash} {System}.
+
+\bibitem{naor_cogsworth_2020}
+{\sc Naor, O., Baudet, M., Malkhi, D., and Spiegelman, A.}
+\newblock Cogsworth: {Byzantine} {View} {Synchronization}, Feb. 2020.
+\newblock arXiv:1909.05204 [cs].
+
+\bibitem{ongaro_search_nodate}
+{\sc Ongaro, D., and Ousterhout, J.}
+\newblock In {Search} of an {Understandable} {Consensus} {Algorithm}.
+
+\bibitem{pease_reaching_1980}
+{\sc Pease, M., Shostak, R., and Lamport, L.}
+\newblock Reaching {Agreement} in the {Presence} of {Faults}.
+\newblock {\em Journal of the ACM 27}, 2 (Apr. 1980), 228--234.
+
+\bibitem{goos_practical_2000}
+{\sc Shoup, V.}
+\newblock Practical {Threshold} {Signatures}.
+\newblock In {\em Advances in {Cryptology} — {EUROCRYPT} 2000}, G.~Goos,
+  J.~Hartmanis, J.~Van~Leeuwen, and B.~Preneel, Eds., vol.~1807. Springer
+  Berlin Heidelberg, Berlin, Heidelberg, 2000, pp.~207--220.
+\newblock Series Title: Lecture Notes in Computer Science.
+
+\bibitem{wood_ethereum_nodate}
+{\sc Wood, D.~G.}
+\newblock {ETHEREUM}: {A} {SECURE} {DECENTRALISED} {GENERALISED} {TRANSACTION}
+  {LEDGER}.
 
 \bibitem{yin2019hotstuff}
 {\sc Yin, M., Malkhi, D., Reiter, M.~K., Gueta, G.~G., and Abraham, I.}

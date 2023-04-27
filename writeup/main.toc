@@ -21,7 +21,7 @@
 \contentsline {section}{\numberline {3.1}Architectural overview}{16}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Pacemaker Specification}{17}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Proofs}{20}{subsection.3.2.1}%
-\contentsline {section}{\numberline {3.3}Performance improvements}{21}{section.3.3}%
+\contentsline {section}{\numberline {3.3}Performance improvements}{22}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Batching}{22}{subsection.3.3.1}%
 \contentsline {subsubsection}{Probing effects}{22}{subsubsection*.4}%
 \contentsline {subsubsection}{Architectural experimentation}{23}{subsubsection*.5}%
@@ -31,7 +31,7 @@
 \contentsline {subsubsection}{Recursive types}{26}{subsubsection*.8}%
 \contentsline {subsubsection}{Node offsets}{27}{subsubsection*.9}%
 \contentsline {subsubsection}{Node comparison}{27}{subsubsection*.10}%
-\contentsline {subsubsection}{Node truncation}{27}{subsubsection*.11}%
+\contentsline {subsubsection}{Node truncation}{28}{subsubsection*.11}%
 \contentsline {section}{\numberline {3.4}Implementing for evaluation}{28}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Load generator}{28}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{29}{subsection.3.4.2}%
@@ -48,4 +48,4 @@
 \contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{39}{subsection.4.3.4}%
 \contentsline {subsection}{\numberline {4.3.5}View-changes}{40}{subsection.4.3.5}%
 \contentsline {chapter}{\numberline {5}Conclusion}{43}{chapter.5}%
-\contentsline {chapter}{Bibliography}{45}{chapter*.12}%
+\contentsline {chapter}{Bibliography}{46}{chapter*.12}%
