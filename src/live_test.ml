@@ -113,8 +113,8 @@ let run_client nodes version time rate req_times_fp stats_fp msg_size batch_size
 		); * view change experiment *)
 		Fmt.pr "connected to all!@.";
 		(* run and ignore results for 3s to allow batches to fill up *)
-		let startup = Array.make (3 * rate) None in
-		let* _ = benchmark conns startup (Float.of_int rate) 1000. msg_size (Base.Int63.zero) in
+(*		let startup = Array.make (3 * rate) None in
+		let* _ = benchmark conns startup (Float.of_int rate) 1000. msg_size (Base.Int63.zero) in*)
 		(* begin actual benchamrking*)
 		let n = time * rate in (* calculate based on actual number sent (filter)*)
 		let res = Array.make n None in
