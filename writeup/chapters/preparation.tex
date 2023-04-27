@@ -215,13 +215,12 @@ The Tezos cryptography library provides aggregate signatures using the BLS12-381
 In order to be successful the implementation should conform to the following requirements:
 
 \begin{itemize}
-	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper \ref{hotstuff}. This can be established by testing the program trace for compliance with the algorithm specification [do I need to mention change from proposal here ***].
-	\item Evaluation --- analysis of system throughput and latency should be carried out on a simulated network of 4 replicas. Evaluation will be carried out by testing the program locally, analysing the trace, and testing in an emulator.
-	\item Improve transaction throughput and reduce latency [compared to what? ***]. This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
-	% \item Description of how to implement verifiable anonymous identities on top of the HotStuff implementation.
+	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper \ref{hotstuff}. This can be established by testing the program trace for compliance with the algorithm specification.
+	\item Evaluation --- analysis of system throughput and latency should be carried out by testing the program locally, analysing the trace, and testing in simulated network.
+	\item Optimisation --- Implement features to improve transaction throughput and reduce latency over the naive implementation. This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
 \end{itemize}
 
-These requirements are similar to those presented in my proposal (Appendix X***) with a few differences. The first difference is to evaluate on 4 nodes rather than 32. Benchmarking of Cap'n Proto has revealed its limitations when sending large messages (\ref{capnpbenchmark}). Once batching of requests is implemented the internal messages sent between nodes will be large and could cause a performance bottleneck for the state machine progressing. Because of this, it may not be feasible to get reasonable performance with more nodes, as more nodes result in more internal messages being sent. In practice, permissioned blockchains are often run with a small number of nodes, so this limitation may not be important [citation needed *** honeybadger BFT?].
+% These requirements are similar to those presented in my proposal (Appendix X***) with a few differences. The first difference is to evaluate on 4 nodes rather than 32. Benchmarking of Cap'n Proto has revealed its limitations when sending large messages (\ref{capnpbenchmark}). Once batching of requests is implemented the internal messages sent between nodes will be large and could cause a performance bottleneck for the state machine progressing. Because of this, it may not be feasible to get reasonable performance with more nodes, as more nodes result in more internal messages being sent. In practice, permissioned blockchains are often run with a small number of nodes, so this limitation may not be important [citation needed *** honeybadger BFT?].
 % https://github.com/heidihoward/distributed-consensus-reading-list#bft-surveys
 
 % Additionally the extension has been changed from adding support for network reconfiguration to describing how to implement verifiable anonymous identities. This is because this extension seemed like a more interesting direction for the project with more exciting applications.
@@ -231,9 +230,9 @@ These requirements are similar to those presented in my proposal (Appendix X***)
 
 \textit{In this section we describe the professional software engineering methodology deployed during implementation.}
 
-\subsection{Development methodology}
+\subsection{Development methodology} \label{waterfall}
 
-[waterfall model based on timetable]
+We chose to use a waterfall model for this project, tasks were carried out in accordance with the timetable set out in the proposal [reference appendix!]. Development proceeded in a sequential fashion, we set out requirements (section \ref{requirements}), studied the HotStuff protocol (section \ref{hotstufftheory}), implemented the system in accordance with the timetable (section \ref{implementation}), and carried out an evaluation of performance (section \ref{evaluation}).
 
 \subsection{Testing \& debugging methodology} \label{testing}
 

@@ -1409,10 +1409,10 @@ INPUT ./images//viewchange/test7_100_7_100_timelatencyheatmap.png
 INPUT images//viewchange/test7_100_7_100_timelatencyheatmap.png
 INPUT ./images//viewchange/test7_100_7_100_timelatencyheatmap.png
 INPUT ./images//viewchange/test7_100_7_100_timelatencyheatmap.png
-INPUT ./chapters/conclusions.tex
-INPUT chapters/conclusions.tex
-INPUT ./chapters/conclusions.tex
-INPUT chapters/conclusions.tex
+INPUT ./chapters/conclusion.tex
+INPUT chapters/conclusion.tex
+INPUT ./chapters/conclusion.tex
+INPUT chapters/conclusion.tex
 INPUT ./main.bbl
 INPUT main.bbl
 INPUT ./main.bbl

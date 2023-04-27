@@ -1,0 +1,1 @@
+sudo docker run -it --privileged -e DISPLAY -v /home/mnh33/hotstuff/src:/mnt --network host --name reckon-mininet cjen1/reckon-mininet:latest bash

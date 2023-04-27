@@ -183,12 +183,14 @@ Version & Chained & Truncation & Filtering & Crypto \\ \hline
 \centering
 \includegraphics[scale=0.75]{ablation/throughputgoodput_ablation.png}
 \caption{Benchmarking of goodput for varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size.}
+\label{throughputgoodputablation}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.75]{ablation/throughputflatency_ablation.png}
 \caption{Benchmarking of mean latency while varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size. Discarded result if goodput was not within 5\% of target throughput.}
+\label{throughputlatencyablation}
 \end{figure}
 
 This study compares the performance of different versions of the system with different optimisations enabled. The optimisations explored are chaining (section \ref{chaining}), node truncation (section \ref{truncation}), and command filtering (section \ref{sendtoall}). We also compare performance with cryptography disabled. The mapping from version numbers to which features are enabled is given in table \ref{versiontable}. All experiments were run with a network of 4 nodes, and unlimited batch sizes.
@@ -215,7 +217,15 @@ This study compares the performance of different versions of the system with dif
 \centering
 \includegraphics[scale=0.5]{viewchange/test7_100_7_100_timelatencyheatmap.png}
 \caption{Heatmap showing distribution of latencies with a node being killed 5s in. Run for 10s with 7 nodes and a batch size of 100.}
+\label{viewchangeheatmap}
 \end{figure}
+
+This study explores the behaviour of the system in the event of a node failing, where the view-change protocol (section \ref{viewchange}) is needed to skip the faulty leader's view and make progress.
+
+Figure \ref{viewchangeheatmap} is a heatmap showing a node being killed 5s into an experiment. There is a clear jump in latency every time the killed node is the leader of the view, and the nodes must wait for the 0.5s timeout to elapse before the next view begins. The latency jump of around 1.25s is about what one would expect; 0.5s timeout and 0.75s of latency (the same as before the node was killed).
+
+The view-change protocol is successful in allowing the system to make progress, albeit with a significant increase in latency. This is an inherent problem with the HotStuff protocol, although a failure-detector could help to minimise the number of views where the faulty node is leader.
+
 % Clone github.com/cjen1/reckon
 
 % ```
