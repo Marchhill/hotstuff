@@ -1,5 +1,6 @@
 src/_build*
 src/profile*
+src/nohup.out
 src.tmp
 .vscode
 .DS_Store
