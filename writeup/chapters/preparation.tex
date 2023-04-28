@@ -19,20 +19,32 @@ I had some experience using OCaml from the IA Foundations of Computer Science co
 % the whole implementation was written from scratch??
 
 \section{HotStuff algorithm} \label{hotstufftheory}
-A consensus algorithm allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a leader node proposes some value by sending it the the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that the log has been agreed upon up to that point and cannot be altered. Once the log is committed up to some point the leader can send `decide' to the replicas; if the log is a list of commands, then the new commands can safely be executed. A consensus algorithm must have these properties:
+A byzantine consensus algorithm allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a \textit{leader} node proposes some value by sending it the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that there is consensus on the committed part of the log, and it is now immutable.
+
+A consensus algorithm must have these properties:
 \begin{itemize}
 	\item Safety: Once a log has been committed up to some point that part of the log is immutable, it can only appended to.
 	\item Liveness: The system is guaranteed to make progress once a non-faulty leader is elected.
 \end{itemize}
 
-The adverse conditions that HotStuff can operate under are described by the system model: partially synchronous, byzantine, with reliable, authenticated, point-to-point delivery. This means that messages sent by one party will always be delivered to another within some bounded amount of time after global synchronisation time (GST) has been reached and a message source cannot be spoofed. The byzantine assumption means a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes; this is the maximum number of byzantine nodes for which consensus can theoretically be reached \cite{pease_reaching_1980}\cite{fischer_easy_nodate}.
+The system model describes the adverse conditions under which HotStuff can operate:
+\begin{itemize}
+	\item Partially Synchronous: Messages sent by one party will always be delivered to another within some bounded amount of time ($\delta$) after global synchronisation time (GST) has been reached.
+	\item Reliable:
+	\item Point-to-point:
+	\item Authenticated: A message source cannot be spoofed [provided by signing messages]
+	\item Byzantine: A maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes; this is the maximum number of byzantine nodes for which consensus can theoretically be reached \cite{pease_reaching_1980}\cite{fischer_easy_nodate}.
+\end{itemize}
+
+Once the log is committed up to some point the leader can send `decide' to the replicas; if the log is a list of commands, then the new commands can safely be executed. [mention the model of a client that sends requests and is responded to]
 
 \subsection{Non-byzantine consensus}
 We will start by describing an algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaro_search_nodate} and multi-shot Paxos \cite{lamport_part-time_1998}\cite{lamport_paxos_2001}.
 
-Each view can be broken into two phases; phase 1 allows the leader to learn of previously decided values, and in phase 2 it decides on a value. Phase 1 is initiated by the leader broadcasting the current view number to the replicas, which respond by sending their longest accepted log (the one with the highest corresponding view number). Once the leader has a quorum of responses, it initiates phase 2: it selects the longest log that has been sent to it and broadcasts it to the replicas. The leader may also extend the log at this point with its own values, or create a new log if it did not receive anything. Finally, each replica updates its log to the value sent by the leader and sends an acknowledgement. Once the leader receives a quorum of acknowledgements it can commit the new log. This algorithm satisfies our requirement that a committed log can only be extended.
+Each view is broken into two phases; the \textit{new-view} phase allows the leader to learn of previously committed values, and in \textit{commit} phase the leader proposes a log extended with new values that the replicas can reach consensus on. The \textit{new-view} phase is initiated by the leader broadcasting the current view number to the replicas [we don't actually do this, is it necessary???], which respond by sending their longest accepted log (the one with the highest corresponding view number). Once the leader has a quorum of responses, the \textit{commit} phase commences: the leader selects the longest log that has been sent to it and broadcasts it to the replicas. The leader may also extend the log at this point with its own values, or create a new log if it did not receive anything. Finally, each replica updates its log to the value sent by the leader and sends an acknowledgement. Once the leader receives a quorum of acknowledgements it can commit the new log. This algorithm satisfies our requirement that a committed log can only be extended.
 
-We will refer to phase 1 as the \textit{new-view} stage, and phase 2 as the \textit{commit} phase to use the terminology of the HotStuff paper. These are followed by the \textit{decide} phase, in which the leader sends a decide message to replicas. Once they receive this message they can consider the log decided, and execute the new commands which have been added to the log. See an example in figure \ref{nonbyzantineexample}.
+%We will refer to phase 1 as the  stage, and phase 2 as the \textit{commit} phase to use the terminology of the HotStuff paper. These are followed by the \textit{decide} phase, in which the leader sends a decide message to replicas. Once they receive this message they can consider the log decided, and execute the new commands which have been added to the log.
+See an example of a non-byzantine consensus algorithm in figure \ref{nonbyzantineexample}.
 % *** replace with diagrams?
 \begin{figure}[h!] 
 \texttt{
@@ -59,19 +71,19 @@ We will refer to phase 1 as the \textit{new-view} stage, and phase 2 as the \tex
 \end{figure}
 
 \subsection{Byzantine consensus}
-In order to extend our algorithm to achieve consensus under a Byzantine threat model we must handle two threats that we will deal with in turn. To do this we must first introduce the concept of a threshold signature \cite{goos_practical_2000}\cite{cachin_random_2005}. Acknowledgements from replicas all contain a signature over the message to prove that they were actually sent by the correct node. The leader can create a threshold signature by combining $n - f$ ack messages' signatures to prove that they really received a quorum of acknowledgements. A collection of a quorum of votes with a threshold signature is known as a `quorum certificate' or `QC'.
+In order to extend our algorithm to achieve consensus under a Byzantine threat model we must handle two threats that we will deal with in turn. To do this we must first introduce the concept of a threshold signature \cite{goos_practical_2000}\cite{cachin_random_2005}. Acknowledgements from replicas already contain a signature over the message to provide authenticated delivery. The leader can create a threshold signature by combining $n - f$ ack messages' signatures to prove that they really received a quorum of acknowledgements. A collection of a quorum of votes with a threshold signature is known as a `quorum certificate' or `QC'.
 
 \begin{enumerate}
-\item Threat: Equivocation --- a faulty leader broadcasts one value to some replicas and a different value to others. For example in the case of a cryptocurrency, this could result in a malicious actor (controlling account X) carrying out a double spend attack, sending ``Account X transfers account Y £10" to some nodes, and ``Account X transfers account Z £10" to other nodes, even if Account X only contains £10.
+\item Threat: Equivocation --- a faulty leader broadcasts one value to some replicas and a different value to others. For example in the case of a cryptocurrency, this could result in a malicious actor (Mallory) carrying out a double spend attack, sending ``Account Mallory transfers account Alice £10" to some nodes, and ``Account Mallory transfers account Bob £10" to other nodes, even if Mallory's account contains less than £20.
 
-Solution: Add a new stage \textit{prepare} which happens just before the \textit{commit} phase. In this phase the leader again chooses the longest log it received in the \textit{new-view} phase to pre-propose in the \textit{prepare} phase; the log may also be extended with the leader's new values. Once the leader receives a quorum of acknowledgements, the \textit{commit} phase begins. The difference is that this time the leader includes in its proposal a QC over \textit{prepare} acks, which proves that it pre-proposed the value to at least $n - f$ nodes and received their acks, so it is not proposing one value to some nodes and another value to others.
+Solution: Add a new stage \textit{prepare} which happens just before the \textit{commit} phase, where the leader pre-proposes the log. In this phase the leader again chooses the longest log it received in the \textit{new-view} phase to pre-propose in the \textit{prepare} phase; the log may also be extended with the leader's new values. Once the leader receives a quorum of acknowledgements, the \textit{commit} phase begins. The difference is that this time the leader includes in its proposal a QC over \textit{prepare} acks, which proves that it pre-proposed the value to at least $n - f$ nodes and received their acks, so it is not proposing one value to some nodes and another value to others.
 
 \item Threat: A faulty leader sends in the \textit{prepare} phase a log that conflicts with one that has already been committed.
 
 Solution: Replicas must \textit{lock} on a value once it is committed and not accept a \textit{prepare} from a leader that contradicts that. They will store the QC that they receive during the \textit{commit} phase and will only accept a new \textit{prepare} if it extends from the node stored in the certificate.
 \end{enumerate}
 
-See an example in figure \ref{byzantineexample}.
+See an example of a byzantine consensus algorithm in figure \ref{byzantineexample}.
 
 We give an informal inductive argument of the safety of this algorithm based on it solving these two threats. To be safe, we must have that if some log $\lambda$ is committed in view $v$, at no point in future will some conflicting log be committed. In view $v$ no log that conflicts with $\lambda$ may be committed, as we have prevented equivocation (threat 1). If we have in some view $v'$ that $\lambda$ (or some log extending it) is committed, then no conflicting log can be committed in view $v' + 1$. This holds because any log proposed in view $v' + 1$ must receive a quorum of $2f + 1$ votes in the \textit{prepare} phase; there must be at least one honest node in the intersection between this quorum, and the quorum of $2f + 1$ nodes that voted to commit $\lambda$ in view $v$. This honest replica is locked on $\lambda$ (solution 2), so would not accept a proposal that conflicts it. From this it follows that in no view from $v$ onwards will a log conflicting with $\lambda$ be committed.
 
@@ -109,11 +121,11 @@ We give an informal inductive argument of the safety of this algorithm based on 
 
 % REWRITE THIS SECTION ***
 \subsection{Optimistic responsiveness}
-A system is responsive if it is able to make progress as fast as conditions allow when a non-faulty leader is elected. If a system must wait for some timeout $\Delta$ to elapse before making progress then it is not responsive.
+A system is responsive if it is able to make progress as fast as conditions allow when a non-faulty leader is elected. [HotStuff is responsive whereas other protocols are not] If a system must wait for some timeout $\Delta$ to elapse before making progress then it is not responsive.
 
-The algorithm demonstrated in figure \ref{byzantineexample} is not responsive. In the \textit{new-view} phase the leader must wait to hear from $n - f$ replicas, and for a timeout of $\Delta$ to elapse. The timeout is necessary for the system to have the liveness property, so that it can always make progress when a non-faulty leader is elected. Consider again the \textit{prepare} phase; the leader includes in its pre-proposal the QC from the highest view that it hears about in the \textit{new-view} messages it receives. However, there may be some honest replica [how???] that the leader did not hear from (perhaps their message was lost) that is locked on a higher-view proposal than the one that the leader chooses to pre-propose. When this replica receives the pre-proposal, it will reject it as it is locked on a higher-view proposal, and the system will not make progress. This is why it is necessary to wait for a timeout $\Delta$, so that the leader waits a sufficient amount of time to receive a \textit{new-view} from all replicas.
+The algorithm demonstrated in figure \ref{byzantineexample} is not responsive. In the \textit{new-view} phase the leader must wait to hear from $n - f$ replicas, and for a timeout of $\Delta$ to elapse. The timeout is necessary for the system to have the liveness property, so that it can always [may???] make progress when a non-faulty leader is elected. Consider again the \textit{prepare} phase; the leader includes in its pre-proposal the QC from the highest view that it hears about in the \textit{new-view} messages it receives. However, there may be some honest replica [how???] that the leader did not hear from (perhaps their message was lost) that is locked on a higher-view proposal than the one that the leader chooses to pre-propose. When this replica receives the pre-proposal, it will reject it as it is locked on a higher-view proposal, and the system will not make progress. This is why it is necessary to wait for a timeout $\Delta$, so that the leader waits a sufficient amount of time to receive a \textit{new-view} from all replicas.
 
-In order to achieve responsiveness we can modify our algorithm by adding a \textit{pre-commit} phase in between \textit{prepare} and \textit{commit}, and removing the requirement for the leader to wait for a timeout in the \textit{new-view} phase. As before, there may be some honest replica that becomes locked on some proposal $x$ during the \textit{commit} phase. However, now there is a \textit{pre-commit} phase before this, where a quorum of replicas all store a \textit{key} for $x$, with this \textit{key} being a QC of \textit{prepare} acks. We now consider the next \textit{new-view} phase; the replicas now send their \textit{key} to the new leader, and the leader chooses what to propose based on the highest view \textit{key} it sees. Even if the leader does not receive a \textit{new-view} from the honest replica itself, it is guaranteed to hear about the proposal $x$, so it will be able to make progress. See an example in figure \ref{responsiveeexample}.
+[HotStuff does \textit{optimistic} responsiveness]In order to achieve responsiveness we can modify our algorithm by adding a \textit{pre-commit} phase in between \textit{prepare} and \textit{commit}, and removing the requirement for the leader to wait for a timeout in the \textit{new-view} phase. As before, there may be some honest replica that becomes locked on some proposal $x$ during the \textit{commit} phase. However, now there is a \textit{pre-commit} phase before this, where a quorum of replicas all store a \textit{key} for $x$, with this \textit{key} being a QC of \textit{prepare} acks. We now consider the next \textit{new-view} phase; the replicas now send their \textit{key} to the new leader, and the leader chooses what to propose based on the highest view \textit{key} it sees. Even if the leader does not receive a \textit{new-view} from the honest replica itself, it is guaranteed to hear about the proposal $x$ [because the quorums intersect!!!], so it will be able to make progress. See an example in figure \ref{responsiveeexample}.
 
 % This ensures that if some honest replica becomes locked on a value in the \textit{commit} phase, then there are at least $f + 1$ honest nodes that have a `key' for that value from the \textit{pre-commit} phase. More specifically, they have a `key-proof' composed of a QC over \textit{pre-commit} acks. Replicas then send this key-proof with their \textit{new-view} message when a new view begins. The new leader selects the key-proof with the highest view proposal and sends it along with their \textit{prepare} message. Even if the leader does not receive a \textit{new-view} message from the replica that is locked on the highest view proposal, they must have received the key to this proposal from some honest replica, so their \textit{prepare} message will make progress. See an example in figure \ref{responsiveeexample}.
 
@@ -155,67 +167,46 @@ In order to achieve responsiveness we can modify our algorithm by adding a \text
 \end{figure}
 
 \subsection{View-changes} \label{viewchange}
-If a leader fails to make progress within some timeout a view-change takes place and the next view begins. The HotStuff paper does not go into detail on how view-changes take place, so this explanation is based on a talk by one of its authors, Ittai Abraham \cite{ittai}, and is similar to the approach used by LibraBFT \cite{baudet_state_nodate}.
+If a leader fails to make progress within some timeout a view-change takes place and the next view begins. The HotStuff paper does not go into detail on how view-changes take place, so this explanation is based on a talk by one of its authors, Ittai Abraham \cite{ittai}, and is similar to the approach used by LibraBFT \cite{baudet_state_nodate}. [mention cogsworth]
 
 Once the view times out, nodes send a \textit{complain} message to the next leader and start a new timeout for the next view. Once the next leader achieves a quorum of \textit{complain} messages it collects them into a QC known as a \textit{view-change proof}. This leader can then send a \textit{view-change} message containing the \textit{view-change proof} to all replicas, who will respond by transitioning to the next view and sending a \textit{new-view} message to the new leader. The inclusion of the \textit{view-change proof} prevents liveness attacks by byzantine nodes that could otherwise attack the system by constantly causing view-changes to take place and preventing non-faulty leaders from making progress.
 
 The use of timeouts in this way is a type of failure detector, which is a system that facilitates the detection of failed nodes \cite{chandra_weakest_1996}\cite{chandra_unreliable_1996}.
 
-\subsection{Chaining} \label{chaining}
 
-The algorithm presented goes through several very similar phases to commit a proposal, these phases involve collecting votes from replicas to form a QC that then serves in later phases. The `chained' algorithm simplifies and optimises this by pipelining the different phases. Instead of having different phases as before, we can have a single \textit{generic} phase that collects votes, creates a \textit{generic QC}, and sends it to the next leader; now we change view on each phase and a QC can serve in multiple phases concurrently.
-
-In each view, some leader sends a proposal to all replicas, who send their replies to the next leader who can form a QC to add to their proposal. The replicas also send \textit{new-view} messages to the next leader as before, to allow them to select a node to propose.
-
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.3]{nchain.png}
-\caption{Sequence of nodes forming a 2-chain.}
-\label{nchain}
-\end{figure}
-
-Figure \ref{nchain} shows a chain of nodes connected by `parent' links; every time we propose a value we extend the chain with a new node. Some node \textit{b} also contains a link to another node within \textit{b.justify.node}, which is the previous generic QC in the chain. In the event of a view-change a dummy node will be inserted in the chain which will cause a `gap' where some \textit{b.justify.node} pointer jumps over a dummy node. If some node \textit{b} has a QC that points to its direct parent with no `gap' in-between, then we say that it forms a \textit{one-chain}. In general, if we have $n$ such direct links without `gaps' we refer to this as an \textit{n-chain}, as shown above.
-
-To reproduce the behaviour of the unchained algorithm, on receiving a proposal for node \textit{b\textsuperscript{*}} a replica must look at \textit{b\textsuperscript{*}.justify.node} to see if it points to an \textit{n-chain}. It must take different actions depending on the length of the chain:
-\begin{itemize}
-\item zero-chain: this is equivalent to the \textit{prepare} phase from the unchained version, so the replica votes for the proposal only if it does not conflict with their \textit{lock}
-\item one-chain: this is equivalent to the \textit{pre-commit} phase from the unchained version, so the replica should store a \textit{key}
-\item two-chain: this is equivalent to the \textit{commit} phase, so the replica should \textit{lock} on the value proposed at the start of the two-chain
-\item three-chain: this is equivalent to the \textit{decide} phase, so the replica can execute the commands from the node at the start of the three-chain
-\end{itemize}
 
 \section{Tools \& libraries} \label{tools}
 \textit{In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.}
 
 \subsection{OCaml}
-I chose OCaml \cite{noauthor_ocaml_nodate} for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, and good library support. OCaml's multi-paradigm nature is suitable for implementing HotStuff, as the core state machine can be elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm. Additionally, the Tezos cryptocurrency is written in OCaml and contains a cryptography library that provides the functionality needed by HotStuff.
+I chose OCaml \cite{noauthor_ocaml_nodate} for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, and good library support. OCaml's multi-paradigm nature is suitable for implementing HotStuff, as the core state machine can be elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm. Additionally, the Tezos cryptocurrency [cite!!!] is written in OCaml and contains a cryptography library (section \ref{tezos}) that provides the functionality needed by HotStuff.
 
-The performance bottlenecks for distributed byzantine algorithms are generally cryptography, message serialisation and network delays. This means that it is more important to choose a language with suitable features to aid implementation, rather than picking a `high-performance' language like C++.
+The performance bottlenecks for distributed byzantine algorithms are generally cryptography, message serialisation and network delays. This means that it is more important to choose a language with suitable features to aid implementation, rather than picking a `high-performance' language like C++. [mention multicore OCaml, it was not ready when this project began]
 
 OCaml has a powerful module system that facilitates writing highly reusable code. The module system was only briefly touched upon in the tripos (in Concepts in Programming Languages from IB), so I spent time learning about these features. Modules provide an elegant interface for the core state machine to interact with the imperative parts of the program that actually send messages over the network.
 
-There is no existing reference implementation of HotStuff in OCaml, so my project contributes to the growing OCaml ecosystem. This ecosystem is home to an active community, and interesting projects such as MirageOS unikernels \cite{noauthor_mirageos_nodate}. Because my project is implemented purely in OCaml, it could potentially be deployed on a MirageOS unikernel.
+There is no existing reference implementation of HotStuff in OCaml, so my project contributes to the growing OCaml ecosystem\footnote{Since our project is implemented purely in OCaml, it could be deployed in a MirageOS unikernel \cite{noauthor_mirageos_nodate}}.
 
 \subsection{Lwt}
-Lwt \cite{noauthor_lwt_2023} is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages and are used by asynchronous promises in Lwt. Lwt is useful to this project as promises provide a way to dispatch messages over the network and wait for their responses in different threads. Promises are cheap to create in Lwt, so one can create many lightweight threads with good performance [citation needed***].
+Lwt \cite{noauthor_lwt_2023} is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages [verify!!!] and are used by asynchronous promises in Lwt. Lwt is useful to this project as promises provide a way to asynchronously dispatch messages over the network and wait for their responses in different threads. Promises are cheap to create in Lwt, so one can create many lightweight threads with good performance [citation needed***].
 
 One alternative I could have used is Jane Street's Async library \cite{noauthor_async_nodate}, which has similar features but better performance; however, I chose not to due to its poor documentation. Another alternative that also has better performance than Lwt is EIO \cite{noauthor_eio_2023}, but this library is new and not yet in a stable state.
 
 \subsection{Cap'n Proto}
-Cap'n Proto  \cite{noauthor_capn_nodate} is an RPC framework that includes a library for sending and receiving RPCs, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in section \ref{capnpbenchmark}.
+Cap'n Proto  \cite{noauthor_capn_nodate} is an RPC framework that includes a library for sending and receiving RPCs [mention message serialisation!!!], and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in section \ref{capnpbenchmark}.
 
 [some people use xyz fancy library that is much faster but this was clearly not feasible for this project\dots]
 
 \subsection{Tezos cryptography} \label{tezos}
-The Tezos cryptography library \cite{noauthor_tezos_nodate} provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, aggregate several signatures into a single one, and check whether an aggregate signature is valid. The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature. Benchmarks for the library are presented in section \ref{tezosbenchmark}.
+The Tezos cryptography library \cite{noauthor_tezos_nodate} provides aggregate signatures using the BLS12-381 elliptic curve construction [cite crypto paper???]. It provides functions to sign some data using a private key, aggregate several signatures into a single one, and check whether an aggregate signature is valid. The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature. Benchmarks for the library are presented in section \ref{tezosbenchmark}.
 
 \section{Requirements analysis} \label{requirements}
 
 In order to be successful the implementation should conform to the following requirements:
 \begin{itemize}
-	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper \ref{hotstuff}. This can be established by testing the program trace for compliance with the algorithm specification.
+	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper \cite{hotstuff}. This can be established by testing the program trace for compliance with the algorithm specification.
 	\item Evaluation --- analysis of system throughput and latency should be carried out by testing the program locally, analysing the trace, and testing in simulated network.
-	\item Optimisation --- Implement features to improve transaction throughput and reduce latency over the naive implementation. This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
+	\item Optimisation --- implement features to improve transaction throughput and reduce latency over the naive implementation. This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
 \end{itemize}
 
 % These requirements are similar to those presented in my proposal (Appendix X***) with a few differences. The first difference is to evaluate on 4 nodes rather than 32. Benchmarking of Cap'n Proto has revealed its limitations when sending large messages (\ref{capnpbenchmark}). Once batching of requests is implemented the internal messages sent between nodes will be large and could cause a performance bottleneck for the state machine progressing. Because of this, it may not be feasible to get reasonable performance with more nodes, as more nodes result in more internal messages being sent. In practice, permissioned blockchains are often run with a small number of nodes, so this limitation may not be important [citation needed *** honeybadger BFT?].
@@ -230,17 +221,21 @@ In order to be successful the implementation should conform to the following req
 
 \subsection{Development methodology} \label{waterfall}
 
+[change to an iterative model]
 We chose to use a waterfall model for this project, tasks were carried out in accordance with the timetable set out in the proposal [reference appendix!]. Development proceeded in a sequential fashion, we set out requirements (section \ref{requirements}), studied the HotStuff protocol (section \ref{hotstufftheory}), implemented the system in accordance with the timetable (section \ref{implementation}), and carried out an evaluation of performance (section \ref{evaluation}).
 
 \subsection{Testing \& debugging methodology} \label{testing}
 
 Unit testing was carried out using `expect tests', which compare a program trace to the correct output. A testing suite of expect tests verifies that the program behaves as specified in the HotStuff paper. This suite has 100\% code coverage\footnote{The report says 97.89\% coverage, but the only uncovered code is the testing code itself.} of the consensus state machine code, the coverage report is at \textit{\_coverage/index.html}.
 
-The Memtrace library \cite{noauthor_memtrace_nodate} and viewer were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
+The Memtrace library and viewer \cite{noauthor_memtrace_nodate} were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
 
 [talk about mininet!] \cite{noauthor_mininet_nodate}
 
 Due to the distributed nature of the program, normal debugging tools and profilers are not useful for debugging deadlocks and performance issues. This is because the cause of deadlocks and performance issues is often some process waiting or a backlog of work forming, but this cannot be detected by tools that just track things like CPU usage. Instead, I had to rely on manual inspection of the program trace and commands that measure the real time taken for some part of the program to run.
+
+[integrate this with the above to make one paragraph!!!]
+As mentioned in section \ref{testing}, the nature of the project meant that debugging had to be carried out by manual inspection of the program trace and timing sections of the program. To overcome this I carried out tests in a scientific manner, constructing a hypothesis for why the program was slow based on analysing the program trace and timing statements, then attempting to test my hypothesis while controlling other variables, and finally implementing a solution.
 
 [CI???]
 

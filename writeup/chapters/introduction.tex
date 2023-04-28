@@ -8,7 +8,7 @@
 
 The power of blockchains lies in their ability to decentralise applications that were traditionally run in a centralised manner. The implications of this are far-reaching: central banks can be replaced by decentralised cryptocurrencies, traditional corporations can be replaced with decentralised autonomous organisations (DAOs), internet infrastructure like DNS servers can be decentralised, and any possible algorithm can be run on a decentralised `world computer'. The innovation that make blockchains possible is the byzantine consensus algorithm.
 
-Byzantine fault-tolerant consensus algorithms allows a group of parties to agree on some piece of information under adverse conditions where some messages can be lost and some parties are controlled by a malicious adversary. For example, one could create a cryptocurrency by using such an algorithm to reach consensus between many devices on a ledger of transactions like ``Account X transfers account Y £10''; the algorithm will ensure that transactions cannot be lost and the system cannot be sabotaged by malicious actors.
+Byzantine fault-tolerant consensus algorithms allows a group of parties to agree on some piece of information under adverse conditions where some messages can be lost and some parties are controlled by a malicious adversary. For example, one could create a cryptocurrency by using such an algorithm to reach consensus between many devices on a ledger of transactions like ``Account Alice transfers account Bob £10''; the algorithm will ensure that transactions cannot be lost and the system cannot be sabotaged by malicious actors.
 
 Byzantine consensus algorithms can be viewed as solutions to the byzantine generals problem \cite{lamport_byzantine_nodate}. In this problem, a group of generals must all agree to siege a castle at the same time, but they can only communicate via messengers that take some time to arrive and can be captured en route. Additionally, up to a third of the generals may be malicious, and try to prevent the other generals from reaching consensus on a time to attack. By following a byzantine consensus protocol the generals can reach consensus on a value like ``attack at dawn''. Some algorithms can reach consensus on multiple values, resulting in a continuously growing log that can never be modified or erased, only extended.
 
@@ -24,7 +24,7 @@ The main contributions of this dissertation are:
 \begin{itemize}
 	\item Providing a reference implementation of HotStuff in OCaml based on a paper by Yin et. ~al~ \cite{yin2019hotstuff}.
 	\item Outlining key practical challenges and considerations of this implementation.
-	\item We adapt the pacemaker mechanism presented in the HotStuff paper, giving a full specification that works in asynchronous environments without synchronised clocks. The paper did not sufficiently specify the pacemaker mechanism, which drives the system to ensure it makes progress.
+	\item Adapting the pacemaker mechanism presented in the HotStuff paper, giving a full specification that works in asynchronous environments without synchronised clocks. The paper did not sufficiently specify the pacemaker mechanism, which drives the system to ensure it makes progress.
 \end{itemize}
 % Blockchains are exciting because of their potential to decentralise many applications that are traditionally centralised. These include:
 % Central banks being replaced with decentralised cryptocurrencies 
