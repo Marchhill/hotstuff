@@ -258,7 +258,7 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Performance improvements} \label{performance}
 
-\textit{In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle.]}
+\textit{In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle.] \cite{chubby}}
 
 
 % Batching \& limiting of batch sizes. deduplication in batching
@@ -395,7 +395,7 @@ This implementation did not lead to the desired reduction in latency, the system
 	\end{algorithmic}
 \end{algorithm}
 
-Note the small optimisation on line \ref{smalloptimisation}, the \textit{seen} can safely be emptied as the commands have already been filtered; this reduces the amount of computation required to calculate the set difference next time. The second implementation was much more effective at screening requests and resulted in a significant reduction in latency. The difference is demonstrated in an ablation study (section \ref{ablation}) The effectiveness of this change led to further insight into what the bottlenecks for performance were.
+Note the small optimisation on line \ref{smalloptimisation}, the \textit{seen} can safely be emptied as the commands have already been filtered; this reduces the amount of computation required to calculate the set difference next time. The second implementation was much more effective at screening requests and resulted in a significant reduction in latency. The difference is demonstrated in our ablation study (section \ref{ablation}). The effectiveness of this change led to further insight into what the bottlenecks for performance were.
 
 \subsubsection{Batch sizes} \label{batchsizes}
 The effectiveness of filtering out commands to make proposals smaller implies that the size of a proposal has a significant impact on the performance of the program.%Furthermore, analysis of the time data for sending messages showed that there was a high variance in time taken, with some messages taking on the order of milliseconds [verify ***] to be sent.
@@ -416,7 +416,7 @@ Implementing this feature required minimal changes to algorithm \ref{dedup2}, on
 % solution: include node hashes
 % fourth issue: size of sending all nodes
 % solution: TODO implement TCP
-\textit{This section concerns the difficulties of encoding nodes in the Cap'n Proto schema, and designing a suitable type to represent them. As mentioned in \ref{overview}, Cap'n Proto requires a schema to define the format of RPCs that can be sent, and one must convert between consensus state machine internal types and Cap'n Proto types in order to send messages.}
+\textit{This section concerns the difficulties of encoding nodes in the Cap'n Proto schema, and designing a suitable type to represent them. As mentioned in section \ref{overview}, Cap'n Proto requires a schema to define the format of RPCs that can be sent, and one must convert between consensus state machine internal types and Cap'n Proto types in order to send messages.}
 
 \subsubsection{Recursive types}
 The unchained HotStuff algorithm has a genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. Each node contains the fields \textit{parent}, \textit{cmd}, \textit{justify}, and \textit{height}, with the \textit{justify} field containing a quorum certificate with a `pointer' to another node in the chain (section \ref{chaining}). The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
@@ -485,7 +485,7 @@ The load generator is responsible for sending client requests to the nodes of th
 
 The load generator is open-loop (figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator `waits' for the system, so cannot overload it.
 
-The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all (\ref{sendtoall}) the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, reducing start-up effects.
+The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all (section \ref{sendtoall}) the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, reducing start-up effects.
 
 \subsection{Experiment scripts} \label{experimentscripts}
 Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
@@ -533,6 +533,6 @@ Different experiments may vary input variables such as throughput, batch size, a
 \end{forest}
 \end{small}
 
-The \textit{src} directory contains the main server loop and the code for interacting with Cap'n Proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in \ref{spec}. N.B. this folder also contains testing files that are omitted for conciseness. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.
+The \textit{src} directory contains the main server loop and the code for interacting with Cap'n Proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in section \ref{spec}. N.B. this folder also contains testing files that are omitted for conciseness. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.
 
 In order to run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \textit{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time. These scripts will run on Linux and MacOS, but will have to be modified to work on Windows.

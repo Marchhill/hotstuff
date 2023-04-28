@@ -100,7 +100,7 @@ Our study of node counts (section \ref{nodecountseval}) gives further evidence t
 
 In our ablation study (section \ref{ablation}) we compare the performance of the system with different optimisations enabled, demonstrating their effectiveness in increasing goodput, and lowering latency. We also demonstrate that cryptography is a bottleneck by demonstrating the superior performance of the system with cryptography disabled.
 
-In our wide area network (WAN) simulation study (section \ref{minineteval}), we compare the performance of our system running locally, to a simulated mininet network (section \ref{testing}) with link latency similar to what one might find in a wide area network. [we found...]
+In our wide area network (WAN) simulation study (section \ref{minineteval}), we compare the performance of our system running locally, to a simulated mininet network (section \ref{testing}) with link latency similar to what one may observe in a wide area network. [we found...]
 
 In our view-change study (section \ref{viewchange}) we demonstrate that the view-change protocol (section \ref{viewchange}) is effective in ensuring the system progresses once a node has died, albeit with a significant performance penalty.
 
@@ -129,7 +129,7 @@ In our view-change study (section \ref{viewchange}) we demonstrate that the view
 
 This study compares the performance of the system for varying limits on batch sizes (section \ref{batchsizes}). All experiments were run on a network of 4 nodes.
 
-At lower throughputs where the system is not overloaded, throughput grows linearly with goodput, as the system is able to responds to all incoming requests (figure \ref{throughputgoodputbatch}), with roughly constant latency throughout an experiment (figure \ref{stableheatmap}). During this period batches are not filled, so larger throughputs result in larger messages and a linear increase in latency due to increasing serialisation latency (figure \ref{throughputlatencybatch}). The system is able to reach a higher goodput before being overloaded if it has a larger batch size, as each view results in more commands being committed; this supports our conclusion that batching is an effective optimisation.
+At lower throughputs where the system is not overloaded, throughput grows linearly with goodput (figure \ref{throughputgoodputbatch}), as the system is able to respond to all incoming requests, with roughly constant latency throughout an experiment (figure \ref{stableheatmap}). During this period batches are not filled, so larger throughputs result in larger messages and a linear increase in latency due to increasing serialisation latency (figure \ref{throughputlatencybatch}). The system is able to reach a higher goodput before being overloaded if it has a larger batch size, as each view results in more commands being committed; this supports our conclusion that batching is an effective optimisation.
 
 Once throughput is increased enough, batches begin to be filled up and the system is overloaded. This results in the goodput flattening out (figure \ref{throughputgoodputbatch}), as the system cannot handle the volume of requests; commands begin to queue on the nodes and latency increases linearly (figure \ref{linearheatmap}). For higher batch size limits (especially unlimited), goodput declines once the system is overloaded rather than flattening off. This is because the benefits of larger batches are offset by messages becoming larger, causing increased serialisation latency, which increase view times and lower goodput. For large batch sizes, view times increase exponentially, as shown by the growing vertical gaps between commands being committed in figure \ref{expheatmap}.
 
@@ -167,7 +167,7 @@ Figure \ref{throughputgoodputnodes} shows that the larger the node count, the lo
 \centering
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-Version & Chained & Truncation & Filtering & Crypto \\ \hline
+Version & Chaining & Truncation & Filtering & Crypto \\ \hline
 1 & \xmark & \xmark & \xmark & \cmark \\ \hline
 2 & \cmark & \xmark & \xmark & \cmark \\ \hline
 3 & \cmark & \xmark & \cmark & \cmark \\ \hline
@@ -193,7 +193,7 @@ Version & Chained & Truncation & Filtering & Crypto \\ \hline
 \label{throughputlatencyablation}
 \end{figure}
 
-This study compares the performance of different versions of the system with different optimisations enabled. The optimisations explored are chaining (section \ref{chaining}), node truncation (section \ref{truncation}), and command filtering (section \ref{sendtoall}). We also compare performance with cryptography disabled. The mapping from version numbers to which features are enabled is given in table \ref{versiontable}. All experiments were run with a network of 4 nodes, and unlimited batch sizes.
+This study compares the performance of different versions of the system with different optimisations enabled. The optimisations explored are chaining (section \ref{chaining}), node truncation (section \ref{truncation}), and command filtering (section \ref{sendtoall}). We also compare performance with, and without cryptography enabled. The mapping from version numbers to which features are enabled is given in table \ref{versiontable}. All experiments were run with a network of 4 nodes, and unlimited batch sizes.
 
 \subsection{Wide area network simulation} \label{minineteval}
 

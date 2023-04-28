@@ -61,6 +61,11 @@ Lwt, Apr. 2023.
   made live: An engineering perspective}.
 \newblock pp.~398--407.
 
+\bibitem{chandra_weakest_1996}
+{\sc Chandra, T.~D., Hadzilacos, V., and Toueg, S.}
+\newblock The weakest failure detector for solving consensus.
+\newblock {\em Journal of the ACM 43}, 4 (July 1996), 685--722.
+
 \bibitem{chandra_unreliable_1996}
 {\sc Chandra, T.~D., and Toueg, S.}
 \newblock Unreliable failure detectors for reliable distributed systems.

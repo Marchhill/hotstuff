@@ -24,45 +24,45 @@ Warning--empty year in lamport_byzantine_nodate
 Warning--empty journal in nakamoto_bitcoin_nodate
 Warning--empty journal in ongaro_search_nodate
 Warning--empty journal in wood_ethereum_nodate
-You've used 31 entries,
+You've used 32 entries,
             2253 wiz_defined-function locations,
-            657 strings with 7825 characters,
-and the built_in function-call counts, 8077 in all, are:
-= -- 735
-> -- 382
+            661 strings with 7963 characters,
+and the built_in function-call counts, 8436 in all, are:
+= -- 771
+> -- 399
 < -- 0
-+ -- 163
-- -- 130
-* -- 539
-:= -- 1270
-add.period$ -- 69
-call.type$ -- 31
-change.case$ -- 156
++ -- 171
+- -- 136
+* -- 574
+:= -- 1328
+add.period$ -- 72
+call.type$ -- 32
+change.case$ -- 162
 chr.to.int$ -- 0
-cite$ -- 52
-duplicate$ -- 301
-empty$ -- 696
-format.name$ -- 130
-if$ -- 1691
+cite$ -- 53
+duplicate$ -- 310
+empty$ -- 723
+format.name$ -- 136
+if$ -- 1762
 int.to.chr$ -- 0
-int.to.str$ -- 31
-missing$ -- 18
-newline$ -- 133
-num.names$ -- 46
-pop$ -- 243
+int.to.str$ -- 32
+missing$ -- 19
+newline$ -- 138
+num.names$ -- 48
+pop$ -- 247
 preamble$ -- 1
-purify$ -- 125
+purify$ -- 130
 quote$ -- 0
-skip$ -- 234
+skip$ -- 239
 stack$ -- 0
-substring$ -- 349
-swap$ -- 66
+substring$ -- 380
+swap$ -- 68
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 124
+type$ -- 128
 warning$ -- 21
-while$ -- 61
-width$ -- 33
-write$ -- 247
+while$ -- 65
+width$ -- 34
+write$ -- 257
 (There were 21 warnings)

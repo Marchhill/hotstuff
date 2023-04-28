@@ -68,23 +68,16 @@ let as_leader state event =
 					let state = {state with s = {state.s with role = Leader {l with m = m'}}} in
 					if q then
 						let highQC = get_high_qc m' in
-						(*
-						let exec = Queue.take_opt state.cmds in
-						let cmd = (match exec with
-							| Some cmd ->
-								Queue.add cmd state.exec;
-								cmd
-							| None -> {data = "#"; callback_id = ""}(* noop *)
-						)
-						in
-						*)
+						let i = ref 0 in
+    					(* limit batch size *)
+						let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i <= state.batch_size) state.cmds in
 						let curProposal = match highQC with
-							| Some qc -> create_leaf qc.node state.cmds (* extend log *)
-							| None -> create_leaf None state.cmds (* should only happen in view 1 *)
+							| Some qc -> create_leaf qc.node cmds (* extend log *)
+							| None -> create_leaf None cmds (* should only happen in view 1 *)
 						in
 						let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = Prepare; node = curProposal; justify = highQC; partial_signature = None}) in
 						(
-							{state with s = {state.s with role = Leader {l with has_proposed = true}}; cmds = Cmd_set.empty},
+							{state with s = {state.s with role = Leader {l with has_proposed = true}}; cmds = rest},
 							[Broadcast broadcast_msg]
 						)
 					else
