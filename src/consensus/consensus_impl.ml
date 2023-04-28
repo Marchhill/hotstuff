@@ -227,10 +227,10 @@ let as_replica state (event : event) =
 			({state with s = {state.s with nv = event::state.s.nv}}, [])
 		| _ -> (state, [])
 
-let create_state_machine ?(crypto = None) id node_count _ =
+let create_state_machine ?(crypto = None) id node_count batch_size =
 	let r = get_role 1 id node_count [] in
 	let s = {phase = Prepare; role = r; locked_qc = Some qc_0; prepare_qc = Some qc_0; nv = []} in
-	let state = {view = 1; id = id; node_count = node_count; batch_size = 0; crypto = crypto; cmds = Cmd_set.empty; seen = Cmd_set.empty; complain = (Hashtbl.create 1000); s = s} in
+	let state = {view = 1; id = id; node_count = node_count; batch_size = batch_size; crypto = crypto; cmds = Cmd_set.empty; seen = Cmd_set.empty; complain = (Hashtbl.create 1000); s = s} in
 	let new_view_msg = sign state.crypto ({id = state.id; view = 0; tcp_lens = []; msg_type = NewView; node = None; justify = Some qc_0; partial_signature = None}) in
 	let new_view_action = SendNextLeader new_view_msg in
 	(state, [new_view_action])
