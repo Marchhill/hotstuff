@@ -39,7 +39,8 @@ let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) =
 	let parent = add_dummy_nodes parent offset in
 	let justify = {node_offset = offset + 1; view = qc.view; signature = qc.signature; msg_type = qc.msg_type; ids = qc.ids} in (* ??? change offset if skipped? *)
 	let n = make_node cmds (Some parent) (Some {justify = justify; height = state.view + 1}) in
-	trim_node n (state.view + 1 - _cutoff) (* only send nodes that will be used *)
+	(*trim_node n (state.view + 1 - _cutoff)*) (* only send nodes that will be used *)
+        n
 
 let rec on_commit (state : t) = function
 	| Some b ->
