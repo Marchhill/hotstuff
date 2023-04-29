@@ -173,8 +173,6 @@ Once the view times out, nodes send a \textit{complain} message to the next lead
 
 The use of timeouts in this way is a type of failure detector, which is a system that facilitates the detection of failed nodes \cite{chandra_weakest_1996}\cite{chandra_unreliable_1996}.
 
-
-
 \section{Tools \& libraries} \label{tools}
 \textit{In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.}
 
@@ -204,7 +202,7 @@ The Tezos cryptography library \cite{noauthor_tezos_nodate} provides aggregate s
 
 In order to be successful the implementation should conform to the following requirements:
 \begin{itemize}
-	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper \cite{hotstuff}. This can be established by testing the program trace for compliance with the algorithm specification.
+	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper \cite{yin2019hotstuff}. This can be established by testing the program trace for compliance with the algorithm specification.
 	\item Evaluation --- analysis of system throughput and latency should be carried out by testing the program locally, analysing the trace, and testing in simulated network.
 	\item Optimisation --- implement features to improve transaction throughput and reduce latency over the naive implementation. This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
 \end{itemize}
@@ -219,10 +217,9 @@ In order to be successful the implementation should conform to the following req
 
 \textit{In this section we describe the professional software engineering methodology deployed during implementation.}
 
-\subsection{Development methodology} \label{waterfall}
+\subsection{Development methodology} \label{devmethods}
 
-[change to an iterative model]
-We chose to use a waterfall model for this project, tasks were carried out in accordance with the timetable set out in the proposal [reference appendix!]. Development proceeded in a sequential fashion, we set out requirements (section \ref{requirements}), studied the HotStuff protocol (section \ref{hotstufftheory}), implemented the system in accordance with the timetable (section \ref{implementation}), and carried out an evaluation of performance (section \ref{evaluation}).
+For this project we used an iterative spiral development methodology. Objectives were chosen in accordance with the timetable set out in the proposal [reference appendix!]. Development then proceeded in cycles of implementation, testing, and analysis of the program trace and timing statements. This approach was particularly useful during the optimisation of our system (section \ref{performance}), which required extensive analysis of the logs and rapid development of different prototypes to compare performance.
 
 \subsection{Testing \& debugging methodology} \label{testing}
 
