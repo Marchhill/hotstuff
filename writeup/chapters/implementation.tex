@@ -36,7 +36,7 @@
 % ---
 \textit{In this chapter we describe the architecture of our implementation [\ref{overview}], present a specification and proof of correctness and liveness for our pacemaker [\ref{spec}], describe key optimisations implemented [\ref{performance}], present our load generator and experiment scripts which will be used in evaluation [\ref{benchcode}], and give an overview of the repository structure [\ref{repo}].}
 
-\section{Architectural overview} \label{overview}
+\section{System Architecture} \label{overview}
 
 \begin{figure}[h!]
 \centering
@@ -45,7 +45,9 @@
 \label{nodediagram}
 \end{figure}
 
-The core implementation of the HotStuff algorithm (section \ref{spec}) is implemented in the \textit{consensus} module. The main function provided by this module is \textit{advance}, which delivers some event (such as an incoming message, client request or timeout) to the consensus state machine and returns an updated state and a list of actions (such as sending a message to another node or responding to a client request) to be carried out. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{jensen_ocons_2023}, which was developed by my project supervisor. The \textit{consensus} module contains both a chained and unchained implementation that share a common signature, so can be interchanged. The module uses the Tezos cryptography library (section \ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
+[make clearer, break down components by diagram. use less of my own terms]
+
+The core implementation of the HotStuff algorithm (section \ref{spec}) is implemented in the \textit{consensus} module. The main function provided by this module is \textit{advance}, which delivers some event (such as an incoming message, client request or timeout) to the consensus state machine and returns an updated state and a list of actions (such as sending a message to another node or responding to a client request) to be carried out. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{jensen_ocons_2023}, which was developed by my project supervisor. The \textit{consensus} module contains both the chained \ref{chaining} and basic \ref{hotstufftheory} algorithms; they share a common signature, so can be interchanged. The module uses the Tezos cryptography library (section \ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
 
 Each node operates as a server waiting for messages from other nodes or requests from a client (or in the case of our experiments a load generator, which is described in section \ref{benchcode}). The format of RPCs is specified in a Cap'n Proto schema, in their custom markdown language. A received RPC must be decoded, and the Cap'n Proto types converted into the internal types of the consensus state machine. Messages and requests are added to separate streams\footnote{A stream is thread-safe implementation of a queue in Lwt.} when they are received. When a request is received the callback function to respond to the request is stored in a hash table, so that it can be accessed when the command has been committed and the client request can be responded to.
 
@@ -53,10 +55,45 @@ The main loop takes events from the message and request streams, prioritising in
 
 The actions that can be carried out are sending a message to other nodes, responding to a client request, and resetting a timer. In order to send a message we must convert the consensus state machine internal types into Cap'n Proto types, and construct an RPC that matches the schema. Messages are dispatched asynchronously in a new thread. The node maintains TCP connections with all other nodes that are reused every time a message is sent, and in the event of the connection breaking the node repeatedly attempts to reconnect with binary exponential back-off. When responding to a client request the committed command's unique identifier is used to lookup the callback to respond to the client, which is then called, sending a response to the client. The timer is implemented with Lwt promises, a new thread is created which waits for a timeout to elapse and then adds a TIMEOUT message to the message stream.
 
+[integrate this and make it much shorter:]
+
+Initial analysis of timing data showed a large amount of time was spent by requests queuing on the node before they are delivered to the state machine. At this time the architecture presented in section \ref{overview} had not been fully developed, specifically, there was only one stream that contained both internal messages and client requests.
+
+\textbf{Hypothesis: } Internal messages are being starved by client requests. At large throughputs the stream quickly becomes filled with client requests, which may prevent internal messages being handled. Internal messages represent a backlog of work that is not yet finished, so this should be handled before accepting more requests.
+
+\textbf{Design principle: } The system should prioritise clearing its backlog of work before accepting new work.
+
+\textbf{Potential solution: } Split the stream into two separate streams for messages and requests, and always pick from the message stream over the request stream until the message stream is empty.
+
+Implementing the potential solution did not lead to a significant improvement in performance, so this was not the issue. However, this architectural model was retained as it is theoretically better and may lead to observable improvements later.
+
 \section{Pacemaker Specification} \label{spec}
-We present the pseudocode for the unchained algorithm given in the HotStuff paper (algorithms \ref{hotstuff} \& \ref{pacemaker}) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable. We informally justify the changes, and then prove that they yield the desired behaviour.
+[highlight that this is our main theoretical contribution and which parts we did!]
+In this section...
+We informally justify the changes, and then prove that they yield the desired behaviour.
+
 
 The model of collecting a quorum of COMPLAIN messages to transition to the next view is based on the pacemaker for LibraBFT \cite{baudet_state_nodate}, and is described in section \ref{viewchange}. The rest of the pacemaker is designed to advance to the next view as soon as the system allows, and is based on ad-hoc fixes to deadlocks that were encountered during implementation.
+
+[Highlight our contributions, and include this bit:]
+[shows that we tried an alternative model for the pacemaker....]
+Another potential cause of the issue was that internal messages are starving client requests, rather than the other way around. The modified implementation of the pacemaker (section \ref{spec}) immediately begins a new view as soon as the previous one is finished, which causes a large amount of internal messages.
+
+\textbf{Hypothesis: } Because the state machine is constantly advancing at the fastest possible rate, the volume of internal messages may prevent new requests from being handled.
+
+\textbf{Experimentation: } One approach is to `balance' the starvation by mostly prioritising internal messages, but every \textit{x} iterations picking a request instead of an internal message. Varying \textit{x} led to significant changes in performance, but no value for \textit{x} led to a good level of performance. This approach did not appear workable, as the nature of starvation seemed to be a complicated, with messages starving requests, and the other way around.
+
+\textbf{Potential solution: } Instead of starting the next view whenever possible, deliver the \textit{BEAT} and \textit{ON{\large N}EXT{\large S}YNC{\large V}IEW} interrupts at a steady rate.
+
+This potential solution was implemented; it involved checking a timer on every iteration of the main loop to see if some $\Delta$ had elapsed and it was time to deliver the next interrupt, as well as significant modifications to be made to the consensus state machine. Implementing this feature actually led to a significant performance hit, so the changes were discarded.
+
+% However, experimenting with this feature showed an interesting phenomenon; the main loop, which is infinitely recursive, was running at a much slower rate than one would expect. Further timing statements revealed that the command which removed an element from the stream would sometimes take a very long time (on the order of seconds). Reading more into the Lwt documentation led to the following idea:
+
+% \textbf{Potential solution: } Use a different method to take elements from the queue that is synchronous. This should stop the main loop blocking waiting for the queue to fill up.
+
+% This change improved performance by reducing the amount of time spent waiting in the main loop.
+
+We present the pseudocode for the unchained algorithm given in the HotStuff paper (algorithms \ref{hotstuff} \& \ref{pacemaker}) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
 
 \begin{algorithm}[h!]
 	\caption{Modified HotStuff}\label{hotstuff}
@@ -153,7 +190,7 @@ The model of collecting a quorum of COMPLAIN messages to transition to the next 
 		\color{Green}
 		\State $ \textit{curView} \gets \textit{view}$
 		\State $ \text{RESET{\large T}IMER}(\textit{curView})$
-		\State $ \text{ON{\large B}EAT}(\textit{cmds.take()})$
+		\State $ \text{ON{\large B}EAT}(\textit{cmds.take()})$ \label{code_takecmd}
 		\color{black}
 		\State $\text{SEND}(\text{GET{\large L}EADER}(), \text{MSG}\textsubscript{\textit{u}}(\text{NEW{\large V}IEW}, \bot, \textit{qc\textsubscript{high}}))$
 	\EndProcedure
@@ -203,9 +240,10 @@ The model of collecting a quorum of COMPLAIN messages to transition to the next 
 
 \subsection{Proofs}
 
-We now present a reasonably formal proof that the modified pacemaker possesses qualities that ensure the liveness of the system. The first property (theorem \ref{viewsync}) ensures that there will always be opportunities for the system to make progress, and the second that the pacemaker cannot be controlled by a byzantine node (theorem \ref{syncvalid}). These properties are based on those described by Naor et. ~al~ in their paper presenting the Cogsworth byzantine view synchronisation protocol \cite{naor_cogsworth_2020}; their paper formalised the notion of a pacemaker and what qualities it should possess.
+We now present a reasonably formal proof that the modified pacemaker possesses qualities that ensure the liveness of the system. The first property (theorem \ref{viewsync}) ensures that there will always be opportunities for the system to make progress, and the second that the pacemaker cannot be controlled by a byzantine node (theorem \ref{syncvalid}). These properties are based on those described by Naor et. ~al~ in their paper presenting the Cogsworth byzantine view synchronisation protocol \cite{naor_cogsworth_2020}; their paper formalised the notion of a pacemaker and what qualities it should possess. [justify why we didn't implement cogsworth, it does not overlap with our ad-hoc fixes, these were original!!!]
 
 HotStuff works under a partially-synchronous system model (section \ref{hotstufftheory}), so the following proofs assume that global synchronisation time has been reached, and messages have a bounded latency of $\delta$.
+[For this proof we consider the consensus machine (algorithm \ref{hotstuff}) and the pacemaker (algorithm \ref{pacemaker}), to be separate entities.] - relate this to cogsworth synchroniser!!!
 
 \begin{theorem}[View synchronisation] \label{viewsync}
 	There exists infinite views with honest leaders that all honest replicas will be in simultaneously, and have enough time to make progress.
@@ -223,7 +261,7 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 \begin{figure}[h!]
 	\centering
 	\includegraphics[scale=0.6]{lemma1.png}
-	\caption{Example of round-robin leader allocation for $f = 1$. Red rectangles denote byzantine leaders.}
+	\caption{Example of round-robin leader allocation for $f = 1$. Red rectangles denote byzantine leaders. [maybe stripe red nodes so they appear in black and white???]}
 	\label{lemma1diagram}
 \end{figure}
 
@@ -240,11 +278,11 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 \end{lemma}
 
 \begin{proof}
-	In the event that a byzantine node is leader and tries to prevent honest nodes from transitioning to a higher view, the honest nodes will eventually timeout and send a COMPLAIN message to the next leader (algorithm \ref{pacemaker}, line \ref{code_timeout}). This may repeat if the next leader is also byzantine. Eventually the COMPLAINs will be sent to an honest leader, that will send a NEXT{\large V}IEW message and transition all replicas into a new view (algorithm \ref{pacemaker}, line \ref{code_nextviewmsg}). Since $x$ will always progress to a higher view, it will eventually reach a view where it is the leader.
+	In the event that a byzantine node is leader and tries to prevent honest nodes from transitioning to a higher view, the honest nodes will eventually timeout and send a COMPLAIN message to the next leader (algorithm \ref{pacemaker}, line \ref{code_timeout}). This may repeat if the next leader is also byzantine. Eventually the COMPLAINs will be sent to an honest leader, that will send a NEXT{\large V}IEW message and transition all replicas into a new view (algorithm \ref{pacemaker}, line \ref{code_nextviewmsg}). Since $x$ will always progress to a higher view, it will eventually reach a view where it is the leader [quickly justify that we cannot `skip ahead' without a qc from a future view].
 \end{proof}
 
 \begin{theorem}[Synchronisation validity] \label{syncvalid}
-	The pacemaker will only advance the view if at least one honest consensus machine\footnote{For this proof we consider the consensus machine (algorithm \ref{hotstuff}) and the pacemaker (algorithm \ref{pacemaker}), to be separate entities.} requests it to be advanced.
+	The pacemaker will only advance the view if at least one honest consensus machine requests it to be advanced.
 \end{theorem}
 
 \begin{proof}
@@ -260,74 +298,53 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 
 \textit{In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle.] \cite{chubby}}
 
+\subsection{Chaining} \label{chaining}
 
-% Batching \& limiting of batch sizes. deduplication in batching
-% Send to all
+[section is too vague...]
 
-% We give cases of deadlock conditions
-% and performance issues / improvements found from debugging traces:
-% 1. print statements (even when not in-between timing commands) can affect the time measured in another operation. Removed prints and printed all results at the end (use static collector function for logging that is passed around the program).
-% 2. >= used lexicographic ordering, resulted in chains being verified due to first field being increasing until a specific command "20" where the value became lexicographically decreasing
-% 3. Infinitely recursive start node not compatible nice with messaging system
-% 4. Memory usage massively increased due to recursive node functions, replaced with an offset
-% 5. Store a hash in each node and use it to compare nodes rather than checking their entire history
-% 6. Discarding messages from future views results in some leaders not progressing
+[This is not our contribution, described in hotstuff paper blah blah]
+
+The algorithm presented goes through several very similar phases to commit a proposal, these phases involve collecting votes from replicas to form a QC that then serves in later phases. The \textit{chained} algorithm [why is it called this??? is this where blockchain gets its name? basic algorithm also seems chained] simplifies and optimises this by pipelining the different phases. Instead of having different phases as before, we can have a single \textit{generic} phase that collects votes, creates a \textit{generic QC}, and sends it to the next leader; now we change view on each phase and a QC can serve in multiple phases concurrently.
+
+In each view, some leader sends a proposal to all replicas, who send their replies to the next leader who can form a QC to add to their proposal. The replicas also send \textit{new-view} messages to the next leader as before, to allow them to select a node to propose.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{nchain.png}
+\caption{Sequence of nodes forming a 2-chain [label parent and justify links!!! fix font].}
+\label{nchain}
+\end{figure}
+
+Figure \ref{nchain} shows a chain of nodes connected by `parent' links; every time we propose a value we extend the chain with a new node. Some node \textit{b} also contains a link to another node within \textit{b.justify.node}, which is the previous generic QC in the chain. In the event of a view-change a dummy node will be inserted in the chain which will cause a `gap' where some \textit{b.justify.node} pointer jumps over a dummy node. If some node \textit{b} has a QC that points to its direct parent with no `gap' in-between, then we say that it forms a \textit{one-chain}. In general, if we have $n$ such direct links without `gaps' we refer to this as an \textit{n-chain}, as shown above.
+
+To reproduce the behaviour of the unchained algorithm, on receiving a proposal for node \textit{b\textsuperscript{*}} a replica must look at \textit{b\textsuperscript{*}.justify.node} to see if it points to an \textit{n-chain}. It must take different actions depending on the length of the chain:
+[replace this with pseudocode describing implementation]
+\begin{itemize}
+\item zero-chain: this is equivalent to the \textit{prepare} phase from the unchained version, so the replica votes for the proposal only if it does not conflict with their \textit{lock}
+\item one-chain: this is equivalent to the \textit{pre-commit} phase from the unchained version, so the replica should store a \textit{key}
+\item two-chain: this is equivalent to the \textit{commit} phase, so the replica should \textit{lock} on the value proposed at the start of the two-chain
+\item three-chain: this is equivalent to the \textit{decide} phase, so the replica can execute the commands from the node at the start of the three-chain
+\end{itemize}
+
 \subsection{Batching} \label{batching}
 % mention send to all & send to one, 4x throughput
 % reference latency graphs from final
-One way to improve goodput (number of requests committed) is to `batch' requests, meaning a node may contain many commands instead of just one. This can dramatically increase goodput as now a single view can result in many commands being committed and executed instead of just one.
+[refer to literature on batching, highlight which (practical) contributions were ours]
+One way to improve goodput (number of requests committed) is to \textit{batch} requests, meaning a node may contain many commands instead of just one. This can dramatically increase goodput as now a single view can result in many commands being committed and executed instead of just one.
 
-In order to implement this change in algorithm \ref{pacemaker} one simply has to modify the ON{\large N}EXT{\large S}YNC{\large V}IEW procedure. Instead of taking a single element from the queue of commands waiting to be proposed, the whole queue will be `batched' into a single proposal.
+[reword paragraph!!!]
+In order to implement this change in algorithm \ref{pacemaker} one simply has to modify line \ref{code_takecmd}. Instead of taking a single element from the queue of commands waiting to be proposed, the whole queue will be `batched' into a single proposal.
 
-In theory this change should result in much higher goodput without any significant increase in latency. Analysis of timing data after implementing this feature revealed that latency had increased substantially. We now present some of the analysis and experimentation that was carried out to diagnose this issue. As mentioned in section \ref{testing}, the nature of the project meant that debugging had to be carried out by manual inspection of the program trace and timing sections of the program. To overcome this I carried out tests in a scientific manner, constructing a hypothesis for why the program was slow based on crawling through logs, then attempting to test my hypothesis while controlling other variables, and finally implementing a solution.
+In theory this change should result in much higher goodput without any significant increase in latency. Analysis of timing data after implementing this feature revealed that latency had increased substantially. We now present some of the analysis and experimentation that was carried out to diagnose this issue.
 
-\subsubsection{Probing effects}
-% development of logging framework, some details of what is logged
-I added timing and logging statements to key parts of the program, allowing me to better diagnose the source of the poor performance. Running a live test with print statements has the advantage that one can quickly see when progress is not being made, or when there are pauses, as the print statements stop. However, this benefit is outweighed by the sheer volume of logs and times being printed, it becomes difficult to manage when logs are in the millions of lines long.
-
-Moreover, debugging by print statements had a bigger problem of inconsistencies between runs making it difficult to diagnose any problem. This was because the large volume of print statements being executed had a significant effect on the performance of the program. This is known as a \textit{probing effect}, the behaviour of a system is altered by the act of measuring it. I initially assumed that because the print statements were not in-between the timing statements they would not affect my measurements, but they are an expensive operation that can cause delays to happen in execution where one would not expect.
-
-This problem was overcome through the development of a simple logging framework. Key parts of the program such as the state machine advancing, actions being carried out, messages being sent, are all timed and added to lists. Critically, this list is stored and not printed out until the node is killed, so the printing cannot interfere with execution. Relevant statistics such as mean, standard deviation, and total time for each interval measured are outputted, providing crucial insight into the performance of the program.
-
-\textbf{Design principle: } Minimise probing effects by carrying out the minimum possible amount of work in critical areas of the program, storing data, and moving work (such as outputting statistics) to less critical areas of the program.
-
-\subsubsection{Architectural experimentation}
-% https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQADc%2B0AASzwxBgZSNOjdNZ%2Bw%3D
-% development of architecture in overview
-% tried moving to non event-driven model
-% thought resource contention was issue, in fact it was async get function
-Initial analysis of timing data showed a large amount of time was spent by requests queuing on the node before they are delivered to the state machine. At this time the architecture presented in section \ref{overview} had not been fully developed, specifically, there was only one stream that contained both internal messages and client requests.
-
-\textbf{Hypothesis: } Internal messages are being starved by client requests. At large throughputs the stream quickly becomes filled with client requests, which may prevent internal messages being handled. Internal messages represent a backlog of work that is not yet finished, so this should be handled before accepting more requests.
-
-\textbf{Design principle: } The system should prioritise clearing its backlog of work before accepting new work.
-
-\textbf{Potential solution: } Split the stream into two separate streams for messages and requests, and always pick from the message stream over the request stream until the message stream is empty.
-
-Implementing the potential solution did not lead to a significant improvement in performance, so this was not the issue. However, this architectural model was retained as it is theoretically better and may lead to observable improvements later.
-
-Another potential cause of the issue was that internal messages are starving client requests, rather than the other way around. The modified implementation of the pacemaker (section \ref{spec}) immediately begins a new view as soon as the previous one is finished, which causes a large amount of internal messages.
-
-\textbf{Hypothesis: } Because the state machine is constantly advancing at the fastest possible rate, the volume of internal messages may prevent new requests from being handled.
-
-\textbf{Experimentation: } One approach is to `balance' the starvation by mostly prioritising internal messages, but every \textit{x} iterations picking a request instead of an internal message. Varying \textit{x} led to significant changes in performance, but no value for \textit{x} led to a good level of performance. This approach did not appear workable, as the nature of starvation seemed to be a complicated, with messages starving requests, and the other way around.
-
-\textbf{Potential solution: } Instead of starting the next view whenever possible, deliver the \textit{BEAT} and \textit{ON{\large N}EXT{\large S}YNC{\large V}IEW} interrupts at a steady rate.
-
-This potential solution was implemented; it involved checking a timer on every iteration of the main loop to see if some $\Delta$ had elapsed and it was time to deliver the next interrupt, as well as significant modifications to be made to the consensus state machine. Implementing this feature actually led to a significant performance hit, so the changes were discarded. However, experimenting with this feature showed an interesting phenomenon; the main loop, which is infinitely recursive, was running at a much slower rate than one would expect. Further timing statements revealed that the command which removed an element from the stream would sometimes take a very long time (on the order of seconds). Reading more into the Lwt documentation led to the following idea:
-
-\textbf{Potential solution: } Use a different method to take elements from the queue that is synchronous. This should stop the main loop blocking waiting for the queue to fill up.
-
-This change improved performance by reducing the amount of time spent waiting in the main loop.
-
-\subsubsection{Send-to-all and filtering} \label{sendtoall}
+\subsubsection{Filtering} \label{filtering}
 % send to all weird graph: https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAM2hZuzkpUNIuGt2QHNZQvc%3D
 % exponential growth with end to all https://imgur.com/a/wDlhbn9 28/03 pseudocode
 % theory: nodes reproposing same values
 % first solution: deduplicate before commiting, use set instead of queue
 % second solution: deduplicate based on *seen* commands
 % could mention bug of reawaking the same promise in the hash table - this brought to my attention the deduplication issue!
-Further problems were uncovered by the implementation of send-to-all in the load generator (section \ref{benchcode}). Without this feature a client would randomly chose a node to send their request to, and the command would not be proposed until the round-robin system reached that node to become the leader. Send-to-all can reduce latency by instead broadcasting a request to all nodes, meaning that the next leader can propose the command without having to wait for the round-robin system to reach them.
+Further problems were uncovered by the implementation of send-to-all in the load generator (section \ref{benchcode}). 
 
 Instead of reducing latency as expected the implementation of this feature actually led to dramatically increased latency, and some requests not being fulfilled at all within the time that the experiment ran. Heatmaps that show the distribution of latencies over the course of an experiment showed that latency increased exponentially over the course of the test.
 
@@ -341,6 +358,7 @@ Instead of reducing latency as expected the implementation of this feature actua
 
 \textbf{Design principle: } Attempt to minimise the amount of redundant work that the system carries out by screening incoming work to check that it actually needs to be done.
 
+[shorten this section, only give the final pseudocode and not the failed attempt]
 One way to implement this is to maintain a set of commands that have been committed, and before proposing or committing a node, calculating the set difference with the \textit{commited} set to filter out redundant commands. Instead of nodes containing a list of commands, as in our naive implementation of batching, we now use a set to enable efficient computation of the difference.
 
 \begin{algorithm}[h!]
@@ -400,11 +418,12 @@ Note the small optimisation on line \ref{smalloptimisation}, the \textit{seen} c
 \subsubsection{Batch sizes} \label{batchsizes}
 The effectiveness of filtering out commands to make proposals smaller implies that the size of a proposal has a significant impact on the performance of the program.%Furthermore, analysis of the time data for sending messages showed that there was a high variance in time taken, with some messages taking on the order of milliseconds [verify ***] to be sent.
 
-\textbf{Hypothesis: } Large batches of commands cause messages to become larger, which causes them to be sent slowly due to limitations in the RPC framework.
+\textbf{Hypothesis: } Large batches of commands cause messages to become larger, which causes them to be sent slowly due to limitations in the RPC framework [serialisation!!!].
 
 \textbf{Potential mitigation: } Limit the size of batches to prevent messages becoming too large.
 
 Implementing this feature required minimal changes to algorithm \ref{dedup2}, one simply has to take a subset of \textit{cmds} to propose instead of the whole set. This feature gave a significant performance improvement, and largely eliminated the exponential growth in latency that had been seen previously. There is a trade-off between sending larger batches (more commands are committed, but messages take longer to send) and sending smaller batches (less commands are committed, but messages are sent faster). This trade-off is explored more in our analysis of the system with different batch sizes (section \ref{batchsizeseval}). Fundamentally, there are limitations in the RPC framework that give an upper bound on the performance we can hope to achieve, these limitations are evident in our benchmarking of the Cap'n Proto framework (section \ref{capnpbenchmark}).
+
 \subsection{Encoding of nodes}
 % https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQALSHx8XQgvxMrG5AvVEd9as%3D
 % 19/01 onwards
@@ -419,18 +438,19 @@ Implementing this feature required minimal changes to algorithm \ref{dedup2}, on
 \textit{This section concerns the difficulties of encoding nodes in the Cap'n Proto schema, and designing a suitable type to represent them. As mentioned in section \ref{overview}, Cap'n Proto requires a schema to define the format of RPCs that can be sent, and one must convert between consensus state machine internal types and Cap'n Proto types in order to send messages.}
 
 \subsubsection{Recursive types}
-The unchained HotStuff algorithm has a genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. Each node contains the fields \textit{parent}, \textit{cmd}, \textit{justify}, and \textit{height}, with the \textit{justify} field containing a quorum certificate with a `pointer' to another node in the chain (section \ref{chaining}). The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
+The chained HotStuff algorithm has a genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. Each node contains the fields \textit{parent}, \textit{cmd}, \textit{justify}, and \textit{height}, with the \textit{justify} field containing a quorum certificate with a `pointer' to another node in the chain (section \ref{chaining}). The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
 
 This recursion poses a problem when carrying out the conversion between Cap'n Proto types and OCaml types. It is perfectly possible to define a recursive type in OCaml, so one can represent \textit{b\textsubscript{0}} inside the consensus state machine. However, the naive implementation of a function to convert this node into a Cap'n Proto type will not terminate, as it will infinitely recurse into the field $ b_0.\textit{justify}.\textit{node} $. A simple solution to this problem is to add a flag to the Cap'n Proto schema \textit{is\_b\textsubscript{0}}; when this flag is enabled then the node is assumed to be equal to \textit{b\textsubscript{0}}. This prevents \textit{b\textsubscript{0}} from ever having to be converted into a Cap'n Proto type or being sent over the network, it can instead be reconstructed as a recursive type in the consensus state machine of the receiver.
 
 \subsubsection{Node offsets}
-During live testing, memory usage increased rapidly, the nodes quickly exceeded the amount of memory the system had, and their processes were killed by the OS. Profiling with Memtrace (section \ref{testing}) showed that the functions for converting between Cap'n Proto types and internal consensus types was responsible for the rapidly increasing memory usage.
+During live testing, memory usage increased rapidly, the nodes quickly exceeded the amount of memory the system had, and their processes were killed by the OS. Profiling with Memtrace (section \ref{testing}) [maybe run this again, give a diagram] showed that the functions for converting between Cap'n Proto types and internal consensus types was responsible for the rapidly increasing memory usage.
 
-This problem arose from the internal types that were designed to represent nodes. As well as the \textit{node} type, there was a \textit{qc} type that was used as the type of the \textit{node.justify} field since it is a quorum certificate. By defining types in this way the `pointers' in \textit{node.justify.node} were not actually pointers, they contained a significant part of the chain. In this way the chain contained many redundant copies of parts of it, resulting in a very bloated \textit{node} object that was very expensive to convert.
+This problem arose from the internal types that were designed to represent nodes. As well as the \textit{node} type, there was a \textit{qc} type that was used as the type of the \textit{node.justify} field since it is a quorum certificate [use OCaml lingo, recursive sum type???]. By defining types in this way the `pointers' in \textit{node.justify.node} were not actually pointers, they contained a significant part of the chain. In this way the chain contained many redundant copies of parts of it, resulting in a very bloated \textit{node} object that was very expensive to convert.
 
 A solution to this problem is to store an offset to a node inside the \textit{justify} field rather than the node itself - making it more like a real pointer. This offset represents how many \textit{parent} links away the node is, and so can be used to reconstruct all of the original information. To implement this another type \textit{node\_justify} was added, that is identical to \textit{qc}, but with the field \textit{node} replaced with \textit{node\_offset}. One must then convert between the \textit{node\_justify} and \textit{qc} types to reconstruct the original data and follow the \textit{node.justify.node} link.
 
 \subsubsection{Node comparison}
+[cite merkle tree here? compare to ethereum and bitcoin...]
 Memtrace profiling also showed that the equality function for nodes was memory intensive. The solution to this was including a \textit{digest} field in the node that is a hash over all of the other fields. Notably we can compute this hash over the \textit{digest} field of the parent node rather than recursing through the whole chain. This means that we can also compare two nodes by comparing their digests without having to recurse through each chain; the digests being equal cryptographically guarantees that the whole chains are equal.
 
 \subsubsection{Node truncation} \label{truncation}
@@ -441,6 +461,8 @@ In order to overcome this problem, one can truncate the node before sending it, 
 To overcome this problem we use a TCP-style approach. We include a field containing the height of the \textit{b\textsubscript{exec}} node to the \textit{PROPOSE}, \textit{NEW{\large V}IEW}, and \textit{COMPLAIN} messages. Each node maintains a list of the \textit{b\textsubscript{exec}} height of every other node. When making a proposal, the leader takes the minimum height from this list, and truncates the node up to that depth. This ensures that every node that receives the proposal has enough information to reconstruct the entire log.
 
 There are some cases when the leader does not receive the latest \textit{b\textsubscript{exec}} of every other node before it makes a proposal. This means that the leader will not truncate the node as much as it could have. We optimised this by having a node send the entire list of all stored \textit{b\textsubscript{exec}} heights rather than just its own, allowing the heights to propagate around the system more quickly.
+
+[give pseudocode!!!]
 
 % \subsection{Connections}
 % talk about capabilities?
@@ -485,12 +507,26 @@ The load generator is responsible for sending client requests to the nodes of th
 
 The load generator is open-loop (figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator `waits' for the system, so cannot overload it.
 
+SEND TO ALL
+[Without this feature a client would randomly chose a node to send their request to, and the command would not be proposed until the round-robin system reached that node to become the leader. Send-to-all can reduce latency by instead broadcasting a request to all nodes, meaning that the next leader can propose the command without having to wait for the round-robin system to reach them.]
+
 The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all (section \ref{sendtoall}) the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, reducing start-up effects.
 
 \subsection{Experiment scripts} \label{experimentscripts}
 Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
 
 Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes all possible permutations of the input variables, duplicates them (so that each experiment is run multiple times to get better results), and runs them in a random order. By running experiments in a random order external factors that affect performance are somewhat mitigated. For example if the experiments were not run in a random order, the system may happen to experience interference when running experiments on 8 nodes, giving distorted results for this set of experiments. If instead the experiments were run randomly, the interference would affect some random group of experiments, and it would be more apparent that these results were anomalous. [could be more concise]
+
+\subsection{Logging framework}
+[make this section much shorter!]
+% development of logging framework, some details of what is logged
+I added timing and logging statements to key parts of the program, allowing me to better diagnose the source of the poor performance. Running a live test with print statements has the advantage that one can quickly see when progress is not being made, or when there are pauses, as the print statements stop. However, this benefit is outweighed by the sheer volume of logs and times being printed, it becomes difficult to manage when logs are in the millions of lines long.
+
+Moreover, debugging by print statements had a bigger problem of inconsistencies between runs making it difficult to diagnose any problem. This was because the large volume of print statements being executed had a significant effect on the performance [CPU cost!!] of the program. This is known as a \textit{probing effect}, the behaviour of a system is altered by the act of measuring it. I initially assumed that because the print statements were not in-between the timing statements they would not affect my measurements, but they are an expensive operation that can cause delays to happen in execution where one would not expect.
+
+This problem was overcome through the development of a simple logging framework. Key parts of the program such as the state machine advancing, actions being carried out, messages being sent, are all timed and added to lists. Critically, this list is stored and not printed out until the node is killed, so the printing cannot interfere with execution. Relevant statistics such as mean, standard deviation, and total time for each interval measured are outputted, providing crucial insight into the performance of the program.
+
+\textbf{Design principle: } Minimise probing effects by carrying out the minimum possible amount of work in critical areas of the program, storing data, and moving work (such as outputting statistics) to less critical areas of the program.
 
 \section{Repository Overview} \label{repo}
 

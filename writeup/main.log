@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  27 APR 2023 22:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  28 APR 2023 20:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -937,12 +937,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 81--81
 
  []
 
-<images//university.png, id=179, 634.85457pt x 797.46207pt>
+<images//university.png, id=183, 634.85457pt x 797.46207pt>
 File: images//university.png Graphic file (type png)
 <use images//university.png>
 Package pdftex.def Info: images//university.png  used on input line 85.
 (pdftex.def)             Requested size: 63.48917pt x 79.75087pt.
-<images//featured_image.jpeg, id=181, 366.36874pt x 528.97626pt>
+<images//featured_image.jpeg, id=185, 366.36874pt x 528.97626pt>
 File: images//featured_image.jpeg Graphic file (type jpg)
 <use images//featured_image.jpeg>
 Package pdftex.def Info: images//featured_image.jpeg  used on input line 87.
@@ -968,93 +968,82 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [3
 
-])
+] [4])
 \tf@toc=\write7
 \openout7 = `main.toc'.
 
- [4]
+ [5]
 Chapter 1.
-(./chapters/introduction.tex [5
+(./chapters/introduction.tex [6
 
-]) [6]
+]) [7]
 Chapter 2.
-(./chapters/preparation.tex [7
+(./chapters/preparation.tex [8
 
 ]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 56.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 68.
  (/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-) [8
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.63 
-     ]
-Underfull \hbox (badness 10000) in paragraph at lines 105--105
-[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: propose ``log = [`hello', `world', `!']", qc =
- []
-
+)
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 152--152
+[9] [10
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.89 
+     ]
+Underfull \hbox (badness 10000) in paragraph at lines 117--117
+[]\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: propose ``log = [`hello', `world', `!']", qc =
+ []
+
+[11
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.127 
+      ]
+Underfull \hbox (badness 10000) in paragraph at lines 164--164
 []\T1/cmtt/m/n/12 replicas $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 leader: ``qc = (\T1/cmtt/m/it/12 key \T1/cmtt/m/n/12 for view = 2, log = [`hello',
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--152
+Underfull \hbox (badness 10000) in paragraph at lines 164--164
 []\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: pre-propose ``log = [`hello', `world', `!'], qc =
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--152
+Underfull \hbox (badness 10000) in paragraph at lines 164--164
 []\T1/cmtt/m/n/12 leader $\OMS/cmsy/m/n/12 !$ \T1/cmtt/m/n/12 replicas: propose ``qc = (\T1/cmtt/m/it/12 pre-commit \T1/cmtt/m/n/12 acks from previous
  []
 
-[10
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.155 \end{figure}
-                  ] [11
+[12
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.161 
-      ]
-<images//nchain.png, id=395, 1629.08624pt x 334.24875pt>
-File: images//nchain.png Graphic file (type png)
-<use images//nchain.png>
-Package pdftex.def Info: images//nchain.png  used on input line 172.
-(pdftex.def)             Requested size: 488.72964pt x 100.27539pt.
+l.171 
+      ] [13] [14]
 
-Overfull \hbox (5.03278pt too wide) in paragraph at lines 172--173
- [][] 
- []
+LaTeX Warning: Citation `hotstuff' on page 15 undefined on input line 207.
 
-[12
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2.4}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.185 \end{itemize}
-                    <./images//nchain.png>] [13] [14]) [15]
+[15]) [16]
 Chapter 3.
 (./chapters/implementation.tex
-<images//nodediagram.png, id=456, 581.17125pt x 297.11pt>
+<images//nodediagram.png, id=462, 581.17125pt x 297.11pt>
 File: images//nodediagram.png Graphic file (type png)
 <use images//nodediagram.png>
 Package pdftex.def Info: images//nodediagram.png  used on input line 43.
 (pdftex.def)             Requested size: 348.70544pt x 178.26736pt.
- [16
+ [17
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.51 
-      <./images//nodediagram.png>]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 62.
+l.53 
+      <./images//nodediagram.png>] [18]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 99.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1062,69 +1051,84 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[17] [18]
-Overfull \hbox (26.1035pt too wide) in paragraph at lines 197--198
+[19] [20]
+Overfull \hbox (26.1035pt too wide) in paragraph at lines 234--235
 []\T1/cmr/m/n/12 ON\T1/cmr/m/n/14.4 N\T1/cmr/m/n/12 EXT\T1/cmr/m/n/14.4 S\T1/cmr/m/n/12 YNC\T1/cmr/m/n/14.4 V\T1/cmr/m/n/12 IEW (al-go-rithm []2[], line []10[]): This func-tion pre-vi-ously just sent a NEW\T1/cmr/m/n/14.4 V\T1/cmr/m/n/12 IEW
  []
 
-[19]
-Overfull \hbox (70.84584pt too wide) in paragraph at lines 200--201
+[21]
+Overfull \hbox (70.84584pt too wide) in paragraph at lines 237--238
 []\T1/cmr/m/n/12 ON\T1/cmr/m/n/14.4 R\T1/cmr/m/n/12 ECIEVE\T1/cmr/m/n/14.4 C\T1/cmr/m/n/12 OMPLAIN (al-go-rithm []2[], line []22[]): This func-tion is very sim-i-lar to ON\T1/cmr/m/n/14.4 R\T1/cmr/m/n/12 ECEIVE\T1/cmr/m/n/14.4 V\T1/cmr/m/n/12 OTE,
  []
 
-[20]
-<images//lemma1.png, id=542, 191.71625pt x 118.4425pt>
+[22]
+<images//lemma1.png, id=562, 191.71625pt x 118.4425pt>
 File: images//lemma1.png Graphic file (type png)
 <use images//lemma1.png>
-Package pdftex.def Info: images//lemma1.png  used on input line 225.
+Package pdftex.def Info: images//lemma1.png  used on input line 263.
 (pdftex.def)             Requested size: 115.03062pt x 71.06604pt.
- [21
+ [23
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.262 
-       <./images//lemma1.png>]
-Overfull \hbox (46.51099pt too wide) in paragraph at lines 280--281
-[]\T1/cmr/m/n/12 In or-der to im-ple-ment this change in al-go-rithm []2[] one sim-ply has to mod-ify the ON\T1/cmr/m/n/14.4 N\T1/cmr/m/n/12 EXT\T1/cmr/m/n/14.4 S\T1/cmr/m/n/12 YNC\T1/cmr/m/n/14.4 V\T1/cmr/m/n/12 IEW
+l.305 [
+       This is not our contribution, described in hotstuff paper blah blah] <./images//lemma1.png>]
+<images//nchain.png, id=579, 1629.08624pt x 334.24875pt>
+File: images//nchain.png Graphic file (type png)
+<use images//nchain.png>
+Package pdftex.def Info: images//nchain.png  used on input line 313.
+(pdftex.def)             Requested size: 488.72964pt x 100.27539pt.
+
+Overfull \hbox (5.03278pt too wide) in paragraph at lines 313--314
+ [][] 
  []
 
-[22] [23] [24]
+[24
+pdfTeX warning (ext4): destination with the same identifier (name{figure.3.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.327 \end{itemize}
+                    <./images//nchain.png>] [25]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[25] [26] [27]
-<images//openloop.png, id=615, 457.71pt x 91.34125pt>
+[26] [27] [28]
+<images//openloop.png, id=625, 457.71pt x 91.34125pt>
 File: images//openloop.png Graphic file (type png)
 <use images//openloop.png>
-Package pdftex.def Info: images//openloop.png  used on input line 466.
+Package pdftex.def Info: images//openloop.png  used on input line 488.
 (pdftex.def)             Requested size: 274.62813pt x 54.80516pt.
-<images//closedloop.png, id=616, 450.68375pt x 131.49126pt>
+<images//closedloop.png, id=626, 450.68375pt x 131.49126pt>
 File: images//closedloop.png Graphic file (type png)
 <use images//closedloop.png>
-Package pdftex.def Info: images//closedloop.png  used on input line 473.
+Package pdftex.def Info: images//closedloop.png  used on input line 495.
 (pdftex.def)             Requested size: 270.41232pt x 78.89534pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[28
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.483 
-       <./images//openloop.png>]
-LaTeX Font Info:    Trying to load font information for T1+cmss on input line 533.
- (/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmss.fd
-File: t1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
-) [29
+[29
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.536 T
-       he \textit{src} directory contains the main server loop and the code ... <./images//closedloop.png>]) [30] [31]
+l.504 \textbf{Goodput: }
+                         The number of requests that are responded to each s... <./images//openloop.png>]
+
+LaTeX Warning: Reference `sendtoall' on page 30 undefined on input line 513.
+
+[30
+pdfTeX warning (ext4): destination with the same identifier (name{figure.3.5}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.519 
+       <./images//closedloop.png>]
+LaTeX Font Info:    Trying to load font information for T1+cmss on input line 569.
+ (/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmss.fd
+File: t1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+) [31]) [32] [33]
 Chapter 4.
 (./chapters/evaluation.tex
-<images//dummy_test/throughputgoodput.png, id=651, 462.528pt x 346.896pt>
+<images//dummy_test/throughputgoodput.png, id=664, 462.528pt x 346.896pt>
 File: images//dummy_test/throughputgoodput.png Graphic file (type png)
 <use images//dummy_test/throughputgoodput.png>
 Package pdftex.def Info: images//dummy_test/throughputgoodput.png  used on input line 26.
@@ -1133,7 +1137,7 @@ Package pdftex.def Info: images//dummy_test/throughputgoodput.png  used on input
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//dummy_test/throughputflatency.png, id=652, 462.528pt x 346.896pt>
+<images//dummy_test/throughputflatency.png, id=665, 462.528pt x 346.896pt>
 File: images//dummy_test/throughputflatency.png Graphic file (type png)
 <use images//dummy_test/throughputflatency.png>
 Package pdftex.def Info: images//dummy_test/throughputflatency.png  used on input line 32.
@@ -1141,7 +1145,7 @@ Package pdftex.def Info: images//dummy_test/throughputflatency.png  used on inpu
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//dummy_test/throughputlost.png, id=653, 462.528pt x 346.896pt>
+<images//dummy_test/throughputlost.png, id=666, 462.528pt x 346.896pt>
 File: images//dummy_test/throughputlost.png Graphic file (type png)
 <use images//dummy_test/throughputlost.png>
 Package pdftex.def Info: images//dummy_test/throughputlost.png  used on input line 38.
@@ -1149,9 +1153,9 @@ Package pdftex.def Info: images//dummy_test/throughputlost.png  used on input li
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[32
+[34
 
-] [33
+] [35
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1162,7 +1166,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.2}) h
                                                   \__shipout_drop_firstpage_...
 l.51 
       <./images//dummy_test/throughputgoodput.png> <./images//dummy_test/throughputflatency.png>]
-<images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png, id=666, 722.7pt x 361.35pt>
+<images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png, id=679, 722.7pt x 361.35pt>
 File: images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png Graphic file (type png)
 <use images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png>
 Package pdftex.def Info: images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png  used on input line 81.
@@ -1171,7 +1175,7 @@ Package pdftex.def Info: images//heatmaps/batch_sizes_5_320_200_4_450_timelatenc
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png, id=667, 722.7pt x 361.35pt>
+<images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png, id=680, 722.7pt x 361.35pt>
 File: images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png Graphic file (type png)
 <use images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png>
 Package pdftex.def Info: images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png  used on input line 88.
@@ -1179,7 +1183,7 @@ Package pdftex.def Info: images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyhe
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[34
+[36
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1189,7 +1193,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{table.4.1}) ha
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.96 
-      <./images//dummy_test/throughputlost.png>] [35
+      <./images//dummy_test/throughputlost.png>] [37
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1200,12 +1204,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.5}) h
                                                   \__shipout_drop_firstpage_...
 l.100 
        <./images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png> <./images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png>]
-<images//batch_size_test/throughputgoodput.png, id=698, 462.528pt x 346.896pt>
+<images//batch_size_test/throughputgoodput.png, id=712, 462.528pt x 346.896pt>
 File: images//batch_size_test/throughputgoodput.png Graphic file (type png)
 <use images//batch_size_test/throughputgoodput.png>
 Package pdftex.def Info: images//batch_size_test/throughputgoodput.png  used on input line 111.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
-<images//batch_size_test/throughputflatency.png, id=699, 462.528pt x 346.896pt>
+<images//batch_size_test/throughputflatency.png, id=713, 462.528pt x 346.896pt>
 File: images//batch_size_test/throughputflatency.png Graphic file (type png)
 <use images//batch_size_test/throughputflatency.png>
 Package pdftex.def Info: images//batch_size_test/throughputflatency.png  used on input line 118.
@@ -1214,7 +1218,7 @@ Package pdftex.def Info: images//batch_size_test/throughputflatency.png  used on
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png, id=700, 722.7pt x 361.35pt>
+<images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png, id=714, 722.7pt x 361.35pt>
 File: images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png Graphic file (type png)
 <use images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png>
 Package pdftex.def Info: images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png  used on input line 125.
@@ -1222,12 +1226,12 @@ Package pdftex.def Info: images//heatmaps/batch_sizes_5_8_1800_4_99999999_timela
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[36
+[38
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.6}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.133 
-       <./images//batch_size_test/throughputgoodput.png>] [37
+       <./images//batch_size_test/throughputgoodput.png>] [39
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.7}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1238,12 +1242,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.8}) h
                                                   \__shipout_drop_firstpage_...
 l.135 
        <./images//batch_size_test/throughputflatency.png> <./images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png>]
-<images//node_count_test/throughputgoodput_nodes.png, id=724, 462.528pt x 346.896pt>
+<images//node_count_test/throughputgoodput_nodes.png, id=737, 462.528pt x 346.896pt>
 File: images//node_count_test/throughputgoodput_nodes.png Graphic file (type png)
 <use images//node_count_test/throughputgoodput_nodes.png>
 Package pdftex.def Info: images//node_count_test/throughputgoodput_nodes.png  used on input line 146.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
-<images//node_count_test/throughputflatency_nodes.png, id=725, 462.528pt x 346.896pt>
+<images//node_count_test/throughputflatency_nodes.png, id=738, 462.528pt x 346.896pt>
 File: images//node_count_test/throughputflatency_nodes.png Graphic file (type png)
 <use images//node_count_test/throughputflatency_nodes.png>
 Package pdftex.def Info: images//node_count_test/throughputflatency_nodes.png  used on input line 153.
@@ -1252,13 +1256,13 @@ Package pdftex.def Info: images//node_count_test/throughputflatency_nodes.png  u
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[38
+[40
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.9}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.164 \subsection{Ablation study}
                                   \label{ablation} <./images//node_count_test/throughputgoodput_nodes.png>]
-<images//ablation/throughputgoodput_ablation.png, id=739, 462.528pt x 346.896pt>
+<images//ablation/throughputgoodput_ablation.png, id=752, 462.528pt x 346.896pt>
 File: images//ablation/throughputgoodput_ablation.png Graphic file (type png)
 <use images//ablation/throughputgoodput_ablation.png>
 Package pdftex.def Info: images//ablation/throughputgoodput_ablation.png  used on input line 184.
@@ -1267,7 +1271,7 @@ Package pdftex.def Info: images//ablation/throughputgoodput_ablation.png  used o
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//ablation/throughputflatency_ablation.png, id=740, 462.528pt x 346.896pt>
+<images//ablation/throughputflatency_ablation.png, id=753, 462.528pt x 346.896pt>
 File: images//ablation/throughputflatency_ablation.png Graphic file (type png)
 <use images//ablation/throughputflatency_ablation.png>
 Package pdftex.def Info: images//ablation/throughputflatency_ablation.png  used on input line 191.
@@ -1275,7 +1279,10 @@ Package pdftex.def Info: images//ablation/throughputflatency_ablation.png  used 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//mininet/throughputlatency.png, id=745, 462.528pt x 346.896pt>
+
+LaTeX Warning: Reference `sendtoall' on page 41 undefined on input line 196.
+
+<images//mininet/throughputlatency.png, id=757, 462.528pt x 346.896pt>
 File: images//mininet/throughputlatency.png Graphic file (type png)
 <use images//mininet/throughputlatency.png>
 Package pdftex.def Info: images//mininet/throughputlatency.png  used on input line 202.
@@ -1283,7 +1290,7 @@ Package pdftex.def Info: images//mininet/throughputlatency.png  used on input li
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//mininet/10tpub_cumlatency.png, id=746, 462.528pt x 346.896pt>
+<images//mininet/10tpub_cumlatency.png, id=758, 462.528pt x 346.896pt>
 File: images//mininet/10tpub_cumlatency.png Graphic file (type png)
 <use images//mininet/10tpub_cumlatency.png>
 Package pdftex.def Info: images//mininet/10tpub_cumlatency.png  used on input line 208.
@@ -1291,12 +1298,12 @@ Package pdftex.def Info: images//mininet/10tpub_cumlatency.png  used on input li
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//viewchange/test7_100_7_100_timelatencyheatmap.png, id=747, 722.7pt x 361.35pt>
+<images//viewchange/test7_100_7_100_timelatencyheatmap.png, id=759, 722.7pt x 361.35pt>
 File: images//viewchange/test7_100_7_100_timelatencyheatmap.png Graphic file (type png)
 <use images//viewchange/test7_100_7_100_timelatencyheatmap.png>
 Package pdftex.def Info: images//viewchange/test7_100_7_100_timelatencyheatmap.png  used on input line 218.
 (pdftex.def)             Requested size: 361.3491pt x 180.67456pt.
-[39
+[41
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.10}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1310,7 +1317,7 @@ l.221 \end{figure}
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[40
+[42
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.11}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1320,7 +1327,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.12}) 
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.226 
-       <./images//ablation/throughputgoodput_ablation.png> <./images//ablation/throughputflatency_ablation.png>] [41
+       <./images//ablation/throughputgoodput_ablation.png> <./images//ablation/throughputflatency_ablation.png>] [43
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.13}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
@@ -1330,39 +1337,42 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.14}) 
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.228 
-       <./images//mininet/throughputlatency.png> <./images//mininet/10tpub_cumlatency.png>]) [42
+       <./images//mininet/throughputlatency.png> <./images//mininet/10tpub_cumlatency.png>]) [44
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4.15}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
 l.131 \chapter
               {Conclusion} <./images//viewchange/test7_100_7_100_timelatencyheatmap.png>]
 Chapter 5.
-(./chapters/conclusion.tex [43
+(./chapters/conclusion.tex [45
 
-]) (./main.bbl [44]
+]) (./main.bbl [46]
 Underfull \hbox (badness 1163) in paragraph at lines 25--27
 []\T1/cmr/m/n/12 Eio -- Effects-Based Par-al-lel IO for OCaml, Apr. 2023.  original-date: 2021-03-
  []
 
-[45
+[47
 
-]) [46] (./main.aux)
+]) [48] (./main.aux)
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 123CC0436F52600C7F7054927C55201A;6201.
+(rerunfilecheck)             Checksum: 296193EED2DFCBA2EC81FE074FEDA11C;6336.
  ) 
 Here is how much of TeX's memory you used:
- 39620 strings out of 478268
- 870341 string characters out of 5835366
- 1174936 words of memory out of 5000000
- 57010 multiletter control sequences out of 15000+600000
+ 39624 strings out of 478268
+ 870380 string characters out of 5835366
+ 1173555 words of memory out of 5000000
+ 57013 multiletter control sequences out of 15000+600000
  495150 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  130i,11n,142p,1660b,3467s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx3583.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfit1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on main.pdf (47 pages, 1258970 bytes).
+Output written on main.pdf (49 pages, 1248339 bytes).
 PDF statistics:
- 971 PDF objects out of 1000 (max. 8388607)
- 818 compressed objects within 9 object streams
- 217 named destinations out of 1000 (max. 500000)
- 473 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 984 PDF objects out of 1000 (max. 8388607)
+ 829 compressed objects within 9 object streams
+ 218 named destinations out of 1000 (max. 500000)
+ 481 words of extra memory for PDF output out of 10000 (max. 10000000)
 

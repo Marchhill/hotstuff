@@ -1275,12 +1275,6 @@ INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmtt.fd
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecit1200.tfm
-INPUT ./images//nchain.png
-INPUT ./images//nchain.png
-INPUT images//nchain.png
-INPUT ./images//nchain.png
-INPUT ./images//nchain.png
-INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti0800.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm0800.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
@@ -1301,8 +1295,10 @@ INPUT ./images//nodediagram.png
 INPUT images//nodediagram.png
 INPUT ./images//nodediagram.png
 INPUT ./images//nodediagram.png
+INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1440.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/eccc1200.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/eccc1440.tfm
+INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti0800.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm0600.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti0600.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti0500.tfm
@@ -1313,7 +1309,11 @@ INPUT ./images//lemma1.png
 INPUT images//lemma1.png
 INPUT ./images//lemma1.png
 INPUT ./images//lemma1.png
-INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1440.tfm
+INPUT ./images//nchain.png
+INPUT ./images//nchain.png
+INPUT images//nchain.png
+INPUT ./images//nchain.png
+INPUT ./images//nchain.png
 INPUT ./images//openloop.png
 INPUT ./images//openloop.png
 INPUT images//openloop.png
