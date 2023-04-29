@@ -19,152 +19,212 @@ I had some experience using OCaml from the IA Foundations of Computer Science co
 % the whole implementation was written from scratch??
 
 \section{HotStuff algorithm} \label{hotstufftheory}
-A byzantine consensus algorithm allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a \textit{leader} node proposes some value by sending it the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that there is consensus on the committed part of the log, and it is now immutable.
+HotStuff is a byzantine consensus algorithm; it allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a \textit{leader} node proposes some value by sending it the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that there is consensus on the committed part of the log, and it is now immutable.
 
-A consensus algorithm must have these properties:
+HotStuff has the following properties:
 \begin{itemize}
-	\item Safety: Once a log has been committed up to some point that part of the log is immutable, it can only appended to.
-	\item Liveness: The system is guaranteed to make progress once a non-faulty leader is elected.
+	\item Safety --- once a log has been committed up to some point that part of the log is immutable, it can only appended to.
+	\item Liveness --- the system is guaranteed to make progress once a non-faulty leader is elected.
+	\item Responsiveness\footnote{To be precise HotStuff is \textit{optimistically} responsive, we will describe this in section \ref{optresponsive}.} --- the system is able to make progress as fast as network conditions allow once a non-faulty leader is elected; it does not have to wait for some timeout to elapse.
 \end{itemize}
 
 The system model describes the adverse conditions under which HotStuff can operate:
 \begin{itemize}
-	\item Partially Synchronous: Messages sent by one party will always be delivered to another within some bounded amount of time ($\delta$) after global synchronisation time (GST) has been reached.
-	\item Reliable:
-	\item Point-to-point:
-	\item Authenticated: A message source cannot be spoofed [provided by signing messages]
-	\item Byzantine: A maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes; this is the maximum number of byzantine nodes for which consensus can theoretically be reached \cite{pease_reaching_1980}\cite{fischer_easy_nodate}.
+	\item Partially Synchronous --- messages sent by one party will always be delivered to another within some bounded amount of time ($\delta$) after global synchronisation time (GST) has been reached.
+	\item Authenticated --- a message source cannot be spoofed. We assume that all messages are signed, providing authentication.
+	\item Byzantine --- a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes. This is the maximum number of byzantine nodes for which consensus can theoretically be reached \cite{pease_reaching_1980}\cite{fischer_easy_nodate}.
 \end{itemize}
 
-Once the log is committed up to some point the leader can send `decide' to the replicas; if the log is a list of commands, then the new commands can safely be executed. [mention the model of a client that sends requests and is responded to]
+Each view is composed of several \textit{phases}. In each phase the leader broadcasts to the replicas, that respond with an acknowledgement (\textit{ack}). The leader waits until it receives a \textit{quorum} of $n - f$ acks\footnote{N.B. the size of a quorum is different in the non-byzantine case.} before proceeding to the next phase, meaning that at least $f + 1$ of the acks were from honest nodes. The basic HotStuff algorithm has five phases in each view.
 
-\subsection{Non-byzantine consensus}
+The final phase of a consensus algorithm is \textit{decide}. We assume that a \textit{client} sends commands to the nodes, the nodes reach consensus on a log of commands, and then execute them in order; this ensures all nodes will be in the same state. The decide phase commences after the log is committed, the nodes can execute the new commands and respond to the client that the command was successfully committed.
+
+The HotStuff algorithm consists of a responsive byzantine consensus algorithm (section \ref{optresponsive}), with a view-change protocol (section \ref{viewchange}) that allows the system to skip the view of a faulty leader. We will start by describing a simpler consensus algorithm that is not responsive, and cannot handle byzantine nodes (section \ref{nonbyzconsensus}). We then extend this algorithm to handle byzantine threats (section \ref{byzconsensus}). Finally, we extend this algorithm to be responsive by removing the need for a timeout to progress (section \ref{optresponsive}).
+
+\subsection{Non-byzantine consensus} \label{nonbyzconsensus}
 We will start by describing an algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaro_search_nodate} and multi-shot Paxos \cite{lamport_part-time_1998}\cite{lamport_paxos_2001}.
 
-Each view is broken into two phases; the \textit{new-view} phase allows the leader to learn of previously committed values, and in \textit{commit} phase the leader proposes a log extended with new values that the replicas can reach consensus on. The \textit{new-view} phase is initiated by the leader broadcasting the current view number to the replicas [we don't actually do this, is it necessary???], which respond by sending their longest accepted log (the one with the highest corresponding view number). Once the leader has a quorum of responses, the \textit{commit} phase commences: the leader selects the longest log that has been sent to it and broadcasts it to the replicas. The leader may also extend the log at this point with its own values, or create a new log if it did not receive anything. Finally, each replica updates its log to the value sent by the leader and sends an acknowledgement. Once the leader receives a quorum of acknowledgements it can commit the new log. This algorithm satisfies our requirement that a committed log can only be extended.
+Each view consists of three phases:
+
+\textit{new-view} --- The leader learns about previously committed logs. All replicas send a \textit{new-view} message to the leader, containing their longest previously committed log.
+
+\textit{commit} --- The leader waits until it receives a quorum of greater than $\frac{n}{2}$ \textit{new-view} messages, and then picks the longest log it received ($\lambda$) to propose. It then broadcasts a \textit{commit} message to the replicas, proposing $\lambda'$ to the nodes, where $\lambda'$ is $\lambda$ optionally extended with the leader's new value.
+
+\textit{decide} --- Once the leader receives a quorum of acks, the log has been successfully committed. The leader can broadcast ``decide'' to the replicas, who can execute the new commands and respond to the client.
+
+Crucially, this algorithm has the \textit{safety} property. Since the leader waits to receive a quorum of greater than $\frac{n}{2}$ \textit{new-view} messages, $\lambda$ is guaranteed to be the longest log that has previously been committed. This is because the the quorum of \textit{new-view} messages must share at least one node with the past quorum of \textit{commit} acks for $\lambda$. The new proposal $\lambda'$ will never conflict with $\lambda$, hence the algorithm is safe.
+%Each view is broken into two phases; the \textit{new-view} phase allows the leader to learn of previously committed values, and in \textit{commit} phase the leader proposes a log extended with new values that the replicas can reach consensus on. The \textit{new-view} phase is initiated by the leader broadcasting the current view number to the replicas [we don't actually do this, is it necessary???], which respond by sending their longest accepted log (the one with the highest corresponding view number). Once the leader has a quorum of responses, the \textit{commit} phase commences: the leader selects the longest log that has been sent to it and broadcasts it to the replicas. The leader may also extend the log at this point with its own values, or create a new log if it did not receive anything. Finally, each replica updates its log to the value sent by the leader and sends an acknowledgement. Once the leader receives a quorum of acknowledgements it can commit the new log. This algorithm satisfies our requirement that a committed log can only be extended.
 
 %We will refer to phase 1 as the  stage, and phase 2 as the \textit{commit} phase to use the terminology of the HotStuff paper. These are followed by the \textit{decide} phase, in which the leader sends a decide message to replicas. Once they receive this message they can consider the log decided, and execute the new commands which have been added to the log.
-See an example of a non-byzantine consensus algorithm in figure \ref{nonbyzantineexample}.
-% *** replace with diagrams?
-\begin{figure}[h!] 
-\texttt{
+% See an example of a non-byzantine consensus algorithm in figure \ref{nonbyzantineexample}.
+% \begin{figure}[h!] 
+% \texttt{
+% \begin{enumerate}
+% \item New-view: 
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: ``view = 3" 
+% 	\item replicas $\to$ leader: ``view = 2, log = [`hello', `world']", ...
+% 	\end{enumerate}
+% \item Commit:
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: propose ``log = [`hello', `world', `!']"
+% 	\item replicas $\to$ leader: ``ack", \dots
+% 	\end{enumerate}
+% \item Decide:
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: ``decide"
+% 	\item replicas: execute log
+% 	\end{enumerate}
+% \end{enumerate}
+% }
+% \caption{Example of crash-stop consensus algorithm.}
+% \label{nonbyzantineexample}
+% \end{figure}
+
+\subsection{Byzantine consensus} \label{byzconsensus}
+In this section we extend our non-byzantine algorithm (section \ref{nonbyzconsensus}) to achieve consensus under a byzantine system model. To do this we must first introduce the \textit{quorum certificate} (\textit{QC}), a cryptographic proof that a leader has received a quorum of acks. We then consider the threats posed by byzantine nodes, give an algorithm that solves these problems, and make an argument for safety. Examples of similar algorithms include xyz
+
+\subsubsection{Quorum certificates}
+
+A QC is a quorum of $n - f$ acks with a matching \textit{threshold signature}. A threshold signature combines several signatures of the same message into one \cite{goos_practical_2000}\cite{cachin_random_2005}; in this case the signature from each ack is combined\footnote{Recall that our messages are signed to provide authenticated delivery.}. QCs have a key property that our byzantine algorithm will rely on:
+
+[add a diagram of intersecting QCs!]
+
+\begin{property} \label{qcproperty}
+There will always be at least one honest node in the intersection of any two QCs.
+\end{property}
+
+Recall that $n = 3f + 1$. The property holds since a QC contains a quorum of $n - f$ acks, at least $f + 1$ of which must be from honest nodes. To have two quorums that \textit{do not} share an honest node would require at least $2(f + 1) = 2f + 2$ honest nodes, but our system only has $2f + 1$.
+
+\subsubsection{Threats}
+Byzantine nodes introduce two threats that we will deal with in turn. We present ideas for solutions to these threats; it will become clear why these solutions are effective in our argument that the algorithm is safe.
+
 \begin{enumerate}
-\item New-view: 
-	\begin{enumerate}
-	\item leader $\to$ replicas: ``view = 3" 
-	\item replicas $\to$ leader: ``view = 2, log = [`hello', `world']", ...
-	\end{enumerate}
-\item Commit:
-	\begin{enumerate}
-	\item leader $\to$ replicas: propose ``log = [`hello', `world', `!']"
-	\item replicas $\to$ leader: ``ack", \dots
-	\end{enumerate}
-\item Decide:
-	\begin{enumerate}
-	\item leader $\to$ replicas: ``decide"
-	\item replicas: execute log
-	\end{enumerate}
-\end{enumerate}
-}
-\caption{Example of crash-stop consensus algorithm.}
-\label{nonbyzantineexample}
-\end{figure}
+\item Threat (Equivocation) --- a faulty leader proposes one value to some replicas and a different value to others. For example, in the case of a cryptocurrency a malicious actor (Mallory) could carry out a double-spend attack by proposing ``Mallory transfers Alice £10" to some nodes and ``Mallory transfers Bob £10" to others, even if Mallory's account contains less than £20. \label{threat1}
 
-\subsection{Byzantine consensus}
-In order to extend our algorithm to achieve consensus under a Byzantine threat model we must handle two threats that we will deal with in turn. To do this we must first introduce the concept of a threshold signature \cite{goos_practical_2000}\cite{cachin_random_2005}. Acknowledgements from replicas already contain a signature over the message to provide authenticated delivery. The leader can create a threshold signature by combining $n - f$ ack messages' signatures to prove that they really received a quorum of acknowledgements. A collection of a quorum of votes with a threshold signature is known as a `quorum certificate' or `QC'.
+Solution idea --- add a new stage \textit{prepare} which happens just before the \textit{commit} phase, where the leader pre-proposes a log before proposing it in the \textit{commit} phase.
 
-\begin{enumerate}
-\item Threat: Equivocation --- a faulty leader broadcasts one value to some replicas and a different value to others. For example in the case of a cryptocurrency, this could result in a malicious actor (Mallory) carrying out a double spend attack, sending ``Account Mallory transfers account Alice £10" to some nodes, and ``Account Mallory transfers account Bob £10" to other nodes, even if Mallory's account contains less than £20.
+\item Threat --- a faulty leader proposes a log that conflicts with one that has previously been committed. \label{threat2}
 
-Solution: Add a new stage \textit{prepare} which happens just before the \textit{commit} phase, where the leader pre-proposes the log. In this phase the leader again chooses the longest log it received in the \textit{new-view} phase to pre-propose in the \textit{prepare} phase; the log may also be extended with the leader's new values. Once the leader receives a quorum of acknowledgements, the \textit{commit} phase begins. The difference is that this time the leader includes in its proposal a QC over \textit{prepare} acks, which proves that it pre-proposed the value to at least $n - f$ nodes and received their acks, so it is not proposing one value to some nodes and another value to others.
-
-\item Threat: A faulty leader sends in the \textit{prepare} phase a log that conflicts with one that has already been committed.
-
-Solution: Replicas must \textit{lock} on a value once it is committed and not accept a \textit{prepare} from a leader that contradicts that. They will store the QC that they receive during the \textit{commit} phase and will only accept a new \textit{prepare} if it extends from the node stored in the certificate.
+Solution idea --- when replicas receive a proposal for some log they must \textit{lock} on it, and not accept a pre-proposal for a conflicting log.
 \end{enumerate}
 
-See an example of a byzantine consensus algorithm in figure \ref{byzantineexample}.
+\subsubsection{Algorithm}
+% See an example of a byzantine consensus algorithm in figure \ref{byzantineexample}.
+Modifying the non-byzantine algorithm to include our solutions to threats \ref{threat1} and \ref{threat2} results in the following:
 
-We give an informal inductive argument of the safety of this algorithm based on it solving these two threats. To be safe, we must have that if some log $\lambda$ is committed in view $v$, at no point in future will some conflicting log be committed. In view $v$ no log that conflicts with $\lambda$ may be committed, as we have prevented equivocation (threat 1). If we have in some view $v'$ that $\lambda$ (or some log extending it) is committed, then no conflicting log can be committed in view $v' + 1$. This holds because any log proposed in view $v' + 1$ must receive a quorum of $2f + 1$ votes in the \textit{prepare} phase; there must be at least one honest node in the intersection between this quorum, and the quorum of $2f + 1$ nodes that voted to commit $\lambda$ in view $v$. This honest replica is locked on $\lambda$ (solution 2), so would not accept a proposal that conflicts it. From this it follows that in no view from $v$ onwards will a log conflicting with $\lambda$ be committed.
+\textit{new-view} --- the leader learns about previously committed logs. All replicas send a \textit{new-view} message to the leader, containing their longest previously committed log.
 
-\begin{figure}[h!] 
-\texttt{
-\begin{enumerate}
-\item New-view: 
-	\begin{enumerate}
-	\item leader $\to$ replicas: ``view = 3" 
-	\item replicas $\to$ leader: ``view = 2, log = [`hello', `world']", \dots
-	\item leader: waits $\Delta$ to hear from all non-faulty replicas
-	\end{enumerate}
-\item Prepare:
-	\begin{enumerate}
-	\item leader $\to$ replicas: pre-propose ``log = [`hello', `world', `!']"
-	\item replicas verify the pre-proposal does not conflict with their \textit{lock}
-	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", \dots
-	\end{enumerate}
-\item Commit (lock):
-	\begin{enumerate}
-	\item leader $\to$ replicas: propose ``log = [`hello', `world', `!']", qc = (\textit{prepare} acks from previous stage)"
-	\item replicas \textit{lock} on the proposed log
-	\item replicas $\to$ leader: ``ack", \dots
-	\end{enumerate}
-\item Decide:
-	\begin{enumerate}
-	\item leader $\to$ replicas: ``decide, qc = (\textit{commit} acks from previous stage)"
-	\item replicas: execute log
-	\end{enumerate}
-\end{enumerate}
-}
-\caption{Example of byzantine fault-tolerant consensus algorithm.}
-\label{byzantineexample}
-\end{figure}
+\textit{prepare} --- the leader waits $\delta$ until it receives a \textit{new-view} message from all replicas (we will revisit this in section \ref{optresponsive}), and then picks the longest log it received ($\lambda$) to pre-propose. It then broadcasts a \textit{prepare} message to the replicas, pre-proposing $\lambda'$ to the nodes, where $\lambda'$ is $\lambda$ optionally extended with the leader's new value. The replicas ensure that $\lambda'$ does not conflict with their \textit{lock} before sending an ack.
 
-% REWRITE THIS SECTION ***
-\subsection{Optimistic responsiveness}
-A system is responsive if it is able to make progress as fast as conditions allow when a non-faulty leader is elected. [HotStuff is responsive whereas other protocols are not] If a system must wait for some timeout $\Delta$ to elapse before making progress then it is not responsive.
+\textit{commit} --- the leader waits until it receives a quorum of at least $n - f$ \textit{prepare} acks. It then broadcasts a \textit{commit} message to the replicas, proposing $\lambda'$ to the nodes, and includes a QC of \textit{prepare} acks. The replicas then \textit{lock} on $\lambda'$ and send a \textit{commit} ack.
 
-The algorithm demonstrated in figure \ref{byzantineexample} is not responsive. In the \textit{new-view} phase the leader must wait to hear from $n - f$ replicas, and for a timeout of $\Delta$ to elapse. The timeout is necessary for the system to have the liveness property, so that it can always [may???] make progress when a non-faulty leader is elected. Consider again the \textit{prepare} phase; the leader includes in its pre-proposal the QC from the highest view that it hears about in the \textit{new-view} messages it receives. However, there may be some honest replica [how???] that the leader did not hear from (perhaps their message was lost) that is locked on a higher-view proposal than the one that the leader chooses to pre-propose. When this replica receives the pre-proposal, it will reject it as it is locked on a higher-view proposal, and the system will not make progress. This is why it is necessary to wait for a timeout $\Delta$, so that the leader waits a sufficient amount of time to receive a \textit{new-view} from all replicas.
+\textit{decide} --- once the leader receives a quorum of acks, $\lambda'$ has been successfully committed. The leader can broadcast ``decide'' to the replicas, who can execute the new commands and respond to the client.
 
-[HotStuff does \textit{optimistic} responsiveness]In order to achieve responsiveness we can modify our algorithm by adding a \textit{pre-commit} phase in between \textit{prepare} and \textit{commit}, and removing the requirement for the leader to wait for a timeout in the \textit{new-view} phase. As before, there may be some honest replica that becomes locked on some proposal $x$ during the \textit{commit} phase. However, now there is a \textit{pre-commit} phase before this, where a quorum of replicas all store a \textit{key} for $x$, with this \textit{key} being a QC of \textit{prepare} acks. We now consider the next \textit{new-view} phase; the replicas now send their \textit{key} to the new leader, and the leader chooses what to propose based on the highest view \textit{key} it sees. Even if the leader does not receive a \textit{new-view} from the honest replica itself, it is guaranteed to hear about the proposal $x$ [because the quorums intersect!!!], so it will be able to make progress. See an example in figure \ref{responsiveeexample}.
+\subsubsection{Argument for safety}
+We give an informal inductive argument of the safety of this algorithm based on it solving threats \ref{threat1} and \ref{threat2}. To be safe, we must have that if some log $\lambda$ is committed in view $v$, at no point in future will some conflicting log be committed.
 
-% This ensures that if some honest replica becomes locked on a value in the \textit{commit} phase, then there are at least $f + 1$ honest nodes that have a `key' for that value from the \textit{pre-commit} phase. More specifically, they have a `key-proof' composed of a QC over \textit{pre-commit} acks. Replicas then send this key-proof with their \textit{new-view} message when a new view begins. The new leader selects the key-proof with the highest view proposal and sends it along with their \textit{prepare} message. Even if the leader does not receive a \textit{new-view} message from the replica that is locked on the highest view proposal, they must have received the key to this proposal from some honest replica, so their \textit{prepare} message will make progress. See an example in figure \ref{responsiveeexample}.
+Base case --- in view $v$ no log that conflicts with $\lambda$ may be committed, in other words equivocation (threat \ref{threat1}) is not possible. For a view to commit a value, there must have been a QC of \textit{prepare} acks, and a QC of \textit{commit} acks. By property \ref{qcproperty}, there must be at least one honest replica in the intersection of these QCs that would not have acknowledged conflicting proposals in the same view.
 
-\begin{figure}[h!]
-\texttt{
-\begin{enumerate}
-\item New view: 
-	\begin{enumerate}
-	\item leader $\to$ replicas: ``view = 3" 
-	\item replicas $\to$ leader: ``qc = (\textit{key} for view = 2, log = [`hello', `world'])", \dots
-	\end{enumerate}
-\item Prepare:
-	\begin{enumerate}
-	\item leader $\to$ replicas: pre-propose ``log = [`hello', `world', `!'], qc = (key for view = 2, log = [`hello', `world'])"
-	\item replicas verify the pre-proposal does not conflict with their \textit{lock}
-	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", \dots
-	\end{enumerate}
-\item Pre-commit (key):
-	\begin{enumerate}
-	\item leader $\to$ replicas: ``qc = (\textit{prepare} acks from previous stage)"
-	\item replicas store qc as a \textit{key}
-	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", \dots
-	\end{enumerate}
-\item Commit (lock):
-	\begin{enumerate}
-	\item leader $\to$ replicas: propose ``qc = (\textit{pre-commit} acks from previous stage)"
-	\item replicas \textit{lock} on proposed log
-	\item replicas $\to$ leader: ``ack", \dots
-	\end{enumerate}
-\item Decide:
-	\begin{enumerate}
-	\item leader $\to$ replicas: ``decide, qc = (\textit{commit} acks from previous stage)"
-	\item replicas: execute log
-	\end{enumerate}
-\end{enumerate}
-}
-\caption{Example of responsive consensus algorithm.}
-\label{responsiveeexample}
-\end{figure}
+Inductive step --- no conflicting log can be proposed in view $v'$ where $v' > v$ (threat \ref{threat2}). This holds because any log pre-proposed in view $v'$ must receive a QC of \textit{prepare} acks; by property \ref{qcproperty}, there must be at least one honest node in the intersection between this QC, and the QC of \textit{commit} acks $\lambda$ in view $v$. This honest replica is locked on $\lambda$, so would not accept a proposal that conflicts it.
+
+From this it follows that in no view from $v$ onwards will a log conflicting with $\lambda$ be committed, so the algorithm is safe.
+
+% \begin{figure}[h!] 
+% \texttt{
+% \begin{enumerate}
+% \item New-view: 
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: ``view = 3" 
+% 	\item replicas $\to$ leader: ``view = 2, log = [`hello', `world']", \dots
+% 	\item leader: waits $\Delta$ to hear from all non-faulty replicas
+% 	\end{enumerate}
+% \item Prepare:
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: pre-propose ``log = [`hello', `world', `!']"
+% 	\item replicas verify the pre-proposal does not conflict with their \textit{lock}
+% 	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", \dots
+% 	\end{enumerate}
+% \item Commit (lock):
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: propose ``log = [`hello', `world', `!']", qc = (\textit{prepare} acks from previous stage)"
+% 	\item replicas \textit{lock} on the proposed log
+% 	\item replicas $\to$ leader: ``ack", \dots
+% 	\end{enumerate}
+% \item Decide:
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: ``decide, qc = (\textit{commit} acks from previous stage)"
+% 	\item replicas: execute log
+% 	\end{enumerate}
+% \end{enumerate}
+% }
+% \caption{Example of byzantine fault-tolerant consensus algorithm.}
+% \label{byzantineexample}
+% \end{figure}
+
+\subsection{Optimistic responsiveness} \label{optresponsive}
+The HotStuff protocol has the \textit{optimistic responsiveness} property, which means that it can make progress as fast as network conditions allow without waiting for a timeout [cite thunderella]. It is called \textit{optimistic} as it is only guaranteed to have this property once GST has been reached.
+
+The algorithm described in section \ref{byzconsensus} is not responsive, as it has a timeout in the \textit{prepare} phase. We first describe the problem that means this timeout is needed, present an algorithm that solves it, and give an informal argument of its effectiveness.
+
+[rewrite all this!]
+
+\subsubsection{Problem}
+Consider again the \textit{prepare} phase; the leader includes in its pre-proposal the QC from the highest view that it hears about in the \textit{new-view} messages it receives. However, there may be some honest replica [how???] that the leader did not hear from (perhaps their message was lost) that is locked on a higher-view proposal than the one that the leader chooses to pre-propose. When this replica receives the pre-proposal, it will reject it as it is locked on a higher-view proposal, and the system will not make progress. This is why it is necessary to wait for a timeout $\Delta$, so that the leader waits a sufficient amount of time to receive a \textit{new-view} from all replicas.
+
+Solution idea --- blah blah
+
+\subsubsection{Algorithm}
+%[HotStuff does \textit{optimistic} responsiveness]In order to achieve responsiveness we can modify our algorithm by adding a \textit{pre-commit} phase in between \textit{prepare} and \textit{commit}, and removing the requirement for the leader to wait for a timeout in the \textit{new-view} phase. As before, there may be some honest replica that becomes locked on some proposal $x$ during the \textit{commit} phase. However, now there is a \textit{pre-commit} phase before this, where a quorum of replicas all store a \textit{key} for $x$, with this \textit{key} being a QC of \textit{prepare} acks. We now consider the next \textit{new-view} phase; the replicas now send their \textit{key} to the new leader, and the leader chooses what to propose based on the highest view \textit{key} it sees. Even if the leader does not receive a \textit{new-view} from the honest replica itself, it is guaranteed to hear about the proposal $x$ [because the quorums intersect!!!], so it will be able to make progress. See an example in figure \ref{responsiveeexample}.
+\textit{new-view} --- the leader learns about previously committed logs. All replicas send a \textit{new-view} message to the leader, containing their longest previously committed log.
+
+\textit{prepare} --- the leader waits $\delta$ until it receives a \textit{new-view} message from all replicas (we will revisit this in section \ref{optresponsive}), and then picks the longest log it received ($\lambda$) to pre-propose. It then broadcasts a \textit{prepare} message to the replicas, pre-proposing $\lambda'$ to the nodes, where $\lambda'$ is $\lambda$ optionally extended with the leader's new value. The replicas ensure that $\lambda'$ does not conflict with their \textit{lock} before sending an ack.
+
+\textit{pre-commit} --- blah blah
+
+\textit{commit} --- the leader waits until it receives a quorum of at least $n - f$ \textit{prepare} acks. It then broadcasts a \textit{commit} message to the replicas, proposing $\lambda'$ to the nodes, and includes a QC of \textit{prepare} acks. The replicas then \textit{lock} on $\lambda'$ and send a \textit{commit} ack.
+
+\textit{decide} --- once the leader receives a quorum of acks, $\lambda'$ has been successfully committed. The leader can broadcast ``decide'' to the replicas, who can execute the new commands and respond to the client.
+
+\subsubsection{Argument for responsiveness}
+This ensures that if some honest replica becomes locked on a value in the \textit{commit} phase, then there are at least $f + 1$ honest nodes that have a `key' for that value from the \textit{pre-commit} phase. More specifically, they have a `key-proof' composed of a QC over \textit{pre-commit} acks. Replicas then send this key-proof with their \textit{new-view} message when a new view begins. The new leader selects the key-proof with the highest view proposal and sends it along with their \textit{prepare} message. Even if the leader does not receive a \textit{new-view} message from the replica that is locked on the highest view proposal, they must have received the key to this proposal from some honest replica, so their \textit{prepare} message will make progress.
+
+% \begin{figure}[h!]
+% \texttt{
+% \begin{enumerate}
+% \item New view: 
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: ``view = 3" 
+% 	\item replicas $\to$ leader: ``qc = (\textit{key} for view = 2, log = [`hello', `world'])", \dots
+% 	\end{enumerate}
+% \item Prepare:
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: pre-propose ``log = [`hello', `world', `!'], qc = (key for view = 2, log = [`hello', `world'])"
+% 	\item replicas verify the pre-proposal does not conflict with their \textit{lock}
+% 	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", \dots
+% 	\end{enumerate}
+% \item Pre-commit (key):
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: ``qc = (\textit{prepare} acks from previous stage)"
+% 	\item replicas store qc as a \textit{key}
+% 	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", \dots
+% 	\end{enumerate}
+% \item Commit (lock):
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: propose ``qc = (\textit{pre-commit} acks from previous stage)"
+% 	\item replicas \textit{lock} on proposed log
+% 	\item replicas $\to$ leader: ``ack", \dots
+% 	\end{enumerate}
+% \item Decide:
+% 	\begin{enumerate}
+% 	\item leader $\to$ replicas: ``decide, qc = (\textit{commit} acks from previous stage)"
+% 	\item replicas: execute log
+% 	\end{enumerate}
+% \end{enumerate}
+% }
+% \caption{Example of responsive consensus algorithm.}
+% \label{responsiveeexample}
+% \end{figure}
 
 \subsection{View-changes} \label{viewchange}
 If a leader fails to make progress within some timeout a view-change takes place and the next view begins. The HotStuff paper does not go into detail on how view-changes take place, so this explanation is based on a talk by one of its authors, Ittai Abraham \cite{ittai}, and is similar to the approach used by LibraBFT \cite{baudet_state_nodate}. [mention cogsworth]

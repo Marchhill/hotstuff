@@ -3,18 +3,25 @@
 \contentsline {section}{\numberline {2.1}Starting point}{8}{section.2.1}%
 \contentsline {section}{\numberline {2.2}HotStuff algorithm}{8}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Non-byzantine consensus}{9}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{9}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{11}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{10}{subsection.2.2.2}%
+\contentsline {subsubsection}{Quorum certificates}{10}{subsubsection*.4}%
+\contentsline {subsubsection}{Threats}{10}{subsubsection*.5}%
+\contentsline {subsubsection}{Algorithm}{11}{subsubsection*.6}%
+\contentsline {subsubsection}{Argument for safety}{11}{subsubsection*.7}%
+\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{12}{subsection.2.2.3}%
+\contentsline {subsubsection}{Problem}{12}{subsubsection*.8}%
+\contentsline {subsubsection}{Algorithm}{12}{subsubsection*.9}%
+\contentsline {subsubsection}{Argument for responsiveness}{13}{subsubsection*.10}%
 \contentsline {subsection}{\numberline {2.2.4}View-changes}{13}{subsection.2.2.4}%
-\contentsline {section}{\numberline {2.3}Tools \& libraries}{13}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}OCaml}{13}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.3}Tools \& libraries}{14}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}OCaml}{14}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Lwt}{14}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{14}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{14}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{15}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{15}{subsection.2.3.4}%
 \contentsline {section}{\numberline {2.4}Requirements analysis}{15}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Software engineering practices}{15}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Development methodology}{15}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{15}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.1}Development methodology}{16}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{16}{subsection.2.5.2}%
 \contentsline {subsection}{\numberline {2.5.3}Source code management}{16}{subsection.2.5.3}%
 \contentsline {chapter}{\numberline {3}Implementation}{17}{chapter.3}%
 \contentsline {section}{\numberline {3.1}System Architecture}{17}{section.3.1}%
@@ -23,13 +30,13 @@
 \contentsline {section}{\numberline {3.3}Performance improvements}{23}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Chaining}{24}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Batching}{25}{subsection.3.3.2}%
-\contentsline {subsubsection}{Filtering}{25}{subsubsection*.4}%
-\contentsline {subsubsection}{Batch sizes}{27}{subsubsection*.5}%
+\contentsline {subsubsection}{Filtering}{25}{subsubsection*.11}%
+\contentsline {subsubsection}{Batch sizes}{27}{subsubsection*.12}%
 \contentsline {subsection}{\numberline {3.3.3}Encoding of nodes}{27}{subsection.3.3.3}%
-\contentsline {subsubsection}{Recursive types}{27}{subsubsection*.6}%
-\contentsline {subsubsection}{Node offsets}{28}{subsubsection*.7}%
-\contentsline {subsubsection}{Node comparison}{28}{subsubsection*.8}%
-\contentsline {subsubsection}{Node truncation}{29}{subsubsection*.9}%
+\contentsline {subsubsection}{Recursive types}{27}{subsubsection*.13}%
+\contentsline {subsubsection}{Node offsets}{28}{subsubsection*.14}%
+\contentsline {subsubsection}{Node comparison}{28}{subsubsection*.15}%
+\contentsline {subsubsection}{Node truncation}{29}{subsubsection*.16}%
 \contentsline {section}{\numberline {3.4}Implementing for evaluation}{29}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Load generator}{29}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Experiment scripts}{30}{subsection.3.4.2}%
@@ -47,4 +54,4 @@
 \contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{41}{subsection.4.3.4}%
 \contentsline {subsection}{\numberline {4.3.5}View-changes}{42}{subsection.4.3.5}%
 \contentsline {chapter}{\numberline {5}Conclusion}{45}{chapter.5}%
-\contentsline {chapter}{Bibliography}{48}{chapter*.10}%
+\contentsline {chapter}{Bibliography}{48}{chapter*.17}%
