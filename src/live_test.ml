@@ -61,11 +61,10 @@ let run_command conns timeout stats msg_size =
 	let conn = List.nth conns id in *)
 	let data = "" in
 	let callback_id = gen_callback_id () in
-	(* simulate the size of a batch *)
 	let data = if msg_size = 1 then
 		data
 	else
-		List.fold_left (fun acc x -> acc ^ x) "" (List.init msg_size (fun _ -> data ^ (Int.to_string callback_id)))
+		List.fold_left (fun acc x -> acc ^ x) "" (List.init msg_size (fun _ -> "x"))
 	in
 	sent := !sent + 1;
 	let res = List.map (fun conn ->
@@ -163,10 +162,9 @@ let run_client nodes version time rate req_times_fp stats_fp msg_size batch_size
 					Printf.fprintf oc "%s, %s, %d, %d, %f, %f, %f, %d, %d, %s, %d\n" name version nodes rate goodput mean sd success n batch_size msg_size
 				)
 			| None -> ());
-		let q = List.map (fun conn ->
-			Net.send_quit conn
+		let _ = List.map (fun conn ->
+			Lwt.async (fun () -> Net.send_quit conn)
 		) conns in
-		let* () = Lwt.join q in
 		Lwt.return ()
 	end
 
