@@ -39,6 +39,7 @@ Each view is composed of several \textit{phases}. In each phase the leader broad
 
 The final phase of a consensus algorithm is \textit{decide}. We assume that a \textit{client} sends commands to the nodes, the nodes reach consensus on a log of commands, and then execute them in order; this ensures all nodes will be in the same state. The decide phase commences after the log is committed, the nodes can execute the new commands and respond to the client that the command was successfully committed.
 
+[basic algorithm... remove stuff about view-change here]
 The HotStuff algorithm consists of a responsive byzantine consensus algorithm (section \ref{optresponsive}), with a view-change protocol (section \ref{viewchange}) that allows the system to skip the view of a faulty leader. We will start by describing a simpler consensus algorithm that is not responsive, and cannot handle byzantine nodes (section \ref{nonbyzconsensus}). We then extend this algorithm to handle byzantine threats (section \ref{byzconsensus}). Finally, we extend this algorithm to be responsive by removing the need for a timeout to progress (section \ref{optresponsive}).
 
 \subsection{Non-byzantine consensus} \label{nonbyzconsensus}
@@ -226,12 +227,7 @@ This ensures that if some honest replica becomes locked on a value in the \texti
 % \label{responsiveeexample}
 % \end{figure}
 
-\subsection{View-changes} \label{viewchange}
-If a leader fails to make progress within some timeout a view-change takes place and the next view begins. The HotStuff paper does not go into detail on how view-changes take place, so this explanation is based on a talk by one of its authors, Ittai Abraham \cite{ittai}, and is similar to the approach used by LibraBFT \cite{baudet_state_nodate}. [mention cogsworth]
 
-Once the view times out, nodes send a \textit{complain} message to the next leader and start a new timeout for the next view. Once the next leader achieves a quorum of \textit{complain} messages it collects them into a QC known as a \textit{view-change proof}. This leader can then send a \textit{view-change} message containing the \textit{view-change proof} to all replicas, who will respond by transitioning to the next view and sending a \textit{new-view} message to the new leader. The inclusion of the \textit{view-change proof} prevents liveness attacks by byzantine nodes that could otherwise attack the system by constantly causing view-changes to take place and preventing non-faulty leaders from making progress.
-
-The use of timeouts in this way is a type of failure detector, which is a system that facilitates the detection of failed nodes \cite{chandra_weakest_1996}\cite{chandra_unreliable_1996}.
 
 \section{Tools \& libraries} \label{tools}
 \textit{In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.}
