@@ -23,8 +23,10 @@ Building practical, well-performing implementations of consensus algorithms is h
 The main contributions of this dissertation are:
 \begin{itemize}
 	\item Providing a reference implementation of HotStuff in OCaml based on a paper by Yin et. ~al~ \cite{yin2019hotstuff}.
-	\item Outlining key practical challenges and considerations of this implementation.
-	\item Adapting the pacemaker mechanism presented in the HotStuff paper, giving a full specification that works in asynchronous environments without synchronised clocks. The paper did not sufficiently specify the pacemaker mechanism, which drives the system to ensure it makes progress.
+	\item Synthesising information from different sources to provide a complete explanation of the HotStuff algorithm, and how it can be arrived at through modifications to simpler consensus algorithms (basic algorithm section \ref{hotstufftheory}, chained algorithm section \ref{chaining}, pacemaker section \ref{pacemaker}).
+	\item Giving solutions to key practical challenges of implementation and optimisations that can be made (section \ref{performance}), as well as showing their effectiveness (section \ref{ablation})
+	\item Giving a complete specification and proof of HotStuff (section \ref{spec}), that adapts the pacemaker mechanism which was not sufficiently specified in the original paper. This specification synthesises the chained algorithm described in the paper (section \ref{chaining}), a view-change protocol based on other talks and papers (section \ref{viewchange}), and our own changes that allow the algorithm to work in environments without synchronised clocks.
+	% \item Adapting the pacemaker mechanism presented in the HotStuff paper, giving a full specification that works in asynchronous environments without synchronised clocks. The paper did not sufficiently specify the pacemaker mechanism, which drives the system to ensure it makes progress.
 \end{itemize}
 % Blockchains are exciting because of their potential to decentralise many applications that are traditionally centralised. These include:
 % Central banks being replaced with decentralised cryptocurrencies 

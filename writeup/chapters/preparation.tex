@@ -11,7 +11,7 @@
 % chubby (Google) - consensus is hard
 % related works
 
-\textit{In this chapter we disclose my knowledge and experience prior to beginning this project [\ref{start}], give a theoretical basis for understanding the HotStuff algorithm [\ref{hotstufftheory}], outline the tools, libraries [\ref{tools}], and methodology [\ref{softwareeng}] deployed in implementation, and highlight the requirements that the implementation should meet [\ref{requirements}].}
+\textit{In this chapter we disclose my knowledge and experience prior to beginning this project [\ref{start}], give a theoretical basis for understanding the HotStuff algorithm by building up from simpler consensus algorithms [\ref{hotstufftheory}], outline the tools, libraries [\ref{tools}], and professional methodology [\ref{softwareeng}] deployed in implementation, and highlight the requirements that the implementation should meet [\ref{requirements}].}
 
 \section{Starting point} \label{start}
 I had some experience using OCaml from the IA Foundations of Computer Science course but had never used it in a project. The IB Distributed Systems course also provided some useful background knowledge, particularly as it briefly covered Raft \cite{ongaro_search_nodate}, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus \cite{nakamoto_bitcoin_nodate} and from developing a wallet application for Ethereum \cite{wood_ethereum_nodate}; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
@@ -275,7 +275,7 @@ In order to be successful the implementation should conform to the following req
 
 \subsection{Development methodology} \label{devmethods}
 
-For this project we used an iterative spiral development methodology. Objectives were chosen in accordance with the timetable set out in the proposal [reference appendix!]. Development then proceeded in cycles of implementation, testing, and analysis of the program trace and timing statements. This approach was particularly useful during the optimisation of our system (section \ref{performance}), which required extensive analysis of the logs and rapid development of different prototypes to compare performance.
+For this project we used an iterative waterfall development methodology. Objectives were chosen in accordance with the timetable set out in the proposal [reference appendix!]. Development then proceeded in cycles of implementation, testing, and analysis of the program trace and timing statements. This approach was particularly useful during the optimisation of our system (section \ref{performance}), which required extensive analysis of the logs and rapid development of different prototypes to compare performance.
 
 \subsection{Testing \& debugging methodology} \label{testing}
 
@@ -295,3 +295,8 @@ As mentioned in section \ref{testing}, the nature of the project meant that debu
 \subsection{Source code management}
 
 I used Git for version control and regularly pushed my local changes to a private GitHub repository.
+
+\subsection{Ethical statement}
+The development of this project did not require human participants, so nobody was harmed during its implementation.
+
+The software that has been developed contributes to an already existing blockchain ecosystem. Such software has many positive applications, but by its nature can facilitate the creation of exploitative markets. Since this software already exists, our contributions will not enable any new forms of unethical markets and products.

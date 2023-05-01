@@ -45,8 +45,6 @@
 \label{nodediagram}
 \end{figure}
 
-% [make clearer, break down components by diagram. follow the path of a message / request going through the system. use less of my own terms]
-
 In this section we present the system architecture that surrounds the core \textit{consensus} module, passing it new messages and client requests, and allowing it to send messages and respond to the client. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{jensen_ocons_2023}, which was developed by my project supervisor.
 
 We will follow the path of an incoming request or message as it passes through the system shown in figure \ref{nodediagram}.
@@ -93,6 +91,8 @@ We will follow the path of an incoming request or message as it passes through t
 [section is too vague...]
 
 [This is not our contribution, described in hotstuff paper blah blah]
+
+In this section we describe the \textit{chained} HotStuff algorithm, which is an optimised version of the basic algorithm described in section \ref{hotstufftheory} where different phases are pipelined. This is a standard optimisation for consensus algorithms that is described in the original paper \cite{yin2019hotstuff}.
 
 The algorithm presented goes through several very similar phases to commit a proposal, these phases involve collecting votes from replicas to form a QC that then serves in later phases. The \textit{chained} algorithm [why is it called this??? is this where blockchain gets its name? basic algorithm also seems chained] simplifies and optimises this by pipelining the different phases. Instead of having different phases as before, we can have a single \textit{generic} phase that collects votes, creates a \textit{generic QC}, and sends it to the next leader; now we change view on each phase and a QC can serve in multiple phases concurrently.
 
