@@ -34,7 +34,7 @@
 	folder icons/.default={12pt},
 }
 % ---
-\textit{In this chapter we describe the architecture of our implementation [\ref{overview}], present a specification and proof of correctness and liveness for our pacemaker [\ref{spec}], describe key optimisations implemented [\ref{performance}], present our load generator and experiment scripts which will be used in evaluation [\ref{benchcode}], and give an overview of the repository structure [\ref{repo}].}
+\textit{In this chapter we describe the architecture of our implementation (section \ref{overview}), conclude our theoretical explanation of HotStuff by discussing the chained algorithm and the pacemaker (section \ref{moretheory}), present a full specification for HotStuff with a proof of correctness and liveness (section \ref{spec}), describe key optimisations implemented (section \ref{performance}), present our load generator and experiment scripts which will be used in evaluation (section \ref{benchcode}), and give an overview of the repository structure (section \ref{repo}).}
 
 \section{System Architecture} \label{overview}
 
@@ -86,17 +86,14 @@ We will follow the path of an incoming request or message as it passes through t
 
 % Implementing the potential solution did not lead to a significant improvement in performance, so this was not the issue. However, this architectural model was retained as it is theoretically better and may lead to observable improvements later.
 
-\section{Chaining} \label{chaining}
+\section{More HotStuff theory} \label{moretheory}
+In this section we conclude our theoretical explanation of HotStuff by discussing chaining, and the pacemaker. As the pacemaker was not sufficiently specified in the original paper, we will draw on other sources to give a full explanation.
 
-[section is too vague...]
-
-[This is not our contribution, described in hotstuff paper blah blah]
+\subsection{Chaining} \label{chaining}
 
 In this section we describe the \textit{chained} HotStuff algorithm, which is an optimised version of the basic algorithm described in section \ref{hotstufftheory} where different phases are pipelined. This is a standard optimisation for consensus algorithms that is described in the original paper \cite{yin2019hotstuff}.
 
-The algorithm presented goes through several very similar phases to commit a proposal, these phases involve collecting votes from replicas to form a QC that then serves in later phases. The \textit{chained} algorithm [why is it called this??? is this where blockchain gets its name? basic algorithm also seems chained] simplifies and optimises this by pipelining the different phases. Instead of having different phases as before, we can have a single \textit{generic} phase that collects votes, creates a \textit{generic QC}, and sends it to the next leader; now we change view on each phase and a QC can serve in multiple phases concurrently.
-
-In each view, some leader sends a proposal to all replicas, who send their replies to the next leader who can form a QC to add to their proposal. The replicas also send \textit{new-view} messages to the next leader as before, to allow them to select a node to propose.
+Pipelining phases both simplifies and optimises the basic algorithm. The phases in the basic algorithm were all very similar; they involved collecting votes from replicas to form a QC that then serves in later phases. Instead of having different phases as before, we can have a single \textit{generic} phase that collects votes, creates a \textit{generic QC}, and sends it to the next leader; now each view is the length of a single phase and a QC can serve in multiple phases concurrently. The only exception to this is the \textit{new-view} phase which is the same as in the basic algorithm.
 
 \begin{figure}[h!]
 \centering
@@ -105,47 +102,39 @@ In each view, some leader sends a proposal to all replicas, who send their repli
 \label{nchain}
 \end{figure}
 
-Figure \ref{nchain} shows a chain of nodes connected by `parent' links; every time we propose a value we extend the chain with a new node. Some node \textit{b} also contains a link to another node within \textit{b.justify.node}, which is the previous generic QC in the chain. In the event of a view-change a dummy node will be inserted in the chain which will cause a `gap' where some \textit{b.justify.node} pointer jumps over a dummy node. If some node \textit{b} has a QC that points to its direct parent with no `gap' in-between, then we say that it forms a \textit{one-chain}. In general, if we have $n$ such direct links without `gaps' we refer to this as an \textit{n-chain}, as shown above.
+In each view a chain of nodes is extended, and different phases are carried out on nodes depending on how long a chain they form. For example, figure \ref{nchain}, shows a 2-chain, which means a proposal has already been through 2 phases\footnote{Not counting the new-view phase, as this can be considered to be the end of the previous view.}; this is the equivalent of being in the \textit{commit} phase in the basic algorithm.
+% Figure \ref{nchain} shows a chain of nodes connected by `parent' links; every time we propose a value we extend the chain with a new node. Some node \textit{b} also contains a link to another node within \textit{b.justify.node}, which is the previous generic QC in the chain. In the event of a view-change a dummy node will be inserted in the chain which will cause a `gap' where some \textit{b.justify.node} pointer jumps over a dummy node. If some node \textit{b} has a QC that points to its direct parent with no `gap' in-between, then we say that it forms a \textit{one-chain}. In general, if we have $n$ such direct links without `gaps' we refer to this as an \textit{n-chain}, as shown above.
 
-To reproduce the behaviour of the unchained algorithm, on receiving a proposal for node \textit{b\textsuperscript{*}} a replica must look at \textit{b\textsuperscript{*}.justify.node} to see if it points to an \textit{n-chain}. It must take different actions depending on the length of the chain:
-[replace this with pseudocode describing implementation]
-\begin{itemize}
-\item zero-chain: this is equivalent to the \textit{prepare} phase from the unchained version, so the replica votes for the proposal only if it does not conflict with their \textit{lock}
-\item one-chain: this is equivalent to the \textit{pre-commit} phase from the unchained version, so the replica should store a \textit{key}
-\item two-chain: this is equivalent to the \textit{commit} phase, so the replica should \textit{lock} on the value proposed at the start of the two-chain
-\item three-chain: this is equivalent to the \textit{decide} phase, so the replica can execute the commands from the node at the start of the three-chain
-\end{itemize}
+% To reproduce the behaviour of the unchained algorithm, on receiving a proposal for node \textit{b\textsuperscript{*}} a replica must look at \textit{b\textsuperscript{*}.justify.node} to see if it points to an \textit{n-chain}. It must take different actions depending on the length of the chain:
+% [replace this with pseudocode describing implementation]
+% \begin{itemize}
+% \item zero-chain: this is equivalent to the \textit{prepare} phase from the unchained version, so the replica votes for the proposal only if it does not conflict with their \textit{lock}
+% \item one-chain: this is equivalent to the \textit{pre-commit} phase from the unchained version, so the replica should store a \textit{key}
+% \item two-chain: this is equivalent to the \textit{commit} phase, so the replica should \textit{lock} on the value proposed at the start of the two-chain
+% \item three-chain: this is equivalent to the \textit{decide} phase, so the replica can execute the commands from the node at the start of the three-chain
+% \end{itemize}
 
-\section{Pacemaker} \label{pacemaker}
-in this section blah blah, highlight which bits are contributions
+\subsection{Pacemaker} \label{pacemaker}
 
-We informally justify the changes, and then prove that they yield the desired behaviour.
+In this section we discuss the pacemaker, which is responsible for the liveness of the system; ensuring that it is able to makes progress. The original paper did not sufficiently specify the pacemaker mechanism, so we have synthesised information about pacemakers from different sources (including our own experimentation) to give a full specification of HotStuff in section \ref{spec}. Part of the pacemaker that we will explain in this section is the \textit{view-change} protocol, which allows the view of a faulty leader to be skipped; ours is based on the pacemaker for LibraBFT \cite{baudet_state_nodate}, which is explained in a talk by Ittai Abraham \cite{ittai}. We will also discuss how the pacemaker can be integrated with the HotStuff algorithm; we did this through our own modifications based on deadlocks encountered during implementation.
 
-The model of collecting a quorum of COMPLAIN messages to transition to the next view is based on the pacemaker for LibraBFT \cite{baudet_state_nodate}, and is described in section \ref{viewchange}. The rest of the pacemaker is designed to advance to the next view as soon as the system allows, and is based on ad-hoc fixes to deadlocks that were encountered during implementation.
+% The model of collecting a quorum of COMPLAIN messages to transition to the next view is based on the pacemaker for LibraBFT \cite{baudet_state_nodate}, and is described in section \ref{viewchange}. The rest of the pacemaker is designed to advance to the next view as soon as the system allows, and is based on ad-hoc fixes to deadlocks that were encountered during implementation.
 
-\subsection{View-changes} \label{viewchange}
-If a leader fails to make progress within some timeout a view-change takes place and the next view begins. The HotStuff paper does not go into detail on how view-changes take place, so this explanation is based on a talk by one of its authors, Ittai Abraham \cite{ittai}, and is similar to the approach used by LibraBFT \cite{baudet_state_nodate}. [mention cogsworth]
+The notion of a pacemaker and the properties it should posses were formalised in the Cogsworth byzantine view synchronisation protocol \cite{naor_cogsworth_2020}; we will later prove that our pacemaker has these properties, and that they lead to liveness (section \ref{proof}). Pacemakers are related to the concept of a failure detector: a system that facilitates the detection of failed nodes \cite{chandra_weakest_1996}\cite{chandra_unreliable_1996}. A pacemaker extends this idea, allowing it to be used in a multi-shot setting.
+
+% We now present a reasonably formal proof that the modified pacemaker possesses qualities that ensure the liveness of the system. The first property (theorem \ref{viewsync}) ensures that there will always be opportunities for the system to make progress, and the second that the pacemaker cannot be controlled by a byzantine node (theorem \ref{syncvalid}). These properties are based on those described by Naor et. ~al~ in their paper presenting the Cogsworth byzantine view synchronisation protocol \cite{naor_cogsworth_2020}; their paper formalised the notion of a pacemaker and what qualities it should possess. [justify why we didn't implement cogsworth, it does not overlap with our ad-hoc fixes, these were original!!!]
+
+\subsubsection{View-change protocol} \label{viewchange}
 
 Once the view times out, nodes send a \textit{complain} message to the next leader and start a new timeout for the next view. Once the next leader achieves a quorum of \textit{complain} messages it collects them into a QC known as a \textit{view-change proof}. This leader can then send a \textit{view-change} message containing the \textit{view-change proof} to all replicas, who will respond by transitioning to the next view and sending a \textit{new-view} message to the new leader. The inclusion of the \textit{view-change proof} prevents liveness attacks by byzantine nodes that could otherwise attack the system by constantly causing view-changes to take place and preventing non-faulty leaders from making progress.
 
-The use of timeouts in this way is a type of failure detector, which is a system that facilitates the detection of failed nodes \cite{chandra_weakest_1996}\cite{chandra_unreliable_1996}.
+\subsubsection{Integration}
+
+Our approach to integrating the pacemaker is to advance a node to the next view as soon as possible once it has finished proposing or voting, or when it receives evidence that there are a quorum of nodes in a higher view. This means that the system does not require synchronised clocks, the nodes advance asynchronously as fast as the network allows.
+
+During development we experimented with a prototype for a pacemaker that advanced views at a steady rate, but analysis of timing data indicated that this approach had inferior performance to our chosen design.
 
 \section{Specification} \label{spec}
-[highlight that this is our main theoretical contribution and which parts we did!]
-In this section...
-
-
-[Highlight our contributions, and include this bit:]
-[shows that we tried an alternative model for the pacemaker....]
-Another potential cause of the issue was that internal messages are starving client requests, rather than the other way around. The modified implementation of the pacemaker (section \ref{spec}) immediately begins a new view as soon as the previous one is finished, which causes a large amount of internal messages.
-
-\textbf{Hypothesis: } Because the state machine is constantly advancing at the fastest possible rate, the volume of internal messages may prevent new requests from being handled.
-
-\textbf{Experimentation: } One approach is to `balance' the starvation by mostly prioritising internal messages, but every \textit{x} iterations picking a request instead of an internal message. Varying \textit{x} led to significant changes in performance, but no value for \textit{x} led to a good level of performance. This approach did not appear workable, as the nature of starvation seemed to be a complicated, with messages starving requests, and the other way around.
-
-\textbf{Potential solution: } Instead of starting the next view whenever possible, deliver the \textit{BEAT} and \textit{ON{\large N}EXT{\large S}YNC{\large V}IEW} interrupts at a steady rate.
-
-This potential solution was implemented; it involved checking a timer on every iteration of the main loop to see if some $\Delta$ had elapsed and it was time to deliver the next interrupt, as well as significant modifications to be made to the consensus state machine. Implementing this feature actually led to a significant performance hit, so the changes were discarded.
 
 % However, experimenting with this feature showed an interesting phenomenon; the main loop, which is infinitely recursive, was running at a much slower rate than one would expect. Further timing statements revealed that the command which removed an element from the stream would sometimes take a very long time (on the order of seconds). Reading more into the Lwt documentation led to the following idea:
 
@@ -285,23 +274,21 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 	\end{algorithmic}
 \end{algorithm}
 
-\subsection{Changes}
-\begin{itemize}
-	\item CREATE{\large L}EAF (algorithm \ref{hotstuffalgorithm}, line \ref{code_createleaf}): This function has been modified so that `dummy' nodes are inserted to maintain the invariant that the height of the chain is always one greater than the current view number, as in the non-event driven pseudocode in the original paper.
-	\item ON{\large R}ECEIVE{\large P}ROPOSAL (algorithm \ref{hotstuffalgorithm}, line \ref{code_onreceiveproposal}): The change on line \ref{code_checkview} ensures that replicas only respond to a proposal from the leader of the current view. The change on line \ref{code_proposaltransition} means that a replica transitions to the next view once it receives a proposal unless it is the next leader, in which case it waits to collect the VOTE{\large M}SGs before transitioning.
-	\item ON{\large R}ECEIVE{\large V}OTE (algorithm \ref{hotstuffalgorithm}, line \ref{code_onreceivevote}): The change on line \ref{code_checkleader} ensures that a replica will ignore messages from earlier views, and it checks that it is the correct destination for a vote message. Another change we make is dividing \textit{V} into different sets for messages from different views; this prevents votes from different views being used to form a quorum. The change on line \ref{code_gotvotes} means that once a leader has received a quorum of messages, it can transition to the next view.
-	\item ON{\large P}ROPOSE (algorithm \ref{hotstuffalgorithm}, line \ref{code_onpropose}): The change on line \ref{code_propose} includes a QC along with the proposal, allowing replicas to catch up if they are in a lower view.
-	\item GET{\large L}EADER (algorithm \ref{pacemakeralgorithm}, line \ref{code_getleader}): The original pseudocode states that this function is application specific. We have chosen to use a round-robin system to assign leaders to views.
-	\item ON{\large N}EXT{\large S}YNC{\large V}IEW (algorithm \ref{pacemakeralgorithm}, line \ref{code_onnextsyncview}): This function previously just sent a NEW{\large V}IEW message to the next leader. Our modified function also updates the \textit{curView}, and resets the timer for the new view. Additionally it calls ON{\large B}EAT which causes a leader to propose a new value.
-	\item ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST (algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceiveclientreq}): On receiving a client request we simply add it to a queue of commands waiting to be proposed.
-	\item ON{\large T}IMEOUT (algorithm \ref{pacemakeralgorithm}, line \ref{code_ontimeout}): When the current view times out replicas will send a COMPLAIN to the next leader, and reset their timers for the next view. This behaviour is explained in \ref{viewchange}.
-	\item ON{\large R}ECIEVE{\large C}OMPLAIN (algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceivecomplain}): This function is very similar to ON{\large R}ECEIVE{\large V}OTE, except that a quorum of COMPLAIN messages is being collected rather than votes. On achieving a quorum the leader can broadcast a NEXT{\large V}IEW message to get the replicas to transition to the next state, including the quorum of COMPLAINs as proof. This behaviour is explained in \ref{viewchange}.
-	\item ON{\large R}ECEIVE{\large A}NY (algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceiveany}): N.B. the message type given is the wildcard operator, so this procedure is run on every message we receive. The function checks if the quorum received is from a greater view than \textit{curView}, if so then it is safe to transition to that view in order to catch up.
-\end{itemize}
+% \subsection{Changes}
+% \begin{itemize}
+% 	\item CREATE{\large L}EAF (algorithm \ref{hotstuffalgorithm}, line \ref{code_createleaf}): This function has been modified so that `dummy' nodes are inserted to maintain the invariant that the height of the chain is always one greater than the current view number, as in the non-event driven pseudocode in the original paper.
+% 	\item ON{\large R}ECEIVE{\large P}ROPOSAL (algorithm \ref{hotstuffalgorithm}, line \ref{code_onreceiveproposal}): The change on line \ref{code_checkview} ensures that replicas only respond to a proposal from the leader of the current view. The change on line \ref{code_proposaltransition} means that a replica transitions to the next view once it receives a proposal unless it is the next leader, in which case it waits to collect the VOTE{\large M}SGs before transitioning.
+% 	\item ON{\large R}ECEIVE{\large V}OTE (algorithm \ref{hotstuffalgorithm}, line \ref{code_onreceivevote}): The change on line \ref{code_checkleader} ensures that a replica will ignore messages from earlier views, and it checks that it is the correct destination for a vote message. Another change we make is dividing \textit{V} into different sets for messages from different views; this prevents votes from different views being used to form a quorum. The change on line \ref{code_gotvotes} means that once a leader has received a quorum of messages, it can transition to the next view.
+% 	\item ON{\large P}ROPOSE (algorithm \ref{hotstuffalgorithm}, line \ref{code_onpropose}): The change on line \ref{code_propose} includes a QC along with the proposal, allowing replicas to catch up if they are in a lower view.
+% 	\item GET{\large L}EADER (algorithm \ref{pacemakeralgorithm}, line \ref{code_getleader}): The original pseudocode states that this function is application specific. We have chosen to use a round-robin system to assign leaders to views.
+% 	\item ON{\large N}EXT{\large S}YNC{\large V}IEW (algorithm \ref{pacemakeralgorithm}, line \ref{code_onnextsyncview}): This function previously just sent a NEW{\large V}IEW message to the next leader. Our modified function also updates the \textit{curView}, and resets the timer for the new view. Additionally it calls ON{\large B}EAT which causes a leader to propose a new value.
+% 	\item ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST (algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceiveclientreq}): On receiving a client request we simply add it to a queue of commands waiting to be proposed.
+% 	\item ON{\large T}IMEOUT (algorithm \ref{pacemakeralgorithm}, line \ref{code_ontimeout}): When the current view times out replicas will send a COMPLAIN to the next leader, and reset their timers for the next view. This behaviour is explained in \ref{viewchange}.
+% 	\item ON{\large R}ECIEVE{\large C}OMPLAIN (algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceivecomplain}): This function is very similar to ON{\large R}ECEIVE{\large V}OTE, except that a quorum of COMPLAIN messages is being collected rather than votes. On achieving a quorum the leader can broadcast a NEXT{\large V}IEW message to get the replicas to transition to the next state, including the quorum of COMPLAINs as proof. This behaviour is explained in \ref{viewchange}.
+% 	\item ON{\large R}ECEIVE{\large A}NY (algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceiveany}): N.B. the message type given is the wildcard operator, so this procedure is run on every message we receive. The function checks if the quorum received is from a greater view than \textit{curView}, if so then it is safe to transition to that view in order to catch up.
+% \end{itemize}
 
-\subsection{Proofs}
-
-We now present a reasonably formal proof that the modified pacemaker possesses qualities that ensure the liveness of the system. The first property (theorem \ref{viewsync}) ensures that there will always be opportunities for the system to make progress, and the second that the pacemaker cannot be controlled by a byzantine node (theorem \ref{syncvalid}). These properties are based on those described by Naor et. ~al~ in their paper presenting the Cogsworth byzantine view synchronisation protocol \cite{naor_cogsworth_2020}; their paper formalised the notion of a pacemaker and what qualities it should possess. [justify why we didn't implement cogsworth, it does not overlap with our ad-hoc fixes, these were original!!!]
+\subsection{Proofs} \label{proof}
 
 HotStuff works under a partially-synchronous system model (section \ref{hotstufftheory}), so the following proofs assume that global synchronisation time has been reached, and messages have a bounded latency of $\delta$.
 [For this proof we consider the consensus machine (algorithm \ref{hotstuffalgorithm}) and the pacemaker (algorithm \ref{pacemakeralgorithm}), to be separate entities.] - relate this to cogsworth synchroniser!!!
@@ -357,7 +344,7 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Performance improvements} \label{performance}
 
-\textit{In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle.] \cite{chubby}}
+In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle.] \cite{chubby}
 
 
 \subsection{Batching} \label{batching}

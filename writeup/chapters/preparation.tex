@@ -11,7 +11,7 @@
 % chubby (Google) - consensus is hard
 % related works
 
-\textit{In this chapter we disclose my knowledge and experience prior to beginning this project [\ref{start}], give a theoretical basis for understanding the HotStuff algorithm by building up from simpler consensus algorithms [\ref{hotstufftheory}], outline the tools, libraries [\ref{tools}], and professional methodology [\ref{softwareeng}] deployed in implementation, and highlight the requirements that the implementation should meet [\ref{requirements}].}
+\textit{In this chapter we disclose my knowledge and experience prior to beginning this project (section \ref{start}), give a theoretical basis for understanding the HotStuff algorithm by building up from simpler consensus algorithms (section \ref{hotstufftheory}), outline the tools, libraries (section \ref{tools}), and professional methodology (section \ref{softwareeng}) deployed in implementation, and highlight the requirements that the implementation should meet (section \ref{requirements}).}
 
 \section{Starting point} \label{start}
 I had some experience using OCaml from the IA Foundations of Computer Science course but had never used it in a project. The IB Distributed Systems course also provided some useful background knowledge, particularly as it briefly covered Raft \cite{ongaro_search_nodate}, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus \cite{nakamoto_bitcoin_nodate} and from developing a wallet application for Ethereum \cite{wood_ethereum_nodate}; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
@@ -43,7 +43,7 @@ The final phase of a consensus algorithm is \textit{decide}. We assume that a \t
 The HotStuff algorithm consists of a responsive byzantine consensus algorithm (section \ref{optresponsive}), with a view-change protocol (section \ref{viewchange}) that allows the system to skip the view of a faulty leader. We will start by describing a simpler consensus algorithm that is not responsive, and cannot handle byzantine nodes (section \ref{nonbyzconsensus}). We then extend this algorithm to handle byzantine threats (section \ref{byzconsensus}). Finally, we extend this algorithm to be responsive by removing the need for a timeout to progress (section \ref{optresponsive}).
 
 \subsection{Non-byzantine consensus} \label{nonbyzconsensus}
-We will start by describing an algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaro_search_nodate} and multi-shot Paxos \cite{lamport_part-time_1998}\cite{lamport_paxos_2001}.
+We will start by describing an algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaro_search_nodate} and MultiPaxos [check citations are actually multi-shot!] \cite{lamport_part-time_1998}\cite{lamport_paxos_2001}.
 
 Each view consists of three phases:
 
@@ -230,7 +230,7 @@ This ensures that if some honest replica becomes locked on a value in the \texti
 
 
 \section{Tools \& libraries} \label{tools}
-\textit{In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.}
+In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.
 
 \subsection{OCaml}
 I chose OCaml \cite{noauthor_ocaml_nodate} for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, and good library support. OCaml's multi-paradigm nature is suitable for implementing HotStuff, as the core state machine can be elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm. Additionally, the Tezos cryptocurrency [cite!!!] is written in OCaml and contains a cryptography library (section \ref{tezos}) that provides the functionality needed by HotStuff.
@@ -271,7 +271,7 @@ In order to be successful the implementation should conform to the following req
 
 \section{Software engineering practices} \label{softwareeng}
 
-\textit{In this section we describe the professional software engineering methodology deployed during implementation.}
+In this section we describe the professional software engineering methodology deployed during implementation, and justify that this project is ethical.
 
 \subsection{Development methodology} \label{devmethods}
 
