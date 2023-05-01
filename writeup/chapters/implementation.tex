@@ -36,7 +36,7 @@
 % ---
 \textit{In this chapter we describe the architecture of our implementation (section \ref{overview}), conclude our theoretical explanation of HotStuff by discussing the chained algorithm and the pacemaker (section \ref{moretheory}), present a full specification for HotStuff with a proof of correctness and liveness (section \ref{spec}), describe key optimisations implemented (section \ref{performance}), present our load generator and experiment scripts which will be used in evaluation (section \ref{benchcode}), and give an overview of the repository structure (section \ref{repo}).}
 
-\section{System Architecture} \label{overview}
+\section{System Architecture} \label{architecture}
 
 \begin{figure}[h!]
 \centering
@@ -142,7 +142,65 @@ During development we experimented with a prototype for a pacemaker that advance
 
 % This change improved performance by reducing the amount of time spent waiting in the main loop.
 
-We present the pseudocode for the unchained algorithm given in the HotStuff paper (algorithms \ref{hotstuffalgorithm} \& \ref{pacemakeralgorithm}) with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}. In order to better map to the original pseudocode we break the algorithm into HotStuff and the pacemaker, although in our modified algorithm these two sections are not cleanly separable.
+In this section we give a full specification of HotStuff based on the basic HotStuff algorithm (section \ref{hotstufftheory}), integrating chaining (section \ref{chaining}), and a pacemaker (section \ref{pacemaker}).
+
+This specification implements the consensus module as described in our discussion of the system architecture (section \ref{architecture}). This module receives messages and requests from the main loop, outputs actions (sending a message, responding to a client request, or resetting the view timer), and updates its own state. We implement this as a \textit{match} statement over the different types of incoming messages and requests, returning a new state for the consensus machine, and a list of actions.
+
+We present the pseudocode with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}. The pseudocode is written to match the format of the original paper to allow for easier comparison, although as stated our actual implementation uses a match statement over the incoming messages and requests.
+
+% \begin{algorithm}[h!]
+% 	\caption{Modified HotStuff} \label{hotstuffalgorithm}
+% 	\begin{algorithmic}[1]
+% 	\Match{\textit{event}}
+% 		\Case{\text{GENERIC} \textit{msg}}
+% 			\color{Green}
+% 			\If {$ msg.src = \text{GET{\large L}EADER}(\textit{msg.view}) \land \textit{msg.view} = curView$} \label{code_checkview}
+% 				\color{black}
+% 				\State $\textit{b\textsubscript{new}} \gets \textit{m.node}$
+% 				\State $\textit{n} \gets \textit{b\textsubscript{new}.justify.node}$
+% 				\If{$\textit{b\textsubscript{new}.height} > \textit{vheight} \land (\textit{b\textsubscript{new}}\ \text{extends}\ \textit{b\textsubscript{lock}} \lor \textit{n.height} > \textit{b\textsubscript{lock}.height})$}
+% 					\State $\textit{vheight} \gets \textit{b\textsubscript{new}.height}$
+% 					\State $ \text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{VOTE{\large M}SG}\textsubscript{\textit{u}}(\text{GENERIC{\large A}CK}, \textit{b\textsubscript{new}}, \bot))$
+% 				\EndIf
+% 				\State $\textit{b''} \gets \textit{b\textsubscript{new}.justify.node}$
+% 				\State $\textit{b'} \gets \textit{b''.justify.node}$
+% 				\State $\textit{b} \gets \textit{b'.justify.node}$
+% 				\State $\text{UPDATE{\large Q}C{\large H}IGH}(\textit{b\textsuperscript{*}.justify})$
+% 				\If{$\textit{b'.height} > \textit{b\textsubscript{lock}.height}$}
+% 					\State $\textit{b\textsubscript{lock}} \gets \textit{b'}$
+% 				\EndIf
+% 				\If{$(\textit{b''.parent} = \textit{b'}) \land (\textit{b'.parent} = \textit{b})$}
+% 					\State $\text{ON{\large C}OMMIT}(\textit{b})$
+% 					\State $\textit{b\textsubscript{exec}} \gets \textit{b}$
+% 				\EndIf
+% 				\color{Green}
+% 				\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $} \label{code_proposaltransition}
+% 					\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{curview} + 1)$
+% 				\EndIf
+% 			\EndIf
+% 			\color{black}
+% 		\EndCase
+% 		\Case{\text{GENERIC{\large A}CK} \textit{msg}}
+% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
+% 		\EndCase
+% 		\Case{\text{NEW{\large V}IEW} \textit{msg}}
+% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
+% 		\EndCase
+% 		\Case{\text{CLIENT{\large R}EQ} \textit{req}}
+% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
+% 		\EndCase
+% 		\Case{\text{TIMEOUT} \textit{view}}
+% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
+% 		\EndCase
+% 		\Case{\text{COMPLAIN} \textit{msg}}
+% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
+% 		\EndCase
+% 		\Case{\text{\_} \textit{msg}}
+% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
+% 		\EndCase
+% 	\EndMatch
+% 	\end{algorithmic}
+% \end{algorithm}
 
 \begin{algorithm}[h!]
 	\caption{Modified HotStuff}\label{hotstuffalgorithm}
@@ -179,6 +237,7 @@ We present the pseudocode for the unchained algorithm given in the HotStuff pape
 		\color{Green}
 		\If {$ v = \text{GET{\large L}EADER}(\textit{m.view}) \land \textit{m.view} = curView$} \label{code_checkview}
 			\color{black}
+			\State $\textit{n} \gets \textit{b\textsubscript{new}.justify.node}$
 			\If{$\textit{b\textsubscript{new}.height} > \textit{vheight} \land (\textit{b\textsubscript{new}}\ \text{extends}\ \textit{b\textsubscript{lock}} \lor \textit{n.height} > \textit{b\textsubscript{lock}.height})$}
 				\State $\textit{vheight} \gets \textit{b\textsubscript{new}.height}$
 				\State $ \text{SEND}(\text{GET{\large L}EADER}(), \text{VOTE{\large M}SG}\textsubscript{\textit{u}}(\text{GENERIC}, \textit{b\textsubscript{new}}, \bot))$

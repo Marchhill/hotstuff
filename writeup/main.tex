@@ -76,6 +76,16 @@
 \newtheorem{property}{Property}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 
+% New definitions
+\algnewcommand\algorithmicmatch{\textbf{match}}
+\algnewcommand\algorithmicwith{\textbf{with}}
+\algnewcommand\algorithmiccase{|}
+% New "environments"
+\algdef{SE}[MATCH]{Match}{EndMatch}[1]{\algorithmicmatch\ #1\ \algorithmicwith}{\algorithmicend\ \algorithmicmatch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1 $\to$}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndMatch}%
+\algtext*{EndCase}%
+
 \begin{document}
 
 \begin{titlepage}

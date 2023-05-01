@@ -99,7 +99,7 @@
 \@writefile{lot}{\addvspace {10\p@ }}
 \newlabel{implementation}{{3}{17}{Implementation}{chapter.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.1}System Architecture}{17}{section.3.1}\protected@file@percent }
-\newlabel{overview}{{3.1}{17}{System Architecture}{section.3.1}{}}
+\newlabel{architecture}{{3.1}{17}{System Architecture}{section.3.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Architecture of a node.}}{17}{figure.3.1}\protected@file@percent }
 \newlabel{nodediagram}{{3.1}{17}{Architecture of a node}{figure.3.1}{}}
 \citation{yin2019hotstuff}
@@ -126,14 +126,12 @@
 \newlabel{code_createleaf}{{1}{21}{Specification}{algorithm.1}{}}
 \newlabel{code_onreceiveproposal}{{21}{21}{Specification}{algorithm.1}{}}
 \newlabel{code_checkview}{{22}{21}{Specification}{algorithm.1}{}}
-\newlabel{code_proposaltransition}{{27}{21}{Specification}{algorithm.1}{}}
-\newlabel{code_onreceivevote}{{29}{21}{Specification}{algorithm.1}{}}
-\newlabel{code_checkleader}{{30}{21}{Specification}{algorithm.1}{}}
-\newlabel{code_gotvotes}{{37}{21}{Specification}{algorithm.1}{}}
-\newlabel{code_onpropose}{{38}{21}{Specification}{algorithm.1}{}}
-\newlabel{code_propose}{{40}{21}{Specification}{algorithm.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Proofs}{21}{subsection.3.3.1}\protected@file@percent }
-\newlabel{proof}{{3.3.1}{21}{Proofs}{subsection.3.3.1}{}}
+\newlabel{code_proposaltransition}{{28}{21}{Specification}{algorithm.1}{}}
+\newlabel{code_onreceivevote}{{30}{21}{Specification}{algorithm.1}{}}
+\newlabel{code_checkleader}{{31}{21}{Specification}{algorithm.1}{}}
+\newlabel{code_gotvotes}{{38}{21}{Specification}{algorithm.1}{}}
+\newlabel{code_onpropose}{{39}{21}{Specification}{algorithm.1}{}}
+\newlabel{code_propose}{{41}{21}{Specification}{algorithm.1}{}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Modified Pacemaker}}{22}{algorithm.2}\protected@file@percent }
 \newlabel{pacemakeralgorithm}{{2}{22}{Specification}{algorithm.2}{}}
 \newlabel{code_getleader}{{1}{22}{Specification}{algorithm.2}{}}
@@ -146,13 +144,15 @@
 \newlabel{code_nextviewmsg}{{29}{22}{Specification}{algorithm.2}{}}
 \newlabel{code_onreceiveany}{{30}{22}{Specification}{algorithm.2}{}}
 \newlabel{code_gotqc}{{32}{22}{Specification}{algorithm.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Proofs}{22}{subsection.3.3.1}\protected@file@percent }
+\newlabel{proof}{{3.3.1}{22}{Proofs}{subsection.3.3.1}{}}
 \newlabel{viewsync}{{3.3.1}{22}{View synchronisation}{theorem.3.3.1}{}}
-\citation{chubby}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Example of round-robin leader allocation for $f = 1$. Red rectangles denote byzantine leaders. [maybe stripe red nodes so they appear in black and white???]}}{23}{figure.3.3}\protected@file@percent }
 \newlabel{lemma1diagram}{{3.3}{23}{Example of round-robin leader allocation for $f = 1$. Red rectangles denote byzantine leaders. [maybe stripe red nodes so they appear in black and white???]}{figure.3.3}{}}
 \newlabel{viewslemma}{{3.3.2}{23}{}{theorem.3.3.2}{}}
 \newlabel{progressionlemma}{{3.3.3}{23}{}{theorem.3.3.3}{}}
 \newlabel{syncvalid}{{3.3.4}{23}{Synchronisation validity}{theorem.3.3.4}{}}
+\citation{chubby}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Performance improvements}{24}{section.3.4}\protected@file@percent }
 \newlabel{performance}{{3.4}{24}{Performance improvements}{section.3.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Batching}{24}{subsection.3.4.1}\protected@file@percent }
@@ -168,19 +168,19 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Nodes}{26}{subsection.3.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Recursive types}{27}{subsubsection*.15}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Node offsets}{27}{subsubsection*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Node comparison}{27}{subsubsection*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Node comparison}{28}{subsubsection*.17}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Node truncation}{28}{subsubsection*.18}\protected@file@percent }
 \newlabel{truncation}{{3.4.2}{28}{Node truncation}{subsubsection*.18}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.5}Implementing for evaluation}{28}{section.3.5}\protected@file@percent }
 \newlabel{benchcode}{{3.5}{28}{Implementing for evaluation}{section.3.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Load generator}{28}{subsection.3.5.1}\protected@file@percent }
-\newlabel{loadgenerator}{{3.5.1}{28}{Load generator}{subsection.3.5.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Open-loop load generator.}}{28}{figure.3.4}\protected@file@percent }
-\newlabel{openloop}{{3.4}{28}{Open-loop load generator}{figure.3.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Load generator}{29}{subsection.3.5.1}\protected@file@percent }
+\newlabel{loadgenerator}{{3.5.1}{29}{Load generator}{subsection.3.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Open-loop load generator.}}{29}{figure.3.4}\protected@file@percent }
+\newlabel{openloop}{{3.4}{29}{Open-loop load generator}{figure.3.4}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Closed-loop load generator.}}{29}{figure.3.5}\protected@file@percent }
 \newlabel{closedloop}{{3.5}{29}{Closed-loop load generator}{figure.3.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{29}{subsection.3.5.2}\protected@file@percent }
-\newlabel{experimentscripts}{{3.5.2}{29}{Experiment scripts}{subsection.3.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{30}{subsection.3.5.2}\protected@file@percent }
+\newlabel{experimentscripts}{{3.5.2}{30}{Experiment scripts}{subsection.3.5.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Logging framework}{30}{subsection.3.5.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3.6}Repository Overview}{31}{section.3.6}\protected@file@percent }
 \newlabel{repo}{{3.6}{31}{Repository Overview}{section.3.6}{}}

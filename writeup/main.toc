@@ -31,7 +31,7 @@
 \contentsline {subsubsection}{View-change protocol}{20}{subsubsection*.11}%
 \contentsline {subsubsection}{Integration}{20}{subsubsection*.12}%
 \contentsline {section}{\numberline {3.3}Specification}{20}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Proofs}{21}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.1}Proofs}{22}{subsection.3.3.1}%
 \contentsline {section}{\numberline {3.4}Performance improvements}{24}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Batching}{24}{subsection.3.4.1}%
 \contentsline {subsubsection}{Filtering}{24}{subsubsection*.13}%
@@ -39,11 +39,11 @@
 \contentsline {subsection}{\numberline {3.4.2}Nodes}{26}{subsection.3.4.2}%
 \contentsline {subsubsection}{Recursive types}{27}{subsubsection*.15}%
 \contentsline {subsubsection}{Node offsets}{27}{subsubsection*.16}%
-\contentsline {subsubsection}{Node comparison}{27}{subsubsection*.17}%
+\contentsline {subsubsection}{Node comparison}{28}{subsubsection*.17}%
 \contentsline {subsubsection}{Node truncation}{28}{subsubsection*.18}%
 \contentsline {section}{\numberline {3.5}Implementing for evaluation}{28}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Load generator}{28}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{29}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.1}Load generator}{29}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{30}{subsection.3.5.2}%
 \contentsline {subsection}{\numberline {3.5.3}Logging framework}{30}{subsection.3.5.3}%
 \contentsline {section}{\numberline {3.6}Repository Overview}{31}{section.3.6}%
 \contentsline {chapter}{\numberline {4}Evaluation}{33}{chapter.4}%
