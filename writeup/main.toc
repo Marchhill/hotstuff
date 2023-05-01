@@ -24,26 +24,26 @@
 \contentsline {subsection}{\numberline {2.5.3}Source code management}{16}{subsection.2.5.3}%
 \contentsline {chapter}{\numberline {3}Implementation}{17}{chapter.3}%
 \contentsline {section}{\numberline {3.1}System Architecture}{17}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Chaining}{19}{section.3.2}%
+\contentsline {section}{\numberline {3.2}Chaining}{18}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Pacemaker}{20}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}View-changes}{20}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Specification}{20}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Changes}{21}{subsection.3.3.3}%
-\contentsline {subsection}{\numberline {3.3.4}Proofs}{24}{subsection.3.3.4}%
-\contentsline {section}{\numberline {3.4}Performance improvements}{25}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Batching}{25}{subsection.3.4.1}%
+\contentsline {section}{\numberline {3.4}Specification}{20}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Changes}{21}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Proofs}{24}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Performance improvements}{25}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Batching}{25}{subsection.3.5.1}%
 \contentsline {subsubsection}{Filtering}{26}{subsubsection*.11}%
 \contentsline {subsubsection}{Batch sizes}{28}{subsubsection*.12}%
-\contentsline {subsection}{\numberline {3.4.2}Nodes}{28}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.5.2}Nodes}{28}{subsection.3.5.2}%
 \contentsline {subsubsection}{Recursive types}{28}{subsubsection*.13}%
 \contentsline {subsubsection}{Node offsets}{29}{subsubsection*.14}%
 \contentsline {subsubsection}{Node comparison}{29}{subsubsection*.15}%
 \contentsline {subsubsection}{Node truncation}{29}{subsubsection*.16}%
-\contentsline {section}{\numberline {3.5}Implementing for evaluation}{30}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Load generator}{30}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{31}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Logging framework}{32}{subsection.3.5.3}%
-\contentsline {section}{\numberline {3.6}Repository Overview}{33}{section.3.6}%
+\contentsline {section}{\numberline {3.6}Implementing for evaluation}{30}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Load generator}{30}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Experiment scripts}{31}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Logging framework}{31}{subsection.3.6.3}%
+\contentsline {section}{\numberline {3.7}Repository Overview}{33}{section.3.7}%
 \contentsline {chapter}{\numberline {4}Evaluation}{35}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Testing methodology}{35}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Library benchmarks}{35}{section.4.2}%

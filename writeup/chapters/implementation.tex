@@ -45,27 +45,48 @@
 \label{nodediagram}
 \end{figure}
 
-[make clearer, break down components by diagram. follow the path of a message / request going through the system. use less of my own terms]
+% [make clearer, break down components by diagram. follow the path of a message / request going through the system. use less of my own terms]
 
-The core implementation of the HotStuff algorithm (section \ref{spec}) is implemented in the \textit{consensus} module. The main function provided by this module is \textit{advance}, which delivers some event (such as an incoming message, client request or timeout) to the consensus state machine and returns an updated state and a list of actions (such as sending a message to another node or responding to a client request) to be carried out. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{jensen_ocons_2023}, which was developed by my project supervisor. The \textit{consensus} module contains both the chained \ref{chaining} and basic \ref{hotstufftheory} algorithms; they share a common signature, so can be interchanged. The module uses the Tezos cryptography library (section \ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
+In this section we present the system architecture that surrounds the core \textit{consensus} module, passing it new messages and client requests, and allowing it to send messages and respond to the client. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{jensen_ocons_2023}, which was developed by my project supervisor.
 
-Each node operates as a server waiting for messages from other nodes or requests from a client (or in the case of our experiments a load generator, which is described in section \ref{benchcode}). The format of RPCs is specified in a Cap'n Proto schema, in their custom markdown language. A received RPC must be decoded, and the Cap'n Proto types converted into the internal types of the consensus state machine. Messages and requests are added to separate streams\footnote{A stream is thread-safe implementation of a queue in Lwt.} when they are received. When a request is received the callback function to respond to the request is stored in a hash table, so that it can be accessed when the command has been committed and the client request can be responded to.
+We will follow the path of an incoming request or message as it passes through the system shown in figure \ref{nodediagram}.
 
-The main loop takes events from the message and request streams, prioritising internal messages over client requests. It takes these events and delivers them to the \textit{advance} function of the consensus state machine. This architecture was chosen so that the \textit{advance} function is never run in parallel on different messages / requests, as this could lead to race conditions. The \textit{advance} function then returns a new state which is stored, and a list of actions to carry out.
+\textit{Incoming message and client RPCs} --- the node responds to internal messages from other nodes, and requests from a client (or a load generator, as described in section \ref{loadgenerator}) containing new commands to be committed. The format of these RPCs is specified in a Cap'n Proto schema, in their custom markdown language.
 
-The actions that can be carried out are sending a message to other nodes, responding to a client request, and resetting a timer. In order to send a message we must convert the consensus state machine internal types into Cap'n Proto types, and construct an RPC that matches the schema. Messages are dispatched asynchronously in a new thread. The node maintains TCP connections with all other nodes that are reused every time a message is sent, and in the event of the connection breaking the node repeatedly attempts to reconnect with binary exponential back-off. When responding to a client request the committed command's unique identifier is used to lookup the callback to respond to the client, which is then called, sending a response to the client. The timer is implemented with Lwt promises, a new thread is created which waits for a timeout to elapse and then adds a TIMEOUT message to the message stream.
+\textit{Server} --- each node operates as a server waiting for incoming RPCs. When the server receives an RPC it must be converted from Cap'n Proto types to internal types, and added to the \textit{message stream} or \textit{request stream}. If the RPC was a client request, a promise for a response is added to the \textit{client response hash table}; this will allow the system to respond to the client once the command is decided.
 
-[integrate this and make it much shorter:]
+\textit{Message and request streams\footnote{A stream is thread-safe implementation of a queue in Lwt.}} - messages and requests are added to separate streams so that messages can be prioritised. Internal messages represent a backlog of work that the system has not yet completed, so we follow the general design principle of clearing this backlog before accepting new work (client requests).
 
-Initial analysis of timing data showed a large amount of time was spent by requests queuing on the node before they are delivered to the state machine. At this time the architecture presented in section \ref{overview} had not been fully developed, specifically, there was only one stream that contained both internal messages and client requests.
+\textit{Main loop} --- takes messages and requests from their respective streams, and delivers them to the \textit{consensus} module. This main loop ensures that the \textit{consensus} module is never run in parallel, which could lead to race conditions.
 
-\textbf{Hypothesis: } Internal messages are being starved by client requests. At large throughputs the stream quickly becomes filled with client requests, which may prevent internal messages being handled. Internal messages represent a backlog of work that is not yet finished, so this should be handled before accepting more requests.
+\textit{Consensus module} --- takes incoming messages and requests, outputs \textit{actions} such as sending messages, and updates its own state. The module contains an implementation of the basic HotStuff algorithm (section \ref{hotstufftheory}), and the chained algorithm (chaining is discussed in section \ref{chaining}, and a full specification is given in section \ref{spec}); both share the same signature, so can be interchanged.
 
-\textbf{Design principle: } The system should prioritise clearing its backlog of work before accepting new work.
+\textit{Action handler} --- takes the actions outputted by the \textit{consensus} module, and passes them to the appropriate handler. The three types of actions are: sending a message, responding to the client, and resetting the view timer.
 
-\textbf{Potential solution: } Split the stream into two separate streams for messages and requests, and always pick from the message stream over the request stream until the message stream is empty.
+\textit{Message sender} --- asynchronously dispatches an RPC in a new thread. To do this it must convert internal types into Cap'n Proto types, and construct an RPC that matches the schema. The message sender maintains TCP connections with all other nodes, and in the event of the connection breaking repeatedly attempts to reconnect with binary exponential back-off times.
 
-Implementing the potential solution did not lead to a significant improvement in performance, so this was not the issue. However, this architectural model was retained as it is theoretically better and may lead to observable improvements later.
+\textit{Client request hashtable} --- allows client requests to be responded to. The hashtable maps each command's unique identifier to a promise, that when awoken will respond to the original client request RPC.
+
+\textit{View timer} --- waits for a timeout to elapse then adds a view timeout message to the \textit{message stream}, so that it will be delivered to the \textit{consensus} module. The \textit{reset} action allows the timer to be reset for a new view.
+% The core implementation of the HotStuff algorithm (section \ref{spec}) is implemented in the \textit{consensus} module. The main function provided by this module is \textit{advance}, which delivers some event (such as an incoming message, client request or timeout) to the consensus state machine and returns an updated state and a list of actions (such as sending a message to another node or responding to a client request) to be carried out. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{jensen_ocons_2023}, which was developed by my project supervisor. The \textit{consensus} module contains both the chained \ref{chaining} and basic \ref{hotstufftheory} algorithms; they share a common signature, so can be interchanged. The module uses the Tezos cryptography library (section \ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
+
+% Each node operates as a server waiting for messages from other nodes or requests from a client (or in the case of our experiments a load generator, which is described in section \ref{benchcode}). The format of RPCs is specified in a Cap'n Proto schema, in their custom markdown language. A received RPC must be decoded, and the Cap'n Proto types converted into the internal types of the consensus state machine. Messages and requests are added to separate streams\footnote{A stream is thread-safe implementation of a queue in Lwt.} when they are received. When a request is received the callback function to respond to the request is stored in a hash table, so that it can be accessed when the command has been committed and the client request can be responded to.
+
+% The main loop takes events from the message and request streams, prioritising internal messages over client requests. It takes these events and delivers them to the \textit{advance} function of the consensus state machine. This architecture was chosen so that the \textit{advance} function is never run in parallel on different messages / requests, as this could lead to race conditions. The \textit{advance} function then returns a new state which is stored, and a list of actions to carry out.
+
+% The actions that can be carried out are sending a message to other nodes, responding to a client request, and resetting a timer. In order to send a message we must convert the consensus state machine internal types into Cap'n Proto types, and construct an RPC that matches the schema. Messages are dispatched asynchronously in a new thread. The node maintains TCP connections with all other nodes that are reused every time a message is sent, and in the event of the connection breaking the node repeatedly attempts to reconnect with binary exponential back-off. When responding to a client request the committed command's unique identifier is used to lookup the callback to respond to the client, which is then called, sending a response to the client. The timer is implemented with Lwt promises, a new thread is created which waits for a timeout to elapse and then adds a TIMEOUT message to the message stream.
+
+% [integrate this and make it much shorter:]
+
+% Initial analysis of timing data showed a large amount of time was spent by requests queuing on the node before they are delivered to the state machine. At this time the architecture presented in section \ref{overview} had not been fully developed, specifically, there was only one stream that contained both internal messages and client requests.
+
+% \textbf{Hypothesis: } Internal messages are being starved by client requests. At large throughputs the stream quickly becomes filled with client requests, which may prevent internal messages being handled. Internal messages represent a backlog of work that is not yet finished, so this should be handled before accepting more requests.
+
+% \textbf{Design principle: } The system should prioritise clearing its backlog of work before accepting new work.
+
+% \textbf{Potential solution: } Split the stream into two separate streams for messages and requests, and always pick from the message stream over the request stream until the message stream is empty.
+
+% Implementing the potential solution did not lead to a significant improvement in performance, so this was not the issue. However, this architectural model was retained as it is theoretically better and may lead to observable improvements later.
 
 \section{Chaining} \label{chaining}
 
@@ -109,7 +130,7 @@ Once the view times out, nodes send a \textit{complain} message to the next lead
 
 The use of timeouts in this way is a type of failure detector, which is a system that facilitates the detection of failed nodes \cite{chandra_weakest_1996}\cite{chandra_unreliable_1996}.
 
-\subsection{Specification}
+\section{Specification} \label{spec}
 [highlight that this is our main theoretical contribution and which parts we did!]
 In this section...
 
