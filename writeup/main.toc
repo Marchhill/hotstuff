@@ -11,7 +11,7 @@
 \contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{12}{subsection.2.2.3}%
 \contentsline {subsubsection}{Problem}{12}{subsubsection*.8}%
 \contentsline {subsubsection}{Algorithm}{12}{subsubsection*.9}%
-\contentsline {subsubsection}{Argument for responsiveness}{13}{subsubsection*.10}%
+\contentsline {subsubsection}{Argument for liveness}{13}{subsubsection*.10}%
 \contentsline {section}{\numberline {2.3}Tools \& libraries}{13}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}OCaml}{13}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Lwt}{14}{subsection.2.3.2}%

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  1 MAY 2023 20:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Homebrew) (preloaded format=pdflatex 2022.10.3)  1 MAY 2023 23:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -987,7 +987,7 @@ Chapter 3.
 
 LaTeX Warning: Reference `overview' on page 17 undefined on input line 37.
 
-<images//nodediagram.png, id=455, 581.17125pt x 297.11pt>
+<images//nodediagram.png, id=459, 581.17125pt x 297.11pt>
 File: images//nodediagram.png Graphic file (type png)
 <use images//nodediagram.png>
 Package pdftex.def Info: images//nodediagram.png  used on input line 43.
@@ -1000,7 +1000,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.3.1}) h
                                                   \__shipout_drop_firstpage_...
 l.53 
       <./images//nodediagram.png>] [18]
-<images//nchain.png, id=481, 1629.08624pt x 334.24875pt>
+<images//nchain.png, id=484, 1629.08624pt x 334.24875pt>
 File: images//nchain.png Graphic file (type png)
 <use images//nchain.png>
 Package pdftex.def Info: images//nchain.png  used on input line 100.
@@ -1022,7 +1022,7 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on inp
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [21] [22]
-<images//lemma1.png, id=538, 191.71625pt x 118.4425pt>
+<images//lemma1.png, id=541, 191.71625pt x 118.4425pt>
 File: images//lemma1.png Graphic file (type png)
 <use images//lemma1.png>
 Package pdftex.def Info: images//lemma1.png  used on input line 370.
@@ -1041,13 +1041,13 @@ LaTeX Warning: Reference `overview' on page 24 undefined on input line 435.
 LaTeX Warning: Reference `overview' on page 26 undefined on input line 519.
 
 [26] [27]
-<images//openloop.png, id=593, 457.71pt x 91.34125pt>
+<images//openloop.png, id=596, 457.71pt x 91.34125pt>
 File: images//openloop.png Graphic file (type png)
 <use images//openloop.png>
 Package pdftex.def Info: images//openloop.png  used on input line 569.
 (pdftex.def)             Requested size: 274.62813pt x 54.80516pt.
  [28]
-<images//closedloop.png, id=601, 450.68375pt x 131.49126pt>
+<images//closedloop.png, id=604, 450.68375pt x 131.49126pt>
 File: images//closedloop.png Graphic file (type png)
 <use images//closedloop.png>
 Package pdftex.def Info: images//closedloop.png  used on input line 576.
@@ -1073,7 +1073,7 @@ File: t1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 ) [30]) [31] [32]
 Chapter 4.
 (./chapters/evaluation.tex
-<images//dummy_test/throughputgoodput.png, id=634, 462.528pt x 346.896pt>
+<images//dummy_test/throughputgoodput.png, id=637, 462.528pt x 346.896pt>
 File: images//dummy_test/throughputgoodput.png Graphic file (type png)
 <use images//dummy_test/throughputgoodput.png>
 Package pdftex.def Info: images//dummy_test/throughputgoodput.png  used on input line 26.
@@ -1082,7 +1082,7 @@ Package pdftex.def Info: images//dummy_test/throughputgoodput.png  used on input
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//dummy_test/throughputflatency.png, id=635, 462.528pt x 346.896pt>
+<images//dummy_test/throughputflatency.png, id=638, 462.528pt x 346.896pt>
 File: images//dummy_test/throughputflatency.png Graphic file (type png)
 <use images//dummy_test/throughputflatency.png>
 Package pdftex.def Info: images//dummy_test/throughputflatency.png  used on input line 32.
@@ -1090,7 +1090,7 @@ Package pdftex.def Info: images//dummy_test/throughputflatency.png  used on inpu
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//dummy_test/throughputlost.png, id=636, 462.528pt x 346.896pt>
+<images//dummy_test/throughputlost.png, id=639, 462.528pt x 346.896pt>
 File: images//dummy_test/throughputlost.png Graphic file (type png)
 <use images//dummy_test/throughputlost.png>
 Package pdftex.def Info: images//dummy_test/throughputlost.png  used on input line 38.
@@ -1111,7 +1111,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.2}) h
                                                   \__shipout_drop_firstpage_...
 l.51 
       <./images//dummy_test/throughputgoodput.png> <./images//dummy_test/throughputflatency.png>]
-<images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png, id=649, 722.7pt x 361.35pt>
+<images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png, id=652, 722.7pt x 361.35pt>
 File: images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png Graphic file (type png)
 <use images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png>
 Package pdftex.def Info: images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png  used on input line 81.
@@ -1120,7 +1120,7 @@ Package pdftex.def Info: images//heatmaps/batch_sizes_5_320_200_4_450_timelatenc
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png, id=650, 722.7pt x 361.35pt>
+<images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png, id=653, 722.7pt x 361.35pt>
 File: images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png Graphic file (type png)
 <use images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png>
 Package pdftex.def Info: images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png  used on input line 88.
@@ -1149,12 +1149,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.5}) h
                                                   \__shipout_drop_firstpage_...
 l.100 
        <./images//heatmaps/batch_sizes_5_320_200_4_450_timelatencyheatmap.png> <./images//heatmaps/batch_sizes_5_3_800_4_50_timelatencyheatmap.png>]
-<images//batch_size_test/throughputgoodput.png, id=681, 462.528pt x 346.896pt>
+<images//batch_size_test/throughputgoodput.png, id=684, 462.528pt x 346.896pt>
 File: images//batch_size_test/throughputgoodput.png Graphic file (type png)
 <use images//batch_size_test/throughputgoodput.png>
 Package pdftex.def Info: images//batch_size_test/throughputgoodput.png  used on input line 111.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
-<images//batch_size_test/throughputflatency.png, id=682, 462.528pt x 346.896pt>
+<images//batch_size_test/throughputflatency.png, id=685, 462.528pt x 346.896pt>
 File: images//batch_size_test/throughputflatency.png Graphic file (type png)
 <use images//batch_size_test/throughputflatency.png>
 Package pdftex.def Info: images//batch_size_test/throughputflatency.png  used on input line 118.
@@ -1163,7 +1163,7 @@ Package pdftex.def Info: images//batch_size_test/throughputflatency.png  used on
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png, id=683, 722.7pt x 361.35pt>
+<images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png, id=686, 722.7pt x 361.35pt>
 File: images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png Graphic file (type png)
 <use images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png>
 Package pdftex.def Info: images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png  used on input line 125.
@@ -1187,12 +1187,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.8}) h
                                                   \__shipout_drop_firstpage_...
 l.135 
        <./images//batch_size_test/throughputflatency.png> <./images//heatmaps/batch_sizes_5_8_1800_4_99999999_timelatencyheatmap.png>]
-<images//node_count_test/throughputgoodput_nodes.png, id=707, 462.528pt x 346.896pt>
+<images//node_count_test/throughputgoodput_nodes.png, id=710, 462.528pt x 346.896pt>
 File: images//node_count_test/throughputgoodput_nodes.png Graphic file (type png)
 <use images//node_count_test/throughputgoodput_nodes.png>
 Package pdftex.def Info: images//node_count_test/throughputgoodput_nodes.png  used on input line 146.
 (pdftex.def)             Requested size: 346.89514pt x 260.17136pt.
-<images//node_count_test/throughputflatency_nodes.png, id=708, 462.528pt x 346.896pt>
+<images//node_count_test/throughputflatency_nodes.png, id=711, 462.528pt x 346.896pt>
 File: images//node_count_test/throughputflatency_nodes.png Graphic file (type png)
 <use images//node_count_test/throughputflatency_nodes.png>
 Package pdftex.def Info: images//node_count_test/throughputflatency_nodes.png  used on input line 153.
@@ -1207,7 +1207,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.4.9}) h
                                                   \__shipout_drop_firstpage_...
 l.164 \subsection{Ablation study}
                                   \label{ablation} <./images//node_count_test/throughputgoodput_nodes.png>]
-<images//ablation/throughputgoodput_ablation.png, id=722, 462.528pt x 346.896pt>
+<images//ablation/throughputgoodput_ablation.png, id=725, 462.528pt x 346.896pt>
 File: images//ablation/throughputgoodput_ablation.png Graphic file (type png)
 <use images//ablation/throughputgoodput_ablation.png>
 Package pdftex.def Info: images//ablation/throughputgoodput_ablation.png  used on input line 184.
@@ -1216,7 +1216,7 @@ Package pdftex.def Info: images//ablation/throughputgoodput_ablation.png  used o
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//ablation/throughputflatency_ablation.png, id=723, 462.528pt x 346.896pt>
+<images//ablation/throughputflatency_ablation.png, id=726, 462.528pt x 346.896pt>
 File: images//ablation/throughputflatency_ablation.png Graphic file (type png)
 <use images//ablation/throughputflatency_ablation.png>
 Package pdftex.def Info: images//ablation/throughputflatency_ablation.png  used on input line 191.
@@ -1224,7 +1224,7 @@ Package pdftex.def Info: images//ablation/throughputflatency_ablation.png  used 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//mininet/throughputlatency.png, id=728, 462.528pt x 346.896pt>
+<images//mininet/throughputlatency.png, id=731, 462.528pt x 346.896pt>
 File: images//mininet/throughputlatency.png Graphic file (type png)
 <use images//mininet/throughputlatency.png>
 Package pdftex.def Info: images//mininet/throughputlatency.png  used on input line 202.
@@ -1232,7 +1232,7 @@ Package pdftex.def Info: images//mininet/throughputlatency.png  used on input li
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//mininet/10tpub_cumlatency.png, id=729, 462.528pt x 346.896pt>
+<images//mininet/10tpub_cumlatency.png, id=732, 462.528pt x 346.896pt>
 File: images//mininet/10tpub_cumlatency.png Graphic file (type png)
 <use images//mininet/10tpub_cumlatency.png>
 Package pdftex.def Info: images//mininet/10tpub_cumlatency.png  used on input line 208.
@@ -1240,7 +1240,7 @@ Package pdftex.def Info: images//mininet/10tpub_cumlatency.png  used on input li
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//viewchange/test7_100_7_100_timelatencyheatmap.png, id=730, 722.7pt x 361.35pt>
+<images//viewchange/test7_100_7_100_timelatencyheatmap.png, id=733, 722.7pt x 361.35pt>
 File: images//viewchange/test7_100_7_100_timelatencyheatmap.png Graphic file (type png)
 <use images//viewchange/test7_100_7_100_timelatencyheatmap.png>
 Package pdftex.def Info: images//viewchange/test7_100_7_100_timelatencyheatmap.png  used on input line 218.
@@ -1303,18 +1303,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 72C849554688894FBBCC045797368B37;6513.
  ) 
 Here is how much of TeX's memory you used:
- 39623 strings out of 478268
- 870296 string characters out of 5835366
+ 39624 strings out of 478268
+ 870308 string characters out of 5835366
  1174649 words of memory out of 5000000
  57046 multiletter control sequences out of 15000+600000
  495208 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  130i,11n,142p,1660b,3467s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfbx3583.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfcc1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfss1095.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti0800.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb></opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on main.pdf (48 pages, 1226038 bytes).
+Output written on main.pdf (48 pages, 1225979 bytes).
 PDF statistics:
- 945 PDF objects out of 1000 (max. 8388607)
- 792 compressed objects within 8 object streams
- 188 named destinations out of 1000 (max. 500000)
+ 948 PDF objects out of 1000 (max. 8388607)
+ 795 compressed objects within 8 object streams
+ 189 named destinations out of 1000 (max. 500000)
  497 words of extra memory for PDF output out of 10000 (max. 10000000)
 
