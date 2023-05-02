@@ -57,7 +57,7 @@ for (rate, n, s) in test_iter:
             processes.append(subprocess.Popen(
                 f'ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build{str(i)} -- ../main.exe -i {str(i)} -n {str(n)} -b {str(s)}', shell=True, preexec_fn=os.setsid))
         time.sleep(5)
-        cmd = f'eval $(opam env) dune exec -- ../live_test.exe {str(n)} -t {str(experiment_time)} --version "{version}" -r {str(rate)} -b {str(s)} --times "{test_path + "subtests/" + name}.csv" --stats "{test_path}stats.csv"'
+        cmd = f'eval $(opam env) dune exec -- ../load_gen.exe {str(n)} -t {str(experiment_time)} --version "{version}" -r {str(rate)} -b {str(s)} --times "{test_path + "subtests/" + name}.csv" --stats "{test_path}stats.csv"'
         print(cmd)
         completed = subprocess.run(cmd, shell=True)
         if completed.returncode == 0:

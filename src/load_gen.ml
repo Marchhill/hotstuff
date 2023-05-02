@@ -1,30 +1,6 @@
 open Lwt.Syntax
 open Lwt.Infix
 
-(* Verbose logging *)
-
-let pp_qid f = function
-  | None -> ()
-  | Some x ->
-	let s = Stdint.Uint32.to_string x in
-	Fmt.(styled `Magenta (fun f x -> Fmt.pf f " (qid=%s)" x)) f s
-
-let reporter =
-  let report src level ~over k msgf =
-	let src = Logs.Src.name src in
-	msgf @@ fun ?header ?(tags=Logs.Tag.empty) fmt ->
-	let qid = Logs.Tag.find Capnp_rpc.Debug.qid_tag tags in
-	let print _ =
-	  Fmt.(pf stdout) "%a@." pp_qid qid;
-	  over ();
-	  k ()
-	in
-	Fmt.kpf print Fmt.stdout ("%a %a: @[" ^^ fmt ^^ "@]")
-	  Fmt.(styled `Magenta string) (Printf.sprintf "%11s" src)
-	  Logs_fmt.pp_header (level, header)
-  in
-  { Logs.report = report }
-
 (* calculate delta between timestamps in seconds s*)
 let delta x y =
 	let open Base.Int63 in
@@ -209,11 +185,4 @@ let connect_cmd =
 
 let () =
 	Random.self_init ();
-	(*Fmt_tty.setup_std_outputs ();
-	Logs.set_reporter reporter;
-	Logs.set_level ~all:true (Some Logs.Info);
-	Logs.Src.list () |> List.iter (fun src ->
-		if Astring.String.is_prefix ~affix:"capnp" (Logs.Src.name src) then
-		Logs.Src.set_level src (Some Logs.Debug);
-	);*)
 	exit (Cmd.eval connect_cmd)

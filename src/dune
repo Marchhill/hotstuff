@@ -1,5 +1,5 @@
 (executables
- (names main dummy live_test)
+ (names main dummy load_gen)
  (libraries consensus lwt.unix capnp-rpc-lwt capnp-rpc-unix tezos-crypto logs.fmt fmt.tty)
  (flags (:standard -w -53-55))
  )
