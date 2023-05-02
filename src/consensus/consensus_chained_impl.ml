@@ -1,6 +1,6 @@
 open Types
 open Util
-open Crypto
+open Crypto_util
 
 type state = {v: (int, event list) Hashtbl.t; vheight: int; b_lock: node; b_exec: node; b_leaf: node; qc_high: qc; tcp_lens: int list}
 type t = {view: int; id: int; node_count: int; batch_size: int; cmds: Cmd_set.t;  seen: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}
@@ -37,7 +37,7 @@ let create_leaf state (parent : node) (cmds : Cmd_set.t) (qc : qc) =
 	let _cutoff = List.fold_left min Int.max_int state.s.tcp_lens in
 	let offset = state.view - (get_node_height parent) in
 	let parent = add_dummy_nodes parent offset in
-	let justify = {node_offset = offset + 1; view = qc.view; signature = qc.signature; msg_type = qc.msg_type; ids = qc.ids} in (* ??? change offset if skipped? *)
+	let justify = {node_offset = offset + 1; view = qc.view; signature = qc.signature; msg_type = qc.msg_type; ids = qc.ids} in
 	let n = make_node cmds (Some parent) (Some {justify = justify; height = state.view + 1}) in
 	(*trim_node n (state.view + 1 - _cutoff)*) (* only send nodes that will be used *)
         n

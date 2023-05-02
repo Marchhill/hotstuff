@@ -13,7 +13,7 @@ let empty_stats t = {
 	recv_req_times = ref [];
 	res_times = ref [];
 	req_queue_times = ref [];
-  msg_queue_times = ref [];
+	msg_queue_times = ref [];
 }
 
 let print_stats l name units id =
@@ -29,29 +29,6 @@ let print_stats l name units id =
 let delta x y =
 	let open Base.Int63 in
 	(to_float (y - x)) /. 1_000_000_000.
-
-(*
-let sizeof v =
-	let rec rec_size d r =
-	  if List.memq r d then (1, d) else
-	  if not(Obj.is_block r) then (1, r::d) else
-	  if (Obj.tag r) = (Obj.double_tag) then (2, r::d) else
-	  if (Obj.tag r) = (Obj.string_tag) then (Obj.size r, r::d) else
-	  if (Obj.tag r) = (Obj.object_tag) ||
-		 (Obj.tag r) = (Obj.closure_tag)
-	  then invalid_arg "please only provide datas"
-	  else
-		let len = Obj.size r in
-		let rec aux d sum i =
-		  if i >= len then (sum, r::d) else
-		  let this = Obj.field r i in
-		  let this_size, d = rec_size d this in
-		  aux d (sum + this_size) (i+1)
-		in
-		aux d (1) 0
-	in
-	fst(rec_size [] (Obj.repr v))
-*)
 
 let on_timeout t f x =
 	let promise, resolver = Lwt.task () in
@@ -82,3 +59,50 @@ let create_timer t =
 		cancel_timeout !timer;
 		timer := on_timeout t f x	
 	)
+
+(* hardcode same pk for all nodes to avoid pki! *)
+let gen_key _ =
+	let sk = Tezos_crypto.Aggregate_signature.Secret_key.of_b58check_exn "BLsk2bwzMPpXwy9hoMuV7MP6muK8NLKMWRVUNAaMs7ZDJwahUhtadY" in
+	let pk = Tezos_crypto.Aggregate_signature.Secret_key.to_public_key sk in
+	let pkh = Tezos_crypto.Aggregate_signature.Public_key.hash pk in
+	(pkh, pk, sk)
+
+(* get our secret key and a list of public keys for all nodes *)
+let gen_keys id nodes =
+	let keys = List.init nodes gen_key in
+	let _, _, sk = List.nth keys id in
+	let pks = List.map (fun (_, x, _) -> x) keys in
+	(sk, pks)
+
+(* Verbose Cap'n Proto logging *)
+
+let pp_qid f = function
+  | None -> ()
+  | Some x ->
+    let s = Stdint.Uint32.to_string x in
+    Fmt.(styled `Magenta (fun f x -> Fmt.pf f " (qid=%s)" x)) f s
+
+let reporter =
+  let report src level ~over k msgf =
+    let src = Logs.Src.name src in
+    msgf @@ fun ?header ?(tags=Logs.Tag.empty) fmt ->
+    let qid = Logs.Tag.find Capnp_rpc.Debug.qid_tag tags in
+    let print _ =
+      Fmt.(pf stdout) "%a@." pp_qid qid;
+      over ();
+      k ()
+    in
+    Fmt.kpf print Fmt.stdout ("%a %a: @[" ^^ fmt ^^ "@]")
+      Fmt.(styled `Magenta string) (Printf.sprintf "%11s" src)
+      Logs_fmt.pp_header (level, header)
+  in
+  { Logs.report = report }
+
+let init_logging () =
+	Fmt_tty.setup_std_outputs ();
+	Logs.set_reporter reporter;
+	Logs.set_level ~all:true (Some Logs.Info);
+	Logs.Src.list () |> List.iter (fun src ->
+		if Astring.String.is_prefix ~affix:"capnp" (Logs.Src.name src) then
+		Logs.Src.set_level src (Some Logs.Debug);
+	);

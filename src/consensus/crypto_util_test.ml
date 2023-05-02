@@ -1,5 +1,5 @@
 open Types
-open Crypto
+open Crypto_util
 
 let%expect_test "threshold qc rejects bad inputs." =
   let sks, pks = gen_keys 1 in

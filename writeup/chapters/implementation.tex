@@ -333,6 +333,7 @@ We present the pseudocode with our additions coloured in green and modifications
 	\end{algorithmic}
 \end{algorithm}
 
+[still highlight the key changes, focusing on our own integration of the pacemaker]
 % \subsection{Changes}
 % \begin{itemize}
 % 	\item CREATE{\large L}EAF (algorithm \ref{hotstuffalgorithm}, line \ref{code_createleaf}): This function has been modified so that `dummy' nodes are inserted to maintain the invariant that the height of the chain is always one greater than the current view number, as in the non-event driven pseudocode in the original paper.
@@ -405,6 +406,7 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 
 In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle.] \cite{chubby}
 
+[talk a bit about the overall structure (match statement), the design of internal types]
 
 \subsection{Batching} \label{batching}
 % mention send to all & send to one, 4x throughput

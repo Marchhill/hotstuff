@@ -232,12 +232,14 @@ The changes ensure that the leader will make progress as it is guaranteed to rec
 \section{Tools \& libraries} \label{tools}
 In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.
 
+[could be more concise!!!]
+
 \subsection{OCaml}
 I chose OCaml \cite{noauthor_ocaml_nodate} for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, and good library support. OCaml's multi-paradigm nature is suitable for implementing HotStuff, as the core state machine can be elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm. Additionally, the Tezos cryptocurrency [cite!!!] is written in OCaml and contains a cryptography library (section \ref{tezos}) that provides the functionality needed by HotStuff.
 
 The performance bottlenecks for distributed byzantine algorithms are generally cryptography, message serialisation and network delays. This means that it is more important to choose a language with suitable features to aid implementation, rather than picking a `high-performance' language like C++. [mention multicore OCaml, it was not ready when this project began]
 
-OCaml has a powerful module system that facilitates writing highly reusable code. The module system was only briefly touched upon in the tripos (in Concepts in Programming Languages from IB), so I spent time learning about these features. Modules provide an elegant interface for the core consensus to interact with the imperative parts of the program that actually send messages over the network.
+OCaml has a powerful module system that facilitates writing highly reusable code that was only briefly touched upon in the tripos (in Concepts in Programming Languages from IB). A modular design allows key components such as the consensus algorithm to be easily reused in other projects.
 
 There is no existing reference implementation of HotStuff in OCaml, so my project contributes to the growing OCaml ecosystem\footnote{Since our project is implemented purely in OCaml, it could be deployed in a MirageOS unikernel \cite{noauthor_mirageos_nodate}}.
 

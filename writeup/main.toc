@@ -36,7 +36,7 @@
 \contentsline {subsection}{\numberline {3.4.1}Batching}{24}{subsection.3.4.1}%
 \contentsline {subsubsection}{Filtering}{24}{subsubsection*.13}%
 \contentsline {subsubsection}{Batch sizes}{26}{subsubsection*.14}%
-\contentsline {subsection}{\numberline {3.4.2}Nodes}{26}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.2}Nodes}{27}{subsection.3.4.2}%
 \contentsline {subsubsection}{Recursive types}{27}{subsubsection*.15}%
 \contentsline {subsubsection}{Node offsets}{27}{subsubsection*.16}%
 \contentsline {subsubsection}{Node comparison}{28}{subsubsection*.17}%
