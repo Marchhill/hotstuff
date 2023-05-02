@@ -32,18 +32,18 @@
 \contentsline {subsubsection}{Integration}{20}{subsubsection*.12}%
 \contentsline {section}{\numberline {3.3}Specification}{20}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Proofs}{22}{subsection.3.3.1}%
-\contentsline {section}{\numberline {3.4}Performance improvements}{24}{section.3.4}%
+\contentsline {section}{\numberline {3.4}Practical challenges and optimisations}{24}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Batching}{24}{subsection.3.4.1}%
 \contentsline {subsubsection}{Filtering}{24}{subsubsection*.13}%
 \contentsline {subsubsection}{Batch sizes}{25}{subsubsection*.14}%
-\contentsline {subsection}{\numberline {3.4.2}Nodes}{25}{subsection.3.4.2}%
-\contentsline {subsubsection}{Recursive types}{25}{subsubsection*.15}%
+\contentsline {subsection}{\numberline {3.4.2}Nodes}{26}{subsection.3.4.2}%
+\contentsline {subsubsection}{Recursive types}{26}{subsubsection*.15}%
 \contentsline {subsubsection}{Node offsets}{26}{subsubsection*.16}%
-\contentsline {subsubsection}{Node comparison}{26}{subsubsection*.17}%
-\contentsline {subsubsection}{Node truncation}{26}{subsubsection*.18}%
-\contentsline {section}{\numberline {3.5}Implementing for evaluation}{27}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Load generator}{27}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{28}{subsection.3.5.2}%
+\contentsline {subsubsection}{Node comparison}{27}{subsubsection*.17}%
+\contentsline {subsubsection}{Node truncation}{27}{subsubsection*.18}%
+\contentsline {section}{\numberline {3.5}Implementing for evaluation}{28}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Load generator}{28}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{29}{subsection.3.5.2}%
 \contentsline {subsection}{\numberline {3.5.3}Logging framework}{29}{subsection.3.5.3}%
 \contentsline {section}{\numberline {3.6}Repository Overview}{30}{section.3.6}%
 \contentsline {chapter}{\numberline {4}Evaluation}{32}{chapter.4}%

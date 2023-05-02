@@ -404,11 +404,11 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 %prove that it doesn't break safety
 %maybe try to prove liveness
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
-\section{Performance improvements} \label{performance}
+\section{Practical challenges and optimisations} \label{performance}
 
-In this section we highlight the key performance optimisations we implemented, and describe some of the debugging and experimentation that led to them. [this is a hard problem, reference chubby again. bugs are subtle.] \cite{chubby}
+In this section we give solutions to some of the practical challenges of implementing HotStuff, and describe optimisations we made to improve performance. The debugging and experimentation that led to these solutions was non-trivial; they involved extensive analysis of the program trace and timing data, and the development of different prototypes to compare performance.
 
-[talk a bit about the overall structure (match statement), the design of internal types]
+One main practical consideration was designing the types and structure of the core consensus module (section \ref{architecture}), to implement the algorithm given in our specification (section \ref{spec}). Recall that this module takes as input messages and client requests (\textit{events}), and returns actions (such as sending a message) and an updated consensus state. We used \textit{variants} to tag the different types of events, with attached \textit{records} to store the body of the event (such as the node and QC of a proposal). The core algorithm is expressed as a \textit{match} statement to handle each type of event. The output from this is a list of actions (also implemented as variants), and a new state.
 
 \subsection{Batching} \label{batching}
 % mention send to all & send to one, 4x throughput
@@ -467,7 +467,6 @@ An alternative implementation of filtering that was prototyped was maintaining a
 
 % \textbf{Potential solution: } Filter commands in the system to minimise the number of commands that are proposed by multiple nodes.
 
-
 % [shorten this section, only give the final pseudocode and not the failed attempt]
 % One way to implement this is to maintain a set of commands that have been committed, and before proposing or committing a node, calculating the set difference with the \textit{commited} set to filter out redundant commands. Instead of nodes containing a list of commands, as in our naive implementation of batching, we now use a set to enable efficient computation of the difference.
 
@@ -482,6 +481,11 @@ An alternative implementation of filtering that was prototyped was maintaining a
 % Note the small optimisation on line \ref{smalloptimisation}, the \textit{seen} can safely be emptied as the commands have already been filtered; this reduces the amount of computation required to calculate the set difference next time. The second implementation was much more effective at screening requests and resulted in a significant reduction in latency. The difference is demonstrated in our ablation study (section \ref{ablation}). The effectiveness of this change led to further insight into what the bottlenecks for performance were.
 
 \subsubsection{Batch sizes} \label{batchsizes}
+We further improved the effectiveness of batching by limiting the size of each batch. We demonstrate that this approach improves performance in our study of the system with different batch size limits (section \ref{batchsizeseval}).
+
+Implementing this feature requires minimal changes to algorithm \ref{dedup}, one simply has to take a subset of \textit{cmds} to propose instead of the whole set. It is important to take the oldest commands from \textit{cmds} to include in the proposal, so that older commands are not starved by newer ones, resulting in high latency. This can be accomplished by using an ordered set (such as a tree set), and ordering by command identifiers, which are ascending integers in our implementation.
+
+The optimisation is effective because at higher message sizes the latency of Cap'n Proto serialisation increases (section \ref{capnpbenchmark}), so smaller batches can lead to better performance. There is an inherent trade-off between increasing batch size to commit more commands, and messages becoming slower due to increased serialisation latency.
 % The effectiveness of filtering out commands to make proposals smaller implies that the size of a proposal has a significant impact on the performance of the program.
 
 % \textbf{Hypothesis: } Large batches of commands cause messages to become larger, which causes them to be sent slowly due to limitations in the RPC framework [serialisation!!!].
@@ -501,20 +505,23 @@ An alternative implementation of filtering that was prototyped was maintaining a
 % solution: include node hashes
 % fourth issue: size of sending all nodes
 % solution: TODO implement TCP
-[not strictly true, more about designing the types. make this section more about nodes, describe what they actually are!]
-\textit{This section concerns the difficulties of encoding nodes in the Cap'n Proto schema, and designing a suitable type to represent them. As mentioned in section \ref{overview}, Cap'n Proto requires a schema to define the format of RPCs that can be sent, and one must convert between consensus state machine internal types and Cap'n Proto types in order to send messages.}
+This section concerns the challenges of designing a suitable type for nodes\footnote{\textit{Node} is another word for log in this context.} that can be efficiently serialised by Cap'n Proto and sent over the network. Recall from our discussion of the system architecture (section \ref{architecture}) that the internal type for a node must be converted into a Cap'n Proto type in order to be serialised.
+
+Nodes are implemented as OCaml records, and contain the fields \textit{parent}, \textit{cmds}, \textit{height}, and \textit{justify}. The \textit{justify} field contains a QC that contains another node inside it.
 
 \subsubsection{Recursive types}
-The chained HotStuff algorithm has a genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. Each node contains the fields \textit{parent}, \textit{cmd}, \textit{justify}, and \textit{height}, with the \textit{justify} field containing a quorum certificate with a `pointer' to another node in the chain (section \ref{chaining}). The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
+One difficulty encountered in converting internal types to Cap'n Proto types was that some nodes are recursive; the node stored inside the \textit{justify} field points to themselves. This is the case in the chained HotStuff algorithm (section \ref{chaining}); it has a recursive genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
 
-This recursion poses a problem when carrying out the conversion between Cap'n Proto types and OCaml types. It is perfectly possible to define a recursive type in OCaml, so one can represent \textit{b\textsubscript{0}} inside the consensus state machine. However, the naive implementation of a function to convert this node into a Cap'n Proto type will not terminate, as it will infinitely recurse into the field $ b_0.\textit{justify}.\textit{node} $. A simple solution to this problem is to add a flag to the Cap'n Proto schema \textit{is\_b\textsubscript{0}}; when this flag is enabled then the node is assumed to be equal to \textit{b\textsubscript{0}}. This prevents \textit{b\textsubscript{0}} from ever having to be converted into a Cap'n Proto type or being sent over the network, it can instead be reconstructed as a recursive type in the consensus state machine of the receiver.
+This recursion poses a problem when carrying out the conversion between Cap'n Proto types and OCaml types. It is perfectly possible to define a recursive type in OCaml, so one can represent \textit{b\textsubscript{0}} inside the consensus state machine. However, the naive implementation of a function to convert this node into a Cap'n Proto type will not terminate, as it will infinitely recurse into the field $ b_0.\textit{justify}.\textit{node} $.
+
+A simple solution to this problem is to add a flag to the Cap'n Proto schema \textit{is\_b\textsubscript{0}}; when this flag is enabled then the node is assumed to be equal to \textit{b\textsubscript{0}}. This prevents \textit{b\textsubscript{0}} from ever having to be converted into a Cap'n Proto type or being sent over the network, it can instead be reconstructed as a recursive type in the consensus state machine of the receiver.
 
 \subsubsection{Node offsets}
-During live testing, memory usage increased rapidly, the nodes quickly exceeded the amount of memory the system had, and their processes were killed by the OS. Profiling with Memtrace (section \ref{testing}) [maybe run this again, give a diagram] showed that the functions for converting between Cap'n Proto types and internal consensus types was responsible for the rapidly increasing memory usage.
+In order to reduce memory usage, we replaced the \textit{node} record inside the \textit{node.justify.node} field with an integer offset into the chain. This dramatically decreased the memory usage of the function to convert from internal types to Cap'n Proto types. The inefficiency of this function was revealed through profiling the memory usage of the program using Memtrace  (section \ref{testing}).
 
-This problem arose from the internal types that were designed to represent nodes. As well as the \textit{node} type, there was a \textit{qc} type that was used as the type of the \textit{node.justify} field since it is a quorum certificate [use OCaml lingo, recursive sum type???]. By defining types in this way the `pointers' in \textit{node.justify.node} were not actually pointers, they contained a significant part of the chain. In this way the chain contained many redundant copies of parts of it, resulting in a very bloated \textit{node} object that was very expensive to convert.
+The source of this problem was the inefficient design of the \textit{node.justify} field, which contained a whole node inside it. As shown in figure \ref{nchain}, each node has two links to previous nodes in the chain through the \textit{parent} field and the \textit{node.justify.node} field. By having each of these fields contain a whole \textit{node} record, much of the chain had multiple redundant copies, resulting in a very bloated \textit{node} object that was very expensive to convert.
 
-A solution to this problem is to store an offset to a node inside the \textit{justify} field rather than the node itself - making it more like a real pointer. This offset represents how many \textit{parent} links away the node is, and so can be used to reconstruct all of the original information. To implement this another type \textit{node\_justify} was added, that is identical to \textit{qc}, but with the field \textit{node} replaced with \textit{node\_offset}. One must then convert between the \textit{node\_justify} and \textit{qc} types to reconstruct the original data and follow the \textit{node.justify.node} link.
+A solution to this problem is to store an integer offset to a node inside the \textit{justify} field rather than a \textit{node} record. This offset represents how many \textit{parent} links away the node is, and so can be used to reconstruct all of the original information. To implement this another type \textit{node\_justify} was added, that is identical to \textit{qc}, but with the field \textit{node} replaced with \textit{node\_offset}. One must then convert between the \textit{node\_justify} and \textit{qc} types to reconstruct the original data and follow the \textit{node.justify.node} link.
 
 \subsubsection{Node comparison}
 [cite merkle tree here? compare to ethereum and bitcoin...]
@@ -577,7 +584,7 @@ The load generator is open-loop (figure \ref{openloop}), which means that it dis
 SEND TO ALL
 [Without this feature a client would randomly chose a node to send their request to, and the command would not be proposed until the round-robin system reached that node to become the leader. Send-to-all can reduce latency by instead broadcasting a request to all nodes, meaning that the next leader can propose the command without having to wait for the round-robin system to reach them.]
 
-The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all (section \ref{sendtoall}) the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, reducing start-up effects.
+The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, reducing start-up effects.
 
 \subsection{Experiment scripts} \label{experimentscripts}
 Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
