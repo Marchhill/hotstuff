@@ -73,7 +73,7 @@ let rec main_loop s =
 	else
 		Lwt.return_unit
 	in
-	let* () = if (!(s.iter_count) mod 10000) = 0 then Lwt.pause () else Lwt.return_unit in
+	let* () = if (!(s.iter_count) mod 5) = 0 then Lwt.pause () else Lwt.return_unit in
 	main_loop s
 
 let start_node id nodes batch_size verbose =
