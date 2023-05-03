@@ -12,8 +12,8 @@ color = sns.color_palette("colorblind")
 test_name = sys.argv[1]
 
 # create directory to output graphs to
-graph_dir = f'./experiments/graphs/{test_name}/'
-subtests_dir = f'./experiments/graphs/{test_name}/subtests/'
+graph_dir = f'./graphs/{test_name}/'
+subtests_dir = f'./graphs/{test_name}/subtests/'
 if not os.path.exists(graph_dir):
 	os.mkdir(graph_dir)
 if not os.path.exists(subtests_dir):
@@ -60,7 +60,7 @@ if not os.path.exists(subtests_dir):
 # print(file_stats_df)
 
 # open stats file and add column
-stats = pd.read_csv(f'./experiments/data/{test_name}/stats.csv', skipinitialspace=True)
+stats = pd.read_csv(f'./data/{test_name}/stats.csv', skipinitialspace=True)
 stats['lost'] = 100. * (1. - (stats['rec'] / stats['sent']))
 stats['diff'] = np.abs(stats['throughput'] - stats['goodput']) / stats['throughput']
 stats['throughputfiltered'] = np.where(stats['diff'] <= 0.05, stats['throughput'], None)
