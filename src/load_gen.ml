@@ -56,32 +56,20 @@ let benchmark conns res rate timeout msg_size t =
 			Lwt.return_unit
 		else (
 			(* yield every 100 iterations *)
-			(* let* () = if (i mod 1000) = 0 then (
-				if (i mod 100) = 0 then
-					Fmt.pr "sent %d!@." i;
+			let* () = if (i mod 1000) = 0 then
 				Lwt.pause ()
-			)
 			else
 				Lwt.return_unit
-			in *)
+			in
 			(* sleep if not yet time to deliver next command *)
 			let now = Time_now.nanoseconds_since_unix_epoch () in
 			let* () = if Base.Int63.(<) now target then (
-				Fmt.pr "sleeping!@.";
 				Lwt_unix.sleep (Util.delta now target)
 			)
 			else
 				Lwt.return_unit
 			in
 			Lwt.async (fun () ->
-				let* () = if (i mod 2) = 0 then (
-					if (i mod 100) = 0 then
-					Fmt.pr "sent %d!@." i;
-					Lwt.pause ()
-				)
-				else
-					Lwt.return_unit
-				in
 				let x = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
 				let* success = run_command conns timeout s msg_size in
 				let y = Base.Int63.(-) (Time_now.nanoseconds_since_unix_epoch ()) t in
