@@ -3,7 +3,6 @@ open Lwt.Syntax
 open Types
 
 let secret_key = `Ephemeral
-let timeout = 1000.
 
 (* intialise internal state *)
 let init id nodes timeout batch_size verbose =
@@ -76,13 +75,13 @@ let rec main_loop s =
 	let* () = if (!(s.iter_count) mod 5) = 0 then Lwt.pause () else Lwt.return_unit in
 	main_loop s
 
-let start_node id nodes batch_size verbose =
+let start_node id nodes batch_size timeout verbose =
 	Lwt_main.run begin
 		(* let listen_address = `TCP ("0.0.0.0", 9000) in *)
 		let listen_address = `TCP ("127.0.0.1", 9000 + id) in
 		let config = Capnp_rpc_unix.Vat_config.create ~serve_tls:false ~secret_key listen_address in
 		let service_id = Capnp_rpc_net.Restorer.Id.public "" in
-    	let node_state = init id nodes timeout batch_size verbose in
+    let node_state = init id nodes timeout batch_size verbose in
 		let restore = Capnp_rpc_net.Restorer.single service_id (Server.local node_state) in
 		let* vat = Capnp_rpc_unix.serve config ~restore in
 		let uri = Capnp_rpc_unix.Vat.sturdy_uri vat service_id in
@@ -106,10 +105,14 @@ let batch_size =
 	let doc = "Batch size." in
 	Arg.(value & opt int 300 & info ["b"; "batch"] ~docv:"BATCH" ~doc)
 
+let timeout =
+	let doc = "View timeout." in
+	Arg.(value & opt float 1000. & info ["t"; "timeout"] ~docv:"TIMEOUT" ~doc)
+
 let cmd =
 	let doc = "run a hotstuff node" in
 	let info = Cmd.info "hs" ~version:"%‌%VERSION%%" ~doc in
-	Cmd.v info Term.(const start_node $ id $ nodes $ batch_size $ verbose)
+	Cmd.v info Term.(const start_node $ id $ nodes $ batch_size $ timeout $ verbose)
 
 let () =
 	(* Util.init_logging () *)
