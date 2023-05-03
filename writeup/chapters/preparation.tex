@@ -6,41 +6,33 @@
 
 % It is essential to declare the starting point. This states any existing codebase or materials that your project builds on. The text here can commonly be identical to the text in your proposal, but it may enlarge on it or report variations. For instance, the true starting point may have turned out to be different from that declared in the proposal and such discrepancies must be explained.
 
-% hotstuff algorithm
-% why Ocaml - mirage etc.
-% chubby (Google) - consensus is hard
-% related works
-
 \textit{In this chapter we disclose my knowledge and experience prior to beginning this project (section \ref{start}), give a theoretical basis for understanding the HotStuff algorithm by building up from simpler consensus algorithms (section \ref{hotstufftheory}), outline the tools, libraries (section \ref{tools}), and professional methodology (section \ref{softwareeng}) deployed in implementation, and highlight the requirements that the implementation should meet (section \ref{requirements}).}
 
 \section{Starting point} \label{start}
 I had some experience using OCaml from the IA Foundations of Computer Science course but had never used it in a project. The IB Distributed Systems course also provided some useful background knowledge, particularly as it briefly covered Raft \cite{ongaro_search_nodate}, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus \cite{nakamoto_bitcoin_nodate} and from developing a wallet application for Ethereum \cite{wood_ethereum_nodate}; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
 
-% the whole implementation was written from scratch??
-
 \section{HotStuff algorithm} \label{hotstufftheory}
 HotStuff is a byzantine consensus algorithm; it allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a \textit{leader} node proposes some value by sending it the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that there is consensus on the committed part of the log, and it is now immutable.
 
 HotStuff has the following properties:
-\begin{itemize}
-	\item Safety --- once a log has been committed up to some point that part of the log is immutable, it can only appended to.
-	\item Liveness --- the system is guaranteed to make progress once a non-faulty leader is elected.
-	\item Responsiveness\footnote{To be precise HotStuff is \textit{optimistically} responsive, we will describe this in section \ref{optresponsive}.} --- the system is able to make progress as fast as network conditions allow once a non-faulty leader is elected; it does not have to wait for some timeout to elapse.
-\end{itemize}
+\begin{description}
+	\item \textit{Safety} --- once a log has been committed up to some point that part of the log is immutable, it can only appended to.
+	\item \textit{Liveness} --- the system is guaranteed to make progress once a non-faulty leader is elected.
+	\item \textit{Responsiveness}\footnote{To be precise HotStuff is \textit{optimistically} responsive, we will describe this in section \ref{optresponsive}.} --- the system is able to make progress as fast as network conditions allow once a non-faulty leader is elected; it does not have to wait for some timeout to elapse.
+\end{description}
 
 The system model describes the adverse conditions under which HotStuff can operate:
-\begin{itemize}
-	\item Partially Synchronous --- messages sent by one party will always be delivered to another within some bounded amount of time ($\delta$) after global synchronisation time (GST) has been reached.
-	\item Authenticated --- a message source cannot be spoofed. We assume that all messages are signed, providing authentication.
-	\item Byzantine --- a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes. This is the maximum number of byzantine nodes for which consensus can theoretically be reached \cite{pease_reaching_1980}\cite{fischer_easy_nodate}.
-\end{itemize}
+\begin{description}
+	\item \textit{Partially Synchronous} --- messages sent by one party will always be delivered to another within some bounded amount of time ($\delta$) after global synchronisation time (GST) has been reached.
+	\item \textit{Authenticated} --- a message source cannot be spoofed. We assume that all messages are signed, providing authentication.
+	\item \textit{Byzantine} --- a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes. This is the maximum number of byzantine nodes for which consensus can theoretically be reached \cite{pease_reaching_1980}\cite{fischer_easy_nodate}.
+\end{description}
 
 Each view is composed of several \textit{phases}. In each phase the leader broadcasts to the replicas, that respond with an acknowledgement (\textit{ack}). The leader waits until it receives a \textit{quorum} of $n - f$ acks\footnote{N.B. the size of a quorum is different in the non-byzantine case.} before proceeding to the next phase, meaning that at least $f + 1$ of the acks were from honest nodes. The basic HotStuff algorithm has five phases in each view.
 
 The final phase of a consensus algorithm is \textit{decide}. We assume that a \textit{client} sends commands to the nodes, the nodes reach consensus on a log of commands, and then execute them in order; this ensures all nodes will be in the same state. The decide phase commences after the log is committed, the nodes can execute the new commands and respond to the client that the command was successfully committed.
 
-[basic algorithm... remove stuff about view-change here]
-The HotStuff algorithm consists of a responsive byzantine consensus algorithm (section \ref{optresponsive}), with a view-change protocol (section \ref{viewchange}) that allows the system to skip the view of a faulty leader. We will start by describing a simpler consensus algorithm that is not responsive, and cannot handle byzantine nodes (section \ref{nonbyzconsensus}). We then extend this algorithm to handle byzantine threats (section \ref{byzconsensus}). Finally, we extend this algorithm to be responsive by removing the need for a timeout to progress (section \ref{optresponsive}).
+Basic HotStuff is a responsive byzantine consensus algorithm (section \ref{optresponsive}). We will start by describing a simpler consensus algorithm that is not responsive or byzantine (section \ref{nonbyzconsensus}). We then extend this algorithm to handle byzantine threats (section \ref{byzconsensus}). Finally, we extend this algorithm to be responsive by removing the need for a timeout to progress, arriving at the basic HotStuff algorithm (section \ref{optresponsive}).
 
 \subsection{Non-byzantine consensus} \label{nonbyzconsensus}
 We will start by describing a generic algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaro_search_nodate} and MultiPaxos [check citations are actually multi-shot!] \cite{lamport_part-time_1998}\cite{lamport_paxos_2001}.
@@ -54,33 +46,6 @@ Each view consists of three phases:
 \end{description}
 
 Crucially, this algorithm has the \textit{safety} property. Since the leader waits to receive a quorum of greater than $\frac{n}{2}$ \textit{new-view} messages, $\lambda$ is guaranteed to be the longest log that has previously been committed. This is because the the quorum of \textit{new-view} messages must share at least one node with the past quorum of \textit{commit} acks for $\lambda$. The new proposal $\lambda'$ will never conflict with $\lambda$, hence the algorithm is safe.
-%Each view is broken into two phases; the \textit{new-view} phase allows the leader to learn of previously committed values, and in \textit{commit} phase the leader proposes a log extended with new values that the replicas can reach consensus on. The \textit{new-view} phase is initiated by the leader broadcasting the current view number to the replicas [we don't actually do this, is it necessary???], which respond by sending their longest accepted log (the one with the highest corresponding view number). Once the leader has a quorum of responses, the \textit{commit} phase commences: the leader selects the longest log that has been sent to it and broadcasts it to the replicas. The leader may also extend the log at this point with its own values, or create a new log if it did not receive anything. Finally, each replica updates its log to the value sent by the leader and sends an acknowledgement. Once the leader receives a quorum of acknowledgements it can commit the new log. This algorithm satisfies our requirement that a committed log can only be extended.
-
-%We will refer to phase 1 as the  stage, and phase 2 as the \textit{commit} phase to use the terminology of the HotStuff paper. These are followed by the \textit{decide} phase, in which the leader sends a decide message to replicas. Once they receive this message they can consider the log decided, and execute the new commands which have been added to the log.
-% See an example of a non-byzantine consensus algorithm in figure \ref{nonbyzantineexample}.
-% \begin{figure}[h!] 
-% \texttt{
-% \begin{enumerate}
-% \item New-view: 
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: ``view = 3" 
-% 	\item replicas $\to$ leader: ``view = 2, log = [`hello', `world']", ...
-% 	\end{enumerate}
-% \item Commit:
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: propose ``log = [`hello', `world', `!']"
-% 	\item replicas $\to$ leader: ``ack", \dots
-% 	\end{enumerate}
-% \item Decide:
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: ``decide"
-% 	\item replicas: execute log
-% 	\end{enumerate}
-% \end{enumerate}
-% }
-% \caption{Example of crash-stop consensus algorithm.}
-% \label{nonbyzantineexample}
-% \end{figure}
 
 \subsection{Byzantine consensus} \label{byzconsensus}
 In this section we extend our non-byzantine algorithm (section \ref{nonbyzconsensus}) to achieve consensus under a byzantine system model. To do this we must first introduce the \textit{quorum certificate} (\textit{QC}), a cryptographic proof that a leader has received a quorum of acks. We then consider the threats posed by byzantine nodes, give an algorithm that solves these problems, and make an argument for safety. Examples of similar algorithms include xyz
@@ -100,15 +65,15 @@ Recall that $n = 3f + 1$. The property holds since a QC contains a quorum of $n 
 \subsubsection{Threats}
 Byzantine nodes introduce two threats that we will deal with in turn. We present ideas for solutions to these threats; it will become clear why these solutions are effective in our argument that the algorithm is safe.
 
-\begin{enumerate}
-\item Threat (Equivocation) --- a faulty leader proposes one value to some replicas and a different value to others. For example, in the case of a cryptocurrency a malicious actor (Mallory) could carry out a double-spend attack by proposing ``Mallory transfers Alice £10" to some nodes and ``Mallory transfers Bob £10" to others, even if Mallory's account contains less than £20. \label{threat1}
+\begin{description}
+\item \textit{Threat \#1 (Equivocation)} --- a faulty leader proposes one value to some replicas and a different value to others. For example, in the case of a cryptocurrency a malicious actor (Mallory) could carry out a double-spend attack by proposing ``Mallory transfers Alice £10" to some nodes and ``Mallory transfers Bob £10" to others, even if Mallory's account contains less than £20. \label{threat1}
 
-Solution idea --- add a new stage \textit{prepare} which happens just before the \textit{commit} phase, where the leader pre-proposes a log before proposing it in the \textit{commit} phase.
+To solve this add a new stage \textit{prepare} which happens just before the \textit{commit} phase, where the leader pre-proposes a log before proposing it in the \textit{commit} phase.
 
-\item Threat --- a faulty leader proposes a log that conflicts with one that has previously been committed. \label{threat2}
+\item \textit{Threat \#2} --- a faulty leader proposes a log that conflicts with one that has previously been committed. \label{threat2}
 
-Solution idea --- when replicas receive a proposal for some log they must \textit{lock} on it, and not accept a pre-proposal for a conflicting log.
-\end{enumerate}
+To solve this make replicas \textit{lock} on a proposal once they receive a \textit{commit} message, and not accept a pre-proposal for a conflicting log.
+\end{description}
 
 \subsubsection{Algorithm}
 % See an example of a byzantine consensus algorithm in figure \ref{byzantineexample}.
@@ -130,38 +95,6 @@ Inductive step --- no conflicting log can be proposed in view $v'$ where $v' > v
 
 From this it follows that in no view from $v$ onwards will a log conflicting with $\lambda$ be committed, so the algorithm is safe.
 
-% \begin{figure}[h!] 
-% \texttt{
-% \begin{enumerate}
-% \item New-view: 
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: ``view = 3" 
-% 	\item replicas $\to$ leader: ``view = 2, log = [`hello', `world']", \dots
-% 	\item leader: waits $\Delta$ to hear from all non-faulty replicas
-% 	\end{enumerate}
-% \item Prepare:
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: pre-propose ``log = [`hello', `world', `!']"
-% 	\item replicas verify the pre-proposal does not conflict with their \textit{lock}
-% 	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", \dots
-% 	\end{enumerate}
-% \item Commit (lock):
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: propose ``log = [`hello', `world', `!']", qc = (\textit{prepare} acks from previous stage)"
-% 	\item replicas \textit{lock} on the proposed log
-% 	\item replicas $\to$ leader: ``ack", \dots
-% 	\end{enumerate}
-% \item Decide:
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: ``decide, qc = (\textit{commit} acks from previous stage)"
-% 	\item replicas: execute log
-% 	\end{enumerate}
-% \end{enumerate}
-% }
-% \caption{Example of byzantine fault-tolerant consensus algorithm.}
-% \label{byzantineexample}
-% \end{figure}
-
 \subsection{Optimistic responsiveness} \label{optresponsive}
 In this section we finally give the basic HotStuff algorithm by extending our generic byzantine consensus algorithm (section \ref{byzconsensus}) to make it \textit{optimistically responsive}. Optimistic responsiveness means that the system can make progress as fast as network conditions allow without waiting for a timeout, once GST has been reached [cite thunderella].
 
@@ -170,12 +103,9 @@ The byzantine consensus algorithm is not responsive as it has a timeout in the \
 \subsubsection{Problem}
 For the system to have liveness, the leader must wait for $\delta$ to elapse so that it receives a \textit{new-view} message from \textit{all} honest replicas before it pre-proposes a log, to ensure that the pre-proposal will be voted for by the replicas. Consider what would happen if the leader did not wait for this timeout, and did not receive a \textit{new-view} from some honest replica $x$. It is possible that $x$ is locked on a higher-view log than the other replicas, as in some past view it received the \textit{commit} message, but other replicas did not\footnote{N.B. this means that the value was never actually committed, as this would have required a quorum of \textit{commit} acks}. When the leader sends the \textit{prepare} message, $x$ will not vote the pre-proposal as it is locked on a higher value, so the leader will not acquire a quorum of acks to make progress; this breaks liveness.
 
-% Consider again the \textit{prepare} phase; the leader includes in its pre-proposal the QC from the highest view that it hears about in the \textit{new-view} messages it receives. However, there may be some honest replica [how???] that the leader did not hear from (perhaps their message was lost) that is locked on a higher-view proposal than the one that the leader chooses to pre-propose. When this replica receives the pre-proposal, it will reject it as it is locked on a higher-view proposal, and the system will not make progress. This is why it is necessary to wait for a timeout $\Delta$, so that the leader waits a sufficient amount of time to receive a \textit{new-view} from all replicas.
-
 Solution idea --- add a \textit{pre-commit} phase directly before the \textit{commit} phase, where replicas store a \textit{key} for a proposal that they include in their \textit{new-view} message; this removes the need for a timeout, making the algorithm responsive.
 
 \subsubsection{Algorithm}
-%[HotStuff does \textit{optimistic} responsiveness]In order to achieve responsiveness we can modify our algorithm by adding a \textit{pre-commit} phase in between \textit{prepare} and \textit{commit}, and removing the requirement for the leader to wait for a timeout in the \textit{new-view} phase. As before, there may be some honest replica that becomes locked on some proposal $x$ during the \textit{commit} phase. However, now there is a \textit{pre-commit} phase before this, where a quorum of replicas all store a \textit{key} for $x$, with this \textit{key} being a QC of \textit{prepare} acks. We now consider the next \textit{new-view} phase; the replicas now send their \textit{key} to the new leader, and the leader chooses what to propose based on the highest view \textit{key} it sees. Even if the leader does not receive a \textit{new-view} from the honest replica itself, it is guaranteed to hear about the proposal $x$ [because the quorums intersect!!!], so it will be able to make progress. See an example in figure \ref{responsiveeexample}.
 
 Modifying the byzantine algorithm (section \ref{byzconsensus}) to include our solution idea leads to the following:
 
@@ -190,71 +120,32 @@ Modifying the byzantine algorithm (section \ref{byzconsensus}) to include our so
 \subsubsection{Argument for liveness}
 The changes ensure that the leader will make progress as it is guaranteed to receive a \textit{key} for a log ($\lambda$) if some honest replica is locked on it. This is because for some replica to become locked on $\lambda$ there must be at least $f + 1$ honest nodes that have a \textit{key} for $\lambda$; the leader must hear about $\lambda$ from one of these honest nodes when it receives a quorum of \textit{new-view} messages.
 
-% \begin{figure}[h!]
-% \texttt{
-% \begin{enumerate}
-% \item New view: 
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: ``view = 3" 
-% 	\item replicas $\to$ leader: ``qc = (\textit{key} for view = 2, log = [`hello', `world'])", \dots
-% 	\end{enumerate}
-% \item Prepare:
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: pre-propose ``log = [`hello', `world', `!'], qc = (key for view = 2, log = [`hello', `world'])"
-% 	\item replicas verify the pre-proposal does not conflict with their \textit{lock}
-% 	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", \dots
-% 	\end{enumerate}
-% \item Pre-commit (key):
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: ``qc = (\textit{prepare} acks from previous stage)"
-% 	\item replicas store qc as a \textit{key}
-% 	\item replicas $\to$ leader: ``log = [`hello', `world', `!'] ack", \dots
-% 	\end{enumerate}
-% \item Commit (lock):
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: propose ``qc = (\textit{pre-commit} acks from previous stage)"
-% 	\item replicas \textit{lock} on proposed log
-% 	\item replicas $\to$ leader: ``ack", \dots
-% 	\end{enumerate}
-% \item Decide:
-% 	\begin{enumerate}
-% 	\item leader $\to$ replicas: ``decide, qc = (\textit{commit} acks from previous stage)"
-% 	\item replicas: execute log
-% 	\end{enumerate}
-% \end{enumerate}
-% }
-% \caption{Example of responsive consensus algorithm.}
-% \label{responsiveeexample}
-% \end{figure}
-
-
-
 \section{Tools \& libraries} \label{tools}
 In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.
 
 [could be more concise!!!]
 
 \subsection{OCaml}
-I chose OCaml \cite{noauthor_ocaml_nodate} for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, and good library support. OCaml's multi-paradigm nature is suitable for implementing HotStuff, as the core state machine can be elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm. Additionally, the Tezos cryptocurrency [cite!!!] is written in OCaml and contains a cryptography library (section \ref{tezos}) that provides the functionality needed by HotStuff.
+I chose OCaml \cite{noauthor_ocaml_nodate} for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, powerful module system, and good library support. The performance bottlenecks for distributed byzantine algorithms are generally cryptography, message serialisation and network delays. This means that it is more important to choose a language with suitable features to aid implementation, rather than picking a `high-performance' language like C++.
 
-The performance bottlenecks for distributed byzantine algorithms are generally cryptography, message serialisation and network delays. This means that it is more important to choose a language with suitable features to aid implementation, rather than picking a `high-performance' language like C++. [mention multicore OCaml, it was not ready when this project began]
+OCaml's multi-paradigm nature is suitable for implementing HotStuff, as the core state machine can be elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm.
 
 OCaml has a powerful module system that facilitates writing highly reusable code that was only briefly touched upon in the tripos (in Concepts in Programming Languages from IB). A modular design allows key components such as the consensus algorithm to be easily reused in other projects.
 
-There is no existing reference implementation of HotStuff in OCaml, so my project contributes to the growing OCaml ecosystem\footnote{Since our project is implemented purely in OCaml, it could be deployed in a MirageOS unikernel \cite{noauthor_mirageos_nodate}}.
-
 \subsection{Lwt}
-Lwt \cite{noauthor_lwt_2023} is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages [verify!!!] and are used by asynchronous promises in Lwt. Lwt is useful to this project as promises provide a way to asynchronously dispatch messages over the network and wait for their responses in different threads. Promises are cheap to create in Lwt, so one can create many lightweight threads with good performance [citation needed***].
+Lwt \cite{noauthor_lwt_2023} is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages that are used by promises in Lwt.
 
-One alternative I could have used is Jane Street's Async library \cite{noauthor_async_nodate}, which has similar features but better performance; however, I chose not to due to its poor documentation. Another alternative that also has better performance than Lwt is EIO \cite{noauthor_eio_2023}, but this library is new and not yet in a stable state.
+Lwt is useful to this project as promises provide a way to asynchronously dispatch messages over the network and wait for their responses in different threads. Promises are cheap to create in Lwt, so one can create many lightweight threads with good performance.
+
+There are alternative libraries I could have used that may have had better performance, namely Jane Street's Async library \cite{noauthor_async_nodate} and EIO \cite{noauthor_eio_2023}. I chose Lwt over these libraries due to superior documentation and statbility.
 
 \subsection{Cap'n Proto}
-Cap'n Proto  \cite{noauthor_capn_nodate} is an RPC framework that includes a library for sending and receiving RPCs [mention message serialisation!!!], and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in section \ref{capnpbenchmark}.
-
-[some people use xyz fancy library that is much faster but this was clearly not feasible for this project\dots]
+Cap'n Proto  \cite{noauthor_capn_nodate} is an RPC framework that includes a library for sending and receiving RPCs, serialising messages, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in section \ref{capnpbenchmark}.
 
 \subsection{Tezos cryptography} \label{tezos}
-The Tezos cryptography library \cite{noauthor_tezos_nodate} provides aggregate signatures using the BLS12-381 elliptic curve construction [cite crypto paper???]. It provides functions to sign some data using a private key, aggregate several signatures into a single one, and check whether an aggregate signature is valid. The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature. Benchmarks for the library are presented in section \ref{tezosbenchmark}.
+The Tezos cryptography library \cite{noauthor_tezos_nodate} provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, aggregate several signatures into a single one, and check whether an aggregate signature is valid. Benchmarks for the library are presented in section \ref{tezosbenchmark}.
+
+The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature.
 
 \section{Requirements analysis} \label{requirements}
 
@@ -264,12 +155,6 @@ In order to be successful the implementation should conform to the following req
 	\item Evaluation --- analysis of system throughput and latency should be carried out by testing the program locally, analysing the trace, and testing in simulated network.
 	\item Optimisation --- implement features to improve transaction throughput and reduce latency over the naive implementation. This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
 \end{itemize}
-
-% These requirements are similar to those presented in my proposal (Appendix X***) with a few differences. The first difference is to evaluate on 4 nodes rather than 32. Benchmarking of Cap'n Proto has revealed its limitations when sending large messages (\ref{capnpbenchmark}). Once batching of requests is implemented the internal messages sent between nodes will be large and could cause a performance bottleneck for the state machine progressing. Because of this, it may not be feasible to get reasonable performance with more nodes, as more nodes result in more internal messages being sent. In practice, permissioned blockchains are often run with a small number of nodes, so this limitation may not be important [citation needed *** honeybadger BFT?].
-% https://github.com/heidihoward/distributed-consensus-reading-list#bft-surveys
-
-% Additionally the extension has been changed from adding support for network reconfiguration to describing how to implement verifiable anonymous identities. This is because this extension seemed like a more interesting direction for the project with more exciting applications.
-% mention how the reconfig extension was dropped for focusing on performance improvements
 
 \section{Software engineering practices} \label{softwareeng}
 

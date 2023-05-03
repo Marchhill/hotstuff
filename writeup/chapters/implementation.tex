@@ -49,42 +49,17 @@ In this section we present the system architecture that surrounds the core \text
 
 We will follow the path of an incoming request or message as it passes through the system shown in figure \ref{nodediagram}.
 
-\textit{Incoming message and client RPCs} --- the node responds to internal messages from other nodes, and requests from a client (or a load generator, as described in section \ref{loadgenerator}) containing new commands to be committed. The format of these RPCs is specified in a Cap'n Proto schema, in their custom markdown language.
-
-\textit{Server} --- each node operates as a server waiting for incoming RPCs. When the server receives an RPC it must be converted from Cap'n Proto types to internal types, and added to the \textit{message stream} or \textit{request stream}. If the RPC was a client request, a promise for a response is added to the \textit{client response hash table}; this will allow the system to respond to the client once the command is decided.
-
-\textit{Message and request streams\footnote{A stream is thread-safe implementation of a queue in Lwt.}} - messages and requests are added to separate streams so that messages can be prioritised. Internal messages represent a backlog of work that the system has not yet completed, so we follow the general design principle of clearing this backlog before accepting new work (client requests).
-
-\textit{Main loop} --- takes messages and requests from their respective streams, and delivers them to the \textit{consensus} module. This main loop ensures that the \textit{consensus} module is never run in parallel, which could lead to race conditions.
-
-\textit{Consensus module} --- takes incoming messages and requests, outputs \textit{actions} such as sending messages, and updates its own state. The module contains an implementation of the basic HotStuff algorithm (section \ref{hotstufftheory}), and the chained algorithm (chaining is discussed in section \ref{chaining}, and a full specification is given in section \ref{spec}); both share the same signature, so can be interchanged.
-
-\textit{Action handler} --- takes the actions outputted by the \textit{consensus} module, and passes them to the appropriate handler. The three types of actions are: sending a message, responding to the client, and resetting the view timer.
-
-\textit{Message sender} --- asynchronously dispatches an RPC in a new thread. To do this it must convert internal types into Cap'n Proto types, and construct an RPC that matches the schema. The message sender maintains TCP connections with all other nodes, and in the event of the connection breaking repeatedly attempts to reconnect with binary exponential back-off times.
-
-\textit{Client request hashtable} --- allows client requests to be responded to. The hashtable maps each command's unique identifier to a promise, that when awoken will respond to the original client request RPC.
-
-\textit{View timer} --- waits for a timeout to elapse then adds a view timeout message to the \textit{message stream}, so that it will be delivered to the \textit{consensus} module. The \textit{reset} action allows the timer to be reset for a new view.
-% The core implementation of the HotStuff algorithm (section \ref{spec}) is implemented in the \textit{consensus} module. The main function provided by this module is \textit{advance}, which delivers some event (such as an incoming message, client request or timeout) to the consensus state machine and returns an updated state and a list of actions (such as sending a message to another node or responding to a client request) to be carried out. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{jensen_ocons_2023}, which was developed by my project supervisor. The \textit{consensus} module contains both the chained \ref{chaining} and basic \ref{hotstufftheory} algorithms; they share a common signature, so can be interchanged. The module uses the Tezos cryptography library (section \ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
-
-% Each node operates as a server waiting for messages from other nodes or requests from a client (or in the case of our experiments a load generator, which is described in section \ref{benchcode}). The format of RPCs is specified in a Cap'n Proto schema, in their custom markdown language. A received RPC must be decoded, and the Cap'n Proto types converted into the internal types of the consensus state machine. Messages and requests are added to separate streams\footnote{A stream is thread-safe implementation of a queue in Lwt.} when they are received. When a request is received the callback function to respond to the request is stored in a hash table, so that it can be accessed when the command has been committed and the client request can be responded to.
-
-% The main loop takes events from the message and request streams, prioritising internal messages over client requests. It takes these events and delivers them to the \textit{advance} function of the consensus state machine. This architecture was chosen so that the \textit{advance} function is never run in parallel on different messages / requests, as this could lead to race conditions. The \textit{advance} function then returns a new state which is stored, and a list of actions to carry out.
-
-% The actions that can be carried out are sending a message to other nodes, responding to a client request, and resetting a timer. In order to send a message we must convert the consensus state machine internal types into Cap'n Proto types, and construct an RPC that matches the schema. Messages are dispatched asynchronously in a new thread. The node maintains TCP connections with all other nodes that are reused every time a message is sent, and in the event of the connection breaking the node repeatedly attempts to reconnect with binary exponential back-off. When responding to a client request the committed command's unique identifier is used to lookup the callback to respond to the client, which is then called, sending a response to the client. The timer is implemented with Lwt promises, a new thread is created which waits for a timeout to elapse and then adds a TIMEOUT message to the message stream.
-
-% [integrate this and make it much shorter:]
-
-% Initial analysis of timing data showed a large amount of time was spent by requests queuing on the node before they are delivered to the state machine. At this time the architecture presented in section \ref{overview} had not been fully developed, specifically, there was only one stream that contained both internal messages and client requests.
-
-% \textbf{Hypothesis: } Internal messages are being starved by client requests. At large throughputs the stream quickly becomes filled with client requests, which may prevent internal messages being handled. Internal messages represent a backlog of work that is not yet finished, so this should be handled before accepting more requests.
-
-% \textbf{Design principle: } The system should prioritise clearing its backlog of work before accepting new work.
-
-% \textbf{Potential solution: } Split the stream into two separate streams for messages and requests, and always pick from the message stream over the request stream until the message stream is empty.
-
-% Implementing the potential solution did not lead to a significant improvement in performance, so this was not the issue. However, this architectural model was retained as it is theoretically better and may lead to observable improvements later.
+\begin{description}
+	\item \textit{Incoming message and client RPCs} --- the node responds to internal messages from other nodes, and requests from a client (or a load generator, as described in section \ref{loadgenerator}) containing new commands to be committed. The format of these RPCs is specified in a Cap'n Proto schema, in their custom markdown language.
+	\item \textit{Server} --- each node operates as a server waiting for incoming RPCs. When the server receives an RPC it must be converted from Cap'n Proto types to internal types, and added to the \textit{message stream} or \textit{request stream}. If the RPC was a client request, a promise for a response is added to the \textit{client response hash table}; this will allow the system to respond to the client once the command is decided.
+	\item \textit{Message and request streams\footnote{A stream is thread-safe implementation of a queue in Lwt.}} - messages and requests are added to separate streams so that messages can be prioritised. Internal messages represent a backlog of work that the system has not yet completed, so we follow the general design principle of clearing this backlog before accepting new work (client requests).
+	\item \textit{Main loop} --- takes messages and requests from their respective streams, and delivers them to the \textit{consensus} module. This main loop ensures that the \textit{consensus} module is never run in parallel, which could lead to race conditions.
+	\item \textit{Consensus module} --- takes incoming messages and requests, outputs \textit{actions} such as sending messages, and updates its own state. The module contains an implementation of the basic HotStuff algorithm (section \ref{hotstufftheory}), and the chained algorithm (chaining is discussed in section \ref{chaining}, and a full specification is given in section \ref{spec}); both share the same signature, so can be interchanged. The module uses the Tezos cryptography library (section \ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
+	\item \textit{Action handler} --- takes the actions outputted by the \textit{consensus} module, and passes them to the appropriate handler. The three types of actions are: sending a message, responding to the client, and resetting the view timer.
+	\item \textit{Message sender} --- asynchronously dispatches an RPC in a new thread. To do this it must convert internal types into Cap'n Proto types, and construct an RPC that matches the schema. The message sender maintains TCP connections with all other nodes, and in the event of the connection breaking repeatedly attempts to reconnect with binary exponential back-off times.
+	\item \textit{Client request hashtable} --- allows client requests to be responded to. The hashtable maps each command's unique identifier to a promise, that will be awoken to respond to the original client request RPC once the command is committed.
+	\item \textit{View timer} --- waits for a timeout to elapse then adds a view timeout message to the \textit{message stream}, so that it will be delivered to the \textit{consensus} module. The \textit{reset} action allows the timer to be reset for a new view.
+\end{description}
 
 \section{More HotStuff theory} \label{moretheory}
 In this section we conclude our theoretical explanation of HotStuff by discussing chaining, and the pacemaker. As the pacemaker was not sufficiently specified in the original paper, we will draw on other sources to give a full explanation.
@@ -142,7 +117,7 @@ During development we experimented with a prototype for a pacemaker that advance
 
 % This change improved performance by reducing the amount of time spent waiting in the main loop.
 
-In this section we give a full specification of HotStuff based on the basic HotStuff algorithm (section \ref{hotstufftheory}), integrating chaining (section \ref{chaining}), and a pacemaker (section \ref{pacemaker}).
+In this section we give a full specification of HotStuff based on the basic HotStuff algorithm (section \ref{hotstufftheory}), integrating chaining (section \ref{chaining}), and a pacemaker (section \ref{pacemaker}). We informally justify some of the changes made from the original algorithm, then give a proof of liveness for our modified algorithm.
 
 This specification implements the consensus module as described in our discussion of the system architecture (section \ref{architecture}). This module receives messages and requests from the main loop, outputs actions (sending a message, responding to a client request, or resetting the view timer), and updates its own state. We implement this as a \textit{match} statement over the different types of incoming messages and requests, returning a new state for the consensus machine, and a list of actions.
 
@@ -333,20 +308,17 @@ We present the pseudocode with our additions coloured in green and modifications
 	\end{algorithmic}
 \end{algorithm}
 
-[still highlight the key changes, focusing on our own integration of the pacemaker]
-% \subsection{Changes}
-% \begin{itemize}
-% 	\item CREATE{\large L}EAF (algorithm \ref{hotstuffalgorithm}, line \ref{code_createleaf}): This function has been modified so that `dummy' nodes are inserted to maintain the invariant that the height of the chain is always one greater than the current view number, as in the non-event driven pseudocode in the original paper.
-% 	\item ON{\large R}ECEIVE{\large P}ROPOSAL (algorithm \ref{hotstuffalgorithm}, line \ref{code_onreceiveproposal}): The change on line \ref{code_checkview} ensures that replicas only respond to a proposal from the leader of the current view. The change on line \ref{code_proposaltransition} means that a replica transitions to the next view once it receives a proposal unless it is the next leader, in which case it waits to collect the VOTE{\large M}SGs before transitioning.
-% 	\item ON{\large R}ECEIVE{\large V}OTE (algorithm \ref{hotstuffalgorithm}, line \ref{code_onreceivevote}): The change on line \ref{code_checkleader} ensures that a replica will ignore messages from earlier views, and it checks that it is the correct destination for a vote message. Another change we make is dividing \textit{V} into different sets for messages from different views; this prevents votes from different views being used to form a quorum. The change on line \ref{code_gotvotes} means that once a leader has received a quorum of messages, it can transition to the next view.
-% 	\item ON{\large P}ROPOSE (algorithm \ref{hotstuffalgorithm}, line \ref{code_onpropose}): The change on line \ref{code_propose} includes a QC along with the proposal, allowing replicas to catch up if they are in a lower view.
-% 	\item GET{\large L}EADER (algorithm \ref{pacemakeralgorithm}, line \ref{code_getleader}): The original pseudocode states that this function is application specific. We have chosen to use a round-robin system to assign leaders to views.
-% 	\item ON{\large N}EXT{\large S}YNC{\large V}IEW (algorithm \ref{pacemakeralgorithm}, line \ref{code_onnextsyncview}): This function previously just sent a NEW{\large V}IEW message to the next leader. Our modified function also updates the \textit{curView}, and resets the timer for the new view. Additionally it calls ON{\large B}EAT which causes a leader to propose a new value.
-% 	\item ON{\large R}ECIEVE{\large C}LIENT{\large R}EQUEST (algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceiveclientreq}): On receiving a client request we simply add it to a queue of commands waiting to be proposed.
-% 	\item ON{\large T}IMEOUT (algorithm \ref{pacemakeralgorithm}, line \ref{code_ontimeout}): When the current view times out replicas will send a COMPLAIN to the next leader, and reset their timers for the next view. This behaviour is explained in \ref{viewchange}.
-% 	\item ON{\large R}ECIEVE{\large C}OMPLAIN (algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceivecomplain}): This function is very similar to ON{\large R}ECEIVE{\large V}OTE, except that a quorum of COMPLAIN messages is being collected rather than votes. On achieving a quorum the leader can broadcast a NEXT{\large V}IEW message to get the replicas to transition to the next state, including the quorum of COMPLAINs as proof. This behaviour is explained in \ref{viewchange}.
-% 	\item ON{\large R}ECEIVE{\large A}NY (algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceiveany}): N.B. the message type given is the wildcard operator, so this procedure is run on every message we receive. The function checks if the quorum received is from a greater view than \textit{curView}, if so then it is safe to transition to that view in order to catch up.
-% \end{itemize}
+\subsection{Changes}
+We now informally justify some of the key changes made to the original algorithm, with a specific focus on the changes we made to integrate the pacemaker with HotStuff (section \ref{pacemaker}). Many of these changes were made to fix deadlocks encountered during implementation.
+
+\begin{description}
+	\item \textit{Algorithm \ref{hotstuffalgorithm}, line \ref{code_proposaltransition}} --- if a replica is the next leader, it waits to receive votes before transitioning to the next view. This prevents a deadlock where the leader transitions to the next view too early and ignores vote messages from an earlier view.
+	\item \textit{Algorithm \ref{hotstuffalgorithm}, line \ref{code_checkleader}} --- a node collects vote messages from future views so that if it has fallen behind, it can receive a quorum of votes and catch up to the current view. This prevents an honest node falling behind and not being able to make progress in the view where it is the leader. Votes from different future views are stored in separate sets ($V\textcolor{Magenta}{\textsubscript{m.view}}$), to prevent votes from different views being used to form a QC.
+	\item \textit{Algorithm \ref{hotstuffalgorithm}, line \ref{code_onpropose}} --- proposals now includes a QC, allowing replicas to catch up if they are in a lower view.
+	\item \textit{Algorithm \ref{pacemakeralgorithm}, line \ref{code_getleader}} --- we have chosen to use a round-robin system to assign leaders to views.
+	\item \textit{Algorithm \ref{pacemakeralgorithm}, line \ref{code_onnextsyncview}} --- as soon as a node transitions into a view where it is leader, ON{\large B}EAT is invoked, causing it to propose a new value.
+	\item \textit{Algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceiveany}} --- if a node receives any QC from a future view $v$, it can safely transition to view $v + 1$
+\end{description}
 
 \subsection{Proofs} \label{proof}
 
@@ -524,8 +496,7 @@ The source of this problem was the inefficient design of the \textit{node.justif
 A solution to this problem is to store an integer offset to a node inside the \textit{justify} field rather than a \textit{node} record. This offset represents how many \textit{parent} links away the node is, and so can be used to reconstruct all of the original information. To implement this another type \textit{node\_justify} was added, that is identical to \textit{qc}, but with the field \textit{node} replaced with \textit{node\_offset}. One must then convert between the \textit{node\_justify} and \textit{qc} types to reconstruct the original data and follow the \textit{node.justify.node} link.
 
 \subsubsection{Node comparison}
-[cite merkle tree here? compare to ethereum and bitcoin...]
-Memtrace profiling also showed that the equality function for nodes was memory intensive. The solution to this was including a \textit{digest} field in the node that is a hash over all of the other fields. Notably we can compute this hash over the \textit{digest} field of the parent node rather than recursing through the whole chain. This means that we can also compare two nodes by comparing their digests without having to recurse through each chain; the digests being equal cryptographically guarantees that the whole chains are equal.
+One optimisation implemented was storing a \textit{digest} field in the node that is a hash over all of the other fields\footnote{Notably the hash can be computed over the \textit{digest} field of the parent node rather than recursing through the whole chain. }, enabling efficient comparison of nodes. This means that two nodes can be compared by their digests without having to recurse through the entire chain; the digests being equal cryptographically guarantees that the whole chains are equal. The need for this optimisation was discovered through profiling the memory usage of the node equality function using Memtrace.
 
 \subsubsection{Node truncation} \label{truncation}
 Our current approach sends the entire node inside internal messages, which becomes expensive as the chain grows. As highlighted in section \ref{batchsizes}, the size of messages being sent is a bottleneck in the system, making this particularly expensive.

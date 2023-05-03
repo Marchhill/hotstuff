@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1683054064 "main.aux" "main.bbl" "main" 1683054097
+["bibtex main"] 1683096521 "main.aux" "main.bbl" "main" 1683097390
   "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/bibtex/bst/base/acm.bst" 1647894602 21064 c61a48664f3c347ce7f73c1a6a530506 ""
-  "main.aux" 1683054096 23174 8fcf7d16ae8fa590f33b4c5c84fabc3b "pdflatex"
+  "main.aux" 1683097389 23321 8bc118ae9b9d24738541df87de34ed15 "pdflatex"
   "ref.bib" 1682625027 28010 a11410c60aa33f1ecd9762b1d26e1fc3 ""
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1683054093 "/Users/marchhill/Documents/cam/2/dissertation/writeup/main.tex" "main.pdf" "main" 1683054097
+["pdflatex"] 1683097388 "/Users/marchhill/Documents/cam/2/dissertation/writeup/main.tex" "main.pdf" "main" 1683097390
   "/Users/marchhill/Documents/cam/2/dissertation/writeup/main.tex" 1682967351 4330 cc9b6495c03ab9266ba497c3e48dab1b ""
   "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1647894602 2971 def0b6c1f0b107b3b936def894055589 ""
   "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1647894602 2900 1537cc8184ad1792082cd229ecc269f4 ""
@@ -258,11 +258,11 @@
   "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/xcolor/xcolor.sty" 1647894602 56029 3f7889dab51d620aa43177c391b7b190 ""
   "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/web2c/texmf.cnf" 1647894602 40174 4e2f94c7b252db2ad3c0cfdef6912ab3 ""
   "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-var/web2c/pdftex/pdflatex.fmt" 1647894602 2826563 f39d1fa6543e354bf2297ed63a067310 ""
-  "chapters/conclusion.tex" 1682954196 5656 bbbf6c3b96b432c893f480879d68a0fe ""
+  "chapters/conclusion.tex" 1683060563 5801 fd9c86b3303d805f92e6492faf64429c ""
   "chapters/evaluation.tex" 1682956144 20069 00b9851c7c784d7ec99ab78b80d05d1b ""
-  "chapters/implementation.tex" 1683054093 66950 bbe0d252bdda5885a167663debaf8458 ""
-  "chapters/introduction.tex" 1682982898 9638 86dc7c7fe34ab83c73031e1866b73f60 ""
-  "chapters/preparation.tex" 1682982838 32442 fdf4d65a50cba9ec1956ed82b043e519 ""
+  "chapters/implementation.tex" 1683095892 61018 37792bb96901fffd5817a6f21baa7170 ""
+  "chapters/introduction.tex" 1683060295 5419 f7cd22cdb35ef702b55aff4b191c2dc1 ""
+  "chapters/preparation.tex" 1683097387 23673 8b91f28e0dae1b429a12a6c04f1ebc4d ""
   "images//ablation/throughputflatency_ablation.png" 1682765795 60849 5c33b2923eb377ff268128f57cb3124a ""
   "images//ablation/throughputgoodput_ablation.png" 1682765794 60594 d3289354ff91bd122553183f76698ad6 ""
   "images//batch_size_test/throughputflatency.png" 1682531100 61256 6de5e608ebcc7e81ad00291bbc7fa0f9 ""
@@ -285,11 +285,11 @@
   "images//openloop.png" 1682177967 13004 7221346aba807733d012898702781fc5 ""
   "images//university.png" 1680103846 165326 a0adfc17b0deb23a167168adf8ffbcea ""
   "images//viewchange/test7_100_7_100_timelatencyheatmap.png" 1681906029 16550 36418a892e1e4605a55008ba8e55fd15 ""
-  "main.aux" 1683054096 23174 8fcf7d16ae8fa590f33b4c5c84fabc3b "pdflatex"
-  "main.bbl" 1683054064 4997 5fdf3b939a4d6ff08b0a77a223c15c46 "bibtex main"
-  "main.out" 1683054096 6589 96a3fd2673839b758149909153fffd57 "pdflatex"
+  "main.aux" 1683097389 23321 8bc118ae9b9d24738541df87de34ed15 "pdflatex"
+  "main.bbl" 1683096521 4997 5fdf3b939a4d6ff08b0a77a223c15c46 "bibtex main"
+  "main.out" 1683097389 6686 7753a0977ec69c937536553e2ce1c1a2 "pdflatex"
   "main.tex" 1682967351 4330 cc9b6495c03ab9266ba497c3e48dab1b ""
-  "main.toc" 1683054096 4822 665878a17c728865c0b334c122e3b355 "pdflatex"
+  "main.toc" 1683097389 4900 2eeb3bbecb259652f126682ef96d5208 "pdflatex"
   (generated)
   "main.aux"
   "main.log"
