@@ -54,8 +54,6 @@ In this section we extend our non-byzantine algorithm (section \ref{nonbyzconsen
 
 A QC is a quorum of $n - f$ acks with a matching \textit{threshold signature}. A threshold signature combines several signatures of the same message into one \cite{goos_practical_2000}\cite{cachin_random_2005}; in this case the signature from each ack is combined\footnote{Recall that our messages are signed to provide authenticated delivery.}. QCs have a key property that our byzantine algorithm will rely on:
 
-[add a diagram of intersecting QCs!]
-
 \begin{property} \label{qcproperty}
 There will always be at least one honest node in the intersection of any two QCs.
 \end{property}

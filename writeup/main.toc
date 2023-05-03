@@ -40,7 +40,7 @@
 \contentsline {subsection}{\numberline {3.4.2}Nodes}{26}{subsection.3.4.2}%
 \contentsline {subsubsection}{Recursive types}{26}{subsubsection*.15}%
 \contentsline {subsubsection}{Node offsets}{27}{subsubsection*.16}%
-\contentsline {subsubsection}{Node comparison}{27}{subsubsection*.17}%
+\contentsline {subsubsection}{Node equality}{27}{subsubsection*.17}%
 \contentsline {subsubsection}{Node truncation}{27}{subsubsection*.18}%
 \contentsline {section}{\numberline {3.5}Implementing for evaluation}{28}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Load generator}{28}{subsection.3.5.1}%

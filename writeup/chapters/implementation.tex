@@ -103,27 +103,21 @@ The notion of a pacemaker and the properties it should posses were formalised in
 
 Once the view times out, nodes send a \textit{complain} message to the next leader and start a new timeout for the next view. Once the next leader achieves a quorum of \textit{complain} messages it collects them into a QC known as a \textit{view-change proof}. This leader can then send a \textit{view-change} message containing the \textit{view-change proof} to all replicas, who will respond by transitioning to the next view and sending a \textit{new-view} message to the new leader. The inclusion of the \textit{view-change proof} prevents liveness attacks by byzantine nodes that could otherwise attack the system by constantly causing view-changes to take place and preventing non-faulty leaders from making progress.
 
-[authenticator complexity maintained!!!]
+Crucially this protocol maintains the \textit{linear view change property} that HotStuff has $O(n)$ \textit{authenticator complexity}. Authenticator complexity measures the total number of threshold signatures and partial signatures in a view. This protocol requires $n - f$ partial signatures for the \textit{complain} messages, and a single threshold signature for the \textit{view-change} message, resulting in $O(n)$ authenticators overall.
 
 \subsubsection{Integration}
 
-Our approach to integrating the pacemaker is to advance a node to the next view as soon as possible once it has finished proposing or voting, or when it receives evidence that there are a quorum of nodes in a higher view. This means that the system does not require synchronised clocks, the nodes advance asynchronously as fast as the network allows.
+Our approach to integrating the pacemaker is to advance a node to the next view as soon as possible once it has finished proposing or voting, or when it receives evidence that there are a quorum of nodes in a higher view. This means that the system does not require synchronised clocks; the nodes advance asynchronously as fast as the network allows.
 
 During development we experimented with a prototype for a pacemaker that advanced views at a steady rate, but analysis of timing data indicated that this approach had inferior performance to our chosen design.
 
 \section{Specification} \label{spec}
 
-% However, experimenting with this feature showed an interesting phenomenon; the main loop, which is infinitely recursive, was running at a much slower rate than one would expect. Further timing statements revealed that the command which removed an element from the stream would sometimes take a very long time (on the order of seconds). Reading more into the Lwt documentation led to the following idea:
-
-% \textbf{Potential solution: } Use a different method to take elements from the queue that is synchronous. This should stop the main loop blocking waiting for the queue to fill up.
-
-% This change improved performance by reducing the amount of time spent waiting in the main loop.
-
 In this section we give a full specification of HotStuff based on the basic HotStuff algorithm (section \ref{hotstufftheory}), integrating chaining (section \ref{chaining}), and a pacemaker (section \ref{pacemaker}). We informally justify some of the changes made from the original algorithm, then give a proof of liveness for our modified algorithm.
 
-This specification implements the consensus module as described in our discussion of the system architecture (section \ref{architecture}). This module receives messages and requests from the main loop, outputs actions (sending a message, responding to a client request, or resetting the view timer), and updates its own state. We implement this as a \textit{match} statement over the different types of incoming messages and requests, returning a new state for the consensus machine, and a list of actions.
+This specification implements the consensus module as described in our discussion of the system architecture (section \ref{architecture}). This module receives messages and requests from the main loop, outputs actions (sending a message, responding to a client request, or resetting the view timer), and updates its own state.% We implement this as a \textit{match} statement over the different types of incoming messages and requests, returning a new state for the consensus machine, and a list of actions.
 
-We present the pseudocode with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}. The pseudocode is written to match the format of the original paper to allow for easier comparison, although as stated our actual implementation uses a match statement over the incoming messages and requests.
+We present the pseudocode with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}.% The pseudocode is written to match the format of the original paper to allow for easier comparison, although as stated our actual implementation uses a match statement over the incoming messages and requests.
 
 % \begin{algorithm}[h!]
 % 	\caption{Modified HotStuff} \label{hotstuffalgorithm}
@@ -375,8 +369,6 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 	The only other way the view can be advanced, is on the receipt of a QC (algorithm \ref{pacemakeralgorithm}, line \ref{code_gotqc}). For a QC to be formed a quorum of $n - f$ nodes must have complained or voted; at least one of these must have been an honest consensus machine that requested for the view to be advanced.
 \end{proof}
 
-%prove that it doesn't break safety
-%maybe try to prove liveness
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Practical challenges and optimisations} \label{performance}
 
@@ -385,20 +377,11 @@ In this section we give solutions to some of the practical challenges of impleme
 One main practical consideration was designing the types and structure of the core consensus module (section \ref{architecture}), to implement the algorithm given in our specification (section \ref{spec}). Recall that this module takes as input messages and client requests (\textit{events}), and returns actions (such as sending a message) and an updated consensus state. We used \textit{variants} to tag the different types of events, with attached \textit{records} to store the body of the event (such as the node and QC of a proposal). The core algorithm is expressed as a \textit{match} statement to handle each type of event. The output from this is a list of actions (also implemented as variants), and a new state.
 
 \subsection{Batching} \label{batching}
-% mention send to all & send to one, 4x throughput
-% reference latency graphs from final
-
 A standard technique to improve the goodput of a consensus algorithm is to \textit{batch} requests, making each node contain many commands instead of just one. This allows a single view to result in many commands being committed rather than just one.
 
 In this section we discuss the practical challenges of implementing effective batching. A naive implementation of batching is simple to implement; instead of taking a single command from the queue to propose (algorithm \ref{pacemakeralgorithm}, line \ref{code_takecmd}), the whole queue can be batched into a single proposal. Analysis of the timing data for the naive implementation showed that it dramatically increased latency. The rest of this section describes further optimisations we made to make batching effective.
 
 \subsubsection{Filtering} \label{filtering}
-% send to all weird graph: https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAM2hZuzkpUNIuGt2QHNZQvc%3D
-% exponential growth with end to all https://imgur.com/a/wDlhbn9 28/03 pseudocode
-% theory: nodes reproposing same values
-% first solution: deduplicate before commiting, use set instead of queue
-% second solution: deduplicate based on *seen* commands
-% could mention bug of reawaking the same promise in the hash table - this brought to my attention the deduplication issue!
 One optimisation that we implemented is \textit{filtering} incoming commands to prevent them being proposed by multiple nodes. This is achieved by nodes maintaining a set of commands that they have \textit{seen} in the proposals of other nodes, and filtering these commands from their proposal. The effectiveness of this optimisation demonstrated in our ablation study (section \ref{ablation}).
 
 \begin{algorithm}[h!]
@@ -422,37 +405,13 @@ One optimisation that we implemented is \textit{filtering} incoming commands to 
 	\end{algorithmic}
 \end{algorithm}
 
-We give pseudocode for an implementation of filtering in algorithm \ref{dedup}. We use a set to store both the commands that are waiting to be proposed, and commands that have been seen, so that the difference can be efficiently computed. Also note the small optimisation on line \ref{smalloptimisation}, the \textit{seen} can safely be emptied as the commands have already been filtered; this reduces the amount of computation required to calculate the set difference next time.
+We give pseudocode for an implementation of filtering in algorithm \ref{dedup}. We use a set to store both the commands that are waiting to be proposed, and commands that have been seen, so that the difference can be efficiently computed. Also note the small optimisation on line \ref{smalloptimisation}: the \textit{seen} set can safely be emptied as the commands have already been filtered, reducing the amount of computation required to calculate the set difference next time.
 
 This optimisation is effective as our load generator is send-to-all (section \ref{loadgenerator}), so a new command is added to the queue of all nodes, and may be included in the proposals of different nodes. Filtering out commands so that they are not proposed multiple times follows the general design principle:
 
 \textbf{Design principle: } Attempt to minimise the amount of redundant work that the system carries out by screening incoming work to check that it actually needs to be done.
 
 An alternative implementation of filtering that was prototyped was maintaining a set of commands that had been \textit{committed} rather than \textit{seen}, but this filtered out far fewer commands and did not significantly improve performance. This is likely because it takes several views for a command to be committed, and in this time multiple nodes may propose the same command and it will not be filtered.
-% Further problems were uncovered by the implementation of send-to-all in the load generator (section \ref{benchcode}). 
-
-% Instead of reducing latency as expected the implementation of this feature actually led to dramatically increased latency, and some requests not being fulfilled at all within the time that the experiment ran. Heatmaps that show the distribution of latencies over the course of an experiment showed that latency increased exponentially over the course of the test.
-
-% \textbf{Hypothesis: } Send-to-all overloads the system by increasing the number of requests by a factor of \textit{n}, where \textit{n} is the number of nodes.
-
-% \textbf{Experimentation: } If our hypothesis is true, then we should see similar behaviour in a send-to-one system run at \textit{n} times the throughput. This is indeed the case; running a send-to-one system with such high throughput led to exponential growth in latencies.
-
-% \textbf{Further evidence: } Implementing this feature resulted in Lwt errors being thrown. As described in section \ref{overview}, in order to respond to client requests, the node maintains a hash table of promises that can be awakened when the consensus state machine has successfully committed and can respond to the client. The Lwt error was caused by promises stored in the hash table being awoken multiple times, which causes an error. This provides further evidence that the same commands are being committed and responded to multiple times, which is wasted work.
-
-% \textbf{Potential solution: } Filter commands in the system to minimise the number of commands that are proposed by multiple nodes.
-
-% [shorten this section, only give the final pseudocode and not the failed attempt]
-% One way to implement this is to maintain a set of commands that have been committed, and before proposing or committing a node, calculating the set difference with the \textit{commited} set to filter out redundant commands. Instead of nodes containing a list of commands, as in our naive implementation of batching, we now use a set to enable efficient computation of the difference.
-
-% This implementation did not lead to the desired reduction in latency, the system still exhibited the exponential growth previously observed. The lack of change in observable behaviour implied that the filtering of requests was not happening successfully.
-
-% \textbf{Hypothesis: } A command (\textit{x}) is committed four views after it is proposed. In these four views our deduplication is ineffective in screening \textit{x} from being proposed again. Notably another node will not try to commit \textit{x} for a second time, but the data indicates that being proposed multiple times is a more important factor affecting performance. 
-
-% \textbf{Experimentation: } Count the elements that are filtered out from being proposed by measuring the value $|\textit{cmds}| - |\textit{toPropose}|$. This value was small, which supports the hypothesis that filtering was largely ineffective.
-
-% \textbf{Potential solution: } Screen incoming commands more aggressively by instead maintaining a set of any commands that have been \textit{seen}. Only filter out commands when they are being proposed rather than when they are being committed, as there is no evidence that screening at commit time gives any tangible benefit.
-
-% Note the small optimisation on line \ref{smalloptimisation}, the \textit{seen} can safely be emptied as the commands have already been filtered; this reduces the amount of computation required to calculate the set difference next time. The second implementation was much more effective at screening requests and resulted in a significant reduction in latency. The difference is demonstrated in our ablation study (section \ref{ablation}). The effectiveness of this change led to further insight into what the bottlenecks for performance were.
 
 \subsubsection{Batch sizes} \label{batchsizes}
 We further improved the effectiveness of batching by limiting the size of each batch. We demonstrate that this approach improves performance in our study of the system with different batch size limits (section \ref{batchsizeseval}).
@@ -460,25 +419,8 @@ We further improved the effectiveness of batching by limiting the size of each b
 Implementing this feature requires minimal changes to algorithm \ref{dedup}, one simply has to take a subset of \textit{cmds} to propose instead of the whole set. It is important to take the oldest commands from \textit{cmds} to include in the proposal, so that older commands are not starved by newer ones, resulting in high latency. This can be accomplished by using an ordered set (such as a tree set), and ordering by command identifiers, which are ascending integers in our implementation.
 
 The optimisation is effective because at higher message sizes the latency of Cap'n Proto serialisation increases (section \ref{capnpbenchmark}), so smaller batches can lead to better performance. There is an inherent trade-off between increasing batch size to commit more commands, and messages becoming slower due to increased serialisation latency.
-% The effectiveness of filtering out commands to make proposals smaller implies that the size of a proposal has a significant impact on the performance of the program.
-
-% \textbf{Hypothesis: } Large batches of commands cause messages to become larger, which causes them to be sent slowly due to limitations in the RPC framework [serialisation!!!].
-
-% \textbf{Potential mitigation: } Limit the size of batches to prevent messages becoming too large.
-
-% Implementing this feature required minimal changes to algorithm \ref{dedup2}, one simply has to take a subset of \textit{cmds} to propose instead of the whole set. This feature gave a significant performance improvement, and largely eliminated the exponential growth in latency that had been seen previously. There is a trade-off between sending larger batches (more commands are committed, but messages take longer to send) and sending smaller batches (less commands are committed, but messages are sent faster). This trade-off is explored more in our analysis of the system with different batch sizes (section \ref{batchsizeseval}). Fundamentally, there are limitations in the RPC framework that give an upper bound on the performance we can hope to achieve, these limitations are evident in our benchmarking of the Cap'n Proto framework (section \ref{capnpbenchmark}).
 
 \subsection{Nodes}
-% https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQALSHx8XQgvxMrG5AvVEd9as%3D
-% 19/01 onwards
-% first issue: infintely recursive node structure
-% solution: hardcoding final node at either end so it is not sent
-% second issue: growing memory usage - revealed by profiling
-% solution: use offset to node, and reconstruct node at either end. introduce `justify' type
-% third issue: memory usage comparing nodes
-% solution: include node hashes
-% fourth issue: size of sending all nodes
-% solution: TODO implement TCP
 This section concerns the challenges of designing a suitable type for nodes\footnote{\textit{Node} is another word for log in this context.} that can be efficiently serialised by Cap'n Proto and sent over the network. Recall from our discussion of the system architecture (section \ref{architecture}) that the internal type for a node must be converted into a Cap'n Proto type in order to be serialised.
 
 Nodes are implemented as OCaml records, and contain the fields \textit{parent}, \textit{cmds}, \textit{height}, and \textit{justify}. The \textit{justify} field contains a QC that contains another node inside it.
@@ -497,28 +439,24 @@ The source of this problem was the inefficient design of the \textit{node.justif
 
 A solution to this problem is to store an integer offset to a node inside the \textit{justify} field rather than a \textit{node} record. This offset represents how many \textit{parent} links away the node is, and so can be used to reconstruct all of the original information. To implement this another type \textit{node\_justify} was added, that is identical to \textit{qc}, but with the field \textit{node} replaced with \textit{node\_offset}. One must then convert between the \textit{node\_justify} and \textit{qc} types to reconstruct the original data and follow the \textit{node.justify.node} link.
 
-\subsubsection{Node comparison}
-One optimisation implemented was storing a \textit{digest} field in the node that is a hash over all of the other fields\footnote{Notably the hash can be computed over the \textit{digest} field of the parent node rather than recursing through the whole chain. }, enabling efficient comparison of nodes. This means that two nodes can be compared by their digests without having to recurse through the entire chain; the digests being equal cryptographically guarantees that the whole chains are equal. The need for this optimisation was discovered through profiling the memory usage of the node equality function using Memtrace.
+\subsubsection{Node equality} \label{equality}
+One optimisation implemented was storing a \textit{digest} field in the node that is a hash over all of the other fields\footnote{Notably the hash can be computed over the \textit{digest} field of the parent node rather than recursing through the whole chain.}, enabling efficient equality checking of nodes. This means that two nodes can be compared by their digests without having to recurse through the entire chain; the digests being equal cryptographically guarantees that the whole chains are equal. The need for this optimisation was discovered through profiling the memory usage of the node equality function using Memtrace.
 
 \subsubsection{Node truncation} \label{truncation}
-Our current approach sends the entire node inside internal messages, which becomes expensive as the chain grows. As highlighted in section \ref{batchsizes}, the size of messages being sent is a bottleneck in the system, making this particularly expensive.
+We implemented node truncation in order to reduce the size of nodes being sent over the network, cutting off older parts of the chain that the receiver already knows about. This is effective because the size of messages being sent is a bottleneck for our implementation (section \ref{capnpbenchmark}). The effectiveness of this optimisation demonstrated in our ablation study (section \ref{ablation}).
 
-In order to overcome this problem, one can truncate the node before sending it, cutting off the node's parent link at some chosen depth. The entire node can then be reconstructed at the receiver, the received node can be `spliced' back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. However, we must ensure not to truncate the log too much, so that there is a gap between what we send and \textit{b\textsubscript{exec}} at the receiver, leading to commands being missed out and not executed. This is a problem in the event that some node becomes isolated from the rest; it must be able to catch up to the others once the network partition is healed.
+In order to truncate the node, our implementation recurses into the node's \textit{parent} field, then deletes the field at some chosen depth. The entire node can then be reconstructed at the receiver, by `splicing' it back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. Splicing together the nodes is done by recursing into the truncated node until it is equal to \textit{b\textsubscript{exec}}, then setting the deleted parent field to \textit{b\textsubscript{exec}}. The node equality function will still work on truncated nodes because of our optimisation to use digests (section \ref{equality}); a node will still have the same digest once it is truncated.
 
-To overcome this problem we use a TCP-style approach. We include a field containing the height of the \textit{b\textsubscript{exec}} node to the \textit{PROPOSE}, \textit{NEW{\large V}IEW}, and \textit{COMPLAIN} messages. Each node maintains a list of the \textit{b\textsubscript{exec}} height of every other node. When making a proposal, the leader takes the minimum height from this list, and truncates the node up to that depth. This ensures that every node that receives the proposal has enough information to reconstruct the entire log.
+One practical challenge of this approach is choosing a suitable depth such that there is enough information at the receiver to reconstruct the whole chain. If there is a gap between the truncated node and \textit{b\textsubscript{exec}} at the receiver, this will lead to commands being missed out and not executed. This is a problem in the event that some node becomes isolated from the rest; it must be able to catch up to the others once the network partition is healed.
+
+To overcome this problem we use a TCP-style approach. We include a field containing the height of the \textit{b\textsubscript{exec}} node to the \textit{propose}, \textit{new-view}, and \textit{complain} messages. Each node maintains a list of the \textit{b\textsubscript{exec}} height of every other node. When making a proposal, the leader takes the minimum height from this list, and truncates the node up to that depth. This ensures that every node that receives the proposal has enough information to reconstruct the entire log.
 
 There are some cases when the leader does not receive the latest \textit{b\textsubscript{exec}} of every other node before it makes a proposal. This means that the leader will not truncate the node as much as it could have. We optimised this by having a node send the entire list of all stored \textit{b\textsubscript{exec}} heights rather than just its own, allowing the heights to propagate around the system more quickly.
-
-[give pseudocode!!!]
 
 % \subsection{Connections}
 % talk about capabilities?
 % when to set up connections? use promises
 % https://outlook.office.com/mail/id/AAQkADc5ODY2YTdlLTQ3NGMtNDVmOS05ZDAxLWNhYzkwMjU2MThhZAAQAEXEcHtcUNFFo%2FRcUtQcSmc%3D
-
-% \section{Verifiable anonymous identities}
-% https://www.usenix.org/system/files/nsdi22-paper-shamis.pdf
-% section 5
 
 \section{Implementing for evaluation} \label{benchcode}
 % Benchmarking code
@@ -546,32 +484,27 @@ There are some cases when the leader does not receive the latest \textit{b\texts
 
 The load generator is responsible for sending client requests to the nodes of the system. One is able to vary the throughput that the load generator drives the system at, and the duration that it runs for before it sends a \textit{kill} messages to the nodes, ending the test. It is also responsible for timing and calculating statistics.
 
-\textbf{Throughput: } The number of requests sent by the load generator each second.
+\begin{description}
+	\item \textit{Throughput} --- the number of requests sent by the load generator each second.
+	\item \textit{Goodput} --- the number of requests that are responded to each second. This is calculated by number of responses divided by the time difference between the first response and the end of the test.
+	\item \textit{Latency} --- the amount of time it takes between sending a request and receiving a response. The load generator reports both mean and standard deviation of latencies.
+\end{description}
 
-\textbf{Goodput: } The number of requests that are responded to each second. This is calculated by number of responses divided by the time difference between the first response and the end of the test.
+The load generator is open-loop (figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator waits for responses from the system, so cannot overload it.
 
-\textbf{Latency: } The amount of time it takes between sending a request and receiving a response. The load generator reports both mean and standard deviation of latencies.
-
-The load generator is open-loop (figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator `waits' for the system, so cannot overload it.
-
-SEND TO ALL
-[Without this feature a client would randomly chose a node to send their request to, and the command would not be proposed until the round-robin system reached that node to become the leader. Send-to-all can reduce latency by instead broadcasting a request to all nodes, meaning that the next leader can propose the command without having to wait for the round-robin system to reach them.]
+Our load generator is \textit{send-to-all}, meaning that a command is sent to all nodes. An alternative is \textit{send-to-one}, where a command is sent to a single node which is chosen at random. Send-to-all reduces latency as the next leader will have been sent the command, and may chose to propose it. In send-to-one it may take several views until the node that the request was sent to becomes the leader.
 
 The load generator uses Lwt to asynchronously dispatch requests, and stores a promise that will be fulfilled with their response. In the case of send-to-all the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, reducing start-up effects.
 
 \subsection{Experiment scripts} \label{experimentscripts}
 Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
 
-Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes all possible permutations of the input variables, duplicates them (so that each experiment is run multiple times to get better results), and runs them in a random order. By running experiments in a random order external factors that affect performance are somewhat mitigated. For example if the experiments were not run in a random order, the system may happen to experience interference when running experiments on 8 nodes, giving distorted results for this set of experiments. If instead the experiments were run randomly, the interference would affect some random group of experiments, and it would be more apparent that these results were anomalous. [could be more concise]
+Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes every permutation. Each experiment is repeated several times to reduce variance. Experiments are run in a random order so that if there is interference for some part of the test, this is not correlated with the parameters of the experiment, making anomalies easier to spot.
 
 \subsection{Logging framework}
-[make this section much shorter!]
-% development of logging framework, some details of what is logged
-I added timing and logging statements to key parts of the program, allowing me to better diagnose the source of the poor performance. Running a live test with print statements has the advantage that one can quickly see when progress is not being made, or when there are pauses, as the print statements stop. However, this benefit is outweighed by the sheer volume of logs and times being printed, it becomes difficult to manage when logs are in the millions of lines long.
+We developed a logging framework that stores the time taken for important parts of the program to execute, and outputs key statistics such as the mean and standard deviation at the end of the test. This was essential for analysing the performance of the system to develop the optimisations described in section \ref{performance}.
 
-Moreover, debugging by print statements had a bigger problem of inconsistencies between runs making it difficult to diagnose any problem. This was because the large volume of print statements being executed had a significant effect on the performance [CPU cost!!] of the program. This is known as a \textit{probing effect}, the behaviour of a system is altered by the act of measuring it. I initially assumed that because the print statements were not in-between the timing statements they would not affect my measurements, but they are an expensive operation that can cause delays to happen in execution where one would not expect.
-
-This problem was overcome through the development of a simple logging framework. Key parts of the program such as the state machine advancing, actions being carried out, messages being sent, are all timed and added to lists. Critically, this list is stored and not printed out until the node is killed, so the printing cannot interfere with execution. Relevant statistics such as mean, standard deviation, and total time for each interval measured are outputted, providing crucial insight into the performance of the program.
+The logging framework helped to reduce the effect of \textit{probing effects}, where the behaviour of a system is altered by the act of measuring it. Our previous approach printed the time taken throughout the execution of the program; since printing takes signficant CPU time this resulted in probing effects. Notably, the print statements were not in-between the statements that measured the time taken, but they caused delays to happen in other parts of the program (presumably when the buffers were being flushed).
 
 \textbf{Design principle: } Minimise probing effects by carrying out the minimum possible amount of work in critical areas of the program, storing data, and moving work (such as outputting statistics) to less critical areas of the program.
 
@@ -614,6 +547,10 @@ This problem was overcome through the development of a simple logging framework.
 \end{forest}
 \end{small}
 
-The \textit{src} directory contains the main server loop and the code for interacting with Cap'n Proto to send messages. It also contains code for the load generator, and Python scripts to run experiments and benchmarks. Inside the \textit{consensus} folder is the implementation of the consensus library based on the pseudocode presented in section \ref{spec}. N.B. this folder also contains testing files that are omitted for conciseness. The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for plotting graphs.
+The \textit{src} directory contains files implementing the main components described in the system architecture (section \ref{architecture}). This includes the server (\textit{server.ml}), main loop (\textit{main.ml}), action handler \textit{action\_handler.ml}, and the message / request sender (\textit{net.ml}). It also contains the schema for RPCs (\textit{hs\_api.capnp}) and code to convert between internal types and Cap'n Proto types (\textit{api\_wrapper.ml}).
+
+Inside the \textit{consensus} folder is a module with implementations of the basic and chained HotStuff algorithms, sharing a common signature (\textit{consensus.mli}). There is also a utility code that allows the use of the \textit{consensus} module types with cryptography functions (\textit{crypto\_util.ml}).
+
+The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for running experiments and plotting graphs.
 
 In order to run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \textit{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time. These scripts will run on Linux and MacOS, but will have to be modified to work on Windows.
