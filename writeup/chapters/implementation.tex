@@ -34,20 +34,20 @@
 	folder icons/.default={12pt},
 }
 % ---
-\textit{In this chapter we describe the architecture of our implementation (section \ref{overview}), conclude our theoretical explanation of HotStuff by discussing the chained algorithm and the pacemaker (section \ref{moretheory}), present a full specification for HotStuff with a proof of correctness and liveness (section \ref{spec}), describe key optimisations implemented (section \ref{performance}), present our load generator and experiment scripts which will be used in evaluation (section \ref{benchcode}), and give an overview of the repository structure (section \ref{repo}).}
+\textit{In this chapter we describe the architecture of our implementation (section \ref{architecture}), conclude our theoretical explanation of HotStuff by discussing the chained algorithm and the pacemaker (section \ref{moretheory}), present a full specification for HotStuff with a proof of correctness and liveness (section \ref{spec}), describe key optimisations implemented (section \ref{performance}), present our load generator and experiment scripts which will be used in evaluation (section \ref{benchcode}), and give an overview of the repository structure (section \ref{repo}).}
 
 \section{System Architecture} \label{architecture}
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.6]{nodediagram.png}
+\includegraphics[scale=0.925]{nodediagram.png}
 \caption{Architecture of a node.}
 \label{nodediagram}
 \end{figure}
 
 In this section we present the system architecture that surrounds the core \textit{consensus} module, passing it new messages and client requests, and allowing it to send messages and respond to the client. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{jensen_ocons_2023}, which was developed by my project supervisor.
 
-We will follow the path of an incoming request or message as it passes through the system shown in figure \ref{nodediagram}.
+We will follow the path of an incoming request or message travelling through the system, as shown in figure \ref{nodediagram}.
 
 \begin{description}
 	\item \textit{Incoming message and client RPCs} --- the node responds to internal messages from other nodes, and requests from a client (or a load generator, as described in section \ref{loadgenerator}) containing new commands to be committed. The format of these RPCs is specified in a Cap'n Proto schema, in their custom markdown language.
