@@ -36,11 +36,10 @@ with open(test_path + 'stats.csv', 'w') as f:
 
 #nodeCounts = [1, 2, 4, 7, 10, 13]
 nodeCounts = [4]
-# rates = [1, 10, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 3000, 4000]
-rates = [4000]
-#batch_sizes = [1, 50, 100, 300, 450, 600, 1000, 2000, 99999999]
-batch_sizes = [300]
-experiment_time = 10
+rates = [1, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 3000, 4000]
+batch_sizes = [1, 75, 150, 300, 600, 1200, 2400, 99999999]
+# batch_sizes = [300]
+experiment_time = 20
 repeats = 3
 version = "1"
 
