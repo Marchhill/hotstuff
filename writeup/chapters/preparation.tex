@@ -9,7 +9,7 @@
 \textit{In this chapter we disclose my knowledge and experience prior to beginning this project (section \ref{start}), give a theoretical basis for understanding the HotStuff algorithm by building up from simpler consensus algorithms (section \ref{hotstufftheory}), outline the tools, libraries (section \ref{tools}), and professional methodology (section \ref{softwareeng}) deployed in implementation, and highlight the requirements that the implementation should meet (section \ref{requirements}).}
 
 \section{Starting point} \label{start}
-I had some experience using OCaml from the IA Foundations of Computer Science course but had never used it in a project. The IB Distributed Systems course also provided some useful background knowledge, particularly as it briefly covered Raft \cite{ongaro_search_nodate}, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus \cite{nakamoto_bitcoin_nodate} and from developing a wallet application for Ethereum \cite{wood_ethereum_nodate}; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
+I had some experience using OCaml from the IA Foundations of Computer Science course but had never used it in a project. The IB Distributed Systems course also provided some useful background knowledge, particularly as it briefly covered Raft \cite{ongaroSearchUnderstandableConsensus2014}, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus \cite{nakamotoBitcoinPeertoPeerElectronic2008} and from developing a wallet application for Ethereum \cite{ethereumWhite, ethereumYellow}; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
 
 \section{HotStuff algorithm} \label{hotstufftheory}
 HotStuff is a byzantine consensus algorithm; it allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a \textit{leader} node proposes some value by sending it the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that there is consensus on the committed part of the log, and it is now immutable.
@@ -25,7 +25,7 @@ The system model describes the adverse conditions under which HotStuff can opera
 \begin{description}
 	\item \textit{Partially Synchronous} --- messages sent by one party will always be delivered to another within some bounded amount of time ($\delta$) after global synchronisation time (GST) has been reached.
 	\item \textit{Authenticated} --- a message source cannot be spoofed. We assume that all messages are signed, providing authentication.
-	\item \textit{Byzantine} --- a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes. This is the maximum number of byzantine nodes for which consensus can theoretically be reached \cite{pease_reaching_1980}\cite{fischer_easy_nodate}.
+	\item \textit{Byzantine} --- a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes. This is the maximum number of byzantine nodes for which consensus can theoretically be reached \cite{peaseReachingAgreementPresence1980}\cite{fischerEasyImpossibilityProofs1986}.
 \end{description}
 
 Each view is composed of several \textit{phases}. In each phase the leader broadcasts to the replicas, that respond with an acknowledgement (\textit{ack}). The leader waits until it receives a \textit{quorum} of $n - f$ acks\footnote{N.B. the size of a quorum is different in the non-byzantine case.} before proceeding to the next phase, meaning that at least $f + 1$ of the acks were from honest nodes. The basic HotStuff algorithm has five phases in each view.
@@ -35,7 +35,7 @@ The final phase of a consensus algorithm is \textit{decide}. We assume that a \t
 Basic HotStuff is a responsive byzantine consensus algorithm (section \ref{optresponsive}). We will start by describing a simpler consensus algorithm that is not responsive or byzantine (section \ref{nonbyzconsensus}). We then extend this algorithm to handle byzantine threats (section \ref{byzconsensus}). Finally, we extend this algorithm to be responsive by removing the need for a timeout to progress, arriving at the basic HotStuff algorithm (section \ref{optresponsive}).
 
 \subsection{Non-byzantine consensus} \label{nonbyzconsensus}
-We will start by describing a generic algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaro_search_nodate} and MultiPaxos [check citations are actually multi-shot!] \cite{lamport_part-time_1998}\cite{lamport_paxos_2001}.
+We will start by describing a generic algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaroSearchUnderstandableConsensus2014} and Paxos \cite{lamportParttimeParliament1998, lamportPaxosMadeSimple2001}.
 
 Each view consists of three phases:
 
@@ -52,7 +52,7 @@ In this section we extend our non-byzantine algorithm (section \ref{nonbyzconsen
 
 \subsubsection{Quorum certificates}
 
-A QC is a quorum of $n - f$ acks with a matching \textit{threshold signature}. A threshold signature combines several signatures of the same message into one \cite{goos_practical_2000}\cite{cachin_random_2005}; in this case the signature from each ack is combined\footnote{Recall that our messages are signed to provide authenticated delivery.}. QCs have a key property that our byzantine algorithm will rely on:
+A QC is a quorum of $n - f$ acks with a matching \textit{threshold signature}. A threshold signature combines several signatures of the same message into one \cite{shoupPracticalThresholdSignatures2000, cachinRandomOraclesConstantinople2005}; in this case the signature from each ack is combined\footnote{Recall that our messages are signed to provide authenticated delivery.}. QCs have a key property that our byzantine algorithm will rely on:
 
 \begin{property} \label{qcproperty}
 There will always be at least one honest node in the intersection of any two QCs.
@@ -94,7 +94,7 @@ Inductive step --- no conflicting log can be proposed in view $v'$ where $v' > v
 From this it follows that in no view from $v$ onwards will a log conflicting with $\lambda$ be committed, so the algorithm is safe.
 
 \subsection{Optimistic responsiveness} \label{optresponsive}
-In this section we finally give the basic HotStuff algorithm by extending our generic byzantine consensus algorithm (section \ref{byzconsensus}) to make it \textit{optimistically responsive}. Optimistic responsiveness means that the system can make progress as fast as network conditions allow without waiting for a timeout, once GST has been reached [cite thunderella].
+In this section we finally give the basic HotStuff algorithm by extending our generic byzantine consensus algorithm (section \ref{byzconsensus}) to make it \textit{optimistically responsive}. Optimistic responsiveness means that the system can make progress as fast as network conditions allow without waiting for a timeout, once GST has been reached \cite{passThunderellaBlockchainsOptimistic2018}.
 
 The byzantine consensus algorithm is not responsive as it has a timeout in the \textit{prepare} phase. We first describe the problem that means this timeout is needed, then present an algorithm that solves it and make an informal argument that it does not break liveness.
 
@@ -124,24 +124,24 @@ In this section we outline the languages and libraries used in implementation, a
 [could be more concise!!!]
 
 \subsection{OCaml}
-I chose OCaml \cite{noauthor_ocaml_nodate} for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, powerful module system, and good library support. The performance bottlenecks for distributed byzantine algorithms are generally cryptography, message serialisation and network delays. This means that it is more important to choose a language with suitable features to aid implementation, rather than picking a `high-performance' language like C++.
+I chose OCaml \cite{ocaml} for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, powerful module system, and good library support. The performance bottlenecks for distributed byzantine algorithms are generally cryptography, message serialisation and network delays. This means that it is more important to choose a language with suitable features to aid implementation, rather than picking a `high-performance' language like C++.
 
 OCaml's multi-paradigm nature is suitable for implementing HotStuff, as the core state machine can be elegantly expressed in a functional way, whereas interacting with the RPC library to send messages is better suited to an imperative paradigm.
 
 OCaml has a powerful module system that facilitates writing highly reusable code that was only briefly touched upon in the tripos (in Concepts in Programming Languages from IB). A modular design allows key components such as the consensus algorithm to be easily reused in other projects.
 
 \subsection{Lwt}
-Lwt \cite{noauthor_lwt_2023} is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages that are used by promises in Lwt.
+Lwt \cite{lwt} is a concurrent programming library for OCaml. It allows the creation of promises, which are values that will become determined in the future; these promises may spawn threads that perform computation and I/O in parallel. In order to use Lwt I had to learn about monads, which are ways of sequencing effects in functional languages that are used by promises in Lwt.
 
 Lwt is useful to this project as promises provide a way to asynchronously dispatch messages over the network and wait for their responses in different threads. Promises are cheap to create in Lwt, so one can create many lightweight threads with good performance.
 
-There are alternative libraries I could have used that may have had better performance, namely Jane Street's Async library \cite{noauthor_async_nodate} and EIO \cite{noauthor_eio_2023}. I chose Lwt over these libraries due to superior documentation and statbility.
+There are alternative libraries I could have used that may have had better performance, namely Jane Street's Async library \cite{async} and EIO \cite{eio}. I chose Lwt over these libraries due to superior documentation and statbility.
 
 \subsection{Cap'n Proto}
-Cap'n Proto  \cite{noauthor_capn_nodate} is an RPC framework that includes a library for sending and receiving RPCs, serialising messages, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in section \ref{capnpbenchmark}.
+Cap'n Proto  \cite{capnp} is an RPC framework that includes a library for sending and receiving RPCs, serialising messages, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in section \ref{capnpbenchmark}.
 
 \subsection{Tezos cryptography} \label{tezos}
-The Tezos cryptography library \cite{noauthor_tezos_nodate} provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, aggregate several signatures into a single one, and check whether an aggregate signature is valid. Benchmarks for the library are presented in section \ref{tezosbenchmark}.
+The Tezos cryptography library \cite{tezosCrypto} provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, aggregate several signatures into a single one, and check whether an aggregate signature is valid. Benchmarks for the library are presented in section \ref{tezosbenchmark}.
 
 The only difference from the threshold signatures needed by HotStuff is that each individual signature in an aggregate signature can sign different data, whereas with threshold signatures each individual signature is over the same data. It is trivial to implement threshold signatures using this library by checking that the data is the same for all signatures inside the aggregate signature.
 
@@ -149,7 +149,7 @@ The only difference from the threshold signatures needed by HotStuff is that eac
 
 In order to be successful the implementation should conform to the following requirements:
 \begin{itemize}
-	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper \cite{yin2019hotstuff}. This can be established by testing the program trace for compliance with the algorithm specification.
+	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper \cite{yinHotStuffBFTConsensus2019}. This can be established by testing the program trace for compliance with the algorithm specification.
 	\item Evaluation --- analysis of system throughput and latency should be carried out by testing the program locally, analysing the trace, and testing in simulated network.
 	\item Optimisation --- implement features to improve transaction throughput and reduce latency over the naive implementation. This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
 \end{itemize}
@@ -166,9 +166,9 @@ For this project we used an iterative waterfall development methodology. Objecti
 
 Unit testing was carried out using `expect tests', which compare a program trace to the correct output. A testing suite of expect tests verifies that the program behaves as specified in the HotStuff paper. This suite has 100\% code coverage\footnote{The report says 97.89\% coverage, but the only uncovered code is the testing code itself.} of the consensus state machine code, the coverage report is at \textit{\_coverage/index.html}.
 
-The Memtrace library and viewer \cite{noauthor_memtrace_nodate} were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
+The Memtrace library and viewer \cite{memtrace} were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
 
-[talk about mininet!] \cite{noauthor_mininet_nodate}
+[talk about mininet!] \cite{mininet}
 
 Due to the distributed nature of the program, normal debugging tools and profilers are not useful for debugging deadlocks and performance issues. This is because the cause of deadlocks and performance issues is often some process waiting or a backlog of work forming, but this cannot be detected by tools that just track things like CPU usage. Instead, I had to rely on manual inspection of the program trace and commands that measure the real time taken for some part of the program to run.
 
