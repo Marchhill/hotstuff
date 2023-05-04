@@ -1,4 +1,5 @@
 src/_build*
+src/_weird
 src/profile*
 src/nohup.out
 src.tmp
