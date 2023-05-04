@@ -42,7 +42,7 @@ rates = [1, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]
 batch_sizes = [300]
 experiment_time = 10
 repeats = 3
-version = "5"
+version = "6"
 
 # randomise testing order
 test_iter = random.sample(list(itertools.product(rates, nodeCounts, batch_sizes)) * repeats, len(rates) * len(nodeCounts) * len(batch_sizes) * repeats)
