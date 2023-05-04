@@ -34,12 +34,13 @@ os.mkdir(test_path + 'subtests')
 with open(test_path + 'stats.csv', 'w') as f:
     f.write('name, version, nodes, throughput, goodput, mean, sd, rec, sent, batch_size, msg_size\n')
 
-#nodeCounts = [1, 2, 4, 7, 10, 13]
-nodeCounts = [4]
-rates = [1, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 3000, 4000]
-batch_sizes = [1, 75, 150, 300, 600, 1200, 2400, 99999999]
-# batch_sizes = [300]
-experiment_time = 20
+nodeCounts = [1, 2, 4, 7, 10, 13]
+# nodeCounts = [4]
+rates = [1, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800, 4000]
+# rates = [1, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 3000, 4000]
+# batch_sizes = [1, 75, 150, 300, 600, 1200, 2400, 99999999]
+batch_sizes = [300]
+experiment_time = 10
 repeats = 3
 version = "1"
 
