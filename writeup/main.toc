@@ -54,9 +54,9 @@
 \contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{35}{subsection.4.2.2}%
 \contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{35}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Batch sizes}{37}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Node counts}{39}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Ablation study}{40}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{40}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}View-changes}{41}{subsection.4.3.5}%
-\contentsline {chapter}{\numberline {5}Conclusion}{44}{chapter.5}%
-\contentsline {chapter}{Bibliography}{47}{chapter*.19}%
+\contentsline {subsection}{\numberline {4.3.2}Node counts}{40}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Ablation study}{41}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{42}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}View-changes}{42}{subsection.4.3.5}%
+\contentsline {chapter}{\numberline {5}Conclusion}{46}{chapter.5}%
+\contentsline {chapter}{Bibliography}{50}{chapter*.19}%

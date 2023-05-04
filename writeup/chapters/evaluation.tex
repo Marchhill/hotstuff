@@ -108,16 +108,23 @@ In our view-change study (section \ref{viewchange}) we demonstrate that the view
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{batch_size_test/throughputgoodput.png}
+\input{images/batch_size_test/throughputgoodput.pgf}
 \caption{Benchmarking of goodput for varying throughputs and batch sizes.}
 \label{throughputgoodputbatch}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{batch_size_test/throughputflatency.png}
-\caption{Benchmarking of mean latency while varying throughputs and batch sizes. Discarded result if goodput was not within 5\% of target throughput.}
-\label{throughputlatencybatch}
+\input{images/batch_size_test/goodputlatency.pgf}
+\caption{Benchmarking of goodput and median latency while varying throughputs and batch sizes.}
+\label{goodputlatencybatch}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\input{images/batch_size_test/goodput95latency.pgf}
+\caption{Benchmarking of goodput and 95\%ile latency while varying throughputs and batch sizes.}
+\label{goodput95latencybatch}
 \end{figure}
 
 \begin{figure}[h!]
@@ -129,7 +136,7 @@ In our view-change study (section \ref{viewchange}) we demonstrate that the view
 
 This study compares the performance of the system for varying limits on batch sizes (section \ref{batchsizes}). All experiments were run on a network of 4 nodes.
 
-At lower throughputs where the system is not overloaded, throughput grows linearly with goodput (figure \ref{throughputgoodputbatch}), as the system is able to respond to all incoming requests, with roughly constant latency throughout an experiment (figure \ref{stableheatmap}). During this period batches are not filled, so larger throughputs result in larger messages and a linear increase in latency due to increasing serialisation latency (figure \ref{throughputlatencybatch}). The system is able to reach a higher goodput before being overloaded if it has a larger batch size, as each view results in more commands being committed; this supports our conclusion that batching is an effective optimisation.
+At lower throughputs where the system is not overloaded, throughput grows linearly with goodput (figure \ref{throughputgoodputbatch}), as the system is able to respond to all incoming requests, with roughly constant latency throughout an experiment (figure \ref{stableheatmap}). During this period batches are not filled, so larger throughputs result in larger messages and a linear increase in latency due to increasing serialisation latency (figure \ref{goodputlatencybatch}). The system is able to reach a higher goodput before being overloaded if it has a larger batch size, as each view results in more commands being committed; this supports our conclusion that batching is an effective optimisation.
 
 Once throughput is increased enough, batches begin to be filled up and the system is overloaded. This results in the goodput flattening out (figure \ref{throughputgoodputbatch}), as the system cannot handle the volume of requests; commands begin to queue on the nodes and latency increases linearly (figure \ref{linearheatmap}). For higher batch size limits (especially unlimited), goodput declines once the system is overloaded rather than flattening off. This is because the benefits of larger batches are offset by messages becoming larger, causing increased serialisation latency, which increase view times and lower goodput. For large batch sizes, view times increase exponentially, as shown by the growing vertical gaps between commands being committed in figure \ref{expheatmap}.
 
@@ -143,21 +150,28 @@ There is a clear trade-off between larger batch sizes that result in more comman
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{node_count_test/throughputgoodput_nodes.png}
+\input{images/node_count_test/throughputgoodput_nodes.pgf}
 \caption{Benchmarking of goodput for varying throughputs and node counts.}
 \label{throughputgoodputnodes}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{node_count_test/throughputflatency_nodes.png}
-\caption{Benchmarking of mean latency while varying throughputs and node counts. Discarded result if goodput was not within 5\% of target throughput.}
-\label{throughputlatencynodes}
+\input{images/node_count_test/goodputlatency_nodes.pgf}
+\caption{Benchmarking of goodput and median latency while varying throughputs and node counts.}
+\label{goodputlatencynodes}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\input{images/node_count_test/goodput95latency_nodes.pgf}
+\caption{Benchmarking of goodput and 95\%ile latency while varying throughputs and node counts.}
+\label{goodput95latencynodes}
 \end{figure}
 
 This study compares the performance of the system for varying node counts. Node counts were chosen such that $n = 3f + 1$ for some $f$, as choosing another value would decrease performance without any benefit of increased fault-tolerance\footnote{A node count of 2 was also tested as it is the smallest node count where internal messages are exchanged.}. All experiments were run with a batch size of 300.
 
-Figure \ref{throughputlatencynodes} shows that as node count increases, latency increases. This is because larger node counts mean that each view requires more internal messages to be sent to progress. Sending internal messages is expensive due to the latency of serialisation and cryptography, so this results in increased overall latency. Additionally, increasing the node count increases the number of messages that must be signed, and makes aggregating signatures slower (section \ref{tezosbenchmark}). As in our study of batch sizes (section \ref{batchsizeseval}), latency also increases linearly with throughput while the system is not overloaded. Notably the latency for a system of 1 node increases slowly, as there are no internal messages, just client requests and responses.
+Figure \ref{goodputlatencynodes} shows that as node count increases, latency increases. This is because larger node counts mean that each view requires more internal messages to be sent to progress. Sending internal messages is expensive due to the latency of serialisation and cryptography, so this results in increased overall latency. Additionally, increasing the node count increases the number of messages that must be signed, and makes aggregating signatures slower (section \ref{tezosbenchmark}). As in our study of batch sizes (section \ref{batchsizeseval}), latency also increases linearly with throughput while the system is not overloaded. Notably the latency for a system of 1 node increases slowly, as there are no internal messages, just client requests and responses.
 
 Figure \ref{throughputgoodputnodes} shows that the larger the node count, the lower the maximum goodput. This is again due to larger node counts resulting in more internal messages, causing more latency since this is a bottleneck. Increased latency causes each view to take longer, reducing the number of requests that can be responded to each second.
 

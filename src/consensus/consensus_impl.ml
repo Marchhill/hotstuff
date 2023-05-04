@@ -6,7 +6,7 @@ open Crypto_util
 type phase = Prepare | PreCommit | Commit | Decide
 
 (* Leader contains own local variables *)
-type role = Leader of {m: event list; vpc: event list; vc: event list; vd: event list; has_proposed: bool} | Replica
+type role = Leader of {m: event list; vpc: event list; vc: event list; vd: event list} | Replica
 
 type state = {phase: phase; role: role; locked_qc: qc option; prepare_qc: qc option; nv: event list}
 type t = {view: int; id: int; node_count: int; batch_size: int; cmds: Cmd_set.t;  seen: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}
@@ -32,7 +32,7 @@ let print_state state = Fmt.pr "state id=%d phase=%s role=%s view=%d@." state.id
 
 let get_role view id node_count nv =
 	if is_leader view id node_count then
-		Leader {m = nv; vpc = []; vc = []; vd = []; has_proposed = false}
+		Leader {m = nv; vpc = []; vc = []; vd = []}
 	else
 		Replica
 
@@ -62,26 +62,28 @@ let as_leader state event =
 	match state.s.role with
 		| Leader l ->
 			(match event with
-				| NewView msg when msg.view = state.view - 1 && not(l.has_proposed) ->
+				| NewView msg when msg.view = state.view - 1 && not(is_quorum l.m state.node_count) ->
 					let m' = event::(l.m) in
-					let q = is_quorum m' state.node_count in
+					let q = get_quorum m' state.node_count in
 					let state = {state with s = {state.s with role = Leader {l with m = m'}}} in
-					if q then
-						let highQC = get_high_qc m' in
-						let i = ref 0 in
-    					(* limit batch size *)
-						let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i <= state.batch_size) state.cmds in
-						let curProposal = match highQC with
-							| Some qc -> create_leaf qc.node cmds (* extend log *)
-							| None -> create_leaf None cmds (* should only happen in view 1 *)
-						in
-						let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = Prepare; node = curProposal; justify = highQC; partial_signature = None}) in
-						(
-							{state with s = {state.s with role = Leader {l with has_proposed = true}}; cmds = rest},
-							[Broadcast broadcast_msg]
-						)
-					else
-						(state, [])
+					(match q with
+						| Some _ ->
+							let highQC = get_high_qc m' in
+							let i = ref 0 in
+							(* limit batch size *)
+							let cmds, rest = Cmd_set.partition (fun _ -> i := !i + 1; !i <= state.batch_size) state.cmds in
+							let curProposal = match highQC with
+								| Some qc -> create_leaf qc.node cmds (* extend log *)
+								| None -> create_leaf None cmds (* should only happen in view 1 *)
+							in
+							let broadcast_msg = sign state.crypto ({id = state.id; view = state.view; tcp_lens = []; msg_type = Prepare; node = curProposal; justify = highQC; partial_signature = None}) in
+							(
+								{state with cmds = rest},
+								[Broadcast broadcast_msg]
+							)
+						| None ->
+							(state, [])
+					)
 				| PrepareAck msg when msg.view = state.view && not(is_quorum l.vpc state.node_count) ->
 					let vpc' = event::(l.vpc) in
 					let q = get_quorum vpc' state.node_count in

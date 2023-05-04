@@ -5,28 +5,35 @@ Leslie Lamport, Robert Shostak, and Marshall Pease.
 \newblock The {{Byzantine Generals Problem}}.
 \newblock {\em ACM Transactions on Programming Languages and Systems}, 4(3),
   1982.
+\newblock \url{https://dl.acm.org/doi/10.1145/357172.357176}.
 
 \bibitem{nakamotoBitcoinPeertoPeerElectronic2008}
 Satoshi Nakamoto.
 \newblock Bitcoin: {{A Peer-to-Peer Electronic Cash System}}.
 \newblock Technical report, 2008.
+\newblock
+  \url{https://www.ussc.gov/sites/default/files/pdf/training/annual-national-training-seminar/2018/Emerging_Tech_Bitcoin_Crypto.pdf}.
 
 \bibitem{ethereumWhite}
 Vitalik Buterin.
 \newblock Ethereum: {{A Next-Generation Smart Contract}} and {{Decentralized
   Application Platform}}.
 \newblock Technical report, 2014.
+\newblock \url{https://ethereum.org/en/whitepaper/}.
 
 \bibitem{ethereumYellow}
 Gavin Wood.
 \newblock Ethereum: {{A}} secure dentralised generalised transaction ledger.
 \newblock Technical report, 2022.
+\newblock \url{https://ethereum.github.io/yellowpaper/paper.pdf}.
 
 \bibitem{baudetStateMachineReplication2019}
 M.~Baudet, A.~Ching, A.~Chursin, G.~Danezis, Fran{\c c}ois Garillot, Zekun Li,
   D.~Malkhi, O.~Naor, D.~Perelman, and A.~Sonnino.
 \newblock State {{Machine Replication}} in the {{Libra Blockchain}}.
 \newblock Technical report, 2019.
+\newblock
+  \url{https://www.semanticscholar.org/paper/State-Machine-Replication-in-the-Libra-Blockchain-Baudet-Ching/71bb5ddbc614c241200302da0a9a6130587e3793}.
 
 \bibitem{castroPracticalByzantineFault1999}
 Miguel Castro and Barbara Liskov.
@@ -34,6 +41,7 @@ Miguel Castro and Barbara Liskov.
 \newblock In {\em Proceedings of the Third Symposium on {{Operating}} Systems
   Design and Implementation}, {{OSDI}} '99, pages 173--186, {USA}, February
   1999. {USENIX Association}.
+\newblock \url{https://dl.acm.org/doi/10.5555/296806.296824}.
 
 \bibitem{golanguetaSBFTScalableDecentralized2019}
 Guy Golan~Gueta, Ittai Abraham, Shelly Grossman, Dahlia Malkhi, Benny Pinkas,
@@ -42,20 +50,25 @@ Guy Golan~Gueta, Ittai Abraham, Shelly Grossman, Dahlia Malkhi, Benny Pinkas,
 \newblock In {\em 2019 49th {{Annual IEEE}}/{{IFIP International Conference}}
   on {{Dependable Systems}} and {{Networks}} ({{DSN}})}, pages 568--580, June
   2019.
+\newblock \url{https://ieeexplore.ieee.org/document/8809541}.
 
 \bibitem{dworkConsensusPresencePartial1988}
 Cynthia Dwork, Nancy Lynch, and Larry Stockmeyer.
 \newblock Consensus in the presence of partial synchrony.
 \newblock {\em Journal of the ACM}, 35(2):288--323, April 1988.
+\newblock \url{https://dl.acm.org/doi/10.1145/42282.42283}.
 
 \bibitem{kwonTendermintConsensusMining2014}
 Jae Kwon.
 \newblock Tendermint : {{Consensus}} without {{Mining}}.
 \newblock 2014.
+\newblock
+  \url{https://www.semanticscholar.org/paper/Tendermint-%3A-Consensus-without-Mining-Kwon/df62a45f50aac8890453b6991ea115e996c1646e}.
 
 \bibitem{buterinCasperFriendlyFinality2019}
 Vitalik Buterin and Virgil Griffith.
-\newblock Casper the {{Friendly Finality Gadget}}, January 2019.
+\newblock Casper the {{Friendly Finality Gadget}}.
+\newblock \url{http://arxiv.org/abs/1710.09437}, January 2019.
 
 \bibitem{chandraPaxosMadeLive2007}
 Tushar~D. Chandra, Robert Griesemer, and Joshua Redstone.
@@ -63,6 +76,7 @@ Tushar~D. Chandra, Robert Griesemer, and Joshua Redstone.
 \newblock In {\em Proceedings of the Twenty-Sixth Annual {{ACM}} Symposium on
   {{Principles}} of Distributed Computing}, {{PODC}} '07, pages 398--407, {New
   York, NY, USA}, August 2007. {Association for Computing Machinery}.
+\newblock \url{https://dl.acm.org/doi/10.1145/1281100.1281103}.
 
 \bibitem{yinHotStuffBFTConsensus2019}
 Maofan Yin, Dahlia Malkhi, Michael~K. Reiter, Guy~Golan Gueta, and Ittai
@@ -72,33 +86,40 @@ Maofan Yin, Dahlia Malkhi, Michael~K. Reiter, Guy~Golan Gueta, and Ittai
 \newblock In {\em Proceedings of the 2019 {{ACM Symposium}} on {{Principles}}
   of {{Distributed Computing}}}, pages 347--356, {Toronto ON Canada}, July
   2019. {ACM}.
+\newblock \url{https://dl.acm.org/doi/10.1145/3293611.3331591}.
 
 \bibitem{ongaroSearchUnderstandableConsensus2014}
 Diego Ongaro and John Ousterhout.
 \newblock In {{Search}} of an {{Understandable Consensus Algorithm}}.
 \newblock In {\em 2014 {{USENIX Annual Technical Conference}} ({{USENIX ATC}}
   14)}, pages 305--319, 2014.
+\newblock \url{https://www.usenix.org/node/184041.}
 
 \bibitem{peaseReachingAgreementPresence1980}
 M.~Pease, R.~Shostak, and L.~Lamport.
 \newblock Reaching {{Agreement}} in the {{Presence}} of {{Faults}}.
 \newblock {\em Journal of the ACM}, 27(2):228--234, April 1980.
+\newblock \url{https://dl.acm.org/doi/10.1145/322186.322188}.
 
 \bibitem{fischerEasyImpossibilityProofs1986}
 Michael~J. Fischer, Nancy~A. Lynch, and Michael Merritt.
 \newblock Easy impossibility proofs for distributed consensus problems.
 \newblock {\em Distributed Computing}, 1(1):26--39, March 1986.
+\newblock \url{https://doi.org/10.1007/BF01843568}.
 
 \bibitem{lamportParttimeParliament1998}
 Leslie Lamport.
 \newblock The part-time parliament.
 \newblock {\em ACM Transactions on Computer Systems}, 16(2):133--169, May 1998.
+\newblock \url{https://dl.acm.org/doi/10.1145/279227.279229}.
 
 \bibitem{lamportPaxosMadeSimple2001}
 Leslie Lamport.
 \newblock Paxos {{Made Simple}}.
 \newblock {\em ACM SIGACT News (Distributed Computing Column) 32, 4 (Whole
   Number 121, December 2001)}, pages 51--58, December 2001.
+\newblock
+  \url{https://www.microsoft.com/en-us/research/publication/paxos-made-simple/}.
 
 \bibitem{shoupPracticalThresholdSignatures2000}
 Victor Shoup.
@@ -107,12 +128,14 @@ Victor Shoup.
   editors, {\em Advances in {{Cryptology}} \textemdash{} {{EUROCRYPT}} 2000},
   volume 1807, pages 207--220. {Springer Berlin Heidelberg}, {Berlin,
   Heidelberg}, 2000.
+\newblock \url{http://link.springer.com/10.1007/3-540-45539-6_15}.
 
 \bibitem{cachinRandomOraclesConstantinople2005}
 Christian Cachin, Klaus Kursawe, and Victor Shoup.
 \newblock Random {{Oracles}} in {{Constantinople}}: {{Practical Asynchronous
   Byzantine Agreement Using Cryptography}}.
 \newblock {\em Journal of Cryptology}, 18(3):219--246, July 2005.
+\newblock \url{https://doi.org/10.1007/s00145-005-0318-0}.
 
 \bibitem{passThunderellaBlockchainsOptimistic2018}
 Rafael Pass and Elaine Shi.
@@ -122,60 +145,76 @@ Rafael Pass and Elaine Shi.
   {{Cryptology}} \textendash{} {{EUROCRYPT}} 2018}, Lecture {{Notes}} in
   {{Computer Science}}, pages 3--33, {Cham}, 2018. {Springer International
   Publishing}.
+\newblock \url{https://link.springer.com/chapter/10.1007/978-3-319-78375-8_1}.
 
 \bibitem{ocaml}
 {{OCaml Programming Language}}.
+\newblock \url{https://ocaml.org}.
 
 \bibitem{lwt}
-Lwt {{Library}}.
-\newblock Ocsigen.
+{Ocsigen}.
+\newblock Lwt {{Library}}.
+\newblock \url{https://github.com/ocsigen/lwt}.
 
 \bibitem{async}
 {Jane Street}.
 \newblock Async {{Library}}.
+\newblock \url{https://opensource.janestreet.com/async/}.
 
 \bibitem{eio}
 {MultiCore OCaml}.
 \newblock Eio {{Library}}.
+\newblock \url{https://github.com/ocaml-multicore/eio}.
 
 \bibitem{capnp}
 Cap'n {{Proto RPC Library}}.
+\newblock \url{https://capnproto.org/}.
 
 \bibitem{tezosCrypto}
 Tezos {{Cryptography Library}}.
+\newblock \url{https://opam.ocaml.org/packages/tezos-crypto/}.
 
 \bibitem{memtrace}
 {Jane Street}.
 \newblock Memtrace {{Memory Profiler}} \& {{Viewer}}.
+\newblock \url{https://opam.ocaml.org/packages/memtrace/}.
 
 \bibitem{mininet}
 Mininet.
+\newblock \url{http://mininet.org/}.
 
 \bibitem{ocons}
 Chris Jensen.
 \newblock {{OCons Paxos Implementation}}.
+\newblock \url{https://github.com/Cjen1/OCons}.
 
 \bibitem{ittai}
 Ittai Abraham.
 \newblock Byzantine fault tolerance, state machine replication and blockchains.
 \newblock {{SPTDC}}, {St. Petersburg}, 2019.
+\newblock \url{https://www.youtube.com/watch?v=Uoo2cOvQVN0}.
 
 \bibitem{naorCogsworthByzantineView2021}
 Oded Naor, Mathieu Baudet, Dahlia Malkhi, and Alexander Spiegelman.
 \newblock Cogsworth: {{Byzantine View Synchronization}}.
 \newblock {\em Cryptoeconomic Systems}, 1(2), October 2021.
+\newblock
+  \url{https://cryptoeconomicsystems.pubpub.org/pub/naor-cogsworth-synchronization/release/5}.
 
 \bibitem{chandraWeakestFailureDetector1996}
 Tushar~Deepak Chandra, Vassos Hadzilacos, and Sam Toueg.
 \newblock The weakest failure detector for solving consensus.
 \newblock {\em Journal of the ACM}, 43(4):685--722, July 1996.
+\newblock \url{https://dl.acm.org/doi/10.1145/234533.234549}.
 
 \bibitem{chandraUnreliableFailureDetectors1996}
 Tushar~Deepak Chandra and Sam Toueg.
 \newblock Unreliable failure detectors for reliable distributed systems.
 \newblock {\em Journal of the ACM}, 43(2):225--267, March 1996.
+\newblock \url{https://dl.acm.org/doi/10.1145/226643.226647}.
 
 \bibitem{mirage}
 {{MirageOS}}.
+\newblock \url{https://mirage.io/}.
 
 \end{thebibliography}

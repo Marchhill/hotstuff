@@ -3,7 +3,6 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: unsrt.bst
 Database file #1: ref.bib
-Warning--I didn't find a database entry for "noauthor_eio_2023"
 Warning--empty institution in nakamotoBitcoinPeertoPeerElectronic2008
 Warning--empty institution in ethereumWhite
 Warning--empty institution in ethereumYellow
@@ -12,34 +11,34 @@ Warning--empty booktitle in kwonTendermintConsensusMining2014
 Warning--empty booktitle in ittai
 You've used 34 entries,
             1791 wiz_defined-function locations,
-            634 strings with 9124 characters,
-and the built_in function-call counts, 7213 in all, are:
-= -- 638
-> -- 285
+            667 strings with 10976 characters,
+and the built_in function-call counts, 7555 in all, are:
+= -- 716
+> -- 288
 < -- 9
-+ -- 111
-- -- 77
++ -- 112
+- -- 78
 * -- 428
-:= -- 1054
-add.period$ -- 91
+:= -- 1140
+add.period$ -- 125
 call.type$ -- 34
 change.case$ -- 38
 chr.to.int$ -- 0
 cite$ -- 40
 duplicate$ -- 340
 empty$ -- 768
-format.name$ -- 77
-if$ -- 1664
+format.name$ -- 78
+if$ -- 1743
 int.to.chr$ -- 0
 int.to.str$ -- 34
 missing$ -- 19
-newline$ -- 157
-num.names$ -- 32
-pop$ -- 131
+newline$ -- 191
+num.names$ -- 33
+pop$ -- 106
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 233
+skip$ -- 213
 stack$ -- 0
 substring$ -- 404
 swap$ -- 98
@@ -48,7 +47,7 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 6
-while$ -- 68
+while$ -- 69
 width$ -- 36
-write$ -- 331
-(There were 7 warnings)
+write$ -- 399
+(There were 6 warnings)

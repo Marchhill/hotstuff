@@ -3,6 +3,7 @@
   author = {{Jane Street}},
   urldate = {2023-04-27},
   abstract = {Typeful concurrent programming},
+  howpublished = {\url{https://opensource.janestreet.com/async/}},
   file = {/Users/marchhill/Zotero/storage/R7DTMW9R/async.html}
 }
 
@@ -11,7 +12,8 @@
   author = {Baudet, M. and Ching, A. and Chursin, A. and Danezis, G. and Garillot, Fran{\c c}ois and Li, Zekun and Malkhi, D. and Naor, O. and Perelman, D. and Sonnino, A.},
   year = {2019},
   urldate = {2023-05-03},
-  abstract = {This report describes the Libra Byzantine Fault Tolerance (LibraBFT) algorithmic core and discusses next steps in its production. The consensus protocol is responsible for forming agreement on ordering and finalizing transactions among a configurable set of validators. LibraBFT maintains safety against network asynchrony and even if at any particular configuration epoch, a threshold of the participants are Byzantine. LibraBFT is based on HotStuff, a recent protocol that leverages several decades of scientific advances in Byzantine Fault Tolerance (BFT) and achieves the strong scalability and security properties required by internet settings. Several novel features distinguish LibraBFT from HotStuff. LibraBFT incorporates a novel round synchronization mechanism that provides bounded commit latency under synchrony. It introduces a nil-block vote that allows proposals to commit despite having faulty leaders. It encapsulates the correct behavior by participants in a ``tcb''-able module, allowing it to run within a secure hardware enclave that reduces the attack surface on participants. LibraBFT can reconfigure itself, by embedding configuration-change commands in the sequence. A new configuration epoch may change everything from the validator set to the protocol itself.}
+  abstract = {This report describes the Libra Byzantine Fault Tolerance (LibraBFT) algorithmic core and discusses next steps in its production. The consensus protocol is responsible for forming agreement on ordering and finalizing transactions among a configurable set of validators. LibraBFT maintains safety against network asynchrony and even if at any particular configuration epoch, a threshold of the participants are Byzantine. LibraBFT is based on HotStuff, a recent protocol that leverages several decades of scientific advances in Byzantine Fault Tolerance (BFT) and achieves the strong scalability and security properties required by internet settings. Several novel features distinguish LibraBFT from HotStuff. LibraBFT incorporates a novel round synchronization mechanism that provides bounded commit latency under synchrony. It introduces a nil-block vote that allows proposals to commit despite having faulty leaders. It encapsulates the correct behavior by participants in a ``tcb''-able module, allowing it to run within a secure hardware enclave that reduces the attack surface on participants. LibraBFT can reconfigure itself, by embedding configuration-change commands in the sequence. A new configuration epoch may change everything from the validator set to the protocol itself.},
+  note = {\url{https://www.semanticscholar.org/paper/State-Machine-Replication-in-the-Libra-Blockchain-Baudet-Ching/71bb5ddbc614c241200302da0a9a6130587e3793}}
 }
 
 @misc{buterinCasperFriendlyFinality2019,
@@ -27,6 +29,7 @@
   urldate = {2023-04-27},
   abstract = {We introduce Casper, a proof of stake-based finality system which overlays an existing proof of work blockchain. Casper is a partial consensus mechanism combining proof of stake algorithm research and Byzantine fault tolerant consensus theory. We introduce our system, prove some desirable features, and show defenses against long range revisions and catastrophic crashes. The Casper overlay provides almost any proof of work chain with additional protections against block reversions.},
   archiveprefix = {arxiv},
+  howpublished = {\url{http://arxiv.org/abs/1710.09437}},
   keywords = {Computer Science - Cryptography and Security},
   file = {/Users/marchhill/Zotero/storage/3IRGMI4E/Buterin and Griffith - 2019 - Casper the Friendly Finality Gadget.pdf;/Users/marchhill/Zotero/storage/8WTSXJLM/1710.html}
 }
@@ -47,12 +50,14 @@
   abstract = {Byzantine agreement requires a set of parties in a distributed system toagree on a value even if some parties are maliciously misbehaving. A newprotocol for Byzantine agreement in a completely asynchronous network ispresented that makes use of new cryptographic protocols, specificallyprotocols for threshold signatures and coin-tossing.  These cryptographicprotocols have practical and provably secure implementations in therandom oracle model.  In particular, a coin-tossing protocol based onthe Diffie-Hellman problem is presented and analyzed. The resulting asynchronous Byzantine agreement protocol is both practicaland theoretically optimal because it tolerates the maximum number ofcorrupted parties, runs in constant expected rounds, has message andcommunication complexity close to the optimum, and uses a trusted dealeronly once in a setup phase, after which it can process a virtually unlimitednumber of transactions. The protocol is formulated as a transaction processing service in acryptographic security model, which differs from the standardinformation-theoretic formalization and may be of independent interest.},
   langid = {english},
   keywords = {Asynchronous consensus,Byzantine faults,Cryptographic common coin,Dual-threshold schemes,Threshold signatures},
+  note = {\url{https://doi.org/10.1007/s00145-005-0318-0}},
   file = {/Users/marchhill/Zotero/storage/5KTAUIFU/Cachin et al. - 2005 - Random Oracles in Constantinople Practical Asynch.pdf}
 }
 
 @misc{capnp,
   title = {Cap'n {{Proto RPC Library}}},
   urldate = {2023-04-27},
+  howpublished = {\url{https://capnproto.org/}},
   file = {/Users/marchhill/Zotero/storage/XDEGBBJA/capnproto.org.html}
 }
 
@@ -67,7 +72,8 @@
   publisher = {{USENIX Association}},
   address = {{USA}},
   urldate = {2023-05-03},
-  isbn = {978-1-880446-39-3}
+  isbn = {978-1-880446-39-3},
+  note = {\url{https://dl.acm.org/doi/10.5555/296806.296824}}
 }
 
 @inproceedings{chandraPaxosMadeLive2007,
@@ -86,6 +92,7 @@
   abstract = {We describe our experience in building a fault-tolerant data-base using the Paxos consensus algorithm. Despite the existing literature in the field, building such a database proved to be non-trivial. We describe selected algorithmic and engineering problems encountered, and the solutions we found for them. Our measurements indicate that we have built a competitive system.},
   isbn = {978-1-59593-616-5},
   keywords = {experiences,fault-tolerance,implementation,Paxos},
+  note = {\url{https://dl.acm.org/doi/10.1145/1281100.1281103}},
   file = {/Users/marchhill/Zotero/storage/PE9D29MB/Chandra et al. - 2007 - Paxos made live an engineering perspective.pdf}
 }
 
@@ -103,6 +110,7 @@
   urldate = {2023-04-21},
   abstract = {We introduce the concept of unreliable failure detectors and study how they can be used to solve Consensus in asynchronous systems with crash failures. We characterise unreliable failure detectors in terms of two properties\textemdash completeness and accuracy. We show that Consensus can be solved even with unreliable failure detectors that make an infinite number of mistakes, and determine which ones can be used to solve Consensus despite any  number of crashes, and which ones require a majority of correct processes. We prove that Consensus and Atomic Broadcast are reducible to each other in asynchronous systems with crash failures; thus, the above results also apply to Atomic Broadcast. A companion paper shows that one of the failure detectors introduced here is the weakest failure detector for solving Consensus [Chandra et al. 1992].},
   langid = {english},
+  note = {\url{https://dl.acm.org/doi/10.1145/226643.226647}},
   file = {/Users/marchhill/Zotero/storage/AZMNZFUV/Chandra and Toueg - 1996 - Unreliable failure detectors for reliable distribu.pdf}
 }
 
@@ -120,6 +128,7 @@
   urldate = {2023-04-21},
   abstract = {We determine what information about failures is necessary and sufficient to solve Consensus in asynchronous distributed systems subject to crash failures. In Chandra and Toueg [1996], it is shown that W, a failure detector that provides surprisingly little information about which processes have crashed, is sufficient to solve Consensus in asynchronous systems with a majority of correct processes. In this paper, we prove that to solve Consensus, any failure detector has to provide at least as much information as W. Thus, W is indeed the weakest failure detector for solving Consensus in asynchronous systems with a majority of correct processes.},
   keywords = {agreement problem,asynchronous systems,atomic broadcast,Byzantine Generals' problem,commit problem,consensus problem,crash failures,failure detection,fault-tolerance,message passing,partial synchrony,processor failures},
+  note = {\url{https://dl.acm.org/doi/10.1145/234533.234549}},
   file = {/Users/marchhill/Zotero/storage/T8KUDSHE/Chandra et al. - 1996 - The weakest failure detector for solving consensus.pdf}
 }
 
@@ -136,6 +145,7 @@
   doi = {10.1145/42282.42283},
   urldate = {2023-05-03},
   abstract = {The concept of partial synchrony in a distributed system is introduced. Partial synchrony lies between the cases of a synchronous system and an asynchronous system. In a synchronous system, there is a known fixed upper bound {$\Delta$} on the time required for a message to be sent from one processor to another and a known fixed upper bound {$\Phi$} on the relative speeds of different processors. In an asynchronous system no fixed upper bounds {$\Delta$} and {$\Phi$} exist. In one version of partial synchrony, fixed bounds {$\Delta$} and {$\Phi$} exist, but they are not known a priori. The problem is to design protocols that work correctly in the partially synchronous system regardless of the actual values of the bounds {$\Delta$} and {$\Phi$}. In another version of partial synchrony, the bounds are known, but are only guaranteed to hold starting at some unknown time T, and protocols must be designed to work correctly regardless of when time T occurs. Fault-tolerant consensus protocols are given for various cases of partial synchrony and various fault models. Lower bounds that show in most cases that our protocols are optimal with respect to the number of faults tolerated are also given. Our consensus protocols for partially synchronous processors use new protocols for fault-tolerant ``distributed clocks'' that allow partially synchronous processors to reach some approximately common notion of time.},
+  note = {\url{https://dl.acm.org/doi/10.1145/42282.42283}},
   file = {/Users/marchhill/Zotero/storage/JHR3CKRZ/Dwork et al. - 1988 - Consensus in the presence of partial synchrony.pdf}
 }
 
@@ -144,6 +154,7 @@
   author = {{MultiCore OCaml}},
   urldate = {2023-04-27},
   abstract = {Effects-based direct-style IO for multicore OCaml},
+  howpublished = {\url{https://github.com/ocaml-multicore/eio}},
   keywords = {concurrency,effects,io,multicore,ocaml}
 }
 
@@ -152,6 +163,7 @@
   author = {Buterin, Vitalik},
   year = {2014},
   langid = {english},
+  note = {\url{https://ethereum.org/en/whitepaper/}},
   file = {/Users/marchhill/Zotero/storage/4DV64JQF/Buterin - Ethereum A Next-Generation Smart Contract and Dec.pdf}
 }
 
@@ -161,6 +173,7 @@
   year = {2022},
   abstract = {The blockchain paradigm when coupled with cryptographically-secured transactions has demonstrated its utility through a number of projects, with Bitcoin being one of the most notable ones. Each such project can be seen as a simple application on a decentralised, but singleton, compute resource. We can call this paradigm a transactional singleton machine with shared-state.},
   langid = {english},
+  note = {\url{https://ethereum.github.io/yellowpaper/paper.pdf}},
   file = {/Users/marchhill/Zotero/storage/5RPZG5RW/Wood - ETHEREUM A SECURE DECENTRALISED GENERALISED TRANS.pdf}
 }
 
@@ -179,6 +192,7 @@
   abstract = {Easy proofs are given, of the impossibility of solving several consensus problems (Byzantine agreement, weak agreement, Byzantine firing squad, approximate agreement and clock synchronization) in certain communication graphs.},
   langid = {english},
   keywords = {Agreement,Distributed computing,Fault tolerance},
+  note = {\url{https://doi.org/10.1007/BF01843568}},
   file = {/Users/marchhill/Zotero/storage/MJYCSAFQ/Fischer et al. - 1986 - Easy impossibility proofs for distributed consensu.pdf}
 }
 
@@ -194,6 +208,7 @@
   doi = {10.1109/DSN.2019.00063},
   abstract = {SBFT is a state of the art Byzantine fault tolerant state machine replication system that addresses the challenges of scalability, decentralization and global geo-replication. SBFT is optimized for decentralization and is experimentally evaluated on a deployment of more than 200 active replicas withstanding a malicious adversary controlling f=64 replicas. Our experiments show how the different algorithmic ingredients of SBFT contribute to its performance and scalability. The results show that SBFT simultaneously provides almost 2x better throughput and about 1.5x better latency relative to a highly optimized system that implements the PBFT protocol. To achieve this performance improvement, SBFT uses a combination of four ingredients: using collectors and threshold signatures to reduce communication to linear, using an optimistic fast path, reducing client communication and utilizing redundant servers for the fast path. SBFT is the first system to implement a correct dual-mode view change protocol that allows to efficiently run either an optimistic fast path or a fallback slow path without incurring a view change to switch between modes.},
   keywords = {Blockchain,Consensus,Fault tolerance,Scalability,Smart contracts,Standards,Throughput},
+  note = {\url{https://ieeexplore.ieee.org/document/8809541}},
   file = {/Users/marchhill/Zotero/storage/3J63SLBM/Golan Gueta et al. - 2019 - SBFT A Scalable and Decentralized Trust Infrastru.pdf;/Users/marchhill/Zotero/storage/F5Q26MKK/8809541.html}
 }
 
@@ -202,7 +217,8 @@
   author = {Abraham, Ittai},
   year = {2019},
   series = {{{SPTDC}}},
-  address = {{St. Petersburg}}
+  address = {{St. Petersburg}},
+  note = {\url{https://www.youtube.com/watch?v=Uoo2cOvQVN0}}
 }
 
 @inproceedings{kwonTendermintConsensusMining2014,
@@ -212,6 +228,7 @@
   year = {2014},
   urldate = {2023-05-03},
   abstract = {Cryptocurrencies such as Bitcoin enable users to submit payment transactions without going through a centralized trusted organization. Bitcoin relies on proof-of-work mining to secure consensus which is problematic; mining requires a massive expenditure of energy, confirmation of transactions is slow, and security is difficult to quantify. We propose a solution to the blockchain consensus problem that does not require mining by adapting an existing solution to the Byzantine Generals Problem.},
+  note = {\url{https://www.semanticscholar.org/paper/Tendermint-%3A-Consensus-without-Mining-Kwon/df62a45f50aac8890453b6991ea115e996c1646e}},
   file = {/Users/marchhill/Zotero/storage/73ZVYRLH/Kwon - 2014 - Tendermint  Consensus without Mining.pdf}
 }
 
@@ -223,6 +240,7 @@
   volume = {4},
   number = {3},
   langid = {english},
+  note = {\url{https://dl.acm.org/doi/10.1145/357172.357176}},
   file = {/Users/marchhill/Zotero/storage/39PDRST8/Lamport et al. - The Byzantine Generals Problem.pdf}
 }
 
@@ -240,6 +258,7 @@
   urldate = {2023-04-27},
   abstract = {Recent archaeological discoveries on the island of Paxos reveal that the parliament functioned despite the peripatetic propensity of its part-time legislators. The legislators maintained consistent copies of the parliamentary record, despite their frequent forays from the chamber and the forgetfulness of their messengers. The Paxon parliament's protocol provides a new way of implementing the state machine approach to the design of distributed systems.},
   keywords = {state machines,three-phase commit,voting},
+  note = {\url{https://dl.acm.org/doi/10.1145/279227.279229}},
   file = {/Users/marchhill/Zotero/storage/V7PQI53D/Lamport - 1998 - The part-time parliament.pdf}
 }
 
@@ -253,33 +272,38 @@
   urldate = {2023-05-03},
   abstract = {At the PODC 2001 conference, I got tired of everyone saying how difficult it was to understand the Paxos algorithm, published in [122]. Although people got so hung up in the pseudo-Greek names that they found the paper hard to understand, the algorithm itself is very simple. So, I cornered a couple of people at [\ldots ]},
   langid = {american},
+  note = {\url{https://www.microsoft.com/en-us/research/publication/paxos-made-simple/}},
   file = {/Users/marchhill/Zotero/storage/D8B395CL/Lamport - 2001 - Paxos Made Simple.pdf}
 }
 
 @misc{lwt,
   title = {Lwt {{Library}}},
+  author = {{Ocsigen}},
   urldate = {2023-04-27},
   abstract = {OCaml promises and concurrent I/O},
   copyright = {MIT},
-  howpublished = {Ocsigen},
+  howpublished = {\url{https://github.com/ocsigen/lwt}},
   keywords = {asynchronous,concurency,events,fibers,futures,io,lwt,ocaml,promises}
 }
 
 @misc{memtrace,
   title = {Memtrace {{Memory Profiler}} \& {{Viewer}}},
   author = {{Jane Street}},
-  urldate = {2023-04-27}
+  urldate = {2023-04-27},
+  howpublished = {\url{https://opam.ocaml.org/packages/memtrace/}}
 }
 
 @misc{mininet,
   title = {Mininet},
   urldate = {2023-04-27},
+  howpublished = {\url{http://mininet.org/}},
   file = {/Users/marchhill/Zotero/storage/77RGEUZC/mininet.org.html}
 }
 
 @misc{mirage,
   title = {{{MirageOS}}},
   urldate = {2023-04-27},
+  howpublished = {\url{https://mirage.io/}},
   file = {/Users/marchhill/Zotero/storage/UB9CRRHN/mirage.io.html}
 }
 
@@ -289,6 +313,7 @@
   year = {2008},
   abstract = {A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution. Digital signatures provide part of the solution, but the main benefits are lost if a trusted third party is still required to prevent double-spending. We propose a solution to the double-spending problem using a peer-to-peer network. The network timestamps transactions by hashing them into an ongoing chain of hash-based proof-of-work, forming a record that cannot be changed without redoing the proof-of-work. The longest chain not only serves as proof of the sequence of events witnessed, but proof that it came from the largest pool of CPU power. As long as a majority of CPU power is controlled by nodes that are not cooperating to attack the network, they'll generate the longest chain and outpace attackers. The network itself requires minimal structure. Messages are broadcast on a best effort basis, and nodes can leave and rejoin the network at will, accepting the longest proof-of-work chain as proof of what happened while they were gone.},
   langid = {english},
+  note = {\url{https://www.ussc.gov/sites/default/files/pdf/training/annual-national-training-seminar/2018/Emerging_Tech_Bitcoin_Crypto.pdf}},
   file = {/Users/marchhill/Zotero/storage/NTH3U3ME/Nakamoto - Bitcoin A Peer-to-Peer Electronic Cash System.pdf}
 }
 
@@ -305,6 +330,7 @@
   doi = {10.21428/58320208.08912a03},
   urldate = {2023-05-03},
   langid = {english},
+  note = {\url{https://cryptoeconomicsystems.pubpub.org/pub/naor-cogsworth-synchronization/release/5}},
   file = {/Users/marchhill/Zotero/storage/QKLT4F73/Naor et al. - 2021 - Cogsworth Byzantine View Synchronization.pdf}
 }
 
@@ -312,6 +338,7 @@
   title = {{{OCaml Programming Language}}},
   urldate = {2023-04-27},
   abstract = {OCaml is a general-purpose, industrial-strength programming language with an emphasis on expressiveness and safety.},
+  howpublished = {\url{https://ocaml.org}},
   file = {/Users/marchhill/Zotero/storage/F9WRZWN2/ocaml.org.html}
 }
 
@@ -319,7 +346,8 @@
   title = {{{OCons Paxos Implementation}}},
   author = {Jensen, Chris},
   urldate = {2023-04-27},
-  copyright = {MIT}
+  copyright = {MIT},
+  howpublished = {\url{https://github.com/Cjen1/OCons}}
 }
 
 @inproceedings{ongaroSearchUnderstandableConsensus2014,
@@ -331,6 +359,7 @@
   urldate = {2023-05-03},
   isbn = {978-1-931971-10-2},
   langid = {english},
+  note = {\url{https://www.usenix.org/node/184041.}},
   file = {/Users/marchhill/Zotero/storage/6IPMAJWI/Ongaro and Ousterhout - 2014 - In Search of an Understandable Consensus Algorithm.pdf}
 }
 
@@ -349,6 +378,7 @@
   abstract = {State machine replication, or ``consensus'', is a central abstraction for distributed systems where a set of nodes seek to agree on an ever-growing, linearly-ordered log. In this paper, we propose a practical new paradigm called Thunderella for achieving state machine replication by combining a fast, asynchronous path with a (slow) synchronous ``fall-back'' path (which only gets executed if something goes wrong); as a consequence, we get simple state machine replications that essentially are as robust as the best synchronous protocols, yet ``optimistically'' (if a super majority of the players are honest), the protocol ``instantly'' confirms transactions.},
   isbn = {978-3-319-78375-8},
   langid = {english},
+  note = {\url{https://link.springer.com/chapter/10.1007/978-3-319-78375-8_1}},
   file = {/Users/marchhill/Zotero/storage/EHG868WI/Pass and Shi - 2018 - Thunderella Blockchains with Optimistic Instant C.pdf}
 }
 
@@ -366,6 +396,7 @@
   urldate = {2023-04-21},
   abstract = {The problem addressed here concerns a set of isolated processors, some unknown subset of which may be faulty, that communicate only by means of two-party messages. Each nonfaulty processor has a private value of information that must be communicated to each other nonfaulty processor. Nonfaulty processors always communicate honestly, whereas faulty processors may lie. The problem is to devise an algorithm in which processors communicate their own values and relay values received from others that allows each nonfaulty processor to infer a value for each other processor. The value inferred for a nonfaulty processor must be that processor's private value, and the value inferred for a faulty one must be consistent with the corresponding value inferred by each other nonfaulty processor.                            It is shown that the problem is solvable for, and only for,               n               {$\geq$} 3               m               + 1, where               m               is the number of faulty processors and               n               is the total number. It is also shown that if faulty processors can refuse to pass on information but cannot falsely relay information, the problem is solvable for arbitrary               n               {$\geq$}               m               {$\geq$} 0. This weaker assumption can be approximated in practice using cryptographic methods.},
   langid = {english},
+  note = {\url{https://dl.acm.org/doi/10.1145/322186.322188}},
   file = {/Users/marchhill/Zotero/storage/I4PMXCYI/Pease et al. - 1980 - Reaching Agreement in the Presence of Faults.pdf}
 }
 
@@ -384,12 +415,14 @@
   abstract = {We present an RSA threshold signature scheme. The scheme enjoys the following properties: 1. it is unforgeable and robust in the random oracle model, assuming the RSA problem is hard; 2. signature share generation and verification is completely non-interactive; 3. the size of an individual signature share is bounded by a constant times the size of the RSA modulus.},
   isbn = {978-3-540-67517-4 978-3-540-45539-4},
   langid = {english},
+  note = {\url{http://link.springer.com/10.1007/3-540-45539-6_15}},
   file = {/Users/marchhill/Zotero/storage/WR7LUKT9/Shoup - 2000 - Practical Threshold Signatures.pdf}
 }
 
 @misc{tezosCrypto,
   title = {Tezos {{Cryptography Library}}},
   urldate = {2023-04-27},
+  howpublished = {\url{https://opam.ocaml.org/packages/tezos-crypto/}},
   file = {/Users/marchhill/Zotero/storage/Q5DNH3DW/tezos-crypto.html}
 }
 
@@ -407,5 +440,6 @@
   urldate = {2023-05-03},
   isbn = {978-1-4503-6217-7},
   langid = {english},
+  note = {\url{https://dl.acm.org/doi/10.1145/3293611.3331591}},
   file = {/Users/marchhill/Zotero/storage/QSGWL7SJ/Yin et al. - 2019 - HotStuff BFT Consensus with Linearity and Respons.pdf}
 }
