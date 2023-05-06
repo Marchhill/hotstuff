@@ -1,18 +1,10 @@
 open Cmdliner
+open Lwt.Infix
 
 let start_node id nodes batch_size timeout verbose =
 	Lwt_main.run begin
-		(* let listen_address = `TCP ("0.0.0.0", 9000) in *)
-		(* let listen_address = `TCP ("127.0.0.1", 9000 + id) in
-		let config = Capnp_rpc_unix.Vat_config.create ~serve_tls:false ~secret_key listen_address in
-		let service_id = Capnp_rpc_net.Restorer.Id.public "" in
-    let node_state = Lib.init id nodes timeout batch_size verbose in
-		let restore = Capnp_rpc_net.Restorer.single service_id (Lib.serve node_state) in
-		let* vat = Capnp_rpc_unix.serve config ~restore in
-		let uri = Capnp_rpc_unix.Vat.sturdy_uri vat service_id in
-		Fmt.pr "Server ID=%s running. Connect to URI %S.@." (Int.to_string id) (Uri.to_string uri);
-		Lib.main_loop node_state *)
-    Lib.start_server id nodes batch_size timeout verbose
+    	Lib.start_server id nodes batch_size timeout verbose >>=
+  		Lib.main_loop
 	end
 
 let id =

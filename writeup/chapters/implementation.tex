@@ -40,7 +40,7 @@
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.925]{nodediagram.png}
+\includegraphics[scale=0.925]{nodediagram.pdf}
 \caption{Architecture of a node.}
 \label{nodediagram}
 \end{figure}
@@ -72,8 +72,8 @@ Pipelining phases both simplifies and optimises the basic algorithm. The phases 
 
 \begin{figure}[h!]
 \centering
-\includegraphics[]{nchain.png}
-\caption{Sequence of nodes forming a 2-chain [label parent and justify links!!! fix font].}
+\includegraphics[]{nchain.pdf}
+\caption{Sequence of nodes forming a 2-chain.}
 \label{nchain}
 \end{figure}
 
@@ -338,8 +338,8 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[]{lemma1.png}
-	\caption{Example of round-robin leader allocation for $f = 1$. Red rectangles denote byzantine leaders. [maybe stripe red nodes so they appear in black and white???]}
+	\includegraphics[]{lemma1.pdf}
+	\caption{Example of round-robin leader allocation for $f = 3$. Red rectangles denote byzantine leaders.}
 	\label{lemma1diagram}
 \end{figure}
 
@@ -470,14 +470,14 @@ There are some cases when the leader does not receive the latest \textit{b\texts
 
 \begin{figure}[h]
 \centering
-\includegraphics[]{openloop.png}
+\includegraphics[]{openloop.pdf}
 \caption{Open-loop load generator.}
 \label{openloop}
 \end{figure}
 
 \begin{figure}[h]
 \centering
-\includegraphics[]{closedloop.png}
+\includegraphics[]{closedloop.pdf}
 \caption{Closed-loop load generator.}
 \label{closedloop}
 \end{figure}
@@ -504,9 +504,9 @@ Different experiments may vary input variables such as throughput, batch size, a
 \subsection{Logging framework}
 We developed a logging framework that stores the time taken for important parts of the program to execute, and outputs key statistics such as the mean and standard deviation at the end of the test. This was essential for analysing the performance of the system to develop the optimisations described in section \ref{performance}.
 
-The logging framework helped to reduce the effect of \textit{probing effects}, where the behaviour of a system is altered by the act of measuring it. Our previous approach printed the time taken throughout the execution of the program; since printing takes signficant CPU time this resulted in probing effects. Notably, the print statements were not in-between the statements that measured the time taken, but they caused delays to happen in other parts of the program (presumably when the buffers were being flushed).
+The logging framework helped to reduce the effect of \textit{probing effects}, where the behaviour of a system is altered by the act of measuring it. Our previous approach printed the time taken throughout the execution of the program; since printing is CPU-heavy this resulted in probing effects. Notably, the print statements were not in-between the statements that measured the time taken, but they caused delays to happen in other parts of the program (presumably when the buffers were being flushed).
 
-\textbf{Design principle: } Minimise probing effects by carrying out the minimum possible amount of work in critical areas of the program, storing data, and moving work (such as outputting statistics) to less critical areas of the program.
+\textbf{Design principle: } Minimise probing effects by carrying out the minimum possible amount of work in critical areas of the program by storing data and moving work (such as outputting statistics) to less critical areas of the program.
 
 \section{Repository Overview} \label{repo}
 
@@ -516,41 +516,49 @@ The logging framework helped to reduce the effect of \textit{probing effects}, w
 	folder indent=0.9em, folder icons,
 	edge=densely dotted}
 	[src
+		[\ bin,
+			[load\_gen.ml, is file]
+			[run\_node.ml, is file]
+		]
 		[\ consensus,
 			[consensus\_chained\_impl.ml, is file]
 			[consensus\_impl.ml, is file]
 			[consensus.ml, is file]
 			[consensus.mli, is file]
-			[crypto\_util.ml, is file]
 			[types.ml, is file]
 			[types.mli, is file]
 			[util.ml, is file]
 		]
-		[\ experiments
+		[\ experiments,
 			[\ data]
 			[\ graphs]
 			[plot.py, is file]
 			[runExperiments.py, is file]
 		]
-		[action\_handler.ml, is file]
-		[api\_wrapper.ml, is file]
-		[api\_wrapper.mli, is file]
-		[hs\_api.capnp, is file]
-		[load\_gen.ml, is file]
-		[main.ml, is file]
-		[net.ml, is file]
+		[\ lib,
+			[action\_handler.ml, is file]
+			[api\_wrapper.ml, is file]
+			[api\_wrapper.mli, is file]
+			[hs\_api.capnp, is file]
+			[lib.ml, is file]
+			[lib.mli, is file]
+			[main\_loop.ml, is file]
+			[msg\_sender.ml, is file]
+			[server.ml, is file]
+			[types.ml, is file]
+			[util.ml, is file]
+		]
 		[README.md, is file]
-		[server.ml, is file]
-		[types.ml, is file]
-		[util.ml, is file]
 	]
 \end{forest}
 \end{small}
 
-The \textit{src} directory contains files implementing the main components described in the system architecture (section \ref{architecture}). This includes the server (\textit{server.ml}), main loop (\textit{main.ml}), action handler \textit{action\_handler.ml}, and the message / request sender (\textit{net.ml}). It also contains the schema for RPCs (\textit{hs\_api.capnp}) and code to convert between internal types and Cap'n Proto types (\textit{api\_wrapper.ml}).
+The \textit{lib} directory contains files implementing the main components described in the system architecture (section \ref{architecture}). It also contains the schema for RPCs (\textit{hs\_api.capnp}) and code to convert between internal types and Cap'n Proto types (\textit{api\_wrapper.ml}).
 
-Inside the \textit{consensus} folder is a module with implementations of the basic and chained HotStuff algorithms, sharing a common signature (\textit{consensus.mli}). There is also a utility code that allows the use of the \textit{consensus} module types with cryptography functions (\textit{crypto\_util.ml}).
+Inside the \textit{consensus} folder is a module with implementations of the basic and chained HotStuff algorithms, sharing a common signature (\textit{consensus.mli}). It also contains testing files to run expect tests (section \ref{testing}) that have been omitted for conciseness.
 
-The \textit{experiments} folder is where the data from running experiments is outputted to, and it contains scripts for running experiments and plotting graphs.
+The \textit{bin} folder contains the executables for running a node, and for running the load generator.
+
+The \textit{experiments} folder is where the data from running experiments is outputted to. It also contains scripts for running experiments and plotting graphs.
 
 In order to run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \textit{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time. These scripts will run on Linux and MacOS, but will have to be modified to work on Windows.

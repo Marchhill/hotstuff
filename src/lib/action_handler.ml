@@ -7,15 +7,15 @@ let rec do_actions s = function
 		let _t1 = Time_now.nanoseconds_since_unix_epoch () in
 		let* () = (match a with
 			| Consensus.Broadcast m ->
-				Lwt_list.iter_s (fun conn -> Net.send_msg conn m s.stats) s.conns
+				Lwt_list.iter_s (fun conn -> Msg_sender.send_msg conn m s.stats) s.conns
 			| Consensus.SendLeader m ->
 				let leader = Consensus.leader_id m.view !(s.state_machine).node_count in
 				let conn = List.nth s.conns leader in
-				Net.send_msg conn m s.stats
+				Msg_sender.send_msg conn m s.stats
 			| Consensus.SendNextLeader m ->
 				let leader = Consensus.leader_id (m.view + 1) !(s.state_machine).node_count in
 				let conn = List.nth s.conns leader in
-				Net.send_msg conn m s.stats
+				Msg_sender.send_msg conn m s.stats
 			| Consensus.SendClient x ->
 				(match Hashtbl.find_opt s.client_callbacks x.callback_id with
 					| Some callback ->

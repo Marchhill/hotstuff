@@ -6,5 +6,5 @@
 (library
  (name lib)
  (libraries consensus lwt.unix capnp-rpc-lwt capnp-rpc-unix tezos-crypto logs.fmt fmt.tty)
- (flags :standard -w -55)
+ (flags :standard -w -53-55)
  )

@@ -1,4 +1,4 @@
-open Api_wrapper
+(* open Api_wrapper *)
 open Capnp_rpc_lwt
 open Util
 open Types
@@ -37,12 +37,12 @@ let get_cap (sr, cap) =
 (* used by nodes to communicate with eachother *)
 let send_msg conn (msg : Consensus.msg) stats =
 	let send cap =
-		let open Api.Client.Hs.SendMsg in
+		let open Api_wrapper.Api.Client.Hs.SendMsg in
 		let _t1 = Time_now.nanoseconds_since_unix_epoch () in
 		let request, params = Capability.Request.create Params.init_pointer in
 		let msg_builder = Params.msg_get params in
 		let _t2 = Time_now.nanoseconds_since_unix_epoch () in
-		msg_to_api_msg msg_builder msg;
+		Api_wrapper.msg_to_api_msg msg_builder msg;
 		let _t3 = Time_now.nanoseconds_since_unix_epoch () in
 		let* () = Capability.call_for_unit_exn cap method_id request in
 		let _t4 = Time_now.nanoseconds_since_unix_epoch () in
@@ -64,10 +64,10 @@ let send_msg conn (msg : Consensus.msg) stats =
 (* send a command to a node (used by client) *)
 let send_req conn (cmd : Consensus.cmd) _t stats =
 	let send cap =
-		let open Api.Client.Hs.ClientReq in
+		let open Api_wrapper.Api.Client.Hs.ClientReq in
 		let request, params = Capability.Request.create Params.init_pointer in
 		let cmd_builder = Params.cmd_get params in
-		cmd_to_api_cmd cmd_builder cmd;
+		Api_wrapper.cmd_to_api_cmd cmd_builder cmd;
 		let* res = Capability.call_for_value cap method_id request in
 		let success = match res with
 			| Ok r -> Results.success_get r
@@ -108,7 +108,7 @@ let send_req conn (cmd : Consensus.cmd) _t stats =
 
 let send_quit conn =
 	let send cap =
-		let open Api.Client.Hs.Quit in
+		let open Api_wrapper.Api.Client.Hs.Quit in
 		let request = Capability.Request.create_no_args () in
 		(* let* () = Capability.call_for_unit_exn cap method_id request in *)
 		let* _ = Capability.call_for_unit cap method_id request in

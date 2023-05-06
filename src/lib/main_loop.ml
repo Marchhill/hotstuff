@@ -40,34 +40,3 @@ let rec main_loop s =
 	in
 	let* () = if (!(s.iter_count) mod 5) = 0 then Lwt.pause () else Lwt.return_unit in
 	main_loop s
-
-(* intialise internal state *)
-let init id nodes timeout batch_size verbose =
-	let _sk, _pks = Util.gen_keys id nodes in (* generate public and private keys *)
-	let crypto = Some ({sk = _sk; pks = _pks} : Consensus.crypto) in
-        (* let crypto = None in *)
-	let initial_state, new_view_actions = Consensus.create_state_machine id nodes batch_size ~crypto in (* initialise state machine *)
-	let conns = Net.open_conns nodes in (* connect to other nodes *)
-	let client_callbacks = Hashtbl.create 1000000 in (* store callbacks to respond to client commands *)
-	let reset_timer = Util.create_timer timeout in (* create a view timer *)
-	let msgs, push_msg = Lwt_stream.create () in
-	let reqs, push_req = Lwt_stream.create () in
-	(* send new-view message to first leader and start timer for first view *)
-	let reset_timer_action = (ResetTimer {id = id; view = 1} : Consensus.action) in
-	let actions = reset_timer_action :: new_view_actions in
-	let s = {
-		state_machine = ref initial_state;
-		alive = ref true;
-		verbose = verbose;
-		conns = conns;
-		client_callbacks = client_callbacks;
-		reset_timer = reset_timer;
-		msgs = msgs;
-		push_msg = push_msg;
-		reqs = reqs;
-		push_req = push_req;
-		iter_count = ref 0;
-		stats = Util.empty_stats (Time_now.nanoseconds_since_unix_epoch ())
-	} in
-	Lwt.async (fun () -> Action_handler.do_actions s actions);
-	s

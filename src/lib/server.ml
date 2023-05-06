@@ -1,13 +1,12 @@
 open Capnp_rpc_lwt
 open Lwt.Syntax
 open Types
-open Api_wrapper
 open Util
 
 let secret_key = `Ephemeral
 
 let serve s =
-	let module Hs = Api.Service.Hs in
+	let module Hs = Api_wrapper.Api.Service.Hs in
 	Hs.local @@ object
 		inherit Hs.service
 
@@ -18,7 +17,7 @@ let serve s =
 			let msg = Params.msg_get params in
 			release_param_caps ();
 			(* convert from api type to consensus machine internal type *)
-			let event = api_msg_to_consensus_event msg in
+			let event = Api_wrapper.api_msg_to_consensus_event msg in
 			let () =
 				if s.verbose then (
 					Fmt.pr "%d: recv " (!(s.state_machine)).id;
@@ -39,7 +38,7 @@ let serve s =
 			let api_cmd = Params.cmd_get params in
 			release_param_caps ();
 			(* create a consensus command from the client's request*)
-			let cmd = api_cmd_to_cmd api_cmd in
+			let cmd = Api_wrapper.api_cmd_to_cmd api_cmd in
 			(* store callback so we can respond to client later *)
 			let res, callback = Lwt.wait () in
 			Hashtbl.add s.client_callbacks cmd.callback_id (Some callback);
@@ -79,13 +78,44 @@ let serve s =
 	  Service.return_empty ()
 	end
 
+(* intialise internal state *)
+let init_state id nodes timeout batch_size verbose =
+	let _sk, _pks = Util.gen_keys id nodes in (* generate public and private keys *)
+	let crypto = Some ({sk = _sk; pks = _pks} : Consensus.crypto) in
+        (* let crypto = None in *)
+	let initial_state, new_view_actions = Consensus.create_state_machine id nodes batch_size ~crypto in (* initialise state machine *)
+	let conns = Msg_sender.open_conns nodes in (* connect to other nodes *)
+	let client_callbacks = Hashtbl.create 1000000 in (* store callbacks to respond to client commands *)
+	let reset_timer = Util.create_timer timeout in (* create a view timer *)
+	let msgs, push_msg = Lwt_stream.create () in
+	let reqs, push_req = Lwt_stream.create () in
+	(* send new-view message to first leader and start timer for first view *)
+	let reset_timer_action = (ResetTimer {id = id; view = 1} : Consensus.action) in
+	let actions = reset_timer_action :: new_view_actions in
+	let s = {
+		state_machine = ref initial_state;
+		alive = ref true;
+		verbose = verbose;
+		conns = conns;
+		client_callbacks = client_callbacks;
+		reset_timer = reset_timer;
+		msgs = msgs;
+		push_msg = push_msg;
+		reqs = reqs;
+		push_req = push_req;
+		iter_count = ref 0;
+		stats = Util.empty_stats (Time_now.nanoseconds_since_unix_epoch ())
+	} in
+	Lwt.async (fun () -> Action_handler.do_actions s actions);
+	s
+
 let start_server id nodes batch_size timeout verbose =
-  let listen_address = `TCP ("127.0.0.1", 9000 + id) in
-  let config = Capnp_rpc_unix.Vat_config.create ~serve_tls:false ~secret_key listen_address in
-  let service_id = Capnp_rpc_net.Restorer.Id.public "" in
-  let node_state = Main_loop.init id nodes timeout batch_size verbose in
-  let restore = Capnp_rpc_net.Restorer.single service_id (serve node_state) in
-  let* vat = Capnp_rpc_unix.serve config ~restore in
-  let uri = Capnp_rpc_unix.Vat.sturdy_uri vat service_id in
-  Fmt.pr "Server ID=%s running. Connect to URI %S.@." (Int.to_string id) (Uri.to_string uri);
-  Main_loop.main_loop node_state
+	let listen_address = `TCP ("127.0.0.1", 9000 + id) in
+	let config = Capnp_rpc_unix.Vat_config.create ~serve_tls:false ~secret_key listen_address in
+	let service_id = Capnp_rpc_net.Restorer.Id.public "" in
+	let node_state = init_state id nodes timeout batch_size verbose in
+	let restore = Capnp_rpc_net.Restorer.single service_id (serve node_state) in
+	let* vat = Capnp_rpc_unix.serve config ~restore in
+	let uri = Capnp_rpc_unix.Vat.sturdy_uri vat service_id in
+	Fmt.pr "Server ID=%s running. Connect to URI %S.@." (Int.to_string id) (Uri.to_string uri);
+	Lwt.return node_state
