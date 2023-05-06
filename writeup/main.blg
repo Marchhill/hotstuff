@@ -9,45 +9,45 @@ Warning--empty institution in ethereumYellow
 Warning--empty institution in baudetStateMachineReplication2019
 Warning--empty booktitle in kwonTendermintConsensusMining2014
 Warning--empty booktitle in ittai
-You've used 35 entries,
+You've used 36 entries,
             1791 wiz_defined-function locations,
-            675 strings with 11252 characters,
-and the built_in function-call counts, 7819 in all, are:
-= -- 742
-> -- 299
-< -- 9
-+ -- 116
-- -- 81
-* -- 452
-:= -- 1182
-add.period$ -- 129
-call.type$ -- 35
-change.case$ -- 39
+            684 strings with 11579 characters,
+and the built_in function-call counts, 8142 in all, are:
+= -- 777
+> -- 310
+< -- 10
++ -- 120
+- -- 84
+* -- 473
+:= -- 1229
+add.period$ -- 134
+call.type$ -- 36
+change.case$ -- 40
 chr.to.int$ -- 0
-cite$ -- 41
-duplicate$ -- 349
-empty$ -- 792
-format.name$ -- 81
-if$ -- 1799
+cite$ -- 42
+duplicate$ -- 366
+empty$ -- 822
+format.name$ -- 84
+if$ -- 1878
 int.to.chr$ -- 0
-int.to.str$ -- 35
-missing$ -- 20
-newline$ -- 197
-num.names$ -- 34
-pop$ -- 106
+int.to.str$ -- 36
+missing$ -- 21
+newline$ -- 203
+num.names$ -- 35
+pop$ -- 108
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 216
+skip$ -- 225
 stack$ -- 0
-substring$ -- 429
-swap$ -- 99
-text.length$ -- 9
+substring$ -- 445
+swap$ -- 105
+text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 6
-while$ -- 72
-width$ -- 37
-write$ -- 412
+while$ -- 76
+width$ -- 38
+write$ -- 428
 (There were 6 warnings)

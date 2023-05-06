@@ -35,7 +35,7 @@ The final phase of a consensus algorithm is \textit{decide}. We assume that a \t
 Basic HotStuff is a responsive byzantine consensus algorithm (section \ref{optresponsive}). We will start by describing a simpler consensus algorithm that is not responsive or byzantine (section \ref{nonbyzconsensus}). We then extend this algorithm to handle byzantine threats (section \ref{byzconsensus}). Finally, we extend this algorithm to be responsive by removing the need for a timeout to progress, arriving at the basic HotStuff algorithm (section \ref{optresponsive}).
 
 \subsection{Non-byzantine consensus} \label{nonbyzconsensus}
-We will start by describing a generic algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaroSearchUnderstandableConsensus2014} and Paxos \cite{lamportParttimeParliament1998, lamportPaxosMadeSimple2001}.
+We will start by describing a generic algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaroSearchUnderstandableConsensus2014} and MultiPaxos \cite{lamportParttimeParliament1998, lamportPaxosMadeSimple2001}.
 
 Each view consists of three phases:
 
@@ -48,7 +48,7 @@ Each view consists of three phases:
 Crucially, this algorithm has the \textit{safety} property. Since the leader waits to receive a quorum of greater than $\frac{n}{2}$ \textit{new-view} messages, $\lambda$ is guaranteed to be the longest log that has previously been committed. This is because the the quorum of \textit{new-view} messages must share at least one node with the past quorum of \textit{commit} acks for $\lambda$. The new proposal $\lambda'$ will never conflict with $\lambda$, hence the algorithm is safe.
 
 \subsection{Byzantine consensus} \label{byzconsensus}
-In this section we extend our non-byzantine algorithm (section \ref{nonbyzconsensus}) to achieve consensus under a byzantine system model. To do this we must first introduce the \textit{quorum certificate} (\textit{QC}), a cryptographic proof that a leader has received a quorum of acks. We then consider the threats posed by byzantine nodes, give an algorithm that solves these problems, and make an argument for safety. Examples of similar algorithms include xyz
+In this section we extend our non-byzantine algorithm (section \ref{nonbyzconsensus}) to achieve consensus under a byzantine system model. To do this we must first introduce the \textit{quorum certificate} (\textit{QC}), a cryptographic proof that a leader has received a quorum of acks. We then consider the threats posed by byzantine nodes, give an algorithm that solves these problems, and make an argument for safety. Examples of similar algorithms include Tendermint \cite{kwonTendermintConsensusMining2014} and Casper \cite{buterinCasperFriendlyFinality2019}.
 
 \subsubsection{Quorum certificates}
 
@@ -60,7 +60,7 @@ There will always be at least one honest node in the intersection of any two QCs
 
 Recall that $n = 3f + 1$. The property holds since a QC contains a quorum of $n - f$ acks, at least $f + 1$ of which must be from honest nodes. To have two quorums that \textit{do not} share an honest node would require at least $2(f + 1) = 2f + 2$ honest nodes, but our system only has $2f + 1$.
 
-\subsubsection{Threats}
+\subsubsection{Threats introduced by byzantine nodes}
 Byzantine nodes introduce two threats that we will deal with in turn. We present ideas for solutions to these threats; it will become clear why these solutions are effective in our argument that the algorithm is safe.
 
 \begin{description}
@@ -73,7 +73,7 @@ To solve this add a new stage \textit{prepare} which happens just before the \te
 To solve this make replicas \textit{lock} on a proposal once they receive a \textit{commit} message, and not accept a pre-proposal for a conflicting log.
 \end{description}
 
-\subsubsection{Algorithm}
+\subsubsection{Byzantine fault-tolerant algorithm}
 % See an example of a byzantine consensus algorithm in figure \ref{byzantineexample}.
 Modifying the non-byzantine algorithm (section \ref{nonbyzconsensus}) to include our solutions to threats \ref{threat1} and \ref{threat2} results in the following:
 
@@ -98,12 +98,12 @@ In this section we finally give the basic HotStuff algorithm by extending our ge
 
 The byzantine consensus algorithm is not responsive as it has a timeout in the \textit{prepare} phase. We first describe the problem that means this timeout is needed, then present an algorithm that solves it and make an informal argument that it does not break liveness.
 
-\subsubsection{Problem}
+\subsubsection{Why the timeout was necessary}
 For the system to have liveness, the leader must wait for $\delta$ to elapse so that it receives a \textit{new-view} message from \textit{all} honest replicas before it pre-proposes a log, to ensure that the pre-proposal will be voted for by the replicas. Consider what would happen if the leader did not wait for this timeout, and did not receive a \textit{new-view} from some honest replica $x$. It is possible that $x$ is locked on a higher-view log than the other replicas, as in some past view it received the \textit{commit} message, but other replicas did not\footnote{N.B. this means that the value was never actually committed, as this would have required a quorum of \textit{commit} acks}. When the leader sends the \textit{prepare} message, $x$ will not vote the pre-proposal as it is locked on a higher value, so the leader will not acquire a quorum of acks to make progress; this breaks liveness.
 
 Solution idea --- add a \textit{pre-commit} phase directly before the \textit{commit} phase, where replicas store a \textit{key} for a proposal that they include in their \textit{new-view} message; this removes the need for a timeout, making the algorithm responsive.
 
-\subsubsection{Algorithm}
+\subsubsection{Basic HotStuff algorithm}
 
 Modifying the byzantine algorithm (section \ref{byzconsensus}) to include our solution idea leads to the following:
 
@@ -122,8 +122,6 @@ The changes ensure that the leader will make progress as it is guaranteed to rec
 \section{Tools \& libraries} \label{tools}
 In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.
 
-[could be more concise!!!]
-
 \subsection{OCaml}
 I chose OCaml \cite{ocaml} for this project due to its high-level nature, static type system, ability to blend functional and imperative paradigms, powerful module system, and good library support. The performance bottlenecks for distributed byzantine algorithms are generally cryptography, message serialisation and network delays. This means that it is more important to choose a language with suitable features to aid implementation, rather than picking a `high-performance' language like C++.
 
@@ -136,7 +134,7 @@ Lwt \cite{lwt} is a concurrent programming library for OCaml. It allows the crea
 
 Lwt is useful to this project as promises provide a way to asynchronously dispatch messages over the network and wait for their responses in different threads. Promises are cheap to create in Lwt, so one can create many lightweight threads with good performance.
 
-There are alternative libraries I could have used that may have had better performance, namely Jane Street's Async library \cite{async} and EIO \cite{eio}. I chose Lwt over these libraries due to superior documentation and statbility.
+There are alternative libraries I could have used that may have had better performance, namely Jane Street's Async library \cite{async} and EIO \cite{eio}. I chose Lwt over these libraries due to superior documentation and stability.
 
 \subsection{Cap'n Proto}
 Cap'n Proto  \cite{capnp} is an RPC framework that includes a library for sending and receiving RPCs, serialising messages, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in section \ref{capnpbenchmark}.
@@ -169,14 +167,9 @@ Unit testing was carried out using `expect tests', which compare a program trace
 
 The Memtrace library and viewer \cite{memtrace} were used to profile the memory usage of the program. One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
 
-[talk about mininet!] \cite{mininet}
+The Mininet virtual network \cite{mininet,lantzNetworkLaptopRapid2010} was used to test our system in a simulated wide area network (section \ref{minineteval}).
 
-Due to the distributed nature of the program, normal debugging tools and profilers are not useful for debugging deadlocks and performance issues. This is because the cause of deadlocks and performance issues is often some process waiting or a backlog of work forming, but this cannot be detected by tools that just track things like CPU usage. Instead, I had to rely on manual inspection of the program trace and commands that measure the real time taken for some part of the program to run.
-
-[integrate this with the above to make one paragraph!!!]
-As mentioned in section \ref{testing}, the nature of the project meant that debugging had to be carried out by manual inspection of the program trace and timing sections of the program. To overcome this I carried out tests in a scientific manner, constructing a hypothesis for why the program was slow based on analysing the program trace and timing statements, then attempting to test my hypothesis while controlling other variables, and finally implementing a solution.
-
-[CI???]
+The distributed nature of this project meant that debugging deadlocks and performance issues had to be carried out by manual inspection of the program trace and timing sections of the program. This is because the cause of these issues is often some process waiting or a backlog of work forming on some node, but this cannot be detected by normal debugging tools and profilers that track metrics like CPU usage.
 
 \subsection{Source code management}
 
@@ -185,4 +178,4 @@ I used Git for version control and regularly pushed my local changes to a privat
 \subsection{Ethical statement}
 The development of this project did not require human participants, so nobody was harmed during its implementation.
 
-The software that has been developed contributes to an already existing blockchain ecosystem. Such software has many positive applications, but by its nature can facilitate the creation of exploitative markets. Since this software already exists, our contributions will not enable any new forms of unethical markets and products.
+The software that has been developed contributes to an existing blockchain ecosystem. Blockchains have many positive applications, but by their nature they can facilitate the creation of exploitative markets. Since this software is already widely available, this project will not further this exploitation. Additionally, permissioned blockchains alleviate some of these harms as they are deployed in more controlled environments, and do not require energy-intensive proof of work mechanisms.

@@ -1,6 +1,5 @@
 open Types
 open Util
-open Crypto_util
 
 (* phase only used for debugging purposes *)
 type phase = Prepare | PreCommit | Commit | Decide

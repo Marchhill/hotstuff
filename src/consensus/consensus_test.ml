@@ -1,6 +1,5 @@
 open Types
 open Util
-open Crypto_util
 open Consensus_impl
 
 exception TestException

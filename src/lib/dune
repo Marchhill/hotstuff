@@ -1,0 +1,10 @@
+(rule
+ (targets hs_api.ml hs_api.mli)
+ (deps    hs_api.capnp)
+ (action (run capnp compile -o %{bin:capnpc-ocaml} %{deps})))
+
+(library
+ (name lib)
+ (libraries consensus lwt.unix capnp-rpc-lwt capnp-rpc-unix tezos-crypto logs.fmt fmt.tty)
+ (flags :standard -w -55)
+ )

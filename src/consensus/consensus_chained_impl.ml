@@ -1,6 +1,5 @@
 open Types
 open Util
-open Crypto_util
 
 type state = {v: (int, event list) Hashtbl.t; vheight: int; b_lock: node; b_exec: node; b_leaf: node; qc_high: qc; tcp_lens: int list}
 type t = {view: int; id: int; node_count: int; batch_size: int; cmds: Cmd_set.t;  seen: Cmd_set.t; crypto: crypto option; complain: (int, event list) Hashtbl.t; s: state}

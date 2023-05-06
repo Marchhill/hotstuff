@@ -189,6 +189,15 @@ Tezos {{Cryptography Library}}.
 Mininet.
 \newblock \url{http://mininet.org/}.
 
+\bibitem{lantzNetworkLaptopRapid2010}
+Bob Lantz, Brandon Heller, and Nick McKeown.
+\newblock A network in a laptop: Rapid prototyping for software-defined
+  networks.
+\newblock In {\em Proceedings of the 9th {{ACM SIGCOMM Workshop}} on {{Hot
+  Topics}} in {{Networks}}}, Hotnets-{{IX}}, pages 1--6, {New York, NY, USA},
+  October 2010. {Association for Computing Machinery}.
+\newblock \url{https://dl.acm.org/doi/10.1145/1868447.1868466}.
+
 \bibitem{ocons}
 Chris Jensen.
 \newblock {{OCons Paxos Implementation}}.

@@ -1,0 +1,5 @@
+(executables
+ (names run_node load_gen)
+ (libraries consensus lib lwt.unix capnp-rpc-lwt capnp-rpc-unix logs.fmt fmt.tty)
+ (flags :standard -w -55)
+ )

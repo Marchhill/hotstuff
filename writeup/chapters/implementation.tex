@@ -105,7 +105,7 @@ Once the view times out, nodes send a \textit{complain} message to the next lead
 
 Crucially this protocol maintains the \textit{linear view change property} that HotStuff has $O(n)$ \textit{authenticator complexity}. Authenticator complexity measures the total number of threshold signatures and partial signatures in a view. This protocol requires $n - f$ partial signatures for the \textit{complain} messages, and a single threshold signature for the \textit{view-change} message, resulting in $O(n)$ authenticators overall.
 
-\subsubsection{Integration}
+\subsubsection{Integrating the pacemaker with HotStuff}
 
 Our approach to integrating the pacemaker is to advance a node to the next view as soon as possible once it has finished proposing or voting, or when it receives evidence that there are a quorum of nodes in a higher view. This means that the system does not require synchronised clocks; the nodes advance asynchronously as fast as the network allows.
 
@@ -115,9 +115,9 @@ During development we experimented with a prototype for a pacemaker that advance
 
 In this section we give a full specification of HotStuff based on the basic HotStuff algorithm (section \ref{hotstufftheory}), integrating chaining (section \ref{chaining}), and a pacemaker (section \ref{pacemaker}). We informally justify some of the changes made from the original algorithm, then give a proof of liveness for our modified algorithm.
 
-This specification implements the consensus module as described in our discussion of the system architecture (section \ref{architecture}). This module receives messages and requests from the main loop, outputs actions (sending a message, responding to a client request, or resetting the view timer), and updates its own state.% We implement this as a \textit{match} statement over the different types of incoming messages and requests, returning a new state for the consensus machine, and a list of actions.
+This specification implements the consensus module as described in our discussion of the system architecture (section \ref{architecture}). This module receives messages and requests from the main loop, outputs actions (sending a message, responding to a client request, or resetting the view timer), and updates its own state.
 
-We present the pseudocode with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}.% The pseudocode is written to match the format of the original paper to allow for easier comparison, although as stated our actual implementation uses a match statement over the incoming messages and requests.
+We present the pseudocode with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in section \ref{performance}. We have followed the format of the event-driven pseudocode from the original paper to allow for easier comparison, and ease of implementation.
 
 % \begin{algorithm}[h!]
 % 	\caption{Modified HotStuff} \label{hotstuffalgorithm}
@@ -304,7 +304,7 @@ We present the pseudocode with our additions coloured in green and modifications
 	\end{algorithmic}
 \end{algorithm}
 
-\subsection{Changes}
+\subsection{Changes to the original algorithm}
 We now informally justify some of the key changes made to the original algorithm, with a specific focus on the changes we made to integrate the pacemaker with HotStuff (section \ref{pacemaker}). Many of these changes were made to fix deadlocks encountered during implementation.
 
 \begin{description}
@@ -372,7 +372,7 @@ HotStuff works under a partially-synchronous system model (section \ref{hotstuff
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Practical challenges and optimisations} \label{performance}
 
-In this section we give solutions to some of the practical challenges of implementing HotStuff, and describe optimisations we made to improve performance. The debugging and experimentation that led to these solutions was non-trivial; they involved extensive analysis of the program trace and timing data, and the development of different prototypes to compare performance.
+In this section we give solutions to some of the practical challenges of implementing HotStuff, and describe optimisations we made to improve performance. We will focus on how we implemented batching that was effective in increasing goodput, and the difficulties of designing a type for node chains and doing so efficiently. The debugging and experimentation that led to these solutions was non-trivial; they involved extensive analysis of the program trace and timing data, and the development of different prototypes to compare performance.
 
 One main practical consideration was designing the types and structure of the core consensus module (section \ref{architecture}), to implement the algorithm given in our specification (section \ref{spec}). Recall that this module takes as input messages and client requests (\textit{events}), and returns actions (such as sending a message) and an updated consensus state. We used \textit{variants} to tag the different types of events, with attached \textit{records} to store the body of the event (such as the node and QC of a proposal). The core algorithm is expressed as a \textit{match} statement to handle each type of event. The output from this is a list of actions (also implemented as variants), and a new state.
 
@@ -381,8 +381,8 @@ A standard technique to improve the goodput of a consensus algorithm is to \text
 
 In this section we discuss the practical challenges of implementing effective batching. A naive implementation of batching is simple to implement; instead of taking a single command from the queue to propose (algorithm \ref{pacemakeralgorithm}, line \ref{code_takecmd}), the whole queue can be batched into a single proposal. Analysis of the timing data for the naive implementation showed that it dramatically increased latency. The rest of this section describes further optimisations we made to make batching effective.
 
-\subsubsection{Filtering} \label{filtering}
-One optimisation that we implemented is \textit{filtering} incoming commands to prevent them being proposed by multiple nodes. This is achieved by nodes maintaining a set of commands that they have \textit{seen} in the proposals of other nodes, and filtering these commands from their proposal. The effectiveness of this optimisation demonstrated in our ablation study (section \ref{ablation}).
+\subsubsection{Filtering commands from batches} \label{filtering}
+One optimisation that we implemented to make batching effective is \textit{filtering} incoming commands to prevent them being proposed by multiple nodes. This is achieved by nodes maintaining a set of commands that they have \textit{seen} in the proposals of other nodes, and filtering these commands from their proposal. This optimisation increased the effectiveness of batching; we demonstrate this in our ablation study (section \ref{ablation}).
 
 \begin{algorithm}[h!]
 	\caption{Filtering implementation} \label{dedup}
@@ -420,30 +420,30 @@ Implementing this feature requires minimal changes to algorithm \ref{dedup}, one
 
 The optimisation is effective because at higher message sizes the latency of Cap'n Proto serialisation increases (section \ref{capnpbenchmark}), so smaller batches can lead to better performance. There is an inherent trade-off between increasing batch size to commit more commands, and messages becoming slower due to increased serialisation latency.
 
-\subsection{Nodes}
-This section concerns the challenges of designing a suitable type for nodes\footnote{\textit{Node} is another word for log in this context.} that can be efficiently serialised by Cap'n Proto and sent over the network. Recall from our discussion of the system architecture (section \ref{architecture}) that the internal node type must be converted into a Cap'n Proto type in order to be serialised.
+\subsection{Node chains}
+This section concerns the challenges of designing a suitable type for node chains (nodes\footnote{\textit{Node} is another word for log in this context, not to be confused with a node in the system.}) that can be efficiently serialised by Cap'n Proto and sent over the network. We will discuss challenges of designing the node type that need to be overcome to allow the system to operate, then describe further optimisations that can be made. Recall from our discussion of the system architecture (section \ref{architecture}) that the internal node type must be converted into a Cap'n Proto type in order to be serialised.
 
-Nodes are implemented as OCaml records, and contain the fields \textit{parent}, \textit{cmds}, \textit{height}, and \textit{justify}. The \textit{justify} field contains a QC that contains another node inside it.
+Our initial naive implementation of the node type was an OCaml record that contained the fields \textit{parent}, \textit{cmds}, \textit{height}, and \textit{justify}. The \textit{justify} field contained a QC that contains another node inside it.
 
-\subsubsection{Recursive types}
-One difficulty encountered in converting internal types to Cap'n Proto types was that some nodes are recursive; the node stored inside the \textit{justify} field points to themselves. This is the case in the chained HotStuff algorithm (section \ref{chaining}); it has a recursive genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
+\subsubsection{The problem with recursive types}
+One problem encountered in converting internal types to Cap'n Proto types was that some nodes are recursive; the node stored inside the \textit{justify} field points to themselves. This is the case in the chained HotStuff algorithm (section \ref{chaining}); it has a recursive genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
 
 This recursion poses a problem when carrying out the conversion between Cap'n Proto types and OCaml types. It is perfectly possible to define a recursive type in OCaml, so one can represent \textit{b\textsubscript{0}} inside the consensus state machine. However, the naive implementation of a function to convert this node into a Cap'n Proto type will not terminate, as it will infinitely recurse into the field $ b_0.\textit{justify}.\textit{node} $.
 
 A simple solution to this problem is to add a flag to the Cap'n Proto schema \textit{is\_b\textsubscript{0}}; when this flag is enabled then the node is assumed to be equal to \textit{b\textsubscript{0}}. This prevents \textit{b\textsubscript{0}} from ever having to be converted into a Cap'n Proto type or being sent over the network, it can instead be reconstructed as a recursive type in the consensus state machine of the receiver.
 
-\subsubsection{Node offsets}
-In order to reduce memory usage, we replaced the \textit{node} record inside the \textit{node.justify.node} field with an integer offset into the chain. This dramatically decreased the memory usage of the function to convert from internal types to Cap'n Proto types. The inefficiency of this function was revealed through profiling the memory usage of the program using Memtrace  (section \ref{testing}).
+\subsubsection{Replacing the justify.node field with an offset}
+One problem of the naive node type implementation was that it caused the system to crash due to rapidly increasing memory usage; this can be prevented by replacing the \textit{node} record inside the \textit{node.justify.node} field with an integer offset into the chain. This dramatically decreased the memory usage of the function to convert from internal types to Cap'n Proto types. The inefficiency of this function was revealed through profiling the memory usage of the program using Memtrace  (section \ref{testing}).
 
 The source of this problem was the inefficient design of the \textit{node.justify} field, which contained a whole node inside it. As shown in figure \ref{nchain}, each node has two links to previous nodes in the chain through the \textit{parent} field and the \textit{node.justify.node} field. By having each of these fields contain a whole \textit{node} record, much of the chain had multiple redundant copies, resulting in a very bloated \textit{node} object that was very expensive to convert.
 
 A solution to this problem is to store an integer offset to a node inside the \textit{justify} field rather than a \textit{node} record. This offset represents how many \textit{parent} links away the node is, and so can be used to reconstruct all of the original information. To implement this another type \textit{node\_justify} was added, that is identical to \textit{qc}, but with the field \textit{node} replaced with \textit{node\_offset}. One must then convert between the \textit{node\_justify} and \textit{qc} types to reconstruct the original data and follow the \textit{node.justify.node} link.
 
-\subsubsection{Node equality} \label{equality}
-One optimisation implemented was storing a \textit{digest} field in the node that is a hash over all of the other fields\footnote{Notably the hash can be computed over the \textit{digest} field of the parent node rather than recursing through the whole chain.}, enabling efficient equality checking of nodes. This means that two nodes can be compared by their digests without having to recurse through the entire chain; the digests being equal cryptographically guarantees that the whole chains are equal. The need for this optimisation was discovered through profiling the memory usage of the node equality function using Memtrace.
+\subsubsection{Optimising the node equality function} \label{equality}
+One optimisation of the node type that was implemented is storing a \textit{digest} field in the node that is a hash over all of the other fields\footnote{Notably the hash can be computed over the \textit{digest} field of the parent node rather than recursing through the whole chain.}, enabling efficient equality checking of nodes. This means that two nodes can be compared by their digests without having to recurse through the entire chain; the digests being equal cryptographically guarantees that the whole chains are equal. The need for this optimisation was discovered through profiling the memory usage of the node equality function using Memtrace.
 
-\subsubsection{Node truncation} \label{truncation}
-We implemented node truncation in order to reduce the size of nodes being sent over the network, cutting off older parts of the chain that the receiver already knows about. This is effective because the size of messages being sent is a bottleneck for our implementation (section \ref{capnpbenchmark}). The effectiveness of this optimisation demonstrated in our ablation study (section \ref{ablation}).
+\subsubsection{Optimising by truncating nodes} \label{truncation}
+In order to optimise the sending of nodes we implemented node truncation; this reduces the size of nodes being sent over the network by cutting off older parts of the chain that the receiver already knows about. This is effective because the size of messages being sent is a bottleneck for our implementation (section \ref{capnpbenchmark}). The effectiveness of this optimisation demonstrated in our ablation study (section \ref{ablation}).
 
 In order to truncate the node, our implementation recurses into the node's \textit{parent} field, then deletes the field at some chosen depth. The entire node can then be reconstructed at the receiver, by `splicing' it back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. Splicing together the nodes is done by recursing into the truncated node until it is equal to \textit{b\textsubscript{exec}}, then setting the deleted parent field to \textit{b\textsubscript{exec}}. The node equality function will still work on truncated nodes because of our optimisation to use digests (section \ref{equality}); a node will still have the same digest once it is truncated.
 

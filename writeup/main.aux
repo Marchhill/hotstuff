@@ -54,22 +54,24 @@
 \citation{lamportPaxosMadeSimple2001}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Non-byzantine consensus}{9}{subsection.2.2.1}\protected@file@percent }
 \newlabel{nonbyzconsensus}{{2.2.1}{9}{Non-byzantine consensus}{subsection.2.2.1}{}}
+\citation{kwonTendermintConsensusMining2014}
+\citation{buterinCasperFriendlyFinality2019}
 \citation{shoupPracticalThresholdSignatures2000}
 \citation{cachinRandomOraclesConstantinople2005}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{10}{subsection.2.2.2}\protected@file@percent }
 \newlabel{byzconsensus}{{2.2.2}{10}{Byzantine consensus}{subsection.2.2.2}{}}
 \@writefile{toc}{\contentsline {subsubsection}{Quorum certificates}{10}{subsubsection*.4}\protected@file@percent }
 \newlabel{qcproperty}{{2.2.1}{10}{}{property.2.2.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Threats}{11}{subsubsection*.5}\protected@file@percent }
-\newlabel{threat1}{{2.2.2}{11}{Threats}{subsubsection*.5}{}}
-\newlabel{threat2}{{2.2.2}{11}{Threats}{subsubsection*.5}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Algorithm}{11}{subsubsection*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Threats introduced by byzantine nodes}{11}{subsubsection*.5}\protected@file@percent }
+\newlabel{threat1}{{2.2.2}{11}{Threats introduced by byzantine nodes}{subsubsection*.5}{}}
+\newlabel{threat2}{{2.2.2}{11}{Threats introduced by byzantine nodes}{subsubsection*.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Byzantine fault-tolerant algorithm}{11}{subsubsection*.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Argument for safety}{11}{subsubsection*.7}\protected@file@percent }
 \citation{passThunderellaBlockchainsOptimistic2018}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{12}{subsection.2.2.3}\protected@file@percent }
 \newlabel{optresponsive}{{2.2.3}{12}{Optimistic responsiveness}{subsection.2.2.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Problem}{12}{subsubsection*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Algorithm}{12}{subsubsection*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Why the timeout was necessary}{12}{subsubsection*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Basic HotStuff algorithm}{12}{subsubsection*.9}\protected@file@percent }
 \citation{ocaml}
 \citation{lwt}
 \@writefile{toc}{\contentsline {subsubsection}{Argument for liveness}{13}{subsubsection*.10}\protected@file@percent }
@@ -89,6 +91,7 @@
 \newlabel{requirements}{{2.4}{14}{Requirements analysis}{section.2.4}{}}
 \citation{memtrace}
 \citation{mininet}
+\citation{lantzNetworkLaptopRapid2010}
 \@writefile{toc}{\contentsline {section}{\numberline {2.5}Software engineering practices}{15}{section.2.5}\protected@file@percent }
 \newlabel{softwareeng}{{2.5}{15}{Software engineering practices}{section.2.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Development methodology}{15}{subsection.2.5.1}\protected@file@percent }
@@ -122,7 +125,7 @@
 \newlabel{pacemaker}{{3.2.2}{19}{Pacemaker}{subsection.3.2.2}{}}
 \@writefile{toc}{\contentsline {subsubsection}{View-change protocol}{20}{subsubsection*.11}\protected@file@percent }
 \newlabel{viewchange}{{3.2.2}{20}{View-change protocol}{subsubsection*.11}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Integration}{20}{subsubsection*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Integrating the pacemaker with HotStuff}{20}{subsubsection*.12}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3.3}Specification}{20}{section.3.3}\protected@file@percent }
 \newlabel{spec}{{3.3}{20}{Specification}{section.3.3}{}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Modified HotStuff}}{21}{algorithm.1}\protected@file@percent }
@@ -136,7 +139,7 @@
 \newlabel{code_gotvotes}{{38}{21}{Specification}{algorithm.1}{}}
 \newlabel{code_onpropose}{{39}{21}{Specification}{algorithm.1}{}}
 \newlabel{code_propose}{{41}{21}{Specification}{algorithm.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Changes}{21}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Changes to the original algorithm}{21}{subsection.3.3.1}\protected@file@percent }
 \@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Modified Pacemaker}}{22}{algorithm.2}\protected@file@percent }
 \newlabel{pacemakeralgorithm}{{2}{22}{Specification}{algorithm.2}{}}
 \newlabel{code_getleader}{{1}{22}{Specification}{algorithm.2}{}}
@@ -161,30 +164,30 @@
 \newlabel{performance}{{3.4}{24}{Practical challenges and optimisations}{section.3.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Batching}{25}{subsection.3.4.1}\protected@file@percent }
 \newlabel{batching}{{3.4.1}{25}{Batching}{subsection.3.4.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Filtering}{25}{subsubsection*.13}\protected@file@percent }
-\newlabel{filtering}{{3.4.1}{25}{Filtering}{subsubsection*.13}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Filtering commands from batches}{25}{subsubsection*.13}\protected@file@percent }
+\newlabel{filtering}{{3.4.1}{25}{Filtering commands from batches}{subsubsection*.13}{}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Filtering implementation}}{25}{algorithm.3}\protected@file@percent }
-\newlabel{dedup}{{3}{25}{Filtering}{algorithm.3}{}}
-\newlabel{smalloptimisation}{{8}{25}{Filtering}{algorithm.3}{}}
+\newlabel{dedup}{{3}{25}{Filtering commands from batches}{algorithm.3}{}}
+\newlabel{smalloptimisation}{{8}{25}{Filtering commands from batches}{algorithm.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{Batch sizes}{26}{subsubsection*.14}\protected@file@percent }
 \newlabel{batchsizes}{{3.4.1}{26}{Batch sizes}{subsubsection*.14}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Nodes}{26}{subsection.3.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Recursive types}{26}{subsubsection*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Node offsets}{27}{subsubsection*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Node equality}{27}{subsubsection*.17}\protected@file@percent }
-\newlabel{equality}{{3.4.2}{27}{Node equality}{subsubsection*.17}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Node truncation}{27}{subsubsection*.18}\protected@file@percent }
-\newlabel{truncation}{{3.4.2}{27}{Node truncation}{subsubsection*.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Node chains}{26}{subsection.3.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{The problem with recursive types}{26}{subsubsection*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Replacing the justify.node field with an offset}{27}{subsubsection*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Optimising the node equality function}{27}{subsubsection*.17}\protected@file@percent }
+\newlabel{equality}{{3.4.2}{27}{Optimising the node equality function}{subsubsection*.17}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Optimising by truncating nodes}{28}{subsubsection*.18}\protected@file@percent }
+\newlabel{truncation}{{3.4.2}{28}{Optimising by truncating nodes}{subsubsection*.18}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.5}Implementing for evaluation}{28}{section.3.5}\protected@file@percent }
 \newlabel{benchcode}{{3.5}{28}{Implementing for evaluation}{section.3.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Load generator}{28}{subsection.3.5.1}\protected@file@percent }
 \newlabel{loadgenerator}{{3.5.1}{28}{Load generator}{subsection.3.5.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Open-loop load generator.}}{28}{figure.3.4}\protected@file@percent }
-\newlabel{openloop}{{3.4}{28}{Open-loop load generator}{figure.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Open-loop load generator.}}{29}{figure.3.4}\protected@file@percent }
+\newlabel{openloop}{{3.4}{29}{Open-loop load generator}{figure.3.4}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Closed-loop load generator.}}{29}{figure.3.5}\protected@file@percent }
 \newlabel{closedloop}{{3.5}{29}{Closed-loop load generator}{figure.3.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{29}{subsection.3.5.2}\protected@file@percent }
-\newlabel{experimentscripts}{{3.5.2}{29}{Experiment scripts}{subsection.3.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{30}{subsection.3.5.2}\protected@file@percent }
+\newlabel{experimentscripts}{{3.5.2}{30}{Experiment scripts}{subsection.3.5.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Logging framework}{30}{subsection.3.5.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3.6}Repository Overview}{31}{section.3.6}\protected@file@percent }
 \newlabel{repo}{{3.6}{31}{Repository Overview}{section.3.6}{}}
@@ -222,6 +225,8 @@
 \newlabel{nodecountseval}{{4.3.2}{39}{Node counts}{subsection.4.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Ablation study}{39}{subsection.4.3.3}\protected@file@percent }
 \newlabel{ablation}{{4.3.3}{39}{Ablation study}{subsection.4.3.3}{}}
+\citation{mininet}
+\citation{lantzNetworkLaptopRapid2010}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces Benchmarking of goodput for varying throughputs and node counts.}}{40}{figure.4.9}\protected@file@percent }
 \newlabel{throughputgoodputnodes}{{4.9}{40}{Benchmarking of goodput for varying throughputs and node counts}{figure.4.9}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{40}{subsection.4.3.4}\protected@file@percent }
@@ -276,12 +281,13 @@
 \bibcite{tezosCrypto}{27}
 \bibcite{memtrace}{28}
 \bibcite{mininet}{29}
-\bibcite{ocons}{30}
-\bibcite{ittai}{31}
-\bibcite{naorCogsworthByzantineView2021}{32}
-\bibcite{chandraWeakestFailureDetector1996}{33}
-\bibcite{chandraUnreliableFailureDetectors1996}{34}
-\bibcite{mirage}{35}
+\bibcite{lantzNetworkLaptopRapid2010}{30}
+\bibcite{ocons}{31}
+\bibcite{ittai}{32}
+\bibcite{naorCogsworthByzantineView2021}{33}
+\bibcite{chandraWeakestFailureDetector1996}{34}
+\bibcite{chandraUnreliableFailureDetectors1996}{35}
+\bibcite{mirage}{36}
 \@writefile{toc}{\contentsline {chapter}{Bibliography}{49}{chapter*.19}\protected@file@percent }
 \gdef\svg@ink@ver@settings{{\m@ne }{inkscape}{\m@ne }}
 \gdef \@abspage@last{50}
