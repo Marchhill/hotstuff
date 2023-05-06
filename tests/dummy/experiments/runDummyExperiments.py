@@ -33,11 +33,9 @@ with open(test_path + 'stats.csv', 'w') as f:
 # nodeCounts = [4, 8]
 nodeCounts = [1]
 # rates = [1, 10, 50, 200, 400, 600, 800, 1000, 2000, 4000, 8000, 12000]
-rates = [1000]
+rates = [1000] # not used
 experiment_time = 10
-msg_sizes = [10, 50, 100, 500, 1000, 2000, 3000, 4000, 5000, 6000]
-# msg_sizes = [10, 100, 500, 1000, 2000, 3000, 4000, 5000, 6000]
-# msg_sizes = [6000]
+msg_sizes = [1, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800, 4000, 4200, 4400, 4600, 4800, 5000, 5200, 5400, 5600, 5800, 6000]
 repeats = 3
 
 # randomise testing order
@@ -57,4 +55,4 @@ for (rate, n, s) in test_iter:
 	processes = []
 	x += 1
 
-subprocess.run(f'python3 ./plotDummy.py {test_name}', shell = True)
+# subprocess.run(f'python3 ./plotDummy.py {test_name}', shell = True)
