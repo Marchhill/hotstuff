@@ -421,7 +421,7 @@ Implementing this feature requires minimal changes to algorithm \ref{dedup}, one
 The optimisation is effective because at higher message sizes the latency of Cap'n Proto serialisation increases (section \ref{capnpbenchmark}), so smaller batches can lead to better performance. There is an inherent trade-off between increasing batch size to commit more commands, and messages becoming slower due to increased serialisation latency.
 
 \subsection{Nodes}
-This section concerns the challenges of designing a suitable type for nodes\footnote{\textit{Node} is another word for log in this context.} that can be efficiently serialised by Cap'n Proto and sent over the network. Recall from our discussion of the system architecture (section \ref{architecture}) that the internal type for a node must be converted into a Cap'n Proto type in order to be serialised.
+This section concerns the challenges of designing a suitable type for nodes\footnote{\textit{Node} is another word for log in this context.} that can be efficiently serialised by Cap'n Proto and sent over the network. Recall from our discussion of the system architecture (section \ref{architecture}) that the internal node type must be converted into a Cap'n Proto type in order to be serialised.
 
 Nodes are implemented as OCaml records, and contain the fields \textit{parent}, \textit{cmds}, \textit{height}, and \textit{justify}. The \textit{justify} field contains a QC that contains another node inside it.
 

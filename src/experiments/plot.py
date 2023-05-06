@@ -22,8 +22,11 @@ if not os.path.exists(subtests_dir):
 file_stats = []
 for file in os.listdir(f'./data/{test_name}/subtests'):
 	filename = os.fsdecode(file)
-	times = pd.read_csv(f'./data/{test_name}/subtests/{filename}', skipinitialspace=True)
-	filename = os.path.splitext(filename)[0]
+	s = os.path.splitext(filename)
+	if s[1] != '.csv':
+		continue
+	times = pd.read_csv(f'./data/{test_name}/subtests/{filename}', skipinitialspace=True, engine='python')
+	filename = s[0]
 	times['sent(s)'] = times['sent'] / 1_000_000_000
 	times['latency'] = (times['rec'] - times['sent']) / 1_000_000_000
 	file_stats.append({
@@ -40,6 +43,7 @@ for file in os.listdir(f'./data/{test_name}/subtests'):
 	# fig.savefig(f'{subtests_dir + filename}_cumlatency.pgf')
 	# fig.savefig(f'{subtests_dir + filename}_cumlatency.png')
 	# plt.close(fig)
+	# plt.clf()
 
 	# # time / latency heatmap
 	# fig, ax = plt.subplots(1, 1, figsize=(10, 5), constrained_layout=True)
@@ -49,6 +53,7 @@ for file in os.listdir(f'./data/{test_name}/subtests'):
 	# fig.savefig(f'{subtests_dir + filename}_timelatencyheatmap.pgf')
 	# fig.savefig(f'{subtests_dir + filename}_timelatencyheatmap.png')
 	# plt.close(fig)
+	# plt.clf()
 
 	# time / latency heatmap (log)
 	# fig, ax = plt.subplots(1, 1, figsize=(10, 5), constrained_layout=True)
@@ -62,7 +67,7 @@ file_stats_df = pd.DataFrame(file_stats)
 print(file_stats_df)
 
 # open stats file and add column
-stats = pd.read_csv(f'./data/{test_name}/stats.csv', skipinitialspace=True)
+stats = pd.read_csv(f'./data/{test_name}/stats.csv', skipinitialspace=True, engine='python')
 stats = stats.merge(file_stats_df, on='name')
 stats['lost'] = 100. * (1. - (stats['rec'] / stats['sent']))
 stats['diff'] = np.abs(stats['throughput'] - stats['goodput']) / stats['throughput']
@@ -107,7 +112,7 @@ plt.close(fig)
 plt.clf()
 
 ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='nodes', palette = color, linestyle='--')
-ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)', xlim = (0, 4000), ylim = (0., 1000.))
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)', xlim = (0, 4000), ylim = (0., 4000.))
 fig = ax.get_figure()
 ax.legend(title = 'node count')
 fig.savefig(graph_dir + 'throughputgoodput_nodes.pgf')
@@ -138,7 +143,7 @@ plt.close(fig)
 plt.clf()
 
 ax = sns.lineplot(x='throughput', y='goodput', data=stats, hue='version', palette = color, linestyle='--')
-ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)', xlim = (0, 2000), ylim = (0., 800.))
+ax.set(xlabel = 'throughput (req/s)', ylabel = 'goodput (req/s)', xlim = (0, 2000), ylim = (0., 1200.))
 fig = ax.get_figure()
 ax.legend(title = 'version')
 fig.savefig(graph_dir + 'throughputgoodput_ablation.pgf')

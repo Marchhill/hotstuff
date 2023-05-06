@@ -120,12 +120,12 @@ In our view-change study (section \ref{viewchange}) we demonstrate that the view
 \label{goodputlatencybatch}
 \end{figure}
 
-\begin{figure}[h!]
-\centering
-\input{images/batch_size_test/goodput95latency.pgf}
-\caption{Benchmarking of goodput and 95\%ile latency while varying throughputs and batch sizes.}
-\label{goodput95latencybatch}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \input{images/batch_size_test/goodput95latency.pgf}
+% \caption{Benchmarking of goodput and 95\%ile latency while varying throughputs and batch sizes.}
+% \label{goodput95latencybatch}
+% \end{figure}
 
 \begin{figure}[h!]
 \centering
@@ -162,12 +162,12 @@ There is a clear trade-off between larger batch sizes that result in more comman
 \label{goodputlatencynodes}
 \end{figure}
 
-\begin{figure}[h!]
-\centering
-\input{images/node_count_test/goodput95latency_nodes.pgf}
-\caption{Benchmarking of goodput and 95\%ile latency while varying throughputs and node counts.}
-\label{goodput95latencynodes}
-\end{figure}
+% \begin{figure}[h!]
+% \centering
+% \input{images/node_count_test/goodput95latency_nodes.pgf}
+% \caption{Benchmarking of goodput and 95\%ile latency while varying throughputs and node counts.}
+% \label{goodput95latencynodes}
+% \end{figure}
 
 This study compares the performance of the system for varying node counts. Node counts were chosen such that $n = 3f + 1$ for some $f$, as choosing another value would decrease performance without any benefit of increased fault-tolerance\footnote{A node count of 2 was also tested as it is the smallest node count where internal messages are exchanged.}. All experiments were run with a batch size of 300.
 
@@ -182,12 +182,12 @@ Figure \ref{throughputgoodputnodes} shows that the larger the node count, the lo
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 Version & Chaining & Truncation & Filtering & Crypto \\ \hline
-1 & \xmark & \xmark & \xmark & \cmark \\ \hline
-2 & \cmark & \xmark & \xmark & \cmark \\ \hline
-3 & \cmark & \xmark & \cmark & \cmark \\ \hline
-4 & \cmark & \cmark & \xmark & \cmark \\ \hline
-5 & \cmark & \cmark & \cmark & \cmark \\ \hline
-6 & \cmark & \cmark & \cmark & \xmark \\ \hline
+BASIC & \xmark & \xmark & \xmark & \cmark \\ \hline
+CHAIN & \cmark & \xmark & \xmark & \cmark \\ \hline
+FILT & \cmark & \xmark & \cmark & \cmark \\ \hline
+TRUNC & \cmark & \cmark & \xmark & \cmark \\ \hline
+ALL & \cmark & \cmark & \cmark & \cmark \\ \hline
+NOCRY & \cmark & \cmark & \cmark & \xmark \\ \hline
 \end{tabular}
 \caption{Features enabled in different versions.}
 \label{versiontable}
@@ -195,16 +195,16 @@ Version & Chaining & Truncation & Filtering & Crypto \\ \hline
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{ablation/throughputgoodput_ablation.png}
-\caption{Benchmarking of goodput for varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size.}
+\input{images/ablation/throughputgoodput_ablation.pgf}
+\caption{Benchmarking of goodput for varying throughputs and implementation versions.}
 \label{throughputgoodputablation}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{ablation/throughputflatency_ablation.png}
-\caption{Benchmarking of mean latency while varying throughputs and implementation versions, run for 10s with 4 nodes unlimited batch size. Discarded result if goodput was not within 5\% of target throughput.}
-\label{throughputlatencyablation}
+\input{images/ablation/goodputlatency_ablation.pgf}
+\caption{Benchmarking of goodput and median latency while varying throughputs and implementation versions.}
+\label{goodputlatencablation}
 \end{figure}
 
 This study compares the performance of different versions of the system with different optimisations enabled. The optimisations explored are chaining (section \ref{chaining}), node truncation (section \ref{truncation}), and command filtering (section \ref{filtering}). We also compare performance with, and without cryptography enabled. The mapping from version numbers to which features are enabled is given in table \ref{versiontable}. All experiments were run with a network of 4 nodes, and unlimited batch sizes.

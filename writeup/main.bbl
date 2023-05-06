@@ -95,6 +95,12 @@ Diego Ongaro and John Ousterhout.
   14)}, pages 305--319, 2014.
 \newblock \url{https://www.usenix.org/node/184041.}
 
+\bibitem{fischerImpossibilityDistributedConsensus1985}
+Michael~J. Fischer, Nancy~A. Lynch, and Michael~S. Paterson.
+\newblock Impossibility of distributed consensus with one faulty process.
+\newblock {\em Journal of the ACM}, 32(2):374--382, April 1985.
+\newblock \url{https://dl.acm.org/doi/10.1145/3149.214121}.
+
 \bibitem{peaseReachingAgreementPresence1980}
 M.~Pease, R.~Shostak, and L.~Lamport.
 \newblock Reaching {{Agreement}} in the {{Presence}} of {{Faults}}.

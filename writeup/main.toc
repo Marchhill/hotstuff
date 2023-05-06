@@ -5,7 +5,7 @@
 \contentsline {subsection}{\numberline {2.2.1}Non-byzantine consensus}{9}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{10}{subsection.2.2.2}%
 \contentsline {subsubsection}{Quorum certificates}{10}{subsubsection*.4}%
-\contentsline {subsubsection}{Threats}{10}{subsubsection*.5}%
+\contentsline {subsubsection}{Threats}{11}{subsubsection*.5}%
 \contentsline {subsubsection}{Algorithm}{11}{subsubsection*.6}%
 \contentsline {subsubsection}{Argument for safety}{11}{subsubsection*.7}%
 \contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{12}{subsection.2.2.3}%
@@ -54,9 +54,9 @@
 \contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{35}{subsection.4.2.2}%
 \contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{35}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Batch sizes}{37}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Node counts}{40}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Ablation study}{41}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{42}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}View-changes}{42}{subsection.4.3.5}%
-\contentsline {chapter}{\numberline {5}Conclusion}{46}{chapter.5}%
-\contentsline {chapter}{Bibliography}{50}{chapter*.19}%
+\contentsline {subsection}{\numberline {4.3.2}Node counts}{39}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Ablation study}{39}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{40}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}View-changes}{40}{subsection.4.3.5}%
+\contentsline {chapter}{\numberline {5}Conclusion}{45}{chapter.5}%
+\contentsline {chapter}{Bibliography}{49}{chapter*.19}%
