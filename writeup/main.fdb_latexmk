@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1683408300 "main.aux" "main.bbl" "main" 1683408302
+["bibtex main"] 1683462553 "main.aux" "main.bbl" "main" 1683462916
   "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/bibtex/bst/base/unsrt.bst" 1647894602 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "main.aux" 1683408302 24329 804f8b208a9850d592a144e7a0c401fa "pdflatex"
-  "ref.bib" 1683383982 32696 7c4e002e44a65776cd210280b5e6b964 ""
+  "main.aux" 1683462916 24754 0a1bc371352eaf5287c2e6945c9ae05d "pdflatex"
+  "ref.bib" 1683462483 38626 eed58098a6d6798b976ce101a67eaa23 ""
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1683408300 "/Users/marchhill/Documents/cam/2/dissertation/writeup/main.tex" "main.pdf" "main" 1683408302
+["pdflatex"] 1683462913 "/Users/marchhill/Documents/cam/2/dissertation/writeup/main.tex" "main.pdf" "main" 1683462916
   "/Users/marchhill/Documents/cam/2/dissertation/writeup/main.tex" 1683408151 4414 328ebf45eb7a5a0b864fc2f986ed6dde ""
   "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1647894602 2971 def0b6c1f0b107b3b936def894055589 ""
   "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1647894602 2900 1537cc8184ad1792082cd229ecc269f4 ""
@@ -268,7 +268,7 @@
   "chapters/evaluation.tex" 1683387087 20250 63f52a53f76f13267f98e140503f0bea ""
   "chapters/implementation.tex" 1683405210 54500 5d53b3933914d97df9fe8d93953c410d ""
   "chapters/introduction.tex" 1683147688 5563 99a4ed384e9a4a4a64a8c67741b1cee6 ""
-  "chapters/preparation.tex" 1683408299 24264 7b067a05befd24f5f74cd090e5b65b14 ""
+  "chapters/preparation.tex" 1683462913 24795 5a999ab34124e6671a90d722780605ef ""
   "images//closedloop.pdf" 1683404694 31791 04ef5c8bab8357efb40812a064555ad0 ""
   "images//dummy_test/throughputflatency.png" 1682015367 63648 ca3e2fc9722bbf5e82314cb2dd3845d6 ""
   "images//dummy_test/throughputgoodput.png" 1681734192 36677 4329547de0d37125a6aa1b599e651441 ""
@@ -291,11 +291,11 @@
   "images/batch_size_test/throughputgoodput.pgf" 1683216290 53448 ad749ba15ae2d99eae9a93e73180b3b1 ""
   "images/node_count_test/goodputlatency_nodes.pgf" 1683230241 116182 6da05a87822dd32ffbe367ea9c7f1faa ""
   "images/node_count_test/throughputgoodput_nodes.pgf" 1683230240 57080 38c6f11ccff3f944c14cb61811853ff5 ""
-  "main.aux" 1683408302 24329 804f8b208a9850d592a144e7a0c401fa "pdflatex"
-  "main.bbl" 1683408300 9640 62bc9ad24a1cfc42ce8830b52d021392 "bibtex main"
-  "main.out" 1683408302 6861 cb157d15795b82a19d54a8bc62f719cc "pdflatex"
+  "main.aux" 1683462916 24754 0a1bc371352eaf5287c2e6945c9ae05d "pdflatex"
+  "main.bbl" 1683462553 10395 82a43b56eaad6509b5f211b61eae4655 "bibtex main"
+  "main.out" 1683462916 6861 cb157d15795b82a19d54a8bc62f719cc "pdflatex"
   "main.tex" 1683408151 4414 328ebf45eb7a5a0b864fc2f986ed6dde ""
-  "main.toc" 1683408302 5163 5c8a87abe34ebea926158c58304fda8a "pdflatex"
+  "main.toc" 1683462916 5163 5c8a87abe34ebea926158c58304fda8a "pdflatex"
   (generated)
   "main.aux"
   "main.log"

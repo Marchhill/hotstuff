@@ -1,3 +1,21 @@
+@misc{abrahamInformationTheoreticHotStuff2020,
+  title = {Information {{Theoretic HotStuff}}},
+  author = {Abraham, Ittai and Stern, Gilad},
+  year = {2020},
+  month = nov,
+  number = {arXiv:2009.12828},
+  eprint = {2009.12828},
+  primaryclass = {cs},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.2009.12828},
+  urldate = {2023-05-07},
+  abstract = {This work presents Information Theoretic HotStuff (IT-HS), a new optimally resilient protocol for solving Byzantine Agreement in partial synchrony with information theoretic security guarantees. In particular, IT-HS does not depend on any PKI or common setup assumptions and is resilient to computationally unbounded adversaries. IT-HS is based on the Primary-Backup view-based paradigm. In IT-HS, in each view, and in each view change, each party sends only a constant number of words to every other party. This yields an \$O(n\^2)\$ word and message complexity in each view. In addition, IT-HS requires just \$O(1)\$ persistent local storage and \$O(n)\$ transient local storage. Finally, like all Primary-Backup view-based protocols in partial synchrony, after the system becomes synchronous, all nonfaulty parties decide on a value in the first view a nonfaulty leader is chosen. Moreover, like PBFT and HotStuff, IT-HS is optimistically responsive: with a nonfaulty leader, parties decide as quickly as the network allows them to do so, without regard for the known upper bound on network delay. Our work improves in multiple dimensions upon the information theoretic version of PBFT presented by Miguel Castro, and can be seen as an information theoretic variant of the HotStuff paradigm.},
+  archiveprefix = {arxiv},
+  howpublished = {\url{http://arxiv.org/abs/2009.12828}},
+  keywords = {{Computer Science - Distributed, Parallel, and Cluster Computing}},
+  file = {/Users/marchhill/Zotero/storage/SY4S6KM3/Abraham and Stern - 2020 - Information Theoretic HotStuff.pdf;/Users/marchhill/Zotero/storage/Y6B9U56M/2009.html}
+}
+
 @misc{async,
   title = {Async {{Library}}},
   author = {{Jane Street}},
@@ -14,6 +32,25 @@
   urldate = {2023-05-03},
   abstract = {This report describes the Libra Byzantine Fault Tolerance (LibraBFT) algorithmic core and discusses next steps in its production. The consensus protocol is responsible for forming agreement on ordering and finalizing transactions among a configurable set of validators. LibraBFT maintains safety against network asynchrony and even if at any particular configuration epoch, a threshold of the participants are Byzantine. LibraBFT is based on HotStuff, a recent protocol that leverages several decades of scientific advances in Byzantine Fault Tolerance (BFT) and achieves the strong scalability and security properties required by internet settings. Several novel features distinguish LibraBFT from HotStuff. LibraBFT incorporates a novel round synchronization mechanism that provides bounded commit latency under synchrony. It introduces a nil-block vote that allows proposals to commit despite having faulty leaders. It encapsulates the correct behavior by participants in a ``tcb''-able module, allowing it to run within a secure hardware enclave that reduces the attack surface on participants. LibraBFT can reconfigure itself, by embedding configuration-change commands in the sequence. A new configuration epoch may change everything from the validator set to the protocol itself.},
   note = {\url{https://www.semanticscholar.org/paper/State-Machine-Replication-in-the-Libra-Blockchain-Baudet-Ching/71bb5ddbc614c241200302da0a9a6130587e3793}}
+}
+
+@article{bennettExperimentalQuantumCryptography1992,
+  title = {Experimental Quantum Cryptography},
+  author = {Bennett, Charles H. and Bessette, Fran{\c c}ois and Brassard, Gilles and Salvail, Louis and Smolin, John},
+  year = {1992},
+  month = jan,
+  journal = {Journal of Cryptology},
+  volume = {5},
+  number = {1},
+  pages = {3--28},
+  issn = {1432-1378},
+  doi = {10.1007/BF00191318},
+  urldate = {2023-05-07},
+  abstract = {We describe results from an apparatus and protocol designed to implement quantum key distribution, by which two users, who share no secret information initially: (1) exchange a random quantum transmission, consisting of very faint flashes of polarized light; (2) by subsequent public discussion of the sent and received versions of this transmission estimate the extent of eavesdropping that might have taken place on it, and finally (3) if this estimate is small enough, distill from the sent and received versions a smaller body of shared random information, which is certifiably secret in the sense that any third party's expected information on it is an exponentially small fraction of one bit. Because the system depends on the uncertainty principle of quantum physics, instead of the usual mathematical assumptions such as the difficulty of factoring, it remains secure against an adversary with unlimited computing power.},
+  langid = {english},
+  keywords = {Key distribution,Polarized light,Privacy amplification,Public discussion,Quantum cryptography,Reconciliation protocols,Uncertainty principle,Unconditional security},
+  note = {\url{https://doi.org/10.1007/BF00191318}},
+  file = {/Users/marchhill/Zotero/storage/KMCD82LZ/Bennett et al. - 1992 - Experimental quantum cryptography.pdf}
 }
 
 @misc{buterinCasperFriendlyFinality2019,
@@ -293,6 +330,24 @@
   file = {/Users/marchhill/Zotero/storage/D8B395CL/Lamport - 2001 - Paxos Made Simple.pdf}
 }
 
+@article{lamportTimeClocksOrdering1978,
+  title = {Time, Clocks, and the Ordering of Events in a Distributed System},
+  author = {Lamport, Leslie},
+  year = {1978},
+  month = jul,
+  journal = {Communications of the ACM},
+  volume = {21},
+  number = {7},
+  pages = {558--565},
+  issn = {0001-0782},
+  doi = {10.1145/359545.359563},
+  urldate = {2023-05-07},
+  abstract = {The concept of one event happening before another in a distributed system is examined, and is shown to define a partial ordering of the events. A distributed algorithm is given for synchronizing a system of logical clocks which can be used to totally order the events. The use of the total ordering is illustrated with a method for solving synchronization problems. The algorithm is then specialized for synchronizing physical clocks, and a bound is derived on how far out of synchrony the clocks can become.},
+  keywords = {clock synchronization,computer networks,distributed systems,multiprocess systems},
+  note = {\url{https://dl.acm.org/doi/10.1145/359545.359563}},
+  file = {/Users/marchhill/Zotero/storage/VFGJYZKA/Lamport - 1978 - Time, clocks, and the ordering of events in a dist.pdf}
+}
+
 @inproceedings{lantzNetworkLaptopRapid2010,
   title = {A Network in a Laptop: Rapid Prototyping for Software-Defined Networks},
   shorttitle = {A Network in a Laptop},
@@ -435,6 +490,24 @@
   langid = {english},
   note = {\url{https://dl.acm.org/doi/10.1145/322186.322188}},
   file = {/Users/marchhill/Zotero/storage/I4PMXCYI/Pease et al. - 1980 - Reaching Agreement in the Presence of Faults.pdf}
+}
+
+@article{schneiderImplementingFaulttolerantServices1990,
+  title = {Implementing Fault-Tolerant Services Using the State Machine Approach: A Tutorial},
+  shorttitle = {Implementing Fault-Tolerant Services Using the State Machine Approach},
+  author = {Schneider, Fred B.},
+  year = {1990},
+  month = dec,
+  journal = {ACM Computing Surveys},
+  volume = {22},
+  number = {4},
+  pages = {299--319},
+  issn = {0360-0300},
+  doi = {10.1145/98163.98167},
+  urldate = {2023-05-07},
+  abstract = {The state machine approach is a general method for implementing fault-tolerant services in distributed systems. This paper reviews the approach and describes protocols for two different failure models\textemdash Byzantine and fail stop. Systems reconfiguration techniques for removing faulty components and integrating repaired components are also discussed.},
+  note = {\url{https://dl.acm.org/doi/10.1145/98163.98167}},
+  file = {/Users/marchhill/Zotero/storage/JQLG2T8R/Schneider - 1990 - Implementing fault-tolerant services using the sta.pdf}
 }
 
 @incollection{shoupPracticalThresholdSignatures2000,
