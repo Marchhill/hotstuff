@@ -33,16 +33,16 @@
 \contentsline {section}{\numberline {3.3}Specification}{20}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Changes to the original algorithm}{22}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Proofs}{23}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Practical challenges and optimisations}{24}{section.3.4}%
+\contentsline {section}{\numberline {3.4}Practical challenges and optimisations}{25}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Batching}{25}{subsection.3.4.1}%
 \contentsline {subsubsection}{Filtering commands from batches}{25}{subsubsection*.13}%
 \contentsline {subsubsection}{Batch sizes}{26}{subsubsection*.14}%
-\contentsline {subsection}{\numberline {3.4.2}Node chains}{26}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.2}Node chains}{27}{subsection.3.4.2}%
 \contentsline {subsubsection}{The problem with recursive types}{27}{subsubsection*.15}%
 \contentsline {subsubsection}{Replacing the justify.node field with an offset}{27}{subsubsection*.16}%
-\contentsline {subsubsection}{Optimising the node equality function}{27}{subsubsection*.17}%
+\contentsline {subsubsection}{Optimising the node equality function}{28}{subsubsection*.17}%
 \contentsline {subsubsection}{Optimising by truncating nodes}{28}{subsubsection*.18}%
-\contentsline {section}{\numberline {3.5}Implementing for evaluation}{28}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Implementing for evaluation}{29}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Load generator}{29}{subsection.3.5.1}%
 \contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{30}{subsection.3.5.2}%
 \contentsline {subsection}{\numberline {3.5.3}Logging framework}{30}{subsection.3.5.3}%
