@@ -85,6 +85,12 @@ let run_client nodes _version time _rate req_times_fp stats_fp msg_size _batch_s
 		let* (i, stats) = benchmark conns time 1000. msg_size start_time in
 		let name = match req_times_fp with
 			| Some s ->
+				Out_channel.with_open_text s (fun oc ->
+					Printf.fprintf oc "send_time, conn_time\n";
+					List.iter (fun (send, conn) ->
+						Printf.fprintf oc "%f, %f\n" send conn
+					) (List.combine !(stats.send_times) !(stats.connection_times));
+				);
 				Filename.basename s |> Filename.remove_extension
 			| None -> ""
 		in
@@ -96,24 +102,6 @@ let run_client nodes _version time _rate req_times_fp stats_fp msg_size _batch_s
 		Fmt.pr "%s: n = %d, goodput = %fbytes/s@." name i goodput;
 		Util.print_stats !(stats.connection_times) "req_conn" "s" 12345;
 		Util.print_stats !(stats.send_times) "req_send" "s" 12345;
-		(* let success = Array.fold_left (fun acc -> function Some _ -> acc + 1 | None -> acc) 0  res in
-		let elapsed =
-			let open Base.Int63 in
-			let (lo, hi) = Array.fold_left (fun (lo, hi) -> function Some (_, x) -> (min lo x, max hi x) | None -> (lo, hi)) (max_value, min_value) res in
-			delta lo hi
-		in
-    	let elapsed = max elapsed (Float.of_int time) in
-		let goodput = (Float.of_int success) /. elapsed in
-		let res = Array.map (function (Some (x, y)) -> delta x y | None -> 0.) res in
-		let sum = Array.fold_left (+.) 0. res in
-		let sum_sq = Array.fold_left (fun acc x -> acc +. (x *. x)) 0. res in
-		let mean = sum /. (Float.of_int success) in
-		let sd = Float.sqrt ((sum_sq /. (Float.of_int success)) -. (mean *. mean)) in
-		let version = match version with Some v -> v | None -> "x" in
-		Fmt.pr "\nname = %s\nversion = %s\nnodes = %d \n reqs = %d / %d\nthroughput = %dreq/s\ngoodput = %freq/s\nmean = %fs\nsd = %fs@." name version nodes success n rate goodput mean sd;
-		Util.print_stats !(stats.connection_times) "req_conn" "s" 12345;
-		Util.print_stats !(stats.send_times) "req_send" "s" 12345;
-		*)
 		(* append stats to csv file*)
 		(match stats_fp with
 			| Some s ->

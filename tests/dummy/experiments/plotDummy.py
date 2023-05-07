@@ -27,7 +27,7 @@ if not os.path.exists(graph_dir):
 # 	file_stats.append({
 # 		'name': filename,
 # 		'medianlatency': times['latency'].median(),
-# 		'99latency': times['latency'].quantile(0.99),
+# 		'95latency': times['latency'].quantile(0.95),
 # 		'meanlatency': times['latency'].mean()
 # 	})
 
@@ -41,11 +41,13 @@ stats = pd.read_csv(f'./data/{test_name}/stats.csv', skipinitialspace=True)
 # stats['throughputfiltered'] = np.where(stats['diff'] <= 0.05, stats['throughput'], None)
 # stats = stats.merge(file_stats_df, on='name')
 stats['goodput(mb/s)'] = stats['goodput'] / 1000000
-stats['mean_send(ms)'] = stats['mean_send'] * 1000
+stats['send(ms)'] = stats['median_send'] * 1000
+stats['send95(ms)'] = stats['95latency'] * 1000
 
 ax = sns.lineplot(x='msg_size', y='goodput(mb/s)', data=stats, linestyle='--')
 ax.set(xlabel = 'msg size (bytes)', ylabel = 'max goodput (Mb/s)')
 fig = ax.get_figure()
+fig.savefig(graph_dir + 'sizegoodput.pgf')
 fig.savefig(graph_dir + 'sizegoodput.png')
 plt.close(fig)
 
@@ -55,9 +57,10 @@ fig = ax.get_figure()
 fig.savefig(graph_dir + 'sizetotalsend.png')
 plt.close(fig)
 
-ax = sns.lineplot(x='msg_size', y='mean_send(ms)', data=stats, linestyle='--')
+ax = sns.lineplot(x='msg_size', y='send(ms)', data=stats, linestyle='--')
 ax.set(xlabel = 'msg size (bytes)', ylabel = 'mean send time (ms)')
 fig = ax.get_figure()
+fig.savefig(graph_dir + 'sizemeansend.pgf')
 fig.savefig(graph_dir + 'sizemeansend.png')
 plt.close(fig)
 

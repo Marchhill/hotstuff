@@ -15,18 +15,32 @@ I had some experience using OCaml from the IA Foundations of Computer Science co
 HotStuff is a byzantine consensus algorithm; it allows a group of nodes to reach agreement on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a \textit{leader} node proposes some value by sending it the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that there is consensus on the committed part of the log, and it is now immutable.
 
 The system model describes the adverse conditions under which HotStuff can operate:
+\begin{assumption}[Partially Synchronous] \label{partialsyncassumption}
+	Messages sent by one party will always be delivered to another within some bounded amount of time ($\delta$) after global synchronisation time (GST) has been reached \cite{dworkConsensusPresencePartial1988}.
+\end{assumption}
+This is the weakest assumption possible that allows consensus to be reached \cite{fischerImpossibilityDistributedConsensus1985}.
+
+\begin{assumption}[Authenticated] \label{authassumption}
+	A message source cannot be spoofed. We assume that all messages are signed, providing authentication.
+\end{assumption}
+
 \begin{description}
-	\item \textit{Partially Synchronous} --- messages sent by one party will always be delivered to another within some bounded amount of time ($\delta$) after global synchronisation time (GST) has been reached \cite{dworkConsensusPresencePartial1988}. This is the weakest assumption possible that allows consensus to be reached \cite{fischerImpossibilityDistributedConsensus1985}.
-	\item \textit{Authenticated} --- a message source cannot be spoofed. We assume that all messages are signed, providing authentication.
+	\item \textit{} --- 
+	\item \textit{Authenticated} --- 
 	\item \textit{Byzantine} --- a maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes. This is the maximum number of byzantine nodes for which consensus can theoretically be reached \cite{peaseReachingAgreementPresence1980}\cite{fischerEasyImpossibilityProofs1986}.
 \end{description}
 
 HotStuff has the following properties:
-\begin{description}
-	\item \textit{Safety} --- once a log has been committed up to some point that part of the log is immutable, it can only appended to.
-	\item \textit{Liveness} --- assuming there is a functioning \textit{pacemaker}, the system is guaranteed to make progress within some bounded amount of time once a non-faulty leader is elected. The pacemaker ensures that all honest replicas will remain in some view with an honest leader for long enough to make progress (section \ref{pacemaker}).
-	\item \textit{Optimistic Responsiveness} --- once GST has been reached, the system is able to make progress as fast as network conditions allow once a non-faulty leader is elected; it does not have to wait for some timeout to elapse.
-\end{description}
+
+\begin{property}[Safety] \label{safetyproperty}
+	Once a log has been committed up to some point that part of the log is immutable, it can only appended to.
+\end{property}
+\begin{property}[Liveness] \label{livenessproperty}
+	Assuming there is a functioning \textit{pacemaker}, the system is guaranteed to make progress within some bounded amount of time once GST has been reached and a non-faulty leader is chosen. The pacemaker ensures that all honest replicas will remain in some view with an honest leader for long enough to make progress (section \ref{pacemaker}).
+\end{property}
+\begin{property}[Optimistic Responsiveness] \label{optresponsiveproperty}
+	Once GST has been reached, the system is able to make progress as fast as network conditions allow once a non-faulty leader is elected; it does not have to wait for some timeout to elapse.
+\end{property}
 
 Each view is composed of several \textit{phases}. In each phase the leader broadcasts to the replicas, that respond with an acknowledgement (\textit{ack}). The leader waits until it receives a \textit{quorum} of $n - f$ acks\footnote{N.B. the size of a quorum is different in the non-byzantine case.} before proceeding to the next phase, meaning that at least $f + 1$ of the acks were from honest nodes. The basic HotStuff algorithm has five phases in each view.
 
@@ -116,8 +130,9 @@ Modifying the byzantine algorithm (section \ref{byzconsensus}) to include our so
 \end{description}
 
 \subsubsection{Argument for liveness}
-[add a bit to this argument, and reference the assumption of a functioning pacemaker]
-The changes ensure that the leader will make progress as it is guaranteed to receive a \textit{key} for a log ($\lambda$) if some honest replica is locked on it. This is because for some replica to become locked on $\lambda$ there must be at least $f + 1$ honest nodes that have a \textit{key} for $\lambda$; the leader must hear about $\lambda$ from one of these honest nodes when it receives a quorum of \textit{new-view} messages.
+We informally argue for the liveness (section \ref{properties}) of this algorithm. We first argue that the non-faulty leader will propose the highest log, and then that the honest replicas will vote for the proposal and progress wil be made.
+
+The non-faulty leader is guaranteed to receive a \textit{key} for a log ($\lambda$) if some honest replica is locked on it. This is because for some replica to become locked on $\lambda$ there must be at least $f + 1$ honest nodes that have a \textit{key} for $\lambda$; the leader must hear about $\lambda$ from one of these honest nodes when it receives a quorum of \textit{new-view} messages.
 
 \section{Tools \& libraries} \label{tools}
 In this section we outline the languages and libraries used in implementation, and justify why they were appropriate for this project.
