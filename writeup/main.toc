@@ -17,7 +17,7 @@
 \contentsline {subsection}{\numberline {2.3.2}Lwt}{14}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{14}{subsection.2.3.3}%
 \contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{14}{subsection.2.3.4}%
-\contentsline {section}{\numberline {2.4}Requirements analysis}{14}{section.2.4}%
+\contentsline {section}{\numberline {2.4}Requirements analysis}{15}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Software engineering practices}{15}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}Development methodology}{15}{subsection.2.5.1}%
 \contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{15}{subsection.2.5.2}%
@@ -31,19 +31,19 @@
 \contentsline {subsubsection}{View-change protocol}{20}{subsubsection*.11}%
 \contentsline {subsubsection}{Integrating the pacemaker with HotStuff}{20}{subsubsection*.12}%
 \contentsline {section}{\numberline {3.3}Specification}{20}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Changes to the original algorithm}{21}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.1}Changes to the original algorithm}{22}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Proofs}{23}{subsection.3.3.2}%
 \contentsline {section}{\numberline {3.4}Practical challenges and optimisations}{24}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Batching}{25}{subsection.3.4.1}%
 \contentsline {subsubsection}{Filtering commands from batches}{25}{subsubsection*.13}%
 \contentsline {subsubsection}{Batch sizes}{26}{subsubsection*.14}%
 \contentsline {subsection}{\numberline {3.4.2}Node chains}{26}{subsection.3.4.2}%
-\contentsline {subsubsection}{The problem with recursive types}{26}{subsubsection*.15}%
+\contentsline {subsubsection}{The problem with recursive types}{27}{subsubsection*.15}%
 \contentsline {subsubsection}{Replacing the justify.node field with an offset}{27}{subsubsection*.16}%
 \contentsline {subsubsection}{Optimising the node equality function}{27}{subsubsection*.17}%
 \contentsline {subsubsection}{Optimising by truncating nodes}{28}{subsubsection*.18}%
 \contentsline {section}{\numberline {3.5}Implementing for evaluation}{28}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Load generator}{28}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.1}Load generator}{29}{subsection.3.5.1}%
 \contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{30}{subsection.3.5.2}%
 \contentsline {subsection}{\numberline {3.5.3}Logging framework}{30}{subsection.3.5.3}%
 \contentsline {section}{\numberline {3.6}Repository Overview}{31}{section.3.6}%

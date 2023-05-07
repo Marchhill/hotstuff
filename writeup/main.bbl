@@ -1,18 +1,23 @@
 \begin{thebibliography}{10}
 
-\bibitem{lamportByzantineGeneralsProblem1982}
-Leslie Lamport, Robert Shostak, and Marshall Pease.
-\newblock The {{Byzantine Generals Problem}}.
-\newblock {\em ACM Transactions on Programming Languages and Systems}, 4(3),
-  1982.
-\newblock \url{https://dl.acm.org/doi/10.1145/357172.357176}.
-
 \bibitem{nakamotoBitcoinPeertoPeerElectronic2008}
 Satoshi Nakamoto.
 \newblock Bitcoin: {{A Peer-to-Peer Electronic Cash System}}.
 \newblock Technical report, 2008.
 \newblock
   \url{https://www.ussc.gov/sites/default/files/pdf/training/annual-national-training-seminar/2018/Emerging_Tech_Bitcoin_Crypto.pdf}.
+
+\bibitem{perniceCryptocurrency2021}
+Ingolf G.~A. Pernice and Brett Scott.
+\newblock Cryptocurrency.
+\newblock {\em Internet Policy Review}, 10(2), May 2021.
+\newblock \url{https://policyreview.info/glossary/cryptocurrency}.
+
+\bibitem{hassanDecentralizedAutonomousOrganization2021}
+Samer Hassan and Primavera~De Filippi.
+\newblock Decentralized {{Autonomous Organization}}.
+\newblock {\em Internet Policy Review}, 10(2), April 2021.
+\newblock \url{https://policyreview.info/glossary/DAO}.
 
 \bibitem{ethereumWhite}
 Vitalik Buterin.
@@ -21,11 +26,22 @@ Vitalik Buterin.
 \newblock Technical report, 2014.
 \newblock \url{https://ethereum.org/en/whitepaper/}.
 
+\bibitem{EthereumNameService}
+Ethereum {{Name Service}}.
+\newblock \url{https://ens.domains}.
+
 \bibitem{ethereumYellow}
 Gavin Wood.
 \newblock Ethereum: {{A}} secure dentralised generalised transaction ledger.
 \newblock Technical report, 2022.
 \newblock \url{https://ethereum.github.io/yellowpaper/paper.pdf}.
+
+\bibitem{lamportByzantineGeneralsProblem1982}
+Leslie Lamport, Robert Shostak, and Marshall Pease.
+\newblock The {{Byzantine Generals Problem}}.
+\newblock {\em ACM Transactions on Programming Languages and Systems}, 4(3),
+  1982.
+\newblock \url{https://dl.acm.org/doi/10.1145/357172.357176}.
 
 \bibitem{baudetStateMachineReplication2019}
 M.~Baudet, A.~Ching, A.~Chursin, G.~Danezis, Fran{\c c}ois Garillot, Zekun Li,
