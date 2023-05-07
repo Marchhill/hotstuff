@@ -58,8 +58,6 @@ let benchmark conns time timeout msg_size start_time =
 		else (
 			(* sleep if not yet time to deliver next command *)
 			let* () = if (i mod 10) = 0 then (
-				if (i mod 100) = 0 then
-					Fmt.pr "sent %d!@." i;
 				Lwt.pause ()
 			)
 			else

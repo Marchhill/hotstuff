@@ -1,9 +1,9 @@
-# dune exec -- ../load_gen_dummy.exe 1 -t 10 -r 1000 -s 10 --times ./data/dummytest_02-05-2023-16:39:53/subtests/dummytest_02-05-2023-16:39:53_0_1000_1_10.csv --stats ./data/dummytest_02-05-2023-16:39:53/stats.csv
+# dune exec -- ../load_gen_dummy.exe 1 -t 10 -r 1000 -s 4600 --times ./data/dummytest_06-05-2023-22:26:02/subtests/dummytest_06-05-2023-22:26:02_101_1000_1_4600.csv --stats ./data/dummytest_06-05-2023-22:26:02/stats.csv
 # OCAMLPARAM: unset
 # Shared cache: disabled
-# Workspace root: /Users/marchhill/Documents/cam/2/dissertation/tests/dummy
-# Auto-detected concurrency: 8
-$ /Users/marchhill/.opam/4.14.1/bin/ocamlc.opt -config > /var/folders/s_/b8868j5n19qbj2vvkdvhkxt40000gn/T/dune_8cd5ef_output
+# Workspace root: /auto/homes/mnh33/hotstuff/tests/dummy
+# Auto-detected concurrency: 104
+$ /auto/homes/mnh33/.opam/4.14.1/bin/ocamlc.opt -config > /tmp/dune_d1d5fc_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -12,74 +12,74 @@ $ /Users/marchhill/.opam/4.14.1/bin/ocamlc.opt -config > /var/folders/s_/b8868j5
 #  ; for_host = None
 #  ; fdo_target_exe = None
 #  ; build_dir = In_build_dir "default"
-#  ; toplevel_path = Some External "/Users/marchhill/.opam/4.14.1/lib/toplevel"
-#  ; ocaml_bin = External "/Users/marchhill/.opam/4.14.1/bin"
-#  ; ocaml = Ok External "/Users/marchhill/.opam/4.14.1/bin/ocaml"
-#  ; ocamlc = External "/Users/marchhill/.opam/4.14.1/bin/ocamlc.opt"
-#  ; ocamlopt = Ok External "/Users/marchhill/.opam/4.14.1/bin/ocamlopt.opt"
-#  ; ocamldep = Ok External "/Users/marchhill/.opam/4.14.1/bin/ocamldep.opt"
+#  ; toplevel_path =
+#      Some External "/auto/homes/mnh33/.opam/4.14.1/lib/toplevel"
+#  ; ocaml_bin = External "/auto/homes/mnh33/.opam/4.14.1/bin"
+#  ; ocaml = Ok External "/auto/homes/mnh33/.opam/4.14.1/bin/ocaml"
+#  ; ocamlc = External "/auto/homes/mnh33/.opam/4.14.1/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/auto/homes/mnh33/.opam/4.14.1/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/auto/homes/mnh33/.opam/4.14.1/bin/ocamldep.opt"
 #  ; ocamlmklib =
-#      Ok External "/Users/marchhill/.opam/4.14.1/bin/ocamlmklib.opt"
+#      Ok External "/auto/homes/mnh33/.opam/4.14.1/bin/ocamlmklib.opt"
 #  ; env =
 #      map
-#        { "DUNE_OCAML_HARDCODED" : "/Users/marchhill/.opam/4.14.1/lib"
-#        ; "DUNE_OCAML_STDLIB" : "/Users/marchhill/.opam/4.14.1/lib/ocaml"
-#        ; "DUNE_SOURCEROOT" :
-#            "/Users/marchhill/Documents/cam/2/dissertation/tests/dummy"
+#        { "DUNE_OCAML_HARDCODED" : "/auto/homes/mnh33/.opam/4.14.1/lib"
+#        ; "DUNE_OCAML_STDLIB" : "/auto/homes/mnh33/.opam/4.14.1/lib/ocaml"
+#        ; "DUNE_SOURCEROOT" : "/auto/homes/mnh33/hotstuff/tests/dummy"
 #        ; "INSIDE_DUNE" :
-#            "/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/_build/default"
+#            "/auto/homes/mnh33/hotstuff/tests/dummy/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/_build/install/default/lib"
+#            "/auto/homes/mnh33/hotstuff/tests/dummy/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/_build/install/default/lib"
+#            "/auto/homes/mnh33/hotstuff/tests/dummy/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/_build/install/default/lib/toplevel"
-#        ; "OCAML_COLOR" : "always"
-#        ; "OPAMCOLOR" : "always"
+#            "/auto/homes/mnh33/hotstuff/tests/dummy/_build/install/default/lib/toplevel"
 #        }
-#  ; findlib_paths = [ External "/Users/marchhill/.opam/4.14.1/lib" ]
+#  ; findlib_paths = [ External "/auto/homes/mnh33/.opam/4.14.1/lib" ]
 #  ; arch_sixtyfour = true
 #  ; natdynlink_supported = true
 #  ; supports_shared_libraries = true
 #  ; ocaml_config =
 #      { version = "4.14.1"
-#      ; standard_library_default = "/Users/marchhill/.opam/4.14.1/lib/ocaml"
-#      ; standard_library = "/Users/marchhill/.opam/4.14.1/lib/ocaml"
+#      ; standard_library_default = "/auto/homes/mnh33/.opam/4.14.1/lib/ocaml"
+#      ; standard_library = "/auto/homes/mnh33/.opam/4.14.1/lib/ocaml"
 #      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
 #      ; ccomp_type = "cc"
-#      ; c_compiler = "cc"
+#      ; c_compiler = "gcc"
 #      ; ocamlc_cflags =
-#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
 #      ; ocamlc_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; ocamlopt_cflags =
-#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread" ]
+#          [ "-O2"; "-fno-strict-aliasing"; "-fwrapv"; "-pthread"; "-fPIC" ]
 #      ; ocamlopt_cppflags = [ "-D_FILE_OFFSET_BITS=64" ]
 #      ; bytecomp_c_compiler =
-#          [ "cc"
+#          [ "gcc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
+#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ]
-#      ; bytecomp_c_libraries = [ "-lm"; "-lpthread" ]
+#      ; bytecomp_c_libraries = [ "-lm"; "-ldl"; "-lpthread" ]
 #      ; native_c_compiler =
-#          [ "cc"
+#          [ "gcc"
 #          ; "-O2"
 #          ; "-fno-strict-aliasing"
 #          ; "-fwrapv"
 #          ; "-pthread"
+#          ; "-fPIC"
 #          ; "-D_FILE_OFFSET_BITS=64"
 #          ]
-#      ; native_c_libraries = [ "-lm" ]
+#      ; native_c_libraries = [ "-lm"; "-ldl" ]
 #      ; native_pack_linker = [ "ld"; "-r"; "-o" ]
 #      ; cc_profile = []
-#      ; architecture = "arm64"
+#      ; architecture = "amd64"
 #      ; model = "default"
 #      ; int_size = 63
 #      ; word_size = 64
-#      ; system = "macosx"
-#      ; asm = [ "cc"; "-c"; "-Wno-trigraphs" ]
+#      ; system = "linux"
+#      ; asm = [ "as" ]
 #      ; asm_cfi_supported = true
 #      ; with_frame_pointers = false
 #      ; ext_exe = ""
@@ -90,8 +90,8 @@ $ /Users/marchhill/.opam/4.14.1/bin/ocamlc.opt -config > /var/folders/s_/b8868j5
 #      ; os_type = "Unix"
 #      ; default_executable_name = "a.out"
 #      ; systhread_supported = true
-#      ; host = "aarch64-apple-darwin21.6.0"
-#      ; target = "aarch64-apple-darwin21.6.0"
+#      ; host = "x86_64-pc-linux-gnu"
+#      ; target = "x86_64-pc-linux-gnu"
 #      ; profiling = false
 #      ; flambda = false
 #      ; spacetime = false
