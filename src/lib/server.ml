@@ -110,7 +110,8 @@ let init_state id nodes timeout batch_size verbose =
 	s
 
 let start_server id nodes batch_size timeout verbose =
-	let listen_address = `TCP ("127.0.0.1", 9000 + id) in
+	(* let listen_address = `TCP ("127.0.0.1", 9000 + id) in *)
+	let listen_address = `TCP ("0.0.0.0", 9000) in
 	let config = Capnp_rpc_unix.Vat_config.create ~serve_tls:false ~secret_key listen_address in
 	let service_id = Capnp_rpc_net.Restorer.Id.public "" in
 	let node_state = init_state id nodes timeout batch_size verbose in

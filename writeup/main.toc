@@ -51,12 +51,12 @@
 \contentsline {section}{\numberline {4.1}Testing methodology}{33}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Library benchmarks}{33}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{33}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{35}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{34}{subsection.4.2.2}%
 \contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{35}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Batch sizes}{37}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}Node counts}{39}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Ablation study}{39}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{40}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}View-changes}{40}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.3}Ablation study}{40}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{41}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}View-changes}{41}{subsection.4.3.5}%
 \contentsline {chapter}{\numberline {5}Conclusion}{45}{chapter.5}%
 \contentsline {chapter}{Bibliography}{49}{chapter*.19}%

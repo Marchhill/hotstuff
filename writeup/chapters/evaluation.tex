@@ -23,20 +23,14 @@ Experiments were driven by an open-loop load generator (Section \ref{loadgenerat
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{dummy_test/throughputgoodput.png}
-\caption{Benchmarking of Cap'n Proto server goodput for varying throughputs and message sizes.}
+\input{images/dummy_test/sizegoodput.pgf}
+\caption{Benchmarking of Cap'n Proto server maximum send goodput for varying message sizes.}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.75]{dummy_test/throughputflatency.png}
+\input{images/dummy_test/box.pgf}
 \caption{Benchmarking of Cap'n Proto server latencies for varying throughputs and message sizes. Discarded result if goodput was not within 5\% of target throughput.}
-\end{figure}
-
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.75]{dummy_test/throughputlost.png}
-\caption{Benchmarking of Cap'n Proto server \% of failed requests for varying throughputs and message sizes, run for 10s}
 \end{figure}
 
 [describe the experiment methodology, present argument, then back up with evidence from figures]
@@ -230,7 +224,7 @@ blah blah mininet \cite{mininet,lantzNetworkLaptopRapid2010}
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.5]{viewchange/test7_100_7_100_timelatencyheatmap.png}
+\resizebox{\textwidth}{!}{\input{images/viewchange/08xviewchange_0_100_7_300_timelatencyheatmap.pgf}}
 \caption{Heatmap showing distribution of latencies with a node being killed 5s in. Run for 10s with 7 nodes and a batch size of 100.}
 \label{viewchangeheatmap}
 \end{figure}
