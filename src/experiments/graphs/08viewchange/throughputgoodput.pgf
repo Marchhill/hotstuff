@@ -1,0 +1,161 @@
+%% Creator: Matplotlib, PGF backend
+%%
+%% To include the figure in your LaTeX document, write
+%%   \input{<filename>.pgf}
+%%
+%% Make sure the required packages are loaded in your preamble
+%%   \usepackage{pgf}
+%%
+%% Also ensure that all the required font packages are loaded; for instance,
+%% the lmodern package is sometimes necessary when using math font.
+%%   \usepackage{lmodern}
+%%
+%% Figures using additional raster images can only be included by \input if
+%% they are in the same directory as the main LaTeX file. For loading figures
+%% from other directories you can use the `import` package
+%%   \usepackage{import}
+%%
+%% and then include the figures with
+%%   \import{<path to file>}{<filename>.pgf}
+%%
+%% Matplotlib used the following preamble
+%%   
+%%   \usepackage{fontspec}
+%%   \setmainfont{DejaVuSerif.ttf}[Path=\detokenize{/auto/homes/mnh33/.local/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/}]
+%%   \setsansfont{DejaVuSans.ttf}[Path=\detokenize{/auto/homes/mnh33/.local/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/}]
+%%   \setmonofont{DejaVuSansMono.ttf}[Path=\detokenize{/auto/homes/mnh33/.local/lib/python3.8/site-packages/matplotlib/mpl-data/fonts/ttf/}]
+%%   \makeatletter\@ifpackageloaded{underscore}{}{\usepackage[strings]{underscore}}\makeatother
+%%
+\begingroup%
+\makeatletter%
+\begin{pgfpicture}%
+\pgfpathrectangle{\pgfpointorigin}{\pgfqpoint{6.400000in}{4.800000in}}%
+\pgfusepath{use as bounding box, clip}%
+\begin{pgfscope}%
+\pgfsetbuttcap%
+\pgfsetmiterjoin%
+\definecolor{currentfill}{rgb}{1.000000,1.000000,1.000000}%
+\pgfsetfillcolor{currentfill}%
+\pgfsetlinewidth{0.000000pt}%
+\definecolor{currentstroke}{rgb}{1.000000,1.000000,1.000000}%
+\pgfsetstrokecolor{currentstroke}%
+\pgfsetdash{}{0pt}%
+\pgfpathmoveto{\pgfqpoint{0.000000in}{0.000000in}}%
+\pgfpathlineto{\pgfqpoint{6.400000in}{0.000000in}}%
+\pgfpathlineto{\pgfqpoint{6.400000in}{4.800000in}}%
+\pgfpathlineto{\pgfqpoint{0.000000in}{4.800000in}}%
+\pgfpathlineto{\pgfqpoint{0.000000in}{0.000000in}}%
+\pgfpathclose%
+\pgfusepath{fill}%
+\end{pgfscope}%
+\begin{pgfscope}%
+\pgfsetbuttcap%
+\pgfsetmiterjoin%
+\definecolor{currentfill}{rgb}{1.000000,1.000000,1.000000}%
+\pgfsetfillcolor{currentfill}%
+\pgfsetlinewidth{0.000000pt}%
+\definecolor{currentstroke}{rgb}{0.000000,0.000000,0.000000}%
+\pgfsetstrokecolor{currentstroke}%
+\pgfsetstrokeopacity{0.000000}%
+\pgfsetdash{}{0pt}%
+\pgfpathmoveto{\pgfqpoint{0.800000in}{0.528000in}}%
+\pgfpathlineto{\pgfqpoint{5.760000in}{0.528000in}}%
+\pgfpathlineto{\pgfqpoint{5.760000in}{4.224000in}}%
+\pgfpathlineto{\pgfqpoint{0.800000in}{4.224000in}}%
+\pgfpathlineto{\pgfqpoint{0.800000in}{0.528000in}}%
+\pgfpathclose%
+\pgfusepath{fill}%
+\end{pgfscope}%
+\begin{pgfscope}%
+\pgfpathrectangle{\pgfqpoint{0.800000in}{0.528000in}}{\pgfqpoint{4.960000in}{3.696000in}}%
+\pgfusepath{clip}%
+\pgfsetbuttcap%
+\pgfsetroundjoin%
+\definecolor{currentfill}{rgb}{0.003922,0.450980,0.698039}%
+\pgfsetfillcolor{currentfill}%
+\pgfsetfillopacity{0.200000}%
+\pgfsetlinewidth{1.003750pt}%
+\definecolor{currentstroke}{rgb}{0.003922,0.450980,0.698039}%
+\pgfsetstrokecolor{currentstroke}%
+\pgfsetstrokeopacity{0.200000}%
+\pgfsetdash{}{0pt}%
+\pgfsys@defobject{currentmarker}{\pgfqpoint{1.048000in}{0.702354in}}{\pgfqpoint{1.792000in}{1.240281in}}{%
+\pgfpathmoveto{\pgfqpoint{1.048000in}{0.743723in}}%
+\pgfpathlineto{\pgfqpoint{1.048000in}{0.702354in}}%
+\pgfpathlineto{\pgfqpoint{1.296000in}{0.953410in}}%
+\pgfpathlineto{\pgfqpoint{1.792000in}{0.999302in}}%
+\pgfpathlineto{\pgfqpoint{1.792000in}{1.240281in}}%
+\pgfpathlineto{\pgfqpoint{1.792000in}{1.240281in}}%
+\pgfpathlineto{\pgfqpoint{1.296000in}{1.064659in}}%
+\pgfpathlineto{\pgfqpoint{1.048000in}{0.743723in}}%
+\pgfpathlineto{\pgfqpoint{1.048000in}{0.743723in}}%
+\pgfpathclose%
+\pgfusepath{stroke,fill}%
+}%
+\begin{pgfscope}%
+\pgfsys@transformshift{0.000000in}{0.000000in}%
+\pgfsys@useobject{currentmarker}{}%
+\end{pgfscope}%
+\end{pgfscope}%
+\begin{pgfscope}%
+\pgfpathrectangle{\pgfqpoint{0.800000in}{0.528000in}}{\pgfqpoint{4.960000in}{3.696000in}}%
+\pgfusepath{clip}%
+\pgfsetbuttcap%
+\pgfsetroundjoin%
+\definecolor{currentfill}{rgb}{0.870588,0.560784,0.019608}%
+\pgfsetfillcolor{currentfill}%
+\pgfsetfillopacity{0.200000}%
+\pgfsetlinewidth{1.003750pt}%
+\definecolor{currentstroke}{rgb}{0.870588,0.560784,0.019608}%
+\pgfsetstrokecolor{currentstroke}%
+\pgfsetstrokeopacity{0.200000}%
+\pgfsetdash{}{0pt}%
+\pgfsys@defobject{currentmarker}{\pgfqpoint{1.048000in}{0.755119in}}{\pgfqpoint{1.792000in}{1.243730in}}{%
+\pgfpathmoveto{\pgfqpoint{1.048000in}{0.812813in}}%
+\pgfpathlineto{\pgfqpoint{1.048000in}{0.755119in}}%
+\pgfpathlineto{\pgfqpoint{1.296000in}{0.880534in}}%
+\pgfpathlineto{\pgfqpoint{1.792000in}{1.031950in}}%
+\pgfpathlineto{\pgfqpoint{1.792000in}{1.243730in}}%
+\pgfpathlineto{\pgfqpoint{1.792000in}{1.243730in}}%
+\pgfpathlineto{\pgfqpoint{1.296000in}{0.991478in}}%
+\pgfpathlineto{\pgfqpoint{1.048000in}{0.812813in}}%
+\pgfpathlineto{\pgfqpoint{1.048000in}{0.812813in}}%
+\pgfpathclose%
+\pgfusepath{stroke,fill}%
+}%
+\begin{pgfscope}%
+\pgfsys@transformshift{0.000000in}{0.000000in}%
+\pgfsys@useobject{currentmarker}{}%
+\end{pgfscope}%
+\end{pgfscope}%
+\begin{pgfscope}%
+\pgfpathrectangle{\pgfqpoint{0.800000in}{0.528000in}}{\pgfqpoint{4.960000in}{3.696000in}}%
+\pgfusepath{clip}%
+\pgfsetbuttcap%
+\pgfsetroundjoin%
+\definecolor{currentfill}{rgb}{0.007843,0.619608,0.450980}%
+\pgfsetfillcolor{currentfill}%
+\pgfsetfillopacity{0.200000}%
+\pgfsetlinewidth{1.003750pt}%
+\definecolor{currentstroke}{rgb}{0.007843,0.619608,0.450980}%
+\pgfsetstrokecolor{currentstroke}%
+\pgfsetstrokeopacity{0.200000}%
+\pgfsetdash{}{0pt}%
+\pgfsys@defobject{currentmarker}{\pgfqpoint{1.048000in}{0.715676in}}{\pgfqpoint{1.792000in}{1.426349in}}{%
+\pgfpathmoveto{\pgfqpoint{1.048000in}{0.794111in}}%
+\pgfpathlineto{\pgfqpoint{1.048000in}{0.715676in}}%
+\pgfpathlineto{\pgfqpoint{1.296000in}{0.867416in}}%
+\pgfpathlineto{\pgfqpoint{1.792000in}{0.973591in}}%
+\pgfpathlineto{\pgfqpoint{1.792000in}{1.426349in}}%
+\pgfpathlineto{\pgfqpoint{1.792000in}{1.426349in}}%
+\pgfpathlineto{\pgfqpoint{1.296000in}{1.021662in}}%
+\pgfpathlineto{\pgfqpoint{1.048000in}{0.794111in}}%
+\pgfpathlineto{\pgfqpoint{1.048000in}{0.794111in}}%
+\pgfpathclose%
+\pgfusepath{stroke,fill}%
+}%
+\begin{pgfscope}%
+\pgfsys@transformshift{0.000000in}{0.000000in}%
+\pgfsys@useobject{currentmarker}{}%
+\end{pgfscope}%
+\end{pgfscope}%
