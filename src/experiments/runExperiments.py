@@ -38,11 +38,11 @@ with open(test_path + 'stats.csv', 'w') as f:
 nodeCounts = [7]
 # rates = [1, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800, 4000]
 # rates = [1, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]
-rates = [100, 200, 400]
+rates = [50, 100, 200, 400]
 # batch_sizes = [1, 75, 150, 300, 600, 1200, 2400, 99999999]
 batch_sizes = [75, 150, 300]
 experiment_time = 10
-repeats = 3
+repeats = 1
 version = "6"
 
 # randomise testing order
@@ -57,7 +57,7 @@ for (rate, n, s) in test_iter:
         print(f'running "{name}"')
         for i in range(n):
             processes.append(subprocess.Popen(
-                f'ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build{str(i)} -- ../bin/run_node.exe -i {str(i)} -n {str(n)} -b {str(s)} -t 0.1', shell=True, preexec_fn=os.setsid))
+                f'ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build{str(i)} -- ../bin/run_node.exe -i {str(i)} -n {str(n)} -b {str(s)} -t 0.5', shell=True, preexec_fn=os.setsid))
         time.sleep(5)
         cmd = f'eval $(opam env) dune exec -- ../bin/load_gen.exe {str(n)} -t {str(experiment_time)} --version "{version}" -r {str(rate)} -b {str(s)} --times "{test_path + "subtests/" + name}.csv" --stats "{test_path}stats.csv"'
         print(cmd)
@@ -69,4 +69,4 @@ for (rate, n, s) in test_iter:
         processes = []
     x += 1
 
-subprocess.run(f'python3 ./plot.py {test_name}', shell=True)
+# subprocess.run(f'python3 ./plot.py {test_name}', shell=True)
