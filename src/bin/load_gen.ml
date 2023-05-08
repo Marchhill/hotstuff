@@ -90,10 +90,10 @@ let run_client nodes version time rate req_times_fp stats_fp msg_size batch_size
 			Fmt.epr "abort!@.";
 			exit 1;
 		);
-		(* Lwt.async (fun () ->
+		Lwt.async (fun () ->
 			let* () = Lwt_unix.sleep 5. in
-			Net.send_quit (List.hd conns)
-		); * view change experiment *)
+			Lib.send_quit (List.hd conns)
+		); (* view change experiment *)
 		Fmt.pr "connected to all!@.";
 		(* run and ignore results for 3s to allow batches to fill up *)
 (*		let startup = Array.make (3 * rate) None in
