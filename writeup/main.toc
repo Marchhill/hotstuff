@@ -1,63 +1,63 @@
-\contentsline {chapter}{\numberline {1}Introduction}{7}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Preparation}{9}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Starting point}{9}{section.2.1}%
-\contentsline {section}{\numberline {2.2}HotStuff algorithm}{9}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Non-byzantine consensus}{10}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{11}{subsection.2.2.2}%
-\contentsline {subsubsection}{Quorum certificates}{11}{subsubsection*.4}%
-\contentsline {subsubsection}{Threats introduced by byzantine nodes}{12}{subsubsection*.5}%
-\contentsline {subsubsection}{Byzantine fault-tolerant algorithm}{12}{subsubsection*.6}%
-\contentsline {subsubsection}{Argument for safety}{12}{subsubsection*.7}%
-\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{13}{subsection.2.2.3}%
-\contentsline {subsubsection}{Why the timeout was necessary}{13}{subsubsection*.8}%
-\contentsline {subsubsection}{Basic HotStuff algorithm}{13}{subsubsection*.9}%
-\contentsline {subsubsection}{Argument for liveness}{14}{subsubsection*.10}%
-\contentsline {section}{\numberline {2.3}Tools \& libraries}{14}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}OCaml}{14}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Lwt}{15}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{15}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{15}{subsection.2.3.4}%
-\contentsline {section}{\numberline {2.4}Requirements analysis}{16}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Software engineering practices}{16}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Development methodology}{16}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{16}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Source code management}{17}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Ethical statement}{17}{subsection.2.5.4}%
-\contentsline {chapter}{\numberline {3}Implementation}{18}{chapter.3}%
-\contentsline {section}{\numberline {3.1}System Architecture}{18}{section.3.1}%
-\contentsline {section}{\numberline {3.2}More HotStuff theory}{19}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Chaining}{20}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Pacemaker}{20}{subsection.3.2.2}%
-\contentsline {subsubsection}{View-change protocol}{21}{subsubsection*.11}%
-\contentsline {subsubsection}{Integrating the pacemaker with HotStuff}{21}{subsubsection*.12}%
-\contentsline {section}{\numberline {3.3}Specification}{21}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Changes to the original algorithm}{23}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Proofs}{24}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Practical challenges and optimisations}{26}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Batching}{26}{subsection.3.4.1}%
-\contentsline {subsubsection}{Filtering commands from batches}{26}{subsubsection*.13}%
-\contentsline {subsubsection}{Batch sizes}{27}{subsubsection*.14}%
-\contentsline {subsection}{\numberline {3.4.2}Node chains}{28}{subsection.3.4.2}%
-\contentsline {subsubsection}{The problem with recursive types}{28}{subsubsection*.15}%
-\contentsline {subsubsection}{Replacing the justify.node field with an offset}{28}{subsubsection*.16}%
-\contentsline {subsubsection}{Optimising the node equality function}{29}{subsubsection*.17}%
-\contentsline {subsubsection}{Optimising by truncating nodes}{29}{subsubsection*.18}%
-\contentsline {section}{\numberline {3.5}Implementing for evaluation}{30}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Load generator}{30}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{31}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Logging framework}{31}{subsection.3.5.3}%
-\contentsline {section}{\numberline {3.6}Repository Overview}{32}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Evaluation}{34}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Testing methodology}{34}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Library benchmarks}{34}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{35}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{36}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{36}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{38}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Node counts}{39}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Ablation study}{41}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{42}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}View-changes}{43}{subsection.4.3.5}%
-\contentsline {chapter}{\numberline {5}Conclusion}{45}{chapter.5}%
-\contentsline {chapter}{Bibliography}{49}{chapter*.19}%
-\contentsline {chapter}{\numberline {A}Proposal}{50}{appendix.1.A}%
+\contentsline {chapter}{\numberline {1}Introduction}{6}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Preparation}{8}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Starting point}{8}{section.2.1}%
+\contentsline {section}{\numberline {2.2}HotStuff algorithm}{8}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Non-byzantine consensus}{9}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Byzantine consensus}{10}{subsection.2.2.2}%
+\contentsline {subsubsection}{Quorum certificates}{10}{subsubsection*.4}%
+\contentsline {subsubsection}{Threats introduced by byzantine nodes}{11}{subsubsection*.5}%
+\contentsline {subsubsection}{Byzantine fault-tolerant algorithm}{11}{subsubsection*.6}%
+\contentsline {subsubsection}{Argument for safety}{11}{subsubsection*.7}%
+\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{12}{subsection.2.2.3}%
+\contentsline {subsubsection}{Why the timeout was necessary}{12}{subsubsection*.8}%
+\contentsline {subsubsection}{Basic HotStuff algorithm}{12}{subsubsection*.9}%
+\contentsline {subsubsection}{Argument for liveness}{13}{subsubsection*.10}%
+\contentsline {section}{\numberline {2.3}Tools \& libraries}{13}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}OCaml}{13}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Lwt}{14}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{14}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{14}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Requirements analysis}{15}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Software engineering practices}{15}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Development methodology}{15}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{15}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Source code management}{16}{subsection.2.5.3}%
+\contentsline {subsection}{\numberline {2.5.4}Ethical statement}{16}{subsection.2.5.4}%
+\contentsline {chapter}{\numberline {3}Implementation}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}System Architecture}{17}{section.3.1}%
+\contentsline {section}{\numberline {3.2}More HotStuff theory}{18}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Chaining}{19}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Pacemaker}{19}{subsection.3.2.2}%
+\contentsline {subsubsection}{View-change protocol}{20}{subsubsection*.11}%
+\contentsline {subsubsection}{Integrating the pacemaker with HotStuff}{20}{subsubsection*.12}%
+\contentsline {section}{\numberline {3.3}Specification}{20}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Changes to the original algorithm}{21}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Proofs}{23}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Practical challenges and optimisations}{24}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Batching}{25}{subsection.3.4.1}%
+\contentsline {subsubsection}{Filtering commands from batches}{25}{subsubsection*.13}%
+\contentsline {subsubsection}{Batch sizes}{26}{subsubsection*.14}%
+\contentsline {subsection}{\numberline {3.4.2}Node chains}{26}{subsection.3.4.2}%
+\contentsline {subsubsection}{The problem with recursive types}{27}{subsubsection*.15}%
+\contentsline {subsubsection}{Replacing the justify.node field with an offset}{27}{subsubsection*.16}%
+\contentsline {subsubsection}{Optimising the node equality function}{28}{subsubsection*.17}%
+\contentsline {subsubsection}{Optimising by truncating nodes}{28}{subsubsection*.18}%
+\contentsline {section}{\numberline {3.5}Implementing for evaluation}{29}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Load generator}{29}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{30}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Logging framework}{30}{subsection.3.5.3}%
+\contentsline {section}{\numberline {3.6}Repository Overview}{31}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Evaluation}{33}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Testing methodology}{33}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Library benchmarks}{33}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{34}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{35}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{35}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{37}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Node counts}{38}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Ablation study}{40}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Wide area network simulation}{41}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}View-changes}{42}{subsection.4.3.5}%
+\contentsline {chapter}{\numberline {5}Conclusion}{44}{chapter.5}%
+\contentsline {chapter}{Bibliography}{48}{chapter*.19}%
+\contentsline {chapter}{\numberline {A}Proposal}{49}{appendix.1.A}%

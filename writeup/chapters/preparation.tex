@@ -20,7 +20,7 @@ The system model describes the adverse conditions under which HotStuff can opera
 \end{assumption}
 
 \begin{assumption}[Authenticated] \label{authassumption}
-	A message source cannot be spoofed. We assume that all messages are signed, providing authentication.
+	We assume that all messages are signed, providing an authenticated channel where no messages can be spoofed.
 \end{assumption}
 
 \begin{assumption}[Byzantine] \label{byzassumption}
@@ -32,7 +32,7 @@ Assumptions \ref{partialsyncassumption} and \ref{byzassumption} are the weakest 
 HotStuff has the following properties:
 
 \begin{property}[Safety] \label{safetyproperty}
-	Once a log has been committed up to some point that part of the log is immutable, it can only be appended to.
+	Once some prefix of a log has been committed, that part of the log is immutable, it can only be appended to.
 \end{property}
 
 \begin{property}[Liveness] \label{livenessproperty}
@@ -40,7 +40,7 @@ HotStuff has the following properties:
 \end{property}
 
 \begin{property}[Optimistic Responsiveness] \label{optresponsiveproperty}
-	Once GST has been reached, the system is able to make progress as fast as network conditions allow once a non-faulty leader is elected; it does not have to wait for some timeout to elapse \cite{passThunderellaBlockchainsOptimistic2018}.
+	Once GST has been reached and a non-faulty leader is chosen, the system is able to make progress as fast as network conditions allow; it does not have to wait for some timeout to elapse \cite{passThunderellaBlockchainsOptimistic2018}.
 \end{property}
 
 Basic HotStuff is a responsive byzantine consensus algorithm (Section \ref{optresponsive}). We will start by describing a simpler consensus algorithm that is not responsive or byzantine (Section \ref{nonbyzconsensus}). We then extend this algorithm to handle byzantine threats (Section \ref{byzconsensus}). Finally, we extend this algorithm to be responsive by removing the need for a timeout to progress, arriving at the basic HotStuff algorithm (Section \ref{optresponsive}).
@@ -113,7 +113,7 @@ In this section, we finally give the basic HotStuff algorithm by extending our g
 The byzantine consensus algorithm is not responsive as it has a timeout in the \textit{prepare} phase. We first describe the problem that means this timeout is needed, then present an algorithm that solves it and make an informal argument that it does not break liveness.
 
 \subsubsection{Why the timeout was necessary}
-For the system to have liveness (Property \ref{livenessproperty}), the leader must wait for $\Delta$ to elapse so that it receives a \textit{new-view} message from \textit{all} honest replicas before it pre-proposes a log, to ensure that the pre-proposal will be voted for by the replicas. Consider what would happen if the leader did not wait for this timeout, and did not receive a \textit{new-view} from some honest replica $x$. It is possible that $x$ is locked on a higher-view log than the other replicas, as in some past view it received the \textit{commit} message, but other replicas did not\footnote{N.B. this means that the value was never actually committed, as this would have required a quorum of \textit{commit} acks}. When the leader sends the \textit{prepare} message, $x$ will not vote the pre-proposal as it is locked on a higher value, so the leader will not acquire a quorum of acks to make progress; this breaks liveness.
+For the system to have liveness (Property \ref{livenessproperty}), the leader must wait for $\Delta$ to elapse so that it receives a \textit{new-view} message from \textit{all} honest replicas before it pre-proposes a log, to ensure that the pre-proposal will be voted for by the replicas. Consider what would happen if the leader did not wait for this timeout, and did not receive a \textit{new-view} from some honest replica $x$. It is possible that $x$ is locked on a longer log than the other replicas, as in some past view it received the \textit{commit} message, but other replicas did not\footnote{N.B. this means that the value was never actually committed, as this would have required a quorum of \textit{commit} acks}. When the leader sends the \textit{prepare} message, $x$ will not vote the pre-proposal as it is locked on a longer log, so the leader will not acquire a quorum of acks to make progress; this breaks liveness.
 
 Solution idea --- add a \textit{pre-commit} phase directly before the \textit{commit} phase, where replicas store a \textit{key} for a proposal that they include in their \textit{new-view} message; this removes the need for a timeout, making the algorithm responsive.
 
@@ -123,14 +123,14 @@ Modifying the byzantine algorithm (Section \ref{byzconsensus}) to include our so
 
 \begin{description}
 	\item \textit{new-view} --- all replicas send their \textit{key} to the leader.
-	\item \textit{prepare} ---  \textit{same as the byzantine algorithm, but picks the log from the key with the highest view.}
+	\item \textit{prepare} ---  \textit{same as the byzantine algorithm, but picks the key for the longest log.}
 	\item \textit{pre-commit} --- the leader waits until it receives a quorum of \textit{prepare} acks. It then broadcasts a \textit{pre-commit} message to the replicas, which contains a QC of \textit{prepare} acks. The replicas store this QC as a \textit{key} and send a \textit{pre-commit} ack.
 	\item \textit{commit} --- \textit{same as the byzantine algorithm, but creates QC from pre-commit acks instead of prepare acks.}
 	\item \textit{decide} --- \textit{same as the non-byzantine algorithm.}
 \end{description}
 
 \subsubsection{Argument for liveness} \label{livenessargument}
-We informally argue for the liveness (Property \ref{livenessproperty}) of this algorithm. We first argue that the non-faulty leader will propose the highest log, and then that the honest replicas will vote for the proposal and progress will be made.
+We informally argue for the liveness (Property \ref{livenessproperty}) of this algorithm. We first argue that the non-faulty leader will propose the longest log, and then that the honest replicas will vote for the proposal and progress will be made.
 
 The non-faulty leader is guaranteed to receive a \textit{key} for the longest log ($\lambda^*$) that some honest replica is locked on. This is because for some replica to become locked on $\lambda^*$ there must be at least $f + 1$ honest nodes that have a \textit{key} for $\lambda^*$. The leader must hear about $\lambda^*$ from one of these honest nodes when it receives a quorum of \textit{new-view} messages and then propose it to the replicas.
 
@@ -176,7 +176,7 @@ In this section, we describe the professional software engineering methodology d
 
 \subsection{Development methodology} \label{devmethods}
 
-For this project, we used an iterative waterfall development methodology. Objectives were chosen in accordance with the timetable set out in the proposal (Appendix \ref{proposal}). Development then proceeded in cycles of implementation, testing, and analysis of the program trace and timing statements. This approach was particularly useful during the optimisation of our system (Section \ref{performance}), which required extensive analysis of the logs and rapid development of different prototypes to compare performance.
+For this project, we used an iterative waterfall development methodology. Objectives were chosen in accordance with the timetable set out in the proposal (Appendix \ref{proposal}). Development then proceeded in cycles of implementation, testing, and analysis of the program trace (to compare it to the protocol specification) and timing statements. This approach was particularly useful during the optimisation of our system (Section \ref{performance}), which required extensive analysis of the logs and rapid development of different prototypes to compare performance.
 
 \subsection{Testing \& debugging methodology} \label{testing}
 

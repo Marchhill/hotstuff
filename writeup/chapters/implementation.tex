@@ -68,7 +68,9 @@ In this section, we conclude our theoretical explanation of HotStuff by discussi
 
 In this section, we describe the \textit{chained} HotStuff algorithm, which is an optimised version of the basic algorithm described in Section \ref{hotstufftheory} where different phases are pipelined. This is a standard optimisation for consensus algorithms that is described in the original paper \cite{yinHotStuffBFTConsensus2019}.
 
-Pipelining phases both simplifies and optimises the basic algorithm. The phases in the basic algorithm were all very similar; they involved collecting votes from replicas to form a QC that then serves in later phases. Instead of having different phases as before, we can have a single \textit{generic} phase that collects votes, creates a \textit{generic QC}, and sends it to the next leader; now each view is the length of a single phase and a QC can serve in multiple phases concurrently. The only exception to this is the \textit{new-view} phase which is the same as in the basic algorithm.
+Pipelining phases both simplifies and optimises the basic algorithm. The phases in the basic algorithm were all very similar; they involved collecting votes from replicas to form a QC that then serves in later phases. Each of the four phases\footnote{Excluding the \textit{new-view} phase which is unchanged.} can be carried out concurrently. In each view, a leader collects votes to form a QC which can serve in all of the concurrent phases, then sends this QC to the next leader in a \textit{new-view} message and broadcasts a proposal to the nodes. 
+
+%Instead of having different phases as before, we can have a single \textit{generic} phase that collects votes, creates a \textit{generic QC}, and sends it to the next leader; now each view is the length of a single phase and a QC can serve in multiple phases concurrently. The only exception to this is the \textit{new-view} phase which is the same as in the basic algorithm.
 
 \begin{figure}[h!]
 \centering
@@ -77,7 +79,7 @@ Pipelining phases both simplifies and optimises the basic algorithm. The phases 
 \label{nchain}
 \end{figure}
 
-In each view, a chain of nodes is extended, and different phases are carried out on nodes depending on how long a chain they form. For example, Figure \ref{nchain} shows a 2-chain, which means a proposal has already been through 2 phases\footnote{Not counting the new-view phase, as this can be considered to be the end of the previous view.}; this is the equivalent of being in the \textit{commit} phase in the basic algorithm.
+In each proposal, a chain of nodes (equivalent to the log) is extended, and different phases are carried out on suffixes of the chain depending on their length. For example, Figure \ref{nchain} shows a 2-chain, which means a proposal has already been through 2 phases; this is the equivalent of being in the \textit{commit} phase in the basic algorithm.
 % Figure \ref{nchain} shows a chain of nodes connected by `parent' links; every time we propose a value we extend the chain with a new node. Some node \textit{b} also contains a link to another node within \textit{b.justify.node}, which is the previous generic QC in the chain. In the event of a view-change a dummy node will be inserted in the chain which will cause a `gap' where some \textit{b.justify.node} pointer jumps over a dummy node. If some node \textit{b} has a QC that points to its direct parent with no `gap' in-between, then we say that it forms a \textit{one-chain}. In general, if we have $n$ such direct links without `gaps' we refer to this as an \textit{n-chain}, as shown above.
 
 % To reproduce the behaviour of the unchained algorithm, on receiving a proposal for node \textit{b\textsuperscript{*}} a replica must look at \textit{b\textsuperscript{*}.justify.node} to see if it points to an \textit{n-chain}. It must take different actions depending on the length of the chain:
@@ -91,7 +93,7 @@ In each view, a chain of nodes is extended, and different phases are carried out
 
 \subsection{Pacemaker} \label{pacemaker}
 
-In this section, we discuss the pacemaker, which synchronises the views of honest replicas: a necessary condition for liveness (Property \ref{livenessproperty}). The original paper did not sufficiently specify the pacemaker mechanism, so we have synthesised information from different sources (including our experimentation) to give a full specification of HotStuff with a pacemaker in Section \ref{spec}. Part of the pacemaker that we will explain in this section is the \textit{view-change} protocol, which allows the view of a faulty leader to be skipped; ours is based on the pacemaker for LibraBFT \cite{baudetStateMachineReplication2019, ittai}. We will also discuss how the pacemaker can be integrated with the HotStuff algorithm; we did this through our modifications based on deadlocks encountered during implementation.
+In this section, we discuss the pacemaker, which synchronises the views of honest replicas: a necessary condition for liveness (Property \ref{livenessproperty}). The original paper did not specify the pacemaker mechanism, so we have synthesised information from different sources (including our experimentation) to give a full specification of HotStuff with a pacemaker in Section \ref{spec}. Part of the pacemaker that we will explain in this section is the \textit{view-change} protocol, which allows the view of a faulty leader to be skipped; ours is based on the pacemaker for LibraBFT \cite{baudetStateMachineReplication2019, ittai}. We will also discuss how the pacemaker can be integrated with the HotStuff algorithm; we did this through our modifications based on deadlocks encountered during implementation.
 
 % The model of collecting a quorum of COMPLAIN messages to transition to the next view is based on the pacemaker for LibraBFT \cite{baudet_state_nodate}, and is described in section \ref{viewchange}. The rest of the pacemaker is designed to advance to the next view as soon as the system allows, and is based on ad-hoc fixes to deadlocks that were encountered during implementation.
 
@@ -320,7 +322,7 @@ We now informally justify some of the key changes made to the original algorithm
 
 \subsection{Proofs} \label{proof}
 
-In this section, we prove the correctness of our specification. The safety (Property \ref{safetyproperty}) of the specification holds trivially, as we have not made changes that invalidate our argument for the safety of our generic byzantine algorithm (Section \ref{safetyargument}). Likewise, liveness (Property \ref{livenessproperty}) still holds from our previous argument (Section \ref{livenessargument}). The only thing that remains to be proven is that our pacemaker has the properties that are needed to provide the conditions for liveness, as discussed in Section \ref{pacemaker}.
+In this section, we prove the correctness of our specification. The safety (Property \ref{safetyproperty}) of the specification holds trivially, as we have not made changes that invalidate our argument for the safety of our generic byzantine algorithm (Section \ref{safetyargument}). Likewise, liveness (Property \ref{livenessproperty}) still holds from our previous argument (Section \ref{livenessargument}). The only thing that remains to be proven is that our pacemaker has the properties that are needed to provide the conditions for liveness, as discussed in Section \ref{pacemaker}. These properties ensure that all honest replicas will remain in some view with an honest leader for long enough to make progress
 
 For this proof, we consider the consensus machine (algorithm \ref{hotstuffalgorithm}) and the pacemaker (algorithm \ref{pacemakeralgorithm}), to be separate entities. Furthermore, we assume that GST has been reached and messages have a bounded latency of $\Delta$ (assumption \ref{partialsyncassumption}).
 
@@ -349,7 +351,7 @@ For this proof, we consider the consensus machine (algorithm \ref{hotstuffalgori
 \end{proof}
 
 \begin{lemma} \label{progressionlemma}
-	An honest replica $x$ will eventually enter a view where it is the leader.
+	Every honest replica $x$ will eventually become the leader of a view.
 \end{lemma}
 
 \begin{proof}
