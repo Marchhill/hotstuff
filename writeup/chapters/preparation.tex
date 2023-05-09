@@ -154,7 +154,7 @@ Lwt is useful to this project as promises provide a way to asynchronously dispat
 There are alternative libraries I could have used that may have had better performance, namely Jane Street's Async library \cite{async} and EIO \cite{eio}. I chose Lwt over these libraries due to superior documentation and stability.
 
 \subsection{Cap'n Proto}
-Cap'n Proto  \cite{capnp} is an RPC framework that includes a library for sending and receiving RPCs, serialising messages, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in Section \ref{capnpbenchmark}.
+Cap'n Proto \cite{capnp} is an RPC framework that includes a library for sending and receiving RPCs, serialising messages, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in Section \ref{capnpbenchmark}.
 
 \subsection{Tezos cryptography} \label{tezos}
 The Tezos cryptography library \cite{tezosCrypto} provides aggregate signatures using the BLS12-381 elliptic curve construction. It provides functions to sign some data using a private key, aggregate several signatures into a single one, and check whether an aggregate signature is valid. Benchmarks for the library are presented in Section \ref{tezosbenchmark}.
@@ -176,7 +176,7 @@ In this section, we describe the professional software engineering methodology d
 
 \subsection{Development methodology} \label{devmethods}
 
-For this project, we used an iterative waterfall development methodology. Objectives were chosen in accordance with the timetable set out in the proposal [reference appendix!]. Development then proceeded in cycles of implementation, testing, and analysis of the program trace and timing statements. This approach was particularly useful during the optimisation of our system (Section \ref{performance}), which required extensive analysis of the logs and rapid development of different prototypes to compare performance.
+For this project, we used an iterative waterfall development methodology. Objectives were chosen in accordance with the timetable set out in the proposal (Appendix \ref{proposal}). Development then proceeded in cycles of implementation, testing, and analysis of the program trace and timing statements. This approach was particularly useful during the optimisation of our system (Section \ref{performance}), which required extensive analysis of the logs and rapid development of different prototypes to compare performance.
 
 \subsection{Testing \& debugging methodology} \label{testing}
 
@@ -189,7 +189,6 @@ The Mininet virtual network \cite{mininet,lantzNetworkLaptopRapid2010} was used 
 The distributed nature of this project meant that debugging deadlocks and performance issues had to be carried out by manual inspection of the program trace and timing sections of the program. This is because the cause of these issues is often some process waiting or a backlog of work forming on some node, but this cannot be detected by normal debugging tools and profilers that track metrics like CPU usage.
 
 \subsection{Source code management}
-
 I used Git for version control and regularly pushed my local changes to a private GitHub repository.
 
 \subsection{Ethical statement}

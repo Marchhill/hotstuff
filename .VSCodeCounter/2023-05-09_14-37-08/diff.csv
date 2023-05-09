@@ -1,0 +1,80 @@
+"filename", "language", "LaTeX", "XML", "Log", "Python", "Shell Script", "OCaml", "Markdown", "OCaml Interface", "capnp", "BibTeX", "comment", "blank", "total"
+"/Users/marchhill/Documents/cam/2/dissertation/misc/How to write a dissertation.md", "Markdown", 0, 0, 0, 0, 0, 0, -86, 0, 0, 0, 0, -14, -100
+"/Users/marchhill/Documents/cam/2/dissertation/misc/blog.md", "Markdown", 0, 0, 0, 0, 0, 0, -4, 0, 0, 0, 0, -3, -7
+"/Users/marchhill/Documents/cam/2/dissertation/misc/startup.sh", "Shell Script", 0, 0, 0, 0, -5, 0, 0, 0, 0, 0, 0, 0, -5
+"/Users/marchhill/Documents/cam/2/dissertation/misc/testParams.py", "Python", 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, -2, -1, -13
+"/Users/marchhill/Documents/cam/2/dissertation/proposal/main.log", "Log", 0, 0, -184, 0, 0, 0, 0, 0, 0, 0, 0, -5, -189
+"/Users/marchhill/Documents/cam/2/dissertation/proposal/main.tex", "LaTeX", -67, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -14, -81
+"/Users/marchhill/Documents/cam/2/dissertation/proposal/ref.bib", "BibTeX", 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 0, -8
+"/Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/_build/default/counter.ml", "OCaml", 0, 0, 0, 0, 0, -9, 0, 0, 0, 0, 0, -2, -11
+"/Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/_build/default/counter.mli", "OCaml Interface", 0, 0, 0, 0, 0, 0, 0, -5, 0, 0, 0, -4, -9
+"/Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/_build/default/freq.ml", "OCaml", 0, 0, 0, 0, 0, -6, 0, 0, 0, 0, 0, -1, -7
+"/Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/counter.ml", "OCaml", 0, 0, 0, 0, 0, -9, 0, 0, 0, 0, 0, -2, -11
+"/Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/counter.mli", "OCaml Interface", 0, 0, 0, 0, 0, 0, 0, -5, 0, 0, 0, -4, -9
+"/Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/freq.ml", "OCaml", 0, 0, 0, 0, 0, -6, 0, 0, 0, 0, 0, -1, -7
+"/Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/echo.ml", "OCaml", 0, 0, 0, 0, 0, -22, 0, 0, 0, 0, 0, -4, -26
+"/Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/echo_api.capnp", "capnp", 0, 0, 0, 0, 0, 0, 0, 0, -4, 0, 0, -1, -5
+"/Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/echo_api.ml", "OCaml", 0, 0, 0, 0, 0, -206, 0, 0, 0, 0, 0, -21, -227
+"/Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/echo_api.mli", "OCaml Interface", 0, 0, 0, 0, 0, 0, 0, -100, 0, 0, 0, -10, -110
+"/Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/main.ml", "OCaml", 0, 0, 0, 0, 0, -35, 0, 0, 0, 0, 0, -7, -42
+"/Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/echo.ml", "OCaml", 0, 0, 0, 0, 0, -71, 0, 0, 0, 0, -16, -11, -98
+"/Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/echo_api.capnp", "capnp", 0, 0, 0, 0, 0, 0, 0, 0, -4, 0, 0, -1, -5
+"/Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/main.ml", "OCaml", 0, 0, 0, 0, 0, -39, 0, 0, 0, 0, -5, -7, -51
+"/Users/marchhill/Documents/cam/2/dissertation/tests/crypto/_build/default/crypto.ml", "OCaml", 0, 0, 0, 0, 0, -30, 0, 0, 0, 0, 0, -3, -33
+"/Users/marchhill/Documents/cam/2/dissertation/tests/crypto/crypto.ml", "OCaml", 0, 0, 0, 0, 0, -30, 0, 0, 0, 0, 0, -3, -33
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/api_wrapper.ml", "OCaml", 0, 0, 0, 0, 0, -160, 0, 0, 0, 0, -2, -15, -177
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/api_wrapper.mli", "OCaml Interface", 0, 0, 0, 0, 0, 0, 0, -5, 0, 0, 0, -1, -6
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus.ml", "OCaml", 0, 0, 0, 0, 0, -3, 0, 0, 0, 0, 0, -1, -4
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus.mli", "OCaml Interface", 0, 0, 0, 0, 0, 0, 0, -10, 0, 0, -3, -4, -17
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus_chained_impl.ml", "OCaml", 0, 0, 0, 0, 0, -180, 0, 0, 0, 0, -9, -20, -209
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus_chained_test.ml", "OCaml", 0, 0, 0, 0, 0, -1135, 0, 0, 0, 0, -16, -26, -1177
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus_impl.ml", "OCaml", 0, 0, 0, 0, 0, -218, 0, 0, 0, 0, -7, -21, -246
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus_test.ml", "OCaml", 0, 0, 0, 0, 0, -1381, 0, 0, 0, 0, -25, -32, -1438
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/crypto_util.ml", "OCaml", 0, 0, 0, 0, 0, -77, 0, 0, 0, 0, -2, -6, -85
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/crypto_util_test.ml", "OCaml", 0, 0, 0, 0, 0, -24, 0, 0, 0, 0, 0, -2, -26
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/types.ml", "OCaml", 0, 0, 0, 0, 0, -39, 0, 0, 0, 0, -1, -7, -47
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/types.mli", "OCaml Interface", 0, 0, 0, 0, 0, 0, 0, -39, 0, 0, -1, -7, -47
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/util.ml", "OCaml", 0, 0, 0, 0, 0, -192, 0, 0, 0, 0, -5, -31, -228
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/util_test.ml", "OCaml", 0, 0, 0, 0, 0, -76, 0, 0, 0, 0, 0, -12, -88
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/dummy.ml", "OCaml", 0, 0, 0, 0, 0, -42, 0, 0, 0, 0, -3, -9, -54
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/experiments/plot.py", "Python", 0, 0, 0, -63, 0, 0, 0, 0, 0, 0, -6, -10, -79
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/experiments/plotSingle.py", "Python", 0, 0, 0, -26, 0, 0, 0, 0, 0, 0, -2, -5, -33
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/experiments/runDummyExperiments.py", "Python", 0, 0, 0, -40, 0, 0, 0, 0, 0, 0, -8, -11, -59
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/hs_api.capnp", "capnp", 0, 0, 0, 0, 0, 0, 0, 0, -53, 0, 0, -7, -60
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/load_gen_dummy.ml", "OCaml", 0, 0, 0, 0, 0, -131, 0, 0, 0, 0, -10, -19, -160
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/net.ml", "OCaml", 0, 0, 0, 0, 0, -107, 0, 0, 0, 0, -6, -7, -120
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/types.ml", "OCaml", 0, 0, 0, 0, 0, -28, 0, 0, 0, 0, 0, -1, -29
+"/Users/marchhill/Documents/cam/2/dissertation/tests/dummy/util.ml", "OCaml", 0, 0, 0, 0, 0, -91, 0, 0, 0, 0, -5, -12, -108
+"/Users/marchhill/Documents/cam/2/dissertation/tests/echo/_build/default/echo.ml", "OCaml", 0, 0, 0, 0, 0, -23, 0, 0, 0, 0, -13, -4, -40
+"/Users/marchhill/Documents/cam/2/dissertation/tests/echo/_build/default/echo.pp.ml", "OCaml", 0, 0, 0, 0, 0, -16, 0, 0, 0, 0, 0, 0, -16
+"/Users/marchhill/Documents/cam/2/dissertation/tests/echo/echo.ml", "OCaml", 0, 0, 0, 0, 0, -23, 0, 0, 0, 0, -13, -4, -40
+"/Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/client.ml", "OCaml", 0, 0, 0, 0, 0, -33, 0, 0, 0, 0, 0, -4, -37
+"/Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/client.pp.ml", "OCaml", 0, 0, 0, 0, 0, -10, 0, 0, 0, 0, 0, 0, -10
+"/Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/intf.ml", "OCaml", 0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 0, -8
+"/Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/intf.pp.ml", "OCaml", 0, 0, 0, 0, 0, -3, 0, 0, 0, 0, 0, 0, -3
+"/Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/server.ml", "OCaml", 0, 0, 0, 0, 0, -40, 0, 0, 0, 0, 0, -3, -43
+"/Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/server.pp.ml", "OCaml", 0, 0, 0, 0, 0, -39, 0, 0, 0, 0, 0, 0, -39
+"/Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/client.ml", "OCaml", 0, 0, 0, 0, 0, -33, 0, 0, 0, 0, 0, -4, -37
+"/Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/intf.ml", "OCaml", 0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 0, -8
+"/Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/server.ml", "OCaml", 0, 0, 0, 0, 0, -45, 0, 0, 0, 0, 0, -7, -52
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/client.ml", "OCaml", 0, 0, 0, 0, 0, -22, 0, 0, 0, 0, 0, -7, -29
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/echo.ml", "OCaml", 0, 0, 0, 0, 0, -20, 0, 0, 0, 0, 0, -5, -25
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/echo_api.capnp", "capnp", 0, 0, 0, 0, 0, 0, 0, 0, -4, 0, 0, -1, -5
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/echo_api.ml", "OCaml", 0, 0, 0, 0, 0, -206, 0, 0, 0, 0, 0, -21, -227
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/echo_api.mli", "OCaml Interface", 0, 0, 0, 0, 0, 0, 0, -100, 0, 0, 0, -10, -110
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/server.ml", "OCaml", 0, 0, 0, 0, 0, -24, 0, 0, 0, 0, 0, -6, -30
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/client.ml", "OCaml", 0, 0, 0, 0, 0, -22, 0, 0, 0, 0, 0, -7, -29
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/echo.ml", "OCaml", 0, 0, 0, 0, 0, -20, 0, 0, 0, 0, 0, -5, -25
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/echo_api.capnp", "capnp", 0, 0, 0, 0, 0, 0, 0, 0, -4, 0, 0, -1, -5
+"/Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/server.ml", "OCaml", 0, 0, 0, 0, 0, -24, 0, 0, 0, 0, 0, -6, -30
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/conclusion.tex", "LaTeX", -6, 0, 0, 0, 0, 0, 0, 0, 0, 0, -7, -10, -23
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/evaluation.tex", "LaTeX", -163, 0, 0, 0, 0, 0, 0, 0, 0, 0, -47, -77, -287
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/implementation.tex", "LaTeX", -383, 0, 0, 0, 0, 0, 0, 0, 0, 0, -83, -106, -572
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/introduction.tex", "LaTeX", -13, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -7, -21
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/preparation.tex", "LaTeX", -122, 0, 0, 0, 0, 0, 0, 0, 0, 0, -4, -71, -197
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/proposal.tex", "LaTeX", -60, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, -15, -83
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/main.log", "Log", 0, 0, -1206, 0, 0, 0, 0, 0, 0, 0, 0, -78, -1284
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/main.run.xml", "XML", 0, -79, 0, 0, 0, 0, 0, 0, 0, 0, -3, -1, -83
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/main.tex", "LaTeX", -133, 0, 0, 0, 0, 0, 0, 0, 0, 0, -19, -50, -202
+"/Users/marchhill/Documents/cam/2/dissertation/writeup/ref.bib", "BibTeX", 0, 0, 0, 0, 0, 0, 0, 0, 0, -560, 0, -44, -604
+"Total", "-", -947, -79, -1390, -139, -5, -4966, -90, -264, -69, -568, -332, -939, -9788

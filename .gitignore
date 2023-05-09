@@ -1,5 +1,6 @@
 src/_build*
-tests/dummy/_build*
+src/benchmarks/capnpBenchmark/_build*
+src/benchmarks/tezosBenchmark/_build*
 src/_weird
 src/profile*
 src/nohup.out

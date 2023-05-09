@@ -1,0 +1,104 @@
+Date : 2023-05-09 14:59:00
+Directory : /Users/marchhill/Documents/cam/2/dissertation/src
+Total : 65 files,  -21421 codes, -3468 comments, -544 blanks, all -25433 lines
+
+Languages
++-----------------+------------+------------+------------+------------+------------+
+| language        | files      | code       | comment    | blank      | total      |
++-----------------+------------+------------+------------+------------+------------+
+| capnp           |          2 |       -106 |          0 |        -14 |       -120 |
+| OCaml Interface |         12 |     -1,118 |         -8 |        -44 |     -1,170 |
+| OCaml           |         51 |    -20,197 |     -3,460 |       -486 |    -24,143 |
++-----------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                               | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                  |         65 |    -21,421 |     -3,468 |       -544 |    -25,433 |
+| benchmarks                                                                                                                         |         65 |    -21,421 |     -3,468 |       -544 |    -25,433 |
+| benchmarks/capnpBenchmark                                                                                                          |         64 |    -21,391 |     -3,468 |       -541 |    -25,400 |
+| benchmarks/capnpBenchmark/_build                                                                                                   |         34 |    -10,921 |     -1,715 |       -289 |    -12,925 |
+| benchmarks/capnpBenchmark/_build/default                                                                                           |         34 |    -10,921 |     -1,715 |       -289 |    -12,925 |
+| benchmarks/capnpBenchmark/_build/default (Files)                                                                                   |         10 |     -2,329 |        -26 |       -102 |     -2,457 |
+| benchmarks/capnpBenchmark/_build/default/consensus                                                                                 |         24 |     -8,592 |     -1,689 |       -187 |    -10,468 |
+| benchmarks/capnpBenchmark/_build0                                                                                                  |         30 |    -10,470 |     -1,753 |       -252 |    -12,475 |
+| benchmarks/capnpBenchmark/_build0/default                                                                                          |         30 |    -10,470 |     -1,753 |       -252 |    -12,475 |
+| benchmarks/capnpBenchmark/_build0/default (Files)                                                                                  |          6 |     -1,972 |         -5 |        -63 |     -2,040 |
+| benchmarks/capnpBenchmark/_build0/default/consensus                                                                                |         24 |     -8,498 |     -1,748 |       -189 |    -10,435 |
+| benchmarks/tezosBenchmark                                                                                                          |          1 |        -30 |          0 |         -3 |        -33 |
+| benchmarks/tezosBenchmark/_build                                                                                                   |          1 |        -30 |          0 |         -3 |        -33 |
+| benchmarks/tezosBenchmark/_build/default                                                                                           |          1 |        -30 |          0 |         -3 |        -33 |
++------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| filename                                                                                                                           | language        | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/api_wrapper.ml                          | OCaml           |       -160 |         -2 |        -15 |       -177 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/api_wrapper.mli                         | OCaml Interface |         -5 |          0 |         -1 |         -6 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus.ml                  | OCaml           |         -3 |          0 |         -1 |         -4 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus.mli                 | OCaml Interface |        -10 |         -3 |         -4 |        -17 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus.pp.ml               | OCaml           |         -8 |          0 |          0 |         -8 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus.pp.mli              | OCaml Interface |         -7 |          0 |          0 |         -7 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus_chained_impl.ml     | OCaml           |       -180 |         -9 |        -20 |       -209 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus_chained_impl.pp.ml  | OCaml           |       -572 |          0 |         -2 |       -574 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus_chained_test.ml     | OCaml           |     -1,135 |        -16 |        -26 |     -1,177 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus_chained_test.pp.ml  | OCaml           |     -1,902 |          0 |        -12 |     -1,914 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus_impl.ml             | OCaml           |       -218 |         -7 |        -21 |       -246 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus_impl.pp.ml          | OCaml           |       -632 |         -6 |         -2 |       -640 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus_test.ml             | OCaml           |     -1,381 |        -25 |        -32 |     -1,438 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/consensus_test.pp.ml          | OCaml           |       -624 |     -1,614 |          0 |     -2,238 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/crypto_util.ml                | OCaml           |        -77 |         -2 |         -6 |        -85 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/crypto_util.pp.ml             | OCaml           |       -260 |          0 |          0 |       -260 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/crypto_util_test.ml           | OCaml           |        -24 |          0 |         -2 |        -26 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/crypto_util_test.pp.ml        | OCaml           |       -142 |          0 |          0 |       -142 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/types.ml                      | OCaml           |        -39 |         -1 |         -7 |        -47 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/types.mli                     | OCaml Interface |        -39 |         -1 |         -7 |        -47 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/types.pp.ml                   | OCaml           |        -22 |          0 |          0 |        -22 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/types.pp.mli                  | OCaml Interface |        -11 |          0 |          0 |        -11 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/util.ml                       | OCaml           |       -192 |         -5 |        -31 |       -228 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/util.pp.ml                    | OCaml           |       -612 |          0 |         -1 |       -613 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/util_test.ml                  | OCaml           |        -76 |          0 |        -12 |        -88 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/consensus/util_test.pp.ml               | OCaml           |       -426 |          0 |         -1 |       -427 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/dummy.ml                                | OCaml           |        -42 |         -3 |         -9 |        -54 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/hs_api.capnp                            | capnp           |        -53 |          0 |         -7 |        -60 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/hs_api.ml                               | OCaml           |     -1,225 |          0 |        -21 |     -1,246 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/hs_api.mli                              | OCaml Interface |       -487 |          0 |        -10 |       -497 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/load_gen_dummy.ml                       | OCaml           |       -131 |        -10 |        -19 |       -160 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/net.ml                                  | OCaml           |       -107 |         -6 |         -7 |       -120 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/types.ml                                | OCaml           |        -28 |          0 |         -1 |        -29 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build/default/util.ml                                 | OCaml           |        -91 |         -5 |        -12 |       -108 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/api_wrapper.ml                         | OCaml           |       -160 |         -2 |        -15 |       -177 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/api_wrapper.mli                        | OCaml Interface |         -5 |          0 |         -1 |         -6 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus.ml                 | OCaml           |         -3 |          0 |         -1 |         -4 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus.mli                | OCaml Interface |        -10 |         -3 |         -4 |        -17 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus.pp.ml              | OCaml           |         -8 |          0 |          0 |         -8 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus.pp.mli             | OCaml Interface |         -7 |          0 |          0 |         -7 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus_chained_impl.ml    | OCaml           |       -180 |         -9 |        -20 |       -209 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus_chained_impl.pp.ml | OCaml           |       -542 |        -31 |         -2 |       -575 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus_chained_test.ml    | OCaml           |     -1,135 |        -16 |        -26 |     -1,177 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus_chained_test.pp.ml | OCaml           |     -1,865 |          0 |        -12 |     -1,877 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus_impl.ml            | OCaml           |       -218 |         -7 |        -21 |       -246 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus_impl.pp.ml         | OCaml           |       -637 |         -6 |         -2 |       -645 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus_test.ml            | OCaml           |     -1,381 |        -25 |        -32 |     -1,438 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/consensus_test.pp.ml         | OCaml           |       -597 |     -1,642 |          0 |     -2,239 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/crypto_util.ml               | OCaml           |        -77 |         -2 |         -6 |        -85 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/crypto_util.pp.ml            | OCaml           |       -259 |          0 |         -1 |       -260 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/crypto_util_test.ml          | OCaml           |        -24 |          0 |         -2 |        -26 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/crypto_util_test.pp.ml       | OCaml           |       -140 |          0 |         -1 |       -141 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/types.ml                     | OCaml           |        -39 |         -1 |         -7 |        -47 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/types.mli                    | OCaml Interface |        -39 |         -1 |         -7 |        -47 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/types.pp.ml                  | OCaml           |        -20 |          0 |          0 |        -20 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/types.pp.mli                 | OCaml Interface |        -11 |          0 |          0 |        -11 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/util.ml                      | OCaml           |       -192 |         -5 |        -31 |       -228 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/util.pp.ml                   | OCaml           |       -601 |          0 |         -1 |       -602 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/util_test.ml                 | OCaml           |        -76 |          0 |        -12 |        -88 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/consensus/util_test.pp.ml              | OCaml           |       -437 |          0 |         -1 |       -438 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/dummy.ml                               | OCaml           |        -42 |         -3 |         -9 |        -54 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/hs_api.capnp                           | capnp           |        -53 |          0 |         -7 |        -60 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/hs_api.ml                              | OCaml           |     -1,225 |          0 |        -21 |     -1,246 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/_build0/default/hs_api.mli                             | OCaml Interface |       -487 |          0 |        -10 |       -497 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/tezosBenchmark/_build/default/crypto.ml                               | OCaml           |        -30 |          0 |         -3 |        -33 |
+| Total                                                                                                                              |                 |    -21,421 |     -3,468 |       -544 |    -25,433 |
++------------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+

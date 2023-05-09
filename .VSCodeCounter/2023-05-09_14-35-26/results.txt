@@ -1,0 +1,199 @@
+Date : 2023-05-09 14:35:26
+Directory : /Users/marchhill/Documents/cam/2/dissertation
+Total : 120 files,  24440 codes, 582 comments, 1525 blanks, all 26547 lines
+
+Languages
++-----------------+------------+------------+------------+------------+------------+
+| language        | files      | code       | comment    | blank      | total      |
++-----------------+------------+------------+------------+------------+------------+
+| HTML            |         11 |     10,954 |          0 |        167 |     11,121 |
+| OCaml           |         64 |      9,044 |        259 |        597 |      9,900 |
+| Log             |          2 |      1,390 |          0 |         83 |      1,473 |
+| LaTeX           |          8 |        947 |        169 |        350 |      1,466 |
+| BibTeX          |          2 |        568 |          0 |         44 |        612 |
+| CSS             |          1 |        421 |          1 |         79 |        501 |
+| Python          |          8 |        348 |        132 |         79 |        559 |
+| OCaml Interface |         11 |        323 |          8 |         52 |        383 |
+| JavaScript      |          2 |        127 |         10 |         30 |        167 |
+| capnp           |          6 |        122 |          0 |         18 |        140 |
+| Markdown        |          3 |        112 |          0 |         25 |        137 |
+| XML             |          1 |         79 |          3 |          1 |         83 |
+| Shell Script    |          1 |          5 |          0 |          0 |          5 |
++-----------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                 | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                    |        120 |     24,440 |        582 |      1,525 |     26,547 |
+| misc                                                                                                 |          4 |        105 |          2 |         18 |        125 |
+| proposal                                                                                             |          3 |        259 |          0 |         19 |        278 |
+| src                                                                                                  |         42 |     15,923 |        250 |        586 |     16,759 |
+| src (Files)                                                                                          |          1 |         22 |          0 |          8 |         30 |
+| src/_coverage                                                                                        |         14 |     11,502 |         11 |        276 |     11,789 |
+| src/_coverage (Files)                                                                                |          4 |        655 |         11 |        110 |        776 |
+| src/_coverage/consensus                                                                              |         10 |     10,847 |          0 |        166 |     11,013 |
+| src/bin                                                                                              |          2 |        194 |         16 |         28 |        238 |
+| src/consensus                                                                                        |         10 |      3,367 |         69 |        169 |      3,605 |
+| src/experiments                                                                                      |          4 |        209 |        114 |         52 |        375 |
+| src/lib                                                                                              |         11 |        629 |         40 |         53 |        722 |
+| tests                                                                                                |         61 |      5,428 |        158 |        443 |      6,029 |
+| tests/basicIO                                                                                        |          6 |         40 |          0 |         14 |         54 |
+| tests/basicIO (Files)                                                                                |          3 |         20 |          0 |          7 |         27 |
+| tests/basicIO/_build                                                                                 |          3 |         20 |          0 |          7 |         27 |
+| tests/basicIO/_build/default                                                                         |          3 |         20 |          0 |          7 |         27 |
+| tests/capnpTest                                                                                      |          8 |        481 |         21 |         62 |        564 |
+| tests/capnpTest (Files)                                                                              |          3 |        114 |         21 |         19 |        154 |
+| tests/capnpTest/_build                                                                               |          5 |        367 |          0 |         43 |        410 |
+| tests/capnpTest/_build/default                                                                       |          5 |        367 |          0 |         43 |        410 |
+| tests/crypto                                                                                         |          2 |         60 |          0 |          6 |         66 |
+| tests/crypto (Files)                                                                                 |          1 |         30 |          0 |          3 |         33 |
+| tests/crypto/_build                                                                                  |          1 |         30 |          0 |          3 |         33 |
+| tests/crypto/_build/default                                                                          |          1 |         30 |          0 |          3 |         33 |
+| tests/dummy                                                                                          |         23 |      4,120 |        111 |        266 |      4,497 |
+| tests/dummy (Files)                                                                                  |          8 |        617 |         26 |         71 |        714 |
+| tests/dummy/consensus                                                                                |         12 |      3,374 |         69 |        169 |      3,612 |
+| tests/dummy/experiments                                                                              |          3 |        129 |         16 |         26 |        171 |
+| tests/echo                                                                                           |          3 |         62 |         26 |          8 |         96 |
+| tests/echo (Files)                                                                                   |          1 |         23 |         13 |          4 |         40 |
+| tests/echo/_build                                                                                    |          2 |         39 |         13 |          4 |         56 |
+| tests/echo/_build/default                                                                            |          2 |         39 |         13 |          4 |         56 |
+| tests/rpcTest                                                                                        |          9 |        219 |          0 |         18 |        237 |
+| tests/rpcTest (Files)                                                                                |          3 |         86 |          0 |         11 |         97 |
+| tests/rpcTest/_build                                                                                 |          6 |        133 |          0 |          7 |        140 |
+| tests/rpcTest/_build/default                                                                         |          6 |        133 |          0 |          7 |        140 |
+| tests/separateServerTest                                                                             |         10 |        446 |          0 |         69 |        515 |
+| tests/separateServerTest (Files)                                                                     |          4 |         70 |          0 |         19 |         89 |
+| tests/separateServerTest/_build                                                                      |          6 |        376 |          0 |         50 |        426 |
+| tests/separateServerTest/_build/default                                                              |          6 |        376 |          0 |         50 |        426 |
+| writeup                                                                                              |         10 |      2,725 |        172 |        459 |      3,356 |
+| writeup (Files)                                                                                      |          4 |      1,978 |         22 |        173 |      2,173 |
+| writeup/chapters                                                                                     |          6 |        747 |        150 |        286 |      1,183 |
++------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| filename                                                                                             | language        | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| /Users/marchhill/Documents/cam/2/dissertation/misc/How to write a dissertation.md                    | Markdown        |         86 |          0 |         14 |        100 |
+| /Users/marchhill/Documents/cam/2/dissertation/misc/blog.md                                           | Markdown        |          4 |          0 |          3 |          7 |
+| /Users/marchhill/Documents/cam/2/dissertation/misc/startup.sh                                        | Shell Script    |          5 |          0 |          0 |          5 |
+| /Users/marchhill/Documents/cam/2/dissertation/misc/testParams.py                                     | Python          |         10 |          2 |          1 |         13 |
+| /Users/marchhill/Documents/cam/2/dissertation/proposal/main.log                                      | Log             |        184 |          0 |          5 |        189 |
+| /Users/marchhill/Documents/cam/2/dissertation/proposal/main.tex                                      | LaTeX           |         67 |          0 |         14 |         81 |
+| /Users/marchhill/Documents/cam/2/dissertation/proposal/ref.bib                                       | BibTeX          |          8 |          0 |          0 |          8 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/README.md                                          | Markdown        |         22 |          0 |          8 |         30 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/consensus.ml.html              | HTML            |         44 |          0 |          1 |         45 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/consensus_chained_impl.ml.html | HTML            |        628 |          0 |         20 |        648 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/consensus_chained_test.ml.html | HTML            |      3,539 |          0 |         27 |      3,566 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/consensus_impl.ml.html         | HTML            |        773 |          0 |         22 |        795 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/consensus_test.ml.html         | HTML            |      4,340 |          0 |         33 |      4,373 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/crypto.ml.html                 | HTML            |        260 |          0 |          7 |        267 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/crypto_test.ml.html            | HTML            |        114 |          0 |          3 |        117 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/types.ml.html                  | HTML            |        169 |          0 |          8 |        177 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/util.ml.html                   | HTML            |        688 |          0 |         32 |        720 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/consensus/util_test.ml.html              | HTML            |        292 |          0 |         13 |        305 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/coverage.css                             | CSS             |        421 |          1 |         79 |        501 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/coverage.js                              | JavaScript      |        126 |          9 |         30 |        165 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/highlight.pack.js                        | JavaScript      |          1 |          1 |          0 |          2 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/_coverage/index.html                               | HTML            |        107 |          0 |          1 |        108 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/bin/load_gen.ml                                    | OCaml           |        165 |         14 |         19 |        198 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/bin/run_node.ml                                    | OCaml           |         29 |          2 |          9 |         40 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/consensus.ml                             | OCaml           |          3 |          0 |          1 |          4 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/consensus.mli                            | OCaml Interface |         10 |          3 |          4 |         17 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/consensus_chained_impl.ml                | OCaml           |        178 |          9 |         20 |        207 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/consensus_chained_test.ml                | OCaml           |      1,134 |         16 |         26 |      1,176 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/consensus_impl.ml                        | OCaml           |        219 |          7 |         21 |        247 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/consensus_test.ml                        | OCaml           |      1,380 |         25 |         32 |      1,437 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/types.ml                                 | OCaml           |         39 |          1 |          7 |         47 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/types.mli                                | OCaml Interface |         39 |          1 |          7 |         47 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/util.ml                                  | OCaml           |        267 |          7 |         37 |        311 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/consensus/util_test.ml                             | OCaml           |         98 |          0 |         14 |        112 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/experiments/plot.py                                | Python          |         82 |         97 |         22 |        201 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/experiments/plotHeatmaps.py                        | Python          |         42 |          4 |         11 |         57 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/experiments/plotSingle.py                          | Python          |         34 |          4 |          6 |         44 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/experiments/runExperiments.py                      | Python          |         51 |          9 |         13 |         73 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/action_handler.ml                              | OCaml           |         44 |          2 |          2 |         48 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/api_wrapper.ml                                 | OCaml           |        160 |          2 |         15 |        177 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/api_wrapper.mli                                | OCaml Interface |          5 |          0 |          1 |          6 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/hs_api.capnp                                   | capnp           |         53 |          0 |          7 |         60 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/lib.ml                                         | OCaml           |          5 |          0 |          0 |          5 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/lib.mli                                        | OCaml Interface |          5 |          0 |          0 |          5 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/main_loop.ml                                   | OCaml           |         34 |          7 |          1 |         42 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/msg_sender.ml                                  | OCaml           |        106 |          7 |          7 |        120 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/server.ml                                      | OCaml           |         98 |         17 |          7 |        122 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/types.ml                                       | OCaml           |         28 |          0 |          1 |         29 |
+| /Users/marchhill/Documents/cam/2/dissertation/src/lib/util.ml                                        | OCaml           |         91 |          5 |         12 |        108 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/_build/default/counter.ml                | OCaml           |          9 |          0 |          2 |         11 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/_build/default/counter.mli               | OCaml Interface |          5 |          0 |          4 |          9 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/_build/default/freq.ml                   | OCaml           |          6 |          0 |          1 |          7 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/counter.ml                               | OCaml           |          9 |          0 |          2 |         11 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/counter.mli                              | OCaml Interface |          5 |          0 |          4 |          9 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/basicIO/freq.ml                                  | OCaml           |          6 |          0 |          1 |          7 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/echo.ml                 | OCaml           |         22 |          0 |          4 |         26 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/echo_api.capnp          | capnp           |          4 |          0 |          1 |          5 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/echo_api.ml             | OCaml           |        206 |          0 |         21 |        227 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/echo_api.mli            | OCaml Interface |        100 |          0 |         10 |        110 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/_build/default/main.ml                 | OCaml           |         35 |          0 |          7 |         42 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/echo.ml                                | OCaml           |         71 |         16 |         11 |         98 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/echo_api.capnp                         | capnp           |          4 |          0 |          1 |          5 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/capnpTest/main.ml                                | OCaml           |         39 |          5 |          7 |         51 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/crypto/_build/default/crypto.ml                  | OCaml           |         30 |          0 |          3 |         33 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/crypto/crypto.ml                                 | OCaml           |         30 |          0 |          3 |         33 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/api_wrapper.ml                             | OCaml           |        160 |          2 |         15 |        177 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/api_wrapper.mli                            | OCaml Interface |          5 |          0 |          1 |          6 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus.ml                     | OCaml           |          3 |          0 |          1 |          4 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus.mli                    | OCaml Interface |         10 |          3 |          4 |         17 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus_chained_impl.ml        | OCaml           |        180 |          9 |         20 |        209 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus_chained_test.ml        | OCaml           |      1,135 |         16 |         26 |      1,177 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus_impl.ml                | OCaml           |        218 |          7 |         21 |        246 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/consensus_test.ml                | OCaml           |      1,381 |         25 |         32 |      1,438 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/crypto_util.ml                   | OCaml           |         77 |          2 |          6 |         85 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/crypto_util_test.ml              | OCaml           |         24 |          0 |          2 |         26 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/types.ml                         | OCaml           |         39 |          1 |          7 |         47 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/types.mli                        | OCaml Interface |         39 |          1 |          7 |         47 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/util.ml                          | OCaml           |        192 |          5 |         31 |        228 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/consensus/util_test.ml                     | OCaml           |         76 |          0 |         12 |         88 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/dummy.ml                                   | OCaml           |         42 |          3 |          9 |         54 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/experiments/plot.py                        | Python          |         63 |          6 |         10 |         79 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/experiments/plotSingle.py                  | Python          |         26 |          2 |          5 |         33 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/experiments/runDummyExperiments.py         | Python          |         40 |          8 |         11 |         59 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/hs_api.capnp                               | capnp           |         53 |          0 |          7 |         60 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/load_gen_dummy.ml                          | OCaml           |        131 |         10 |         19 |        160 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/net.ml                                     | OCaml           |        107 |          6 |          7 |        120 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/types.ml                                   | OCaml           |         28 |          0 |          1 |         29 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/dummy/util.ml                                    | OCaml           |         91 |          5 |         12 |        108 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/echo/_build/default/echo.ml                      | OCaml           |         23 |         13 |          4 |         40 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/echo/_build/default/echo.pp.ml                   | OCaml           |         16 |          0 |          0 |         16 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/echo/echo.ml                                     | OCaml           |         23 |         13 |          4 |         40 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/client.ml                 | OCaml           |         33 |          0 |          4 |         37 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/client.pp.ml              | OCaml           |         10 |          0 |          0 |         10 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/intf.ml                   | OCaml           |          8 |          0 |          0 |          8 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/intf.pp.ml                | OCaml           |          3 |          0 |          0 |          3 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/server.ml                 | OCaml           |         40 |          0 |          3 |         43 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/_build/default/server.pp.ml              | OCaml           |         39 |          0 |          0 |         39 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/client.ml                                | OCaml           |         33 |          0 |          4 |         37 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/intf.ml                                  | OCaml           |          8 |          0 |          0 |          8 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/rpcTest/server.ml                                | OCaml           |         45 |          0 |          7 |         52 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/client.ml      | OCaml           |         22 |          0 |          7 |         29 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/echo.ml        | OCaml           |         20 |          0 |          5 |         25 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/echo_api.capnp | capnp           |          4 |          0 |          1 |          5 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/echo_api.ml    | OCaml           |        206 |          0 |         21 |        227 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/echo_api.mli   | OCaml Interface |        100 |          0 |         10 |        110 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/_build/default/server.ml      | OCaml           |         24 |          0 |          6 |         30 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/client.ml                     | OCaml           |         22 |          0 |          7 |         29 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/echo.ml                       | OCaml           |         20 |          0 |          5 |         25 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/echo_api.capnp                | capnp           |          4 |          0 |          1 |          5 |
+| /Users/marchhill/Documents/cam/2/dissertation/tests/separateServerTest/server.ml                     | OCaml           |         24 |          0 |          6 |         30 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/conclusion.tex                        | LaTeX           |          6 |          7 |         10 |         23 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/evaluation.tex                        | LaTeX           |        163 |         47 |         77 |        287 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/implementation.tex                    | LaTeX           |        383 |         83 |        106 |        572 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/introduction.tex                      | LaTeX           |         13 |          1 |          7 |         21 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/preparation.tex                       | LaTeX           |        122 |          4 |         71 |        197 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/proposal.tex                          | LaTeX           |         60 |          8 |         15 |         83 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/main.log                                       | Log             |      1,206 |          0 |         78 |      1,284 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/main.run.xml                                   | XML             |         79 |          3 |          1 |         83 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/main.tex                                       | LaTeX           |        133 |         19 |         50 |        202 |
+| /Users/marchhill/Documents/cam/2/dissertation/writeup/ref.bib                                        | BibTeX          |        560 |          0 |         44 |        604 |
+| Total                                                                                                |                 |     24,440 |        582 |      1,525 |     26,547 |
++------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+

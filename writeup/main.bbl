@@ -263,6 +263,11 @@ Tushar~Deepak Chandra and Sam Toueg.
 \newblock {\em Journal of the ACM}, 43(2):225--267, March 1996.
 \newblock \url{https://dl.acm.org/doi/10.1145/226643.226647}.
 
+\bibitem{janestreetCoreBench2023}
+{Jane Street}.
+\newblock Core\_bench.
+\newblock \url{https://github.com/janestreet/core_bench}.
+
 \bibitem{mirage}
 {{MirageOS}}.
 \newblock \url{https://mirage.io/}.

@@ -1,5 +1,5 @@
-ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build0 -- ./main.exe -i 0 -n 4 -b 100
-ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build1 -- ./main.exe -i 1 -n 4 -b 100
-ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build2 -- ./main.exe -i 2 -n 4 -b 100
-ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build3 -- ./main.exe -i 3 -n 4 -b 100
-eval $(opam env) dune exec -- ./live_test.exe 4 -c -t 10 -r 600 -b 100 --times "./experiments/data/mininet2/subtests/600tp100b.csv" --stats "./experiments/data/mininet2/stats.csv"
+ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build0 -- ./bin/run_node.exe -i 0 -n 4 -b 300
+ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build1 -- ./bin/run_node.exe -i 1 -n 4 -b 300
+ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build2 -- ./bin/run_node.exe -i 2 -n 4 -b 300
+ulimit -n 65536; eval $(opam env) dune exec --build-dir=_build3 -- ./bin/run_node.exe -i 3 -n 4 -b 300
+eval $(opam env) dune exec -- ./bin/load_gen.exe 4 -t 10 -b 300 --stats "./experiments/data/mininet3/stats.csv" --times "./experiments/data/mininet3/subtests/t1r300.csv" -r 300

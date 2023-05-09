@@ -1,0 +1,14 @@
+# Fdb version 3
+["pdflatex"] 1683637140 "/Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/proposal.tex" "chapters/proposal.pdf" "proposal" 1683637140
+  "../main.tex" 0 -1 0 ""
+  "/Users/marchhill/Documents/cam/2/dissertation/writeup/chapters/proposal.tex" 1683637139 6891 98ec20651f2c7ab756c4e8db5392e422 ""
+  "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/import.sty" 1647894602 6201 0ad8b5da8e12f60a88d546b2198a56f2 ""
+  "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/subfiles/subfiles.cls" 1647894602 1507 57de335d88fde4e5c924dfed577fdb74 ""
+  "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/web2c/texmf.cnf" 1647894602 40174 4e2f94c7b252db2ad3c0cfdef6912ab3 ""
+  "/opt/homebrew/Cellar/texlive/20220321_3/share/texmf-var/web2c/pdftex/pdflatex.fmt" 1647894602 2826563 f39d1fa6543e354bf2297ed63a067310 ""
+  "chapters/../main.tex" 0 -1 0 ""
+  "chapters/proposal.aux" 1683637140 32 3985256e7290058c681f74d7a3565a19 ""
+  "chapters/proposal.tex" 1683637139 6891 98ec20651f2c7ab756c4e8db5392e422 ""
+  (generated)
+  "chapters/proposal.log"
+  "chapters/proposal.pdf"

@@ -1,0 +1,82 @@
+% \documentclass[a4paper]{article}
+% \usepackage[utf8]{inputenc}
+% \usepackage{graphicx}
+% \usepackage{booktabs}
+% \usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,bindingoffset=6mm]{geometry}
+% \graphicspath{ {images/} }
+\documentclass[../main]{subfiles}
+
+\begin{document}
+
+\title{
+{Project proposal: Implementing the HotStuff consensus algorithm}
+}
+\author{Marc Harvey-Hill}
+\date{12 10 2022}
+\frenchspacing
+
+\maketitle
+
+\section*{Description}
+This project aims to implement the HotStuff algorithm as outlined by Yin et ~al~. in 2019 \cite{yinHotStuffBFTConsensus2019}. HotStuff is a Byzantine fault-tolerant algorithm that allows state to be replicated across nodes under a partially synchronous model. This has applications in blockchain, and can be used as the foundation for the development of cryptocurrencies and decentralised applications.
+
+A leader node will drive consensus, ensuring that non-faulty replicas run identical commands in the same order so that state is consistent across replicas. The algorithm has a two-phase process for reaching consensus on a given proposal - the first forms a quorum certificate to guarantee a unique proposal and the second guarantees that the next leader will be able to convince replicas to vote for a safe proposal. Additionally the algorithm has a three-phase process for a view-change, which involves selecting a new leader, allowing it to collect information, and make a proposal to replicas.
+
+The project will be implemented in OCaml on top of existing RPC and cryptographic libraries such as AsyncRPC and tezos-crypto. It can be divided into three main sections:
+\begin{itemize}
+	\item Core algorithm - a non-chained implementation without Byzantine fault-tolerance
+	\item Cryptography - integration of cryptographic signing to ensure Byzantine fault-tolerance
+	\item Chained - pipelined version of HotStuff allowing a quorum certificate to serve in multiple phases simultaneously.
+\end{itemize}
+
+\section*{Starting point}
+I have some experience using OCaml from the IA course.
+
+\section*{Success Criteria}
+\begin{itemize}
+	\item Correctness - The consensus algorithm is implemented as it is described in the paper. This can be established by comparison of the program trace to a known correct implementation or mapping to a verified TLA+ model.
+	\item Evaluation - Analysis of system throughput and latency carried out on a simulated network of 32 replicas.
+\end{itemize}
+Evaluation will be carried out by testing the program locally, analysing the trace, and testing in an emulator.
+
+\section*{Extensions}
+\begin{itemize}
+	\item Improve transaction throughput and reduce latency. This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
+	\item Support reconfiguration of the network.
+\end{itemize}
+
+\section*{Timetable}
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|l|l|l|}
+	\hline
+	Start    & End      & Work                                                                                                                                                            \\ \hline
+	17/10/22 & 30/10/22 & \begin{tabular}[c]{@{}l@{}}Preparatory work:\\ Set up local environment and repository.\\ Learn OCaml and RPC library\end{tabular}\\ \hline
+	31/10/22 & 13/11/22 & \begin{tabular}[c]{@{}l@{}}Study HotStuff paper in depth.\\ Begin implementing core algorithm.\\ \textit{Cloud Computing 1 deadline (9th Nov)}\end{tabular}                             \\ \hline
+	14/10/22 & 27/11/22 & \begin{tabular}[c]{@{}l@{}}Continue implementing core algorithm. \\ \textit{Milestone: core algorithm implementation completed}\end{tabular}                                                                                                                 \\ \hline
+	28/11/22 & 11/12/22 & \begin{tabular}[c]{@{}l@{}}Integrate cryptographic libraries.\\ \textit{Cloud Computing 2 deadline (28th Nov)}\end{tabular}                                 \\ \hline
+	12/12/22 & 25/12/22 & \begin{tabular}[c]{@{}l@{}}Begin implementing chained algorithm. \end{tabular}     \\ \hline
+	26/12/22 & 08/01/23 & \textit{Christmas break}                                                                                                                                        \\ \hline
+	09/01/23 & 22/01/23 & \begin{tabular}[c]{@{}l@{}}Complete implementation of chained algorithm. \\ Test implementation locally.\\ \textit{Milestone: success criteria met}\end{tabular}                                              \\ \hline
+	23/01/23 & 05/02/23 & \begin{tabular}[c]{@{}l@{}}Write progress report, prepare presentation.\\ \textit{Cybercrime 1 deadline (3rd Feb)}\\ \textit{Milestone: Progress report submitted (3rd Feb)}\end{tabular}                           \\ \hline
+	06/02/23 & 19/02/23 & \begin{tabular}[c]{@{}l@{}}\textit{Slack time / work on extensions}\\ \textit{Cybercrime 2 deadline (17th Feb)}\\ \textit{Milestone: Presentation delivered (8th - 15th Feb)}\end{tabular}                                    \\ \hline
+	20/02/23 & 05/03/23 & \begin{tabular}[c]{@{}l@{}}Write dissertation outline.\\ \textit{Cybercrime 3 deadline (3rd March)}\end{tabular}                                                                                                                                     \\ \hline
+	06/03/23 & 19/03/23 & \begin{tabular}[c]{@{}l@{}}Write preparation and implementation chapters.\\ \textit{Cybercrime 4 deadline (17th March)}\end{tabular}                                                                                                   \\ \hline
+	20/03/23 & 02/04/23 & Write evaluation chapter.                                                                                                                                       \\ \hline
+	03/04/23 & 16/04/23 & \begin{tabular}[c]{@{}l@{}}Write introduction and conclusion chapters.\\ \textit{Milestone: Dissertation draft completed and sent}\\ \textit{to supervisors and DoS}\end{tabular} \\ \hline
+	17/04/23 & 30/04/23 & \begin{tabular}[c]{@{}l@{}}Respond to feedback.\\ \textit{Milestone: Dissertation completed}\end{tabular}                                                                 \\ \hline
+	01/05/23 & 12/05/23 & \begin{tabular}[c]{@{}l@{}}\textit{Slack time}\\ \textit{Milestone: Dissertation submitted (12th May)}\end{tabular}                                                               \\ \hline
+	\end{tabular}
+\end{table}
+
+\section*{Resources}
+Laptop (Macbook Air 2020 with M1 chip, 16GB RAM, 512GB SSD)\\
+Sofia server (2x Xeon Gold 6230R chips, 768GB RAM)\\
+git for version control and backups to Github. TeX for typesetting.\\
+If there is a problem with my machine, I will clone the repository and continue on another one of my machines or the MCS.
+
+% \bibliographystyle{plain}
+% \bibliography{ref}
+
+\end{document}
