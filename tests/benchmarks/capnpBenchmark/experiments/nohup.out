@@ -1,0 +1,2370 @@
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+kj/filesystem-disk-unix.c++:1681: warning: PWD environment variable doesn't match current directory; pwd = /home/mnh33/hotstuff/tests/dummy/experiments
+hs_api.capnp --> hs_api.mli hs_api.ml
+kj/filesystem-disk-unix.c++:1681: warning: PWD environment variable doesn't match current directory; pwd = /home/mnh33/hotstuff/tests/dummy/experiments
+hs_api.capnp --> hs_api.mli hs_api.ml
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_0_1000_1_3200: n = 7454, goodput = 2385280.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 7439, sum = 0.003007
+12345: req_send mean = 0.013397s, sd = 0.008042s, count = 7439, sum = 99.663171
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_1_1000_1_200: n = 256631, goodput = 5132620.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000036s, count = 256431, sum = 0.084914
+12345: req_send mean = 0.006277s, sd = 0.003558s, count = 256431, sum = 1609.735198
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_2_1000_1_25: n = 267504, goodput = 668760.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000066s, count = 267420, sum = 0.181999
+12345: req_send mean = 0.005694s, sd = 0.004768s, count = 267420, sum = 1522.666136
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_3_1000_1_100: n = 256281, goodput = 2562810.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000040s, count = 255949, sum = 0.113812
+12345: req_send mean = 0.007787s, sd = 0.003933s, count = 255949, sum = 1992.970310
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_4_1000_1_4000: n = 4685, goodput = 1874000.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4679, sum = 0.001939
+12345: req_send mean = 0.021843s, sd = 0.012735s, count = 4679, sum = 102.204853
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_5_1000_1_3600: n = 6019, goodput = 2166840.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 6000, sum = 0.002789
+12345: req_send mean = 0.015821s, sd = 0.009904s, count = 6000, sum = 94.924561
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_6_1000_1_3800: n = 5375, goodput = 2042500.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5359, sum = 0.002456
+12345: req_send mean = 0.018209s, sd = 0.011238s, count = 5359, sum = 97.580135
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_7_1000_1_1200: n = 104473, goodput = 12536760.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 104440, sum = 0.021274
+12345: req_send mean = 0.003361s, sd = 0.001802s, count = 104440, sum = 351.031659
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_8_1000_1_3600: n = 5897, goodput = 2122920.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5880, sum = 0.002130
+12345: req_send mean = 0.017079s, sd = 0.010214s, count = 5880, sum = 100.423481
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_9_1000_1_5400: n = 2766, goodput = 1493640.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2759, sum = 0.001160
+12345: req_send mean = 0.038001s, sd = 0.022474s, count = 2759, sum = 104.844882
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_10_1000_1_2000: n = 52085, goodput = 10417000.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 52080, sum = 0.016071
+12345: req_send mean = 0.004120s, sd = 0.002289s, count = 52080, sum = 214.557616
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_11_1000_1_25: n = 265167, goodput = 662917.500000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000025s, count = 264900, sum = 0.135155
+12345: req_send mean = 0.010406s, sd = 0.006887s, count = 264900, sum = 2756.469878
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_12_1000_1_2600: n = 13213, goodput = 3435380.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 13200, sum = 0.005247
+12345: req_send mean = 0.007364s, sd = 0.004485s, count = 13200, sum = 97.211238
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_13_1000_1_1400: n = 81047, goodput = 11346580.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 81000, sum = 0.022362
+12345: req_send mean = 0.003908s, sd = 0.002090s, count = 81000, sum = 316.559044
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_14_1000_1_3600: n = 5758, goodput = 2072880.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5739, sum = 0.002305
+12345: req_send mean = 0.017539s, sd = 0.010439s, count = 5739, sum = 100.655555
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_15_1000_1_400: n = 210521, goodput = 8420840.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000005s, count = 210437, sum = 0.035513
+12345: req_send mean = 0.004118s, sd = 0.002208s, count = 210437, sum = 866.633553
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_16_1000_1_1800: n = 57275, goodput = 10309500.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 57224, sum = 0.020647
+12345: req_send mean = 0.003826s, sd = 0.002270s, count = 57224, sum = 218.965442
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_17_1000_1_800: n = 146401, goodput = 11712080.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 146390, sum = 0.020510
+12345: req_send mean = 0.003533s, sd = 0.002344s, count = 146390, sum = 517.210211
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_18_1000_1_1200: n = 95431, goodput = 11451720.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 95420, sum = 0.025370
+12345: req_send mean = 0.003504s, sd = 0.001849s, count = 95420, sum = 334.361065
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_19_1000_1_1000: n = 117594, goodput = 11759400.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 117580, sum = 0.018000
+12345: req_send mean = 0.003660s, sd = 0.001999s, count = 117580, sum = 430.354168
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_20_1000_1_6000: n = 2199, goodput = 1319400.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2179, sum = 0.000965
+12345: req_send mean = 0.047914s, sd = 0.028711s, count = 2179, sum = 104.405223
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_21_1000_1_2800: n = 10490, goodput = 2937200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 10480, sum = 0.003894
+12345: req_send mean = 0.009592s, sd = 0.005815s, count = 10480, sum = 100.527036
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_22_1000_1_6000: n = 2234, goodput = 1340400.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2219, sum = 0.001042
+12345: req_send mean = 0.046416s, sd = 0.027928s, count = 2219, sum = 102.997779
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_23_1000_1_4200: n = 4322, goodput = 1815240.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4319, sum = 0.001794
+12345: req_send mean = 0.023569s, sd = 0.013994s, count = 4319, sum = 101.795330
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_24_1000_1_1: n = 265681, goodput = 26568.100000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000043s, count = 265600, sum = 0.173558
+12345: req_send mean = 0.006038s, sd = 0.004038s, count = 265600, sum = 1603.684950
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_25_1000_1_4400: n = 3787, goodput = 1666280.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3779, sum = 0.001594
+12345: req_send mean = 0.027295s, sd = 0.015939s, count = 3779, sum = 103.146319
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_26_1000_1_5200: n = 2845, goodput = 1479400.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2839, sum = 0.001255
+12345: req_send mean = 0.036768s, sd = 0.021504s, count = 2839, sum = 104.383776
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_27_1000_1_600: n = 175944, goodput = 10556640.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 175880, sum = 0.026164
+12345: req_send mean = 0.003698s, sd = 0.002266s, count = 175880, sum = 650.420812
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_28_1000_1_800: n = 151121, goodput = 12089680.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 151120, sum = 0.021104
+12345: req_send mean = 0.003443s, sd = 0.001911s, count = 151120, sum = 520.369293
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_29_1000_1_4400: n = 4032, goodput = 1774080.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4019, sum = 0.001756
+12345: req_send mean = 0.025512s, sd = 0.015188s, count = 4019, sum = 102.533633
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_30_1000_1_2800: n = 10343, goodput = 2896040.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000004s, count = 10339, sum = 0.005031
+12345: req_send mean = 0.009350s, sd = 0.005795s, count = 10339, sum = 96.669558
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_31_1000_1_2400: n = 16462, goodput = 3950880.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000008s, count = 16440, sum = 0.009810
+12345: req_send mean = 0.010907s, sd = 0.007216s, count = 16440, sum = 179.304113
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_32_1000_1_5800: n = 2300, goodput = 1334000.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2280, sum = 0.001008
+12345: req_send mean = 0.045204s, sd = 0.026830s, count = 2280, sum = 103.064008
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_33_1000_1_4600: n = 3624, goodput = 1667040.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3619, sum = 0.001465
+12345: req_send mean = 0.028531s, sd = 0.016876s, count = 3619, sum = 103.252990
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_34_1000_1_5200: n = 2720, goodput = 1414400.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2699, sum = 0.001163
+12345: req_send mean = 0.038174s, sd = 0.022748s, count = 2699, sum = 103.031654
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_35_1000_1_1600: n = 72344, goodput = 11575040.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 72300, sum = 0.021570
+12345: req_send mean = 0.004264s, sd = 0.002921s, count = 72300, sum = 308.293279
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_36_1000_1_3200: n = 7063, goodput = 2260160.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 7059, sum = 0.002882
+12345: req_send mean = 0.014306s, sd = 0.008556s, count = 7059, sum = 100.983506
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_37_1000_1_5600: n = 2409, goodput = 1349040.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2399, sum = 0.001100
+12345: req_send mean = 0.043581s, sd = 0.025501s, count = 2399, sum = 104.550314
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_38_1000_1_3400: n = 6926, goodput = 2354840.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 6920, sum = 0.002671
+12345: req_send mean = 0.014559s, sd = 0.008654s, count = 6920, sum = 100.750107
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_39_1000_1_3800: n = 5166, goodput = 1963080.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5160, sum = 0.002135
+12345: req_send mean = 0.019651s, sd = 0.011531s, count = 5160, sum = 101.397198
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_40_1000_1_3000: n = 8485, goodput = 2545500.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 8479, sum = 0.003290
+12345: req_send mean = 0.011639s, sd = 0.007027s, count = 8479, sum = 98.686348
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_41_1000_1_5400: n = 2664, goodput = 1438560.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2659, sum = 0.001171
+12345: req_send mean = 0.039440s, sd = 0.022873s, count = 2659, sum = 104.870574
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_42_1000_1_400: n = 211241, goodput = 8449640.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000004s, count = 211232, sum = 0.034280
+12345: req_send mean = 0.004045s, sd = 0.002778s, count = 211232, sum = 854.440748
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_43_1000_1_3200: n = 7407, goodput = 2370240.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 7399, sum = 0.003018
+12345: req_send mean = 0.013298s, sd = 0.008095s, count = 7399, sum = 98.394301
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_44_1000_1_2600: n = 12484, goodput = 3245840.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 12479, sum = 0.005091
+12345: req_send mean = 0.007796s, sd = 0.004796s, count = 12479, sum = 97.281439
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_45_1000_1_2200: n = 24346, goodput = 5356120.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 24320, sum = 0.009733
+12345: req_send mean = 0.008115s, sd = 0.004872s, count = 24320, sum = 197.348251
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_46_1000_1_1400: n = 79441, goodput = 11121740.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 79420, sum = 0.022793
+12345: req_send mean = 0.004003s, sd = 0.002252s, count = 79420, sum = 317.888395
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_47_1000_1_800: n = 145235, goodput = 11618800.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 145204, sum = 0.020091
+12345: req_send mean = 0.003465s, sd = 0.001828s, count = 145204, sum = 503.138253
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_48_1000_1_4800: n = 3243, goodput = 1556640.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3239, sum = 0.001374
+12345: req_send mean = 0.032161s, sd = 0.018460s, count = 3239, sum = 104.168772
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_49_1000_1_200: n = 256541, goodput = 5130820.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000010s, count = 256540, sum = 0.059643
+12345: req_send mean = 0.004562s, sd = 0.002931s, count = 256540, sum = 1170.235900
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_50_1000_1_1600: n = 67211, goodput = 10753760.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 67200, sum = 0.022015
+12345: req_send mean = 0.004445s, sd = 0.002409s, count = 67200, sum = 298.708752
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_51_1000_1_5000: n = 3022, goodput = 1511000.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3019, sum = 0.001413
+12345: req_send mean = 0.034565s, sd = 0.019994s, count = 3019, sum = 104.351728
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_52_1000_1_1: n = 267025, goodput = 26702.500000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000027s, count = 266776, sum = 0.138172
+12345: req_send mean = 0.005877s, sd = 0.003558s, count = 266776, sum = 1567.957110
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_53_1000_1_5800: n = 2257, goodput = 1309060.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2239, sum = 0.000978
+12345: req_send mean = 0.046429s, sd = 0.027377s, count = 2239, sum = 103.953721
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_54_1000_1_2200: n = 25395, goodput = 5586900.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000004s, count = 25360, sum = 0.009835
+12345: req_send mean = 0.007871s, sd = 0.004493s, count = 25360, sum = 199.609011
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_55_1000_1_2400: n = 16840, goodput = 4041600.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000013s, count = 16820, sum = 0.012936
+12345: req_send mean = 0.010137s, sd = 0.006967s, count = 16820, sum = 170.511943
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_56_1000_1_200: n = 258689, goodput = 5173780.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000028s, count = 258540, sum = 0.080583
+12345: req_send mean = 0.006432s, sd = 0.004041s, count = 258540, sum = 1663.028151
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_57_1000_1_5200: n = 2760, goodput = 1435200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2739, sum = 0.001231
+12345: req_send mean = 0.037902s, sd = 0.021992s, count = 2739, sum = 103.814498
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_58_1000_1_2000: n = 51828, goodput = 10365600.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 51820, sum = 0.016104
+12345: req_send mean = 0.004156s, sd = 0.002314s, count = 51820, sum = 215.357615
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_59_1000_1_400: n = 209486, goodput = 8379440.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000004s, count = 209426, sum = 0.034799
+12345: req_send mean = 0.004102s, sd = 0.002401s, count = 209426, sum = 859.144500
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_60_1000_1_6000: n = 2234, goodput = 1340400.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2219, sum = 0.000982
+12345: req_send mean = 0.047196s, sd = 0.028299s, count = 2219, sum = 104.726885
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_61_1000_1_2600: n = 13115, goodput = 3409900.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000005s, count = 13099, sum = 0.005428
+12345: req_send mean = 0.007599s, sd = 0.004534s, count = 13099, sum = 99.543161
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_62_1000_1_3400: n = 6530, goodput = 2220200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 6519, sum = 0.002660
+12345: req_send mean = 0.015599s, sd = 0.009147s, count = 6519, sum = 101.688561
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_63_1000_1_4000: n = 4828, goodput = 1931200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4819, sum = 0.002176
+12345: req_send mean = 0.021103s, sd = 0.012966s, count = 4819, sum = 101.694850
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_64_1000_1_1600: n = 67517, goodput = 10802720.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 67480, sum = 0.021480
+12345: req_send mean = 0.004408s, sd = 0.002438s, count = 67480, sum = 297.432763
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_65_1000_1_50: n = 266698, goodput = 1333490.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000024s, count = 266660, sum = 0.111926
+12345: req_send mean = 0.004616s, sd = 0.003235s, count = 266660, sum = 1230.942013
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_66_1000_1_3000: n = 8742, goodput = 2622600.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 8739, sum = 0.003568
+12345: req_send mean = 0.011221s, sd = 0.006888s, count = 8739, sum = 98.057818
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_67_1000_1_1800: n = 57605, goodput = 10368900.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 57600, sum = 0.021139
+12345: req_send mean = 0.003935s, sd = 0.002192s, count = 57600, sum = 226.666572
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_68_1000_1_100: n = 258114, goodput = 2581140.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000034s, count = 257840, sum = 0.097591
+12345: req_send mean = 0.007824s, sd = 0.004145s, count = 257840, sum = 2017.440867
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_69_1000_1_50: n = 276337, goodput = 1381685.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000038s, count = 276040, sum = 0.158904
+12345: req_send mean = 0.010059s, sd = 0.004654s, count = 276040, sum = 2776.605636
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_70_1000_1_5600: n = 2528, goodput = 1415680.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2520, sum = 0.001124
+12345: req_send mean = 0.041449s, sd = 0.024410s, count = 2520, sum = 104.451100
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_71_1000_1_50: n = 265821, goodput = 1329105.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000021s, count = 265820, sum = 0.120022
+12345: req_send mean = 0.004876s, sd = 0.003339s, count = 265820, sum = 1296.263533
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_72_1000_1_2200: n = 24981, goodput = 5495820.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000003s, count = 24960, sum = 0.010120
+12345: req_send mean = 0.007943s, sd = 0.004573s, count = 24960, sum = 198.264356
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_73_1000_1_4800: n = 3370, goodput = 1617600.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3359, sum = 0.001407
+12345: req_send mean = 0.030744s, sd = 0.018199s, count = 3359, sum = 103.270484
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_74_1000_1_1: n = 265961, goodput = 26596.100000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000057s, count = 265926, sum = 0.186967
+12345: req_send mean = 0.006494s, sd = 0.006018s, count = 265926, sum = 1726.814806
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_75_1000_1_4800: n = 3290, goodput = 1579200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3279, sum = 0.001425
+12345: req_send mean = 0.031606s, sd = 0.018662s, count = 3279, sum = 103.635572
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_76_1000_1_5000: n = 3079, goodput = 1539500.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3059, sum = 0.001322
+12345: req_send mean = 0.033831s, sd = 0.020093s, count = 3059, sum = 103.490207
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_77_1000_1_3400: n = 6743, goodput = 2292620.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 6739, sum = 0.002906
+12345: req_send mean = 0.014678s, sd = 0.008927s, count = 6739, sum = 98.913069
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_78_1000_1_600: n = 187032, goodput = 11221920.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 186947, sum = 0.027796
+12345: req_send mean = 0.003633s, sd = 0.001946s, count = 186947, sum = 679.218316
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_79_1000_1_5600: n = 2363, goodput = 1323280.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 2360, sum = 0.001233
+12345: req_send mean = 0.040505s, sd = 0.026518s, count = 2360, sum = 95.592319
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_80_1000_1_4600: n = 3623, goodput = 1666580.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3620, sum = 0.001681
+12345: req_send mean = 0.028049s, sd = 0.016753s, count = 3620, sum = 101.537340
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_81_1000_1_1200: n = 100754, goodput = 12090480.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 100700, sum = 0.021915
+12345: req_send mean = 0.003363s, sd = 0.001710s, count = 100700, sum = 338.703889
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_82_1000_1_4200: n = 4036, goodput = 1695120.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4019, sum = 0.001794
+12345: req_send mean = 0.025142s, sd = 0.014884s, count = 4019, sum = 101.046356
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_83_1000_1_2400: n = 16205, goodput = 3889200.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000010s, count = 16200, sum = 0.010374
+12345: req_send mean = 0.011119s, sd = 0.007370s, count = 16200, sum = 180.126331
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_84_1000_1_600: n = 175224, goodput = 10513440.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 175120, sum = 0.026446
+12345: req_send mean = 0.003700s, sd = 0.001900s, count = 175120, sum = 647.913168
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_85_1000_1_3800: n = 5149, goodput = 1956620.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5139, sum = 0.001997
+12345: req_send mean = 0.019819s, sd = 0.011713s, count = 5139, sum = 101.848769
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_86_1000_1_1000: n = 119094, goodput = 11909400.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 119032, sum = 0.018591
+12345: req_send mean = 0.003665s, sd = 0.001913s, count = 119032, sum = 436.210316
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_87_1000_1_100: n = 258661, goodput = 2586610.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000014s, count = 258660, sum = 0.082734
+12345: req_send mean = 0.007780s, sd = 0.003956s, count = 258660, sum = 2012.327509
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_88_1000_1_2800: n = 10033, goodput = 2809240.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000010s, count = 10019, sum = 0.005677
+12345: req_send mean = 0.009772s, sd = 0.005950s, count = 10019, sum = 97.905928
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_89_1000_1_2000: n = 49348, goodput = 9869600.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 49320, sum = 0.016546
+12345: req_send mean = 0.004301s, sd = 0.002465s, count = 49320, sum = 212.142250
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_90_1000_1_3000: n = 8871, goodput = 2661300.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 8860, sum = 0.003408
+12345: req_send mean = 0.011088s, sd = 0.006776s, count = 8860, sum = 98.242613
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_91_1000_1_5400: n = 2649, goodput = 1430460.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2639, sum = 0.001147
+12345: req_send mean = 0.039606s, sd = 0.023652s, count = 2639, sum = 104.519495
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_92_1000_1_1800: n = 57929, goodput = 10427220.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 57900, sum = 0.020936
+12345: req_send mean = 0.003986s, sd = 0.002336s, count = 57900, sum = 230.796214
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_93_1000_1_1400: n = 84241, goodput = 11793740.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 84233, sum = 0.021694
+12345: req_send mean = 0.003891s, sd = 0.002066s, count = 84233, sum = 327.710616
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_94_1000_1_5000: n = 3036, goodput = 1518000.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3019, sum = 0.001300
+12345: req_send mean = 0.034298s, sd = 0.020248s, count = 3019, sum = 103.546325
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_95_1000_1_4200: n = 4056, goodput = 1703520.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4039, sum = 0.001723
+12345: req_send mean = 0.025149s, sd = 0.014764s, count = 4039, sum = 101.575537
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_96_1000_1_5800: n = 2246, goodput = 1302680.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2240, sum = 0.001090
+12345: req_send mean = 0.042475s, sd = 0.027647s, count = 2240, sum = 95.142926
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_97_1000_1_25: n = 268924, goodput = 672310.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000021s, count = 268600, sum = 0.121700
+12345: req_send mean = 0.009527s, sd = 0.005287s, count = 268600, sum = 2559.037529
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_98_1000_1_4000: n = 4446, goodput = 1778400.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 4439, sum = 0.002353
+12345: req_send mean = 0.023200s, sd = 0.013479s, count = 4439, sum = 102.984934
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_99_1000_1_4400: n = 3815, goodput = 1678600.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3800, sum = 0.001614
+12345: req_send mean = 0.026894s, sd = 0.015901s, count = 3800, sum = 102.198286
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_100_1000_1_1000: n = 118228, goodput = 11822800.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 118220, sum = 0.022059
+12345: req_send mean = 0.003715s, sd = 0.002099s, count = 118220, sum = 439.143035
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_06-05-2023-22:26:02_101_1000_1_4600: n = 3676, goodput = 1690960.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3660, sum = 0.001577
+12345: req_send mean = 0.028137s, sd = 0.016694s, count = 3660, sum = 102.979897
+running "dummytest_06-05-2023-22:26:02_0_1000_1_3200"
+running "dummytest_06-05-2023-22:26:02_1_1000_1_200"
+running "dummytest_06-05-2023-22:26:02_2_1000_1_25"
+running "dummytest_06-05-2023-22:26:02_3_1000_1_100"
+running "dummytest_06-05-2023-22:26:02_4_1000_1_4000"
+running "dummytest_06-05-2023-22:26:02_5_1000_1_3600"
+running "dummytest_06-05-2023-22:26:02_6_1000_1_3800"
+running "dummytest_06-05-2023-22:26:02_7_1000_1_1200"
+running "dummytest_06-05-2023-22:26:02_8_1000_1_3600"
+running "dummytest_06-05-2023-22:26:02_9_1000_1_5400"
+running "dummytest_06-05-2023-22:26:02_10_1000_1_2000"
+running "dummytest_06-05-2023-22:26:02_11_1000_1_25"
+running "dummytest_06-05-2023-22:26:02_12_1000_1_2600"
+running "dummytest_06-05-2023-22:26:02_13_1000_1_1400"
+running "dummytest_06-05-2023-22:26:02_14_1000_1_3600"
+running "dummytest_06-05-2023-22:26:02_15_1000_1_400"
+running "dummytest_06-05-2023-22:26:02_16_1000_1_1800"
+running "dummytest_06-05-2023-22:26:02_17_1000_1_800"
+running "dummytest_06-05-2023-22:26:02_18_1000_1_1200"
+running "dummytest_06-05-2023-22:26:02_19_1000_1_1000"
+running "dummytest_06-05-2023-22:26:02_20_1000_1_6000"
+running "dummytest_06-05-2023-22:26:02_21_1000_1_2800"
+running "dummytest_06-05-2023-22:26:02_22_1000_1_6000"
+running "dummytest_06-05-2023-22:26:02_23_1000_1_4200"
+running "dummytest_06-05-2023-22:26:02_24_1000_1_1"
+running "dummytest_06-05-2023-22:26:02_25_1000_1_4400"
+running "dummytest_06-05-2023-22:26:02_26_1000_1_5200"
+running "dummytest_06-05-2023-22:26:02_27_1000_1_600"
+running "dummytest_06-05-2023-22:26:02_28_1000_1_800"
+running "dummytest_06-05-2023-22:26:02_29_1000_1_4400"
+running "dummytest_06-05-2023-22:26:02_30_1000_1_2800"
+running "dummytest_06-05-2023-22:26:02_31_1000_1_2400"
+running "dummytest_06-05-2023-22:26:02_32_1000_1_5800"
+running "dummytest_06-05-2023-22:26:02_33_1000_1_4600"
+running "dummytest_06-05-2023-22:26:02_34_1000_1_5200"
+running "dummytest_06-05-2023-22:26:02_35_1000_1_1600"
+running "dummytest_06-05-2023-22:26:02_36_1000_1_3200"
+running "dummytest_06-05-2023-22:26:02_37_1000_1_5600"
+running "dummytest_06-05-2023-22:26:02_38_1000_1_3400"
+running "dummytest_06-05-2023-22:26:02_39_1000_1_3800"
+running "dummytest_06-05-2023-22:26:02_40_1000_1_3000"
+running "dummytest_06-05-2023-22:26:02_41_1000_1_5400"
+running "dummytest_06-05-2023-22:26:02_42_1000_1_400"
+running "dummytest_06-05-2023-22:26:02_43_1000_1_3200"
+running "dummytest_06-05-2023-22:26:02_44_1000_1_2600"
+running "dummytest_06-05-2023-22:26:02_45_1000_1_2200"
+running "dummytest_06-05-2023-22:26:02_46_1000_1_1400"
+running "dummytest_06-05-2023-22:26:02_47_1000_1_800"
+running "dummytest_06-05-2023-22:26:02_48_1000_1_4800"
+running "dummytest_06-05-2023-22:26:02_49_1000_1_200"
+running "dummytest_06-05-2023-22:26:02_50_1000_1_1600"
+running "dummytest_06-05-2023-22:26:02_51_1000_1_5000"
+running "dummytest_06-05-2023-22:26:02_52_1000_1_1"
+running "dummytest_06-05-2023-22:26:02_53_1000_1_5800"
+running "dummytest_06-05-2023-22:26:02_54_1000_1_2200"
+running "dummytest_06-05-2023-22:26:02_55_1000_1_2400"
+running "dummytest_06-05-2023-22:26:02_56_1000_1_200"
+running "dummytest_06-05-2023-22:26:02_57_1000_1_5200"
+running "dummytest_06-05-2023-22:26:02_58_1000_1_2000"
+running "dummytest_06-05-2023-22:26:02_59_1000_1_400"
+running "dummytest_06-05-2023-22:26:02_60_1000_1_6000"
+running "dummytest_06-05-2023-22:26:02_61_1000_1_2600"
+running "dummytest_06-05-2023-22:26:02_62_1000_1_3400"
+running "dummytest_06-05-2023-22:26:02_63_1000_1_4000"
+running "dummytest_06-05-2023-22:26:02_64_1000_1_1600"
+running "dummytest_06-05-2023-22:26:02_65_1000_1_50"
+running "dummytest_06-05-2023-22:26:02_66_1000_1_3000"
+running "dummytest_06-05-2023-22:26:02_67_1000_1_1800"
+running "dummytest_06-05-2023-22:26:02_68_1000_1_100"
+running "dummytest_06-05-2023-22:26:02_69_1000_1_50"
+running "dummytest_06-05-2023-22:26:02_70_1000_1_5600"
+running "dummytest_06-05-2023-22:26:02_71_1000_1_50"
+running "dummytest_06-05-2023-22:26:02_72_1000_1_2200"
+running "dummytest_06-05-2023-22:26:02_73_1000_1_4800"
+running "dummytest_06-05-2023-22:26:02_74_1000_1_1"
+running "dummytest_06-05-2023-22:26:02_75_1000_1_4800"
+running "dummytest_06-05-2023-22:26:02_76_1000_1_5000"
+running "dummytest_06-05-2023-22:26:02_77_1000_1_3400"
+running "dummytest_06-05-2023-22:26:02_78_1000_1_600"
+running "dummytest_06-05-2023-22:26:02_79_1000_1_5600"
+running "dummytest_06-05-2023-22:26:02_80_1000_1_4600"
+running "dummytest_06-05-2023-22:26:02_81_1000_1_1200"
+running "dummytest_06-05-2023-22:26:02_82_1000_1_4200"
+running "dummytest_06-05-2023-22:26:02_83_1000_1_2400"
+running "dummytest_06-05-2023-22:26:02_84_1000_1_600"
+running "dummytest_06-05-2023-22:26:02_85_1000_1_3800"
+running "dummytest_06-05-2023-22:26:02_86_1000_1_1000"
+running "dummytest_06-05-2023-22:26:02_87_1000_1_100"
+running "dummytest_06-05-2023-22:26:02_88_1000_1_2800"
+running "dummytest_06-05-2023-22:26:02_89_1000_1_2000"
+running "dummytest_06-05-2023-22:26:02_90_1000_1_3000"
+running "dummytest_06-05-2023-22:26:02_91_1000_1_5400"
+running "dummytest_06-05-2023-22:26:02_92_1000_1_1800"
+running "dummytest_06-05-2023-22:26:02_93_1000_1_1400"
+running "dummytest_06-05-2023-22:26:02_94_1000_1_5000"
+running "dummytest_06-05-2023-22:26:02_95_1000_1_4200"
+running "dummytest_06-05-2023-22:26:02_96_1000_1_5800"
+running "dummytest_06-05-2023-22:26:02_97_1000_1_25"
+running "dummytest_06-05-2023-22:26:02_98_1000_1_4000"
+running "dummytest_06-05-2023-22:26:02_99_1000_1_4400"
+running "dummytest_06-05-2023-22:26:02_100_1000_1_1000"
+running "dummytest_06-05-2023-22:26:02_101_1000_1_4600"
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+kj/filesystem-disk-unix.c++:1681: warning: PWD environment variable doesn't match current directory; pwd = /home/mnh33/hotstuff/tests/dummy/experiments
+hs_api.capnp --> hs_api.mli hs_api.ml
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_0_1000_1_4400: n = 4130, goodput = 1817200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4119, sum = 0.001684
+12345: req_send mean = 0.024874s, sd = 0.014409s, count = 4119, sum = 102.453962
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_1_1000_1_400: n = 220331, goodput = 8813240.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000004s, count = 220138, sum = 0.037287
+12345: req_send mean = 0.004127s, sd = 0.002540s, count = 220138, sum = 908.607020
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_2_1000_1_4200: n = 4256, goodput = 1787520.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4239, sum = 0.001857
+12345: req_send mean = 0.024002s, sd = 0.013906s, count = 4239, sum = 101.745347
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_3_1000_1_1000: n = 120080, goodput = 12008000.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 120053, sum = 0.017484
+12345: req_send mean = 0.003570s, sd = 0.001971s, count = 120053, sum = 428.621202
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_4_1000_1_4600: n = 3649, goodput = 1678540.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3639, sum = 0.001533
+12345: req_send mean = 0.028532s, sd = 0.016392s, count = 3639, sum = 103.828103
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_5_1000_1_4000: n = 4803, goodput = 1921200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 4799, sum = 0.002069
+12345: req_send mean = 0.021431s, sd = 0.012389s, count = 4799, sum = 102.846978
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_6_1000_1_3000: n = 8776, goodput = 2632800.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 8759, sum = 0.003275
+12345: req_send mean = 0.011248s, sd = 0.006918s, count = 8759, sum = 98.517951
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_7_1000_1_5400: n = 2557, goodput = 1380780.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 2540, sum = 0.001388
+12345: req_send mean = 0.037270s, sd = 0.023571s, count = 2540, sum = 94.666455
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_9_1000_1_3800: n = 5440, goodput = 2067200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5419, sum = 0.002216
+12345: req_send mean = 0.018764s, sd = 0.010976s, count = 5419, sum = 101.680077
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_10_1000_1_3600: n = 5899, goodput = 2123640.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5879, sum = 0.002327
+12345: req_send mean = 0.017083s, sd = 0.010229s, count = 5879, sum = 100.429051
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_11_1000_1_2400: n = 16084, goodput = 3860160.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000013s, count = 16060, sum = 0.010613
+12345: req_send mean = 0.011397s, sd = 0.007411s, count = 16060, sum = 183.039594
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_12_1000_1_400: n = 219441, goodput = 8777640.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000003s, count = 219307, sum = 0.034361
+12345: req_send mean = 0.004021s, sd = 0.002103s, count = 219307, sum = 881.865391
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_13_1000_1_200: n = 259665, goodput = 5193300.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000009s, count = 259500, sum = 0.066587
+12345: req_send mean = 0.005716s, sd = 0.003421s, count = 259500, sum = 1483.255144
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_14_1000_1_600: n = 177201, goodput = 10632060.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 177200, sum = 0.026417
+12345: req_send mean = 0.003680s, sd = 0.001971s, count = 177200, sum = 652.078975
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_15_1000_1_4800: n = 3442, goodput = 1652160.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3439, sum = 0.001386
+12345: req_send mean = 0.030226s, sd = 0.017389s, count = 3439, sum = 103.945739
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_16_1000_1_3000: n = 8556, goodput = 2566800.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 8540, sum = 0.003741
+12345: req_send mean = 0.011342s, sd = 0.007036s, count = 8540, sum = 96.859508
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_17_1000_1_1600: n = 70929, goodput = 11348640.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 70900, sum = 0.022226
+12345: req_send mean = 0.004235s, sd = 0.002285s, count = 70900, sum = 300.279691
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_18_1000_1_4600: n = 3670, goodput = 1688200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3659, sum = 0.001550
+12345: req_send mean = 0.028243s, sd = 0.016348s, count = 3659, sum = 103.341065
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_19_1000_1_5600: n = 2577, goodput = 1443120.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2559, sum = 0.001147
+12345: req_send mean = 0.040553s, sd = 0.023558s, count = 2559, sum = 103.776310
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_20_1000_1_800: n = 153121, goodput = 12249680.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 153079, sum = 0.020501
+12345: req_send mean = 0.003286s, sd = 0.001754s, count = 153079, sum = 503.009801
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_21_1000_1_5800: n = 2405, goodput = 1394900.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2400, sum = 0.001003
+12345: req_send mean = 0.043648s, sd = 0.025340s, count = 2400, sum = 104.755411
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_22_1000_1_200: n = 258421, goodput = 5168420.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000009s, count = 258268, sum = 0.060027
+12345: req_send mean = 0.005963s, sd = 0.003444s, count = 258268, sum = 1540.116094
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_23_1000_1_3200: n = 7813, goodput = 2500160.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 7800, sum = 0.003268
+12345: req_send mean = 0.012773s, sd = 0.007663s, count = 7800, sum = 99.626501
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_26_1000_1_2400: n = 16542, goodput = 3970080.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000013s, count = 16520, sum = 0.011464
+12345: req_send mean = 0.011693s, sd = 0.007043s, count = 16520, sum = 193.176035
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_27_1000_1_5600: n = 2460, goodput = 1377600.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2439, sum = 0.001106
+12345: req_send mean = 0.042534s, sd = 0.024821s, count = 2439, sum = 103.739222
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_28_1000_1_4000: n = 4973, goodput = 1989200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4959, sum = 0.002038
+12345: req_send mean = 0.020722s, sd = 0.011926s, count = 4959, sum = 102.758395
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_29_1000_1_4200: n = 4193, goodput = 1761060.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 4180, sum = 0.002154
+12345: req_send mean = 0.022551s, sd = 0.014096s, count = 4180, sum = 94.263994
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_30_1000_1_4800: n = 3477, goodput = 1668960.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 3460, sum = 0.001789
+12345: req_send mean = 0.027322s, sd = 0.017136s, count = 3460, sum = 94.533270
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_31_1000_1_2200: n = 24292, goodput = 5344240.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000003s, count = 24280, sum = 0.010359
+12345: req_send mean = 0.008211s, sd = 0.005388s, count = 24280, sum = 199.367337
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_34_1000_1_3400: n = 6461, goodput = 2196740.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 6460, sum = 0.002729
+12345: req_send mean = 0.015782s, sd = 0.009291s, count = 6460, sum = 101.953024
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_35_1000_1_2800: n = 10376, goodput = 2905280.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000005s, count = 10360, sum = 0.005805
+12345: req_send mean = 0.009302s, sd = 0.005748s, count = 10360, sum = 96.368662
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_37_1000_1_4000: n = 4927, goodput = 1970800.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4920, sum = 0.002142
+12345: req_send mean = 0.020881s, sd = 0.012060s, count = 4920, sum = 102.735113
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_38_1000_1_2200: n = 24537, goodput = 5398140.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000003s, count = 24500, sum = 0.011378
+12345: req_send mean = 0.007940s, sd = 0.004645s, count = 24500, sum = 194.522393
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_39_1000_1_2200: n = 24310, goodput = 5348200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 24280, sum = 0.010440
+12345: req_send mean = 0.008158s, sd = 0.004721s, count = 24280, sum = 198.075586
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_40_1000_1_1600: n = 67282, goodput = 10765120.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 67280, sum = 0.023013
+12345: req_send mean = 0.004428s, sd = 0.002400s, count = 67280, sum = 297.904052
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_41_1000_1_1800: n = 58192, goodput = 10474560.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000017s, count = 58180, sum = 0.025636
+12345: req_send mean = 0.003930s, sd = 0.002242s, count = 58180, sum = 228.634851
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_43_1000_1_600: n = 182043, goodput = 10922580.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000003s, count = 181980, sum = 0.025700
+12345: req_send mean = 0.003451s, sd = 0.001781s, count = 181980, sum = 627.959447
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_44_1000_1_6000: n = 2274, goodput = 1364400.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2259, sum = 0.000997
+12345: req_send mean = 0.046357s, sd = 0.027157s, count = 2259, sum = 104.720516
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_45_1000_1_2000: n = 51624, goodput = 10324800.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 51620, sum = 0.018205
+12345: req_send mean = 0.004068s, sd = 0.002206s, count = 51620, sum = 209.986567
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_46_1000_1_3800: n = 5402, goodput = 2052760.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5400, sum = 0.002198
+12345: req_send mean = 0.018939s, sd = 0.011049s, count = 5400, sum = 102.269447
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_48_1000_1_5000: n = 3139, goodput = 1569500.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3119, sum = 0.001467
+12345: req_send mean = 0.033269s, sd = 0.019104s, count = 3119, sum = 103.767293
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_49_1000_1_1800: n = 57050, goodput = 10269000.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000003s, count = 57020, sum = 0.022050
+12345: req_send mean = 0.003882s, sd = 0.002199s, count = 57020, sum = 221.374153
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_50_1000_1_2600: n = 11691, goodput = 3039660.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000005s, count = 11680, sum = 0.005632
+12345: req_send mean = 0.008318s, sd = 0.005103s, count = 11680, sum = 97.149065
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_51_1000_1_2600: n = 12083, goodput = 3141580.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 12080, sum = 0.004923
+12345: req_send mean = 0.008027s, sd = 0.005001s, count = 12080, sum = 96.971949
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_52_1000_1_2400: n = 16374, goodput = 3929760.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000012s, count = 16340, sum = 0.010321
+12345: req_send mean = 0.010045s, sd = 0.007119s, count = 16340, sum = 164.131252
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_53_1000_1_3400: n = 6513, goodput = 2214420.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 6500, sum = 0.002697
+12345: req_send mean = 0.015528s, sd = 0.009233s, count = 6500, sum = 100.933946
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_54_1000_1_5400: n = 2724, goodput = 1470960.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 2720, sum = 0.001535
+12345: req_send mean = 0.034992s, sd = 0.022117s, count = 2720, sum = 95.176949
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_55_1000_1_4200: n = 4281, goodput = 1798020.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 4280, sum = 0.002318
+12345: req_send mean = 0.022114s, sd = 0.013831s, count = 4280, sum = 94.649120
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_56_1000_1_1200: n = 101777, goodput = 12213240.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 101760, sum = 0.023691
+12345: req_send mean = 0.003392s, sd = 0.001810s, count = 101760, sum = 345.140209
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_57_1000_1_4400: n = 3958, goodput = 1741520.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3939, sum = 0.001839
+12345: req_send mean = 0.026074s, sd = 0.015111s, count = 3939, sum = 102.703691
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_58_1000_1_1400: n = 81990, goodput = 11478600.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 81940, sum = 0.025728
+12345: req_send mean = 0.003943s, sd = 0.002123s, count = 81940, sum = 323.080602
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_59_1000_1_5200: n = 2798, goodput = 1454960.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2779, sum = 0.001271
+12345: req_send mean = 0.037338s, sd = 0.021488s, count = 2779, sum = 103.761645
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_60_1000_1_3600: n = 5708, goodput = 2054880.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5700, sum = 0.002504
+12345: req_send mean = 0.017633s, sd = 0.010515s, count = 5700, sum = 100.506997
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_61_1000_1_2600: n = 12689, goodput = 3299140.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 12680, sum = 0.005528
+12345: req_send mean = 0.007645s, sd = 0.004649s, count = 12680, sum = 96.940227
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_62_1000_1_4400: n = 4152, goodput = 1826880.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 4139, sum = 0.001735
+12345: req_send mean = 0.024848s, sd = 0.014349s, count = 4139, sum = 102.845008
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_63_1000_1_5200: n = 2883, goodput = 1499160.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2879, sum = 0.001359
+12345: req_send mean = 0.036201s, sd = 0.020841s, count = 2879, sum = 104.221300
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_64_1000_1_600: n = 179514, goodput = 10770840.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 179481, sum = 0.025751
+12345: req_send mean = 0.003480s, sd = 0.001945s, count = 179481, sum = 624.584946
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_66_1000_1_800: n = 145481, goodput = 11638480.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 145480, sum = 0.021466
+12345: req_send mean = 0.003387s, sd = 0.002070s, count = 145480, sum = 492.800104
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_67_1000_1_1800: n = 58518, goodput = 10533240.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 58479, sum = 0.022515
+12345: req_send mean = 0.003903s, sd = 0.002119s, count = 58479, sum = 228.221926
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_68_1000_1_1400: n = 82374, goodput = 11532360.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000008s, count = 82340, sum = 0.026918
+12345: req_send mean = 0.003900s, sd = 0.002072s, count = 82340, sum = 321.105289
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_70_1000_1_5400: n = 2693, goodput = 1454220.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2679, sum = 0.001291
+12345: req_send mean = 0.038962s, sd = 0.022462s, count = 2679, sum = 104.378597
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_71_1000_1_1400: n = 82903, goodput = 11606420.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 82860, sum = 0.024117
+12345: req_send mean = 0.003816s, sd = 0.002086s, count = 82860, sum = 316.229971
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_73_1000_1_6000: n = 2265, goodput = 1359000.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 2260, sum = 0.001162
+12345: req_send mean = 0.042267s, sd = 0.027036s, count = 2260, sum = 95.524531
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_74_1000_1_2800: n = 9969, goodput = 2791320.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 9960, sum = 0.004729
+12345: req_send mean = 0.009676s, sd = 0.006018s, count = 9960, sum = 96.377195
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+connect: internal error, uncaught exception:
+         Stack overflow
+         Raised by primitive operation at Stdlib.output_string in file "stdlib.ml", line 369, characters 2-47
+         Re-raised at Stdlib__Fun.protect in file "fun.ml", line 38, characters 6-52
+         Called from Stdlib__Out_channel.with_open_text in file "out_channel.ml" (inlined), line 44, characters 2-31
+         Called from Dune__exe__Load_gen_dummy.run_client in file "load_gen_dummy.ml", line 88, characters 4-248
+         Called from Lwt.Sequential_composition.bind.create_result_promise_and_callback_if_deferred.callback in file "src/core/lwt.ml", line 1849, characters 23-26
+         Re-raised at Lwt.Miscellaneous.poll in file "src/core/lwt.ml", line 3077, characters 20-29
+         Called from Lwt_main.run.run_loop in file "src/unix/lwt_main.ml", line 31, characters 10-20
+         Called from Lwt_main.run in file "src/unix/lwt_main.ml", line 118, characters 8-13
+         Re-raised at Lwt_main.run in file "src/unix/lwt_main.ml", line 124, characters 4-13
+         Called from Cmdliner_term.app.(fun) in file "cmdliner_term.ml", line 24, characters 19-24
+         Called from Cmdliner_eval.run_parser in file "cmdliner_eval.ml", line 34, characters 37-44
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_76_1000_1_3600: n = 5449, goodput = 1961640.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 5440, sum = 0.002914
+12345: req_send mean = 0.017480s, sd = 0.010839s, count = 5440, sum = 95.091165
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_77_1000_1_2000: n = 48390, goodput = 9678000.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 48372, sum = 0.017044
+12345: req_send mean = 0.004319s, sd = 0.002522s, count = 48372, sum = 208.939749
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_78_1000_1_3400: n = 6441, goodput = 2189940.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 6440, sum = 0.003267
+12345: req_send mean = 0.014971s, sd = 0.009258s, count = 6440, sum = 96.412553
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_79_1000_1_3000: n = 8641, goodput = 2592300.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 8640, sum = 0.003789
+12345: req_send mean = 0.011408s, sd = 0.006936s, count = 8640, sum = 98.567424
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_80_1000_1_1000: n = 123581, goodput = 12358100.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000004s, count = 123540, sum = 0.022986
+12345: req_send mean = 0.003616s, sd = 0.002066s, count = 123540, sum = 446.735686
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_81_1000_1_4800: n = 3265, goodput = 1567200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 3259, sum = 0.001425
+12345: req_send mean = 0.031889s, sd = 0.018264s, count = 3259, sum = 103.927220
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_82_1000_1_1600: n = 69322, goodput = 11091520.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 69300, sum = 0.025535
+12345: req_send mean = 0.004366s, sd = 0.002373s, count = 69300, sum = 302.540338
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_83_1000_1_5000: n = 3101, goodput = 1550500.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 3100, sum = 0.001774
+12345: req_send mean = 0.030683s, sd = 0.019197s, count = 3100, sum = 95.117817
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_84_1000_1_5200: n = 2871, goodput = 1492920.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 2860, sum = 0.001534
+12345: req_send mean = 0.033148s, sd = 0.020785s, count = 2860, sum = 94.803667
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_85_1000_1_1200: n = 100280, goodput = 12033600.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000002s, count = 100256, sum = 0.026969
+12345: req_send mean = 0.003350s, sd = 0.001654s, count = 100256, sum = 335.902076
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_86_1000_1_3200: n = 7776, goodput = 2488320.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 7759, sum = 0.003095
+12345: req_send mean = 0.012744s, sd = 0.007702s, count = 7759, sum = 98.878641
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_87_1000_1_4600: n = 3583, goodput = 1648180.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 3580, sum = 0.002013
+12345: req_send mean = 0.026684s, sd = 0.016612s, count = 3580, sum = 95.529525
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_88_1000_1_400: n = 214290, goodput = 8571600.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000003s, count = 214220, sum = 0.033925
+12345: req_send mean = 0.004130s, sd = 0.002257s, count = 214220, sum = 884.652911
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_89_1000_1_800: n = 150260, goodput = 12020800.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 150220, sum = 0.020185
+12345: req_send mean = 0.003398s, sd = 0.002026s, count = 150220, sum = 510.510354
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_90_1000_1_5800: n = 2408, goodput = 1396640.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2400, sum = 0.001014
+12345: req_send mean = 0.043443s, sd = 0.025425s, count = 2400, sum = 104.264350
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_91_1000_1_3200: n = 7573, goodput = 2423360.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000000s, count = 7560, sum = 0.003892
+12345: req_send mean = 0.012676s, sd = 0.007849s, count = 7560, sum = 95.828142
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_92_1000_1_3800: n = 5329, goodput = 2025020.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 5319, sum = 0.002318
+12345: req_send mean = 0.019139s, sd = 0.011220s, count = 5319, sum = 101.800579
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_93_1000_1_200: n = 248493, goodput = 4969860.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000035s, count = 248320, sum = 0.077292
+12345: req_send mean = 0.005484s, sd = 0.003156s, count = 248320, sum = 1361.745891
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_94_1000_1_6000: n = 2098, goodput = 1258800.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2079, sum = 0.000937
+12345: req_send mean = 0.050258s, sd = 0.029310s, count = 2079, sum = 104.485954
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_95_1000_1_1200: n = 99208, goodput = 11904960.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 99160, sum = 0.021827
+12345: req_send mean = 0.003398s, sd = 0.001768s, count = 99160, sum = 336.982305
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_96_1000_1_5600: n = 2525, goodput = 1414000.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2519, sum = 0.001231
+12345: req_send mean = 0.039299s, sd = 0.023961s, count = 2519, sum = 98.994241
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_97_1000_1_2800: n = 10213, goodput = 2859640.000000bytes/s
+12345: req_conn mean = 0.000001s, sd = 0.000007s, count = 10200, sum = 0.005408
+12345: req_send mean = 0.018932s, sd = 0.011807s, count = 10200, sum = 193.107825
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_98_1000_1_5000: n = 3009, goodput = 1504500.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2999, sum = 0.001422
+12345: req_send mean = 0.034706s, sd = 0.019931s, count = 2999, sum = 104.082871
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_99_1000_1_5800: n = 2378, goodput = 1379240.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 2359, sum = 0.001065
+12345: req_send mean = 0.044009s, sd = 0.025758s, count = 2359, sum = 103.816247
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_100_1000_1_1000: n = 124332, goodput = 12433200.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000001s, count = 124253, sum = 0.021412
+12345: req_send mean = 0.003461s, sd = 0.001889s, count = 124253, sum = 430.058745
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Server ID=0 running. Connect to URI "capnp://insecure@127.0.0.1:9000".
+Entering directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+Leaving directory '/auto/homes/mnh33/hotstuff/tests/dummy'
+connected to 0!
+connected to all!
+dummytest_07-05-2023-11:21:33_101_1000_1_2000: n = 49814, goodput = 9962800.000000bytes/s
+12345: req_conn mean = 0.000000s, sd = 0.000000s, count = 49800, sum = 0.017507
+12345: req_send mean = 0.004241s, sd = 0.002339s, count = 49800, sum = 211.187881
+running "dummytest_07-05-2023-11:21:33_0_1000_1_4400"
+running "dummytest_07-05-2023-11:21:33_1_1000_1_400"
+running "dummytest_07-05-2023-11:21:33_2_1000_1_4200"
+running "dummytest_07-05-2023-11:21:33_3_1000_1_1000"
+running "dummytest_07-05-2023-11:21:33_4_1000_1_4600"
+running "dummytest_07-05-2023-11:21:33_5_1000_1_4000"
+running "dummytest_07-05-2023-11:21:33_6_1000_1_3000"
+running "dummytest_07-05-2023-11:21:33_7_1000_1_5400"
+running "dummytest_07-05-2023-11:21:33_8_1000_1_25"
+running "dummytest_07-05-2023-11:21:33_9_1000_1_3800"
+running "dummytest_07-05-2023-11:21:33_10_1000_1_3600"
+running "dummytest_07-05-2023-11:21:33_11_1000_1_2400"
+running "dummytest_07-05-2023-11:21:33_12_1000_1_400"
+running "dummytest_07-05-2023-11:21:33_13_1000_1_200"
+running "dummytest_07-05-2023-11:21:33_14_1000_1_600"
+running "dummytest_07-05-2023-11:21:33_15_1000_1_4800"
+running "dummytest_07-05-2023-11:21:33_16_1000_1_3000"
+running "dummytest_07-05-2023-11:21:33_17_1000_1_1600"
+running "dummytest_07-05-2023-11:21:33_18_1000_1_4600"
+running "dummytest_07-05-2023-11:21:33_19_1000_1_5600"
+running "dummytest_07-05-2023-11:21:33_20_1000_1_800"
+running "dummytest_07-05-2023-11:21:33_21_1000_1_5800"
+running "dummytest_07-05-2023-11:21:33_22_1000_1_200"
+running "dummytest_07-05-2023-11:21:33_23_1000_1_3200"
+running "dummytest_07-05-2023-11:21:33_24_1000_1_50"
+running "dummytest_07-05-2023-11:21:33_25_1000_1_50"
+running "dummytest_07-05-2023-11:21:33_26_1000_1_2400"
+running "dummytest_07-05-2023-11:21:33_27_1000_1_5600"
+running "dummytest_07-05-2023-11:21:33_28_1000_1_4000"
+running "dummytest_07-05-2023-11:21:33_29_1000_1_4200"
+running "dummytest_07-05-2023-11:21:33_30_1000_1_4800"
+running "dummytest_07-05-2023-11:21:33_31_1000_1_2200"
+running "dummytest_07-05-2023-11:21:33_32_1000_1_100"
+running "dummytest_07-05-2023-11:21:33_33_1000_1_25"
+running "dummytest_07-05-2023-11:21:33_34_1000_1_3400"
+running "dummytest_07-05-2023-11:21:33_35_1000_1_2800"
+running "dummytest_07-05-2023-11:21:33_36_1000_1_100"
+running "dummytest_07-05-2023-11:21:33_37_1000_1_4000"
+running "dummytest_07-05-2023-11:21:33_38_1000_1_2200"
+running "dummytest_07-05-2023-11:21:33_39_1000_1_2200"
+running "dummytest_07-05-2023-11:21:33_40_1000_1_1600"
+running "dummytest_07-05-2023-11:21:33_41_1000_1_1800"
+running "dummytest_07-05-2023-11:21:33_42_1000_1_1"
+running "dummytest_07-05-2023-11:21:33_43_1000_1_600"
+running "dummytest_07-05-2023-11:21:33_44_1000_1_6000"
+running "dummytest_07-05-2023-11:21:33_45_1000_1_2000"
+running "dummytest_07-05-2023-11:21:33_46_1000_1_3800"
+running "dummytest_07-05-2023-11:21:33_47_1000_1_1"
+running "dummytest_07-05-2023-11:21:33_48_1000_1_5000"
+running "dummytest_07-05-2023-11:21:33_49_1000_1_1800"
+running "dummytest_07-05-2023-11:21:33_50_1000_1_2600"
+running "dummytest_07-05-2023-11:21:33_51_1000_1_2600"
+running "dummytest_07-05-2023-11:21:33_52_1000_1_2400"
+running "dummytest_07-05-2023-11:21:33_53_1000_1_3400"
+running "dummytest_07-05-2023-11:21:33_54_1000_1_5400"
+running "dummytest_07-05-2023-11:21:33_55_1000_1_4200"
+running "dummytest_07-05-2023-11:21:33_56_1000_1_1200"
+running "dummytest_07-05-2023-11:21:33_57_1000_1_4400"
+running "dummytest_07-05-2023-11:21:33_58_1000_1_1400"
+running "dummytest_07-05-2023-11:21:33_59_1000_1_5200"
+running "dummytest_07-05-2023-11:21:33_60_1000_1_3600"
+running "dummytest_07-05-2023-11:21:33_61_1000_1_2600"
+running "dummytest_07-05-2023-11:21:33_62_1000_1_4400"
+running "dummytest_07-05-2023-11:21:33_63_1000_1_5200"
+running "dummytest_07-05-2023-11:21:33_64_1000_1_600"
+running "dummytest_07-05-2023-11:21:33_65_1000_1_100"
+running "dummytest_07-05-2023-11:21:33_66_1000_1_800"
+running "dummytest_07-05-2023-11:21:33_67_1000_1_1800"
+running "dummytest_07-05-2023-11:21:33_68_1000_1_1400"
+running "dummytest_07-05-2023-11:21:33_69_1000_1_50"
+running "dummytest_07-05-2023-11:21:33_70_1000_1_5400"
+running "dummytest_07-05-2023-11:21:33_71_1000_1_1400"
+running "dummytest_07-05-2023-11:21:33_72_1000_1_25"
+running "dummytest_07-05-2023-11:21:33_73_1000_1_6000"
+running "dummytest_07-05-2023-11:21:33_74_1000_1_2800"
+running "dummytest_07-05-2023-11:21:33_75_1000_1_1"
+running "dummytest_07-05-2023-11:21:33_76_1000_1_3600"
+running "dummytest_07-05-2023-11:21:33_77_1000_1_2000"
+running "dummytest_07-05-2023-11:21:33_78_1000_1_3400"
+running "dummytest_07-05-2023-11:21:33_79_1000_1_3000"
+running "dummytest_07-05-2023-11:21:33_80_1000_1_1000"
+running "dummytest_07-05-2023-11:21:33_81_1000_1_4800"
+running "dummytest_07-05-2023-11:21:33_82_1000_1_1600"
+running "dummytest_07-05-2023-11:21:33_83_1000_1_5000"
+running "dummytest_07-05-2023-11:21:33_84_1000_1_5200"
+running "dummytest_07-05-2023-11:21:33_85_1000_1_1200"
+running "dummytest_07-05-2023-11:21:33_86_1000_1_3200"
+running "dummytest_07-05-2023-11:21:33_87_1000_1_4600"
+running "dummytest_07-05-2023-11:21:33_88_1000_1_400"
+running "dummytest_07-05-2023-11:21:33_89_1000_1_800"
+running "dummytest_07-05-2023-11:21:33_90_1000_1_5800"
+running "dummytest_07-05-2023-11:21:33_91_1000_1_3200"
+running "dummytest_07-05-2023-11:21:33_92_1000_1_3800"
+running "dummytest_07-05-2023-11:21:33_93_1000_1_200"
+running "dummytest_07-05-2023-11:21:33_94_1000_1_6000"
+running "dummytest_07-05-2023-11:21:33_95_1000_1_1200"
+running "dummytest_07-05-2023-11:21:33_96_1000_1_5600"
+running "dummytest_07-05-2023-11:21:33_97_1000_1_2800"
+running "dummytest_07-05-2023-11:21:33_98_1000_1_5000"
+running "dummytest_07-05-2023-11:21:33_99_1000_1_5800"
+running "dummytest_07-05-2023-11:21:33_100_1000_1_1000"
+running "dummytest_07-05-2023-11:21:33_101_1000_1_2000"

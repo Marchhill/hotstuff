@@ -1,3 +1,0 @@
-(executables
- (names crypto)
- (libraries tezos-crypto core_unix.command_unix core core_bench re))

@@ -1,5 +1,15 @@
 \begin{thebibliography}{10}
 
+\bibitem{yinHotStuffBFTConsensus2019}
+Maofan Yin, Dahlia Malkhi, Michael~K. Reiter, Guy~Golan Gueta, and Ittai
+  Abraham.
+\newblock {{HotStuff}}: {{BFT Consensus}} with {{Linearity}} and
+  {{Responsiveness}}.
+\newblock In {\em Proceedings of the 2019 {{ACM Symposium}} on {{Principles}}
+  of {{Distributed Computing}}}, pages 347--356, {Toronto ON Canada}, July
+  2019. {ACM}.
+\newblock \url{https://dl.acm.org/doi/10.1145/3293611.3331591}.
+
 \bibitem{nakamotoBitcoinPeertoPeerElectronic2008}
 Satoshi Nakamoto.
 \newblock Bitcoin: {{A Peer-to-Peer Electronic Cash System}}.
@@ -93,16 +103,6 @@ Tushar~D. Chandra, Robert Griesemer, and Joshua Redstone.
   {{Principles}} of Distributed Computing}, {{PODC}} '07, pages 398--407, {New
   York, NY, USA}, August 2007. {Association for Computing Machinery}.
 \newblock \url{https://dl.acm.org/doi/10.1145/1281100.1281103}.
-
-\bibitem{yinHotStuffBFTConsensus2019}
-Maofan Yin, Dahlia Malkhi, Michael~K. Reiter, Guy~Golan Gueta, and Ittai
-  Abraham.
-\newblock {{HotStuff}}: {{BFT Consensus}} with {{Linearity}} and
-  {{Responsiveness}}.
-\newblock In {\em Proceedings of the 2019 {{ACM Symposium}} on {{Principles}}
-  of {{Distributed Computing}}}, pages 347--356, {Toronto ON Canada}, July
-  2019. {ACM}.
-\newblock \url{https://dl.acm.org/doi/10.1145/3293611.3331591}.
 
 \bibitem{ongaroSearchUnderstandableConsensus2014}
 Diego Ongaro and John Ousterhout.

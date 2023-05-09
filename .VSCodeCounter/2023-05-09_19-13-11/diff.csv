@@ -1,0 +1,26 @@
+"filename", "language", "OCaml", "capnp", "Python", "OCaml Interface", "comment", "blank", "total"
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/api_wrapper.ml", "OCaml", -160, 0, 0, 0, -2, -15, -177
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/api_wrapper.mli", "OCaml Interface", 0, 0, 0, -5, 0, -1, -6
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/consensus.ml", "OCaml", -3, 0, 0, 0, 0, -1, -4
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/consensus.mli", "OCaml Interface", 0, 0, 0, -10, -3, -4, -17
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/consensus_chained_impl.ml", "OCaml", -180, 0, 0, 0, -9, -20, -209
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/consensus_chained_test.ml", "OCaml", -1135, 0, 0, 0, -16, -26, -1177
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/consensus_impl.ml", "OCaml", -218, 0, 0, 0, -7, -21, -246
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/consensus_test.ml", "OCaml", -1381, 0, 0, 0, -25, -32, -1438
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/crypto_util.ml", "OCaml", -77, 0, 0, 0, -2, -6, -85
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/crypto_util_test.ml", "OCaml", -24, 0, 0, 0, 0, -2, -26
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/types.ml", "OCaml", -39, 0, 0, 0, -1, -7, -47
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/types.mli", "OCaml Interface", 0, 0, 0, -39, -1, -7, -47
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/util.ml", "OCaml", -192, 0, 0, 0, -5, -31, -228
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/consensus/util_test.ml", "OCaml", -76, 0, 0, 0, 0, -12, -88
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/dummy.ml", "OCaml", -42, 0, 0, 0, -3, -9, -54
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/experiments/plot.py", "Python", 0, 0, -63, 0, -6, -10, -79
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/experiments/plotSingle.py", "Python", 0, 0, -26, 0, -2, -5, -33
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/experiments/runDummyExperiments.py", "Python", 0, 0, -40, 0, -8, -11, -59
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/hs_api.capnp", "capnp", 0, -53, 0, 0, 0, -7, -60
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/load_gen_dummy.ml", "OCaml", -131, 0, 0, 0, -10, -19, -160
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/net.ml", "OCaml", -107, 0, 0, 0, -6, -7, -120
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/types.ml", "OCaml", -28, 0, 0, 0, 0, -1, -29
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/capnpBenchmark/util.ml", "OCaml", -91, 0, 0, 0, -5, -12, -108
+"/Users/marchhill/Documents/cam/2/dissertation/src/benchmarks/tezosBenchmark/crypto.ml", "OCaml", -30, 0, 0, 0, 0, -3, -33
+"Total", "-", -3914, -53, -129, -54, -111, -269, -4530

@@ -1321,12 +1321,12 @@ INPUT ./chapters/introduction.tex
 INPUT chapters/introduction.tex
 INPUT ./chapters/introduction.tex
 INPUT chapters/introduction.tex
-INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1200.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm
 INPUT ./chapters/preparation.tex
 INPUT chapters/preparation.tex
 INPUT ./chapters/preparation.tex
 INPUT chapters/preparation.tex
+INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecti1200.tfm
 INPUT ./chapters/implementation.tex
 INPUT chapters/implementation.tex
 INPUT ./chapters/implementation.tex
@@ -1364,6 +1364,7 @@ INPUT ./images//closedloop.pdf
 INPUT images//closedloop.pdf
 INPUT ./images//closedloop.pdf
 INPUT ./images//closedloop.pdf
+INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecrm1095.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmss.fd
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/base/t1cmss.fd
@@ -1440,7 +1441,6 @@ INPUT ./main.bbl
 INPUT main.bbl
 INPUT ./main.bbl
 INPUT main.bbl
-INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
 INPUT ./chapters/proposal.tex
 INPUT chapters/proposal.tex
 INPUT ./chapters/proposal.tex

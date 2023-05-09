@@ -34,7 +34,7 @@
 	folder icons/.default={12pt},
 }
 % ---
-\textit{In this chapter, we describe the architecture of our implementation (Section \ref{architecture}), conclude our theoretical explanation of HotStuff by discussing the chained algorithm and the pacemaker (Section \ref{moretheory}), present a full specification for HotStuff with a proof of correctness and liveness (Section \ref{spec}), describe key optimisations implemented (Section \ref{performance}), present our load generator and experiment scripts which will be used in evaluation (Section \ref{benchcode}), and give an overview of the repository structure (Section \ref{repo}).}
+In this chapter, we describe the architecture of our implementation (Section \ref{architecture}), conclude our theoretical explanation of HotStuff by discussing the chained algorithm and the pacemaker (Section \ref{moretheory}), present a full specification for HotStuff with a proof of correctness and liveness (Section \ref{spec}), describe key optimisations implemented (Section \ref{performance}), present our load generator and experiment scripts which will be used in evaluation (Section \ref{benchcode}), and give an overview of the repository structure (Section \ref{repo}).
 
 \section{System Architecture} \label{architecture}
 
@@ -66,7 +66,7 @@ In this section, we conclude our theoretical explanation of HotStuff by discussi
 
 \subsection{Chaining} \label{chaining}
 
-In this section, we describe the \textit{chained} HotStuff algorithm, which is an optimised version of the basic algorithm described in Section \ref{hotstufftheory} where different phases are pipelined. This is a standard optimisation for consensus algorithms that is described in the original paper \cite{yinHotStuffBFTConsensus2019}.
+In this section, we describe the chained HotStuff algorithm, which is an optimised version of the basic algorithm described in Section \ref{hotstufftheory} where different phases are pipelined. This is a standard optimisation for consensus algorithms that is described in the original paper \cite{yinHotStuffBFTConsensus2019}.
 
 Pipelining phases both simplifies and optimises the basic algorithm. The phases in the basic algorithm were all very similar; they involved collecting votes from replicas to form a QC that then serves in later phases. Each of the four phases\footnote{Excluding the \textit{new-view} phase which is unchanged.} can be carried out concurrently. In each view, a leader collects votes to form a QC which can serve in all of the concurrent phases, then sends this QC to the next leader in a \textit{new-view} message and broadcasts a proposal to the nodes. 
 
@@ -93,7 +93,7 @@ In each proposal, a chain of nodes (equivalent to the log) is extended, and diff
 
 \subsection{Pacemaker} \label{pacemaker}
 
-In this section, we discuss the pacemaker, which synchronises the views of honest replicas: a necessary condition for liveness (Property \ref{livenessproperty}). The original paper did not specify the pacemaker mechanism, so we have synthesised information from different sources (including our experimentation) to give a full specification of HotStuff with a pacemaker in Section \ref{spec}. Part of the pacemaker that we will explain in this section is the \textit{view-change} protocol, which allows the view of a faulty leader to be skipped; ours is based on the pacemaker for LibraBFT \cite{baudetStateMachineReplication2019, ittai}. We will also discuss how the pacemaker can be integrated with the HotStuff algorithm; we did this through our modifications based on deadlocks encountered during implementation.
+In this section, we discuss the pacemaker, which synchronises the views of honest replicas: a necessary condition for liveness (Property \ref{livenessproperty}). The original paper did not specify the pacemaker mechanism, so we have synthesised information from different sources (including our experimentation) to give a full specification of HotStuff with a pacemaker in Section \ref{spec}. Part of the pacemaker that we will explain in this section is the view-change protocol, which allows the view of a faulty leader to be skipped; ours is based on the pacemaker for LibraBFT \cite{baudetStateMachineReplication2019, ittai}. We will also discuss how the pacemaker can be integrated with the HotStuff algorithm; we did this through our modifications based on deadlocks encountered during implementation.
 
 % The model of collecting a quorum of COMPLAIN messages to transition to the next view is based on the pacemaker for LibraBFT \cite{baudet_state_nodate}, and is described in section \ref{viewchange}. The rest of the pacemaker is designed to advance to the next view as soon as the system allows, and is based on ad-hoc fixes to deadlocks that were encountered during implementation.
 
@@ -107,7 +107,7 @@ Pacemakers are related to failure detectors: mechanisms that facilitate the dete
 
 Once the view times out, nodes send a \textit{complain} message to the next leader and start a new timeout for the next view. Once the next leader achieves a quorum of \textit{complain} messages it collects them into a QC known as a \textit{view-change proof}. This leader can then send a \textit{view-change} message containing the \textit{view-change proof} to all replicas, who will respond by transitioning to the next view and sending a \textit{new-view} message to the new leader. The inclusion of the \textit{view-change proof} prevents liveness attacks by byzantine nodes that could otherwise attack the system by constantly causing view-changes to take place and preventing non-faulty leaders from making progress.
 
-Crucially this protocol maintains the \textit{linear view change property} that HotStuff has $O(n)$ \textit{authenticator complexity}. Authenticator complexity measures the total number of threshold signatures and partial signatures in a view. This protocol requires $n - f$ partial signatures for the \textit{complain} messages, and a single threshold signature for the \textit{view-change} message, resulting in $O(n)$ authenticators overall.
+Crucially this protocol maintains the linear view change property that HotStuff has $O(n)$ authenticator complexity. Authenticator complexity measures the total number of threshold signatures and partial signatures in a view. This protocol requires $n - f$ partial signatures for the \textit{complain} messages, and a single threshold signature for the \textit{view-change} message, resulting in $O(n)$ authenticators overall.
 
 \subsubsection{Integrating the pacemaker with HotStuff}
 
@@ -392,7 +392,7 @@ A naive implementation of batching is simple to implement; instead of taking a s
 The rest of this section describes further optimisations we made to make batching effective.
 
 \subsubsection{Filtering commands from batches} \label{filtering}
-One optimisation that we implemented to make batching effective is \textit{filtering} incoming commands to prevent them from being proposed by multiple nodes. This is achieved by nodes maintaining a set of commands that they have \textit{seen} in the proposals of other nodes, and filtering these commands from their proposal. This optimisation increased the effectiveness of batching; we demonstrate this in our ablation study (Section \ref{ablation}).
+One optimisation that we implemented to make batching effective is filtering incoming commands to prevent them from being proposed by multiple nodes. This is achieved by nodes maintaining a set of commands that they have seen in the proposals of other nodes, and filtering these commands from their proposal. This optimisation increased the effectiveness of batching; we demonstrate this in our ablation study (Section \ref{ablation}).
 
 \begin{algorithm}[h!]
 	\caption{Filtering implementation} \label{dedup}
@@ -415,13 +415,13 @@ One optimisation that we implemented to make batching effective is \textit{filte
 	\end{algorithmic}
 \end{algorithm}
 
-We give pseudocode for an implementation of filtering in algorithm \ref{dedup}. We use a set to store both the commands that are waiting to be proposed, and commands that have been seen, so that the difference can be efficiently computed. Also note the small optimisation on line \ref{smalloptimisation}: the \textit{seen} set can safely be emptied as the commands have already been filtered, reducing the amount of computation required to calculate the set difference next time.
+We give pseudocode for an implementation of filtering in algorithm \ref{dedup}. We use a set to store both the commands that are waiting to be proposed, and commands that have been seen, so that the difference can be efficiently computed. Also note the small optimisation on line \ref{smalloptimisation}: the seen set can safely be emptied as the commands have already been filtered, reducing the amount of computation required to calculate the set difference next time.
 
 This optimisation is effective as our load generator is send-to-all (Section \ref{loadgenerator}), so a new command is added to the queue of all nodes, and may be included in the proposals of different nodes. Filtering out commands so that they are not proposed multiple times follows the general design principle:
 
 \textbf{Design principle: } Attempt to minimise the amount of redundant work that the system carries out by screening incoming work to check that it needs to be done.
 
-An alternative implementation of filtering that was prototyped was maintaining a set of commands that had been \textit{committed} rather than \textit{seen}, but this filtered out far fewer commands and did not significantly improve performance. This is likely because it takes several views for a command to be committed, and in this time multiple nodes may propose the same command and it will not be filtered.
+An alternative implementation of filtering that was prototyped was maintaining a set of commands that had been committed rather than seen, but this filtered out far fewer commands and did not significantly improve performance. This is likely because it takes several views for a command to be committed, and in this time multiple nodes may propose the same command and it will not be filtered.
 
 \subsubsection{Batch sizes} \label{batchsizes}
 We further improved the effectiveness of batching by limiting the size of each batch. We demonstrate that this approach improves performance in our study of the system with different batch size limits (Section \ref{batchsizeseval}).
@@ -431,7 +431,7 @@ Implementing this feature requires minimal changes to algorithm \ref{dedup}, one
 The optimisation is effective because at higher message sizes the latency of Cap'n Proto serialisation increases (Section \ref{capnpbenchmark}), so smaller batches can lead to better performance. There is an inherent trade-off between increasing batch size to commit more commands, and messages becoming slower due to increased serialisation latency.
 
 \subsection{Node chains}
-This section concerns the challenges of designing a suitable type for node chains (nodes\footnote{\textit{Node} is another word for log in this context, not to be confused with a node in the system.}) that can be efficiently serialised by Cap'n Proto and sent over the network. We will discuss the challenges of designing the node type that must be overcome to allow the system to operate, then describe further optimisations that can be made. Recall from our discussion of the system architecture (Section \ref{architecture}) that the internal node type must be converted into a Cap'n Proto type in order to be serialised.
+This section concerns the challenges of designing a suitable type for node chains (nodes\footnote{Node is another word for log in this context, not to be confused with a node in the system.}) that can be efficiently serialised by Cap'n Proto and sent over the network. We will discuss the challenges of designing the node type that must be overcome to allow the system to operate, then describe further optimisations that can be made. Recall from our discussion of the system architecture (Section \ref{architecture}) that the internal node type must be converted into a Cap'n Proto type in order to be serialised.
 
 Our initial naive implementation of the node type was an OCaml record that contained the fields \textit{parent}, \textit{cmds}, \textit{height}, and \textit{justify}. The \textit{justify} field contained a QC that contains another node inside it.
 
@@ -474,7 +474,7 @@ There are some cases when the leader does not receive the latest \textit{b\texts
 % avoid coordinated ommision by using open loop clients
 % section 3: https://dl.acm.org/doi/pdf/10.1145/3447851.3458739
 
-\textit{In this section we describe the infrastructure that will be used to evaluate our system in Chapter \ref{evaluation}, including the scripting developed to automate running experiments.}
+In this section we describe the infrastructure that will be used to evaluate our system in Chapter \ref{evaluation}, including the scripting developed to automate running experiments.
 
 \subsection{Load generator} \label{loadgenerator}
 
@@ -502,9 +502,9 @@ The load generator is responsible for sending client requests to the nodes of th
 
 The load generator is open-loop (Figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (Figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator waits for responses from the system, so cannot overload it.
 
-Our load generator is \textit{send-to-all}, meaning that a command is sent to all nodes. An alternative is \textit{send-to-one}, where a command is sent to a single node which is chosen at random. Send-to-all reduces latency as the next leader will have been sent the command, and may choose to propose it. In send-to-one it may take several views until the node that the request was sent to becomes the leader.
+Our load generator is send-to-all, meaning that a command is sent to all nodes. An alternative is send-to-one, where a command is sent to a single node which is chosen at random. Send-to-all reduces latency as the next leader will have been sent the command, and may choose to propose it. In send-to-one it may take several views until the node that the request was sent to becomes the leader.
 
-The load generator uses Lwt to asynchronously dispatch requests and stores a promise that will be fulfilled with their response. In the case of send-to-all the promises waiting on a response from each node are combined using \textit{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, reducing start-up effects.
+The load generator uses Lwt to asynchronously dispatch requests and stores a promise that will be fulfilled with their response. In the case of send-to-all the promises waiting on a response from each node are combined using \texttt{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, reducing start-up effects.
 
 \subsection{Experiment scripts} \label{experimentscripts}
 Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
@@ -514,7 +514,7 @@ Different experiments may vary input variables such as throughput, batch size, a
 \subsection{Logging framework}
 We developed a logging framework that stores the time taken for important parts of the program to execute and outputs key statistics such as the mean and standard deviation at the end of the test. This was essential for analysing the performance of the system to develop the optimisations described in Section \ref{performance}.
 
-The logging framework helped to reduce the effect of \textit{probing effects}, where the behaviour of a system is altered by the act of measuring it. Our previous approach printed the time taken throughout the execution of the program; since printing is CPU-heavy this resulted in probing effects. Notably, the print statements were not in-between the statements that measured the time taken, but they caused delays to happen in other parts of the program (presumably when the buffers were being flushed).
+The logging framework helped to reduce the effect of probing effects, where the behaviour of a system is altered by the act of measuring it. Our previous approach printed the time taken throughout the execution of the program; since printing is CPU-heavy this resulted in probing effects. Notably, the print statements were not in-between the statements that measured the time taken, but they caused delays to happen in other parts of the program (presumably when the buffers were being flushed).
 
 \textbf{Design principle: } Minimise probing effects by carrying out the minimum possible amount of work in critical areas of the program by storing data and moving work (such as outputting statistics) to less critical areas of the program.
 
@@ -571,4 +571,4 @@ The \textit{bin} folder contains the executables for running a node, and for run
 
 The \textit{experiments} folder is where the data from running experiments is outputted to. It also contains scripts for running experiments and plotting graphs.
 
-In order to run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \textit{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time. These scripts will run on Linux and MacOS, but will have to be modified to work on Windows.
+In order to run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \texttt{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time. These scripts will run on Linux and MacOS, but will have to be modified to work on Windows.

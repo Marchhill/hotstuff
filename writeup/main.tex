@@ -1,5 +1,5 @@
 \documentclass[12pt]{report}
-\usepackage[a4paper, margin=2cm]{geometry}
+\usepackage[a4paper, margin=2.2cm]{geometry}
 \usepackage{anyfontsize}
 \usepackage{setspace}
 \usepackage[dvipsnames]{xcolor}
@@ -36,6 +36,7 @@
 \graphicspath{ {images/} }
 
 \usepackage[T1]{fontenc} % to correctly display <, > and | symbols
+\setlength\parindent{0pt}
 
 %TC:ignore
 \makeatletter         
@@ -123,7 +124,7 @@ College:            & \bf Gonville \& Caius College                    \\
 Project Title:      & \bf Implementing the HotStuff consensus algorithm \\
 Examination:        & \bf Computer Science Tripos -- Part II, 2023  \\
 Word Count:         & \bf 11,612\footnotemark[1] \\
-Code line Count:    & \bf 9,470\footnotemark[2] \\
+Code line Count:    & \bf 4,190\footnotemark[2] \\
 Project Originator: & Christopher Jensen and 2409B \\
 Supervisor:         & Christopher Jensen \\ 
 \end{tabular}
@@ -134,22 +135,12 @@ Supervisor:         & Christopher Jensen \\
 
 \section*{Original Aims of the Project}
 
-To write a demonstration dissertation\footnote{A normal footnote without the
-complication of being in a table.} using \LaTeX\ to save
-student's time when writing their own dissertations. The dissertation
-should illustrate how to use the more common \LaTeX\ constructs. It
-should include pictures and diagrams to show how these can be
-incorporated into the dissertation.  It should contain the entire
-\LaTeX\ source of the dissertation and the makefile.  It should
-explain how to construct an MSDOS disk of the dissertation in
-Postscript format that can be used by the book shop for printing, and,
-finally, it should have the prescribed layout and format of a diploma
-dissertation.
+HotStuff is a byzantine-fault tolerant consensus algorithm that allows a group of participants to reach consensus when some proportion of them act maliciously. It can be used to develop blockchains which underlie cryptocurrencies and other decentralised applications. This project aimed to implement the HotStuff algorithm based on a paper by Yin et. ~al~ \cite{yinHotStuffBFTConsensus2019}, demonstrate its correctness, and evaluate its performance. As an extension, further optimisations were to be implemented on the basic algorithm.
 
 
 \section*{Work Completed}
 
-All that has been completed appears in this dissertation.
+This project includes a full specification of the HotStuff algorithm, filling in the gaps from the original paper with other protocols from the literature, and our changes. We provide a correct implementation of the algorithm with several optimisations, which are shown to be effective in an evaluation. This project paves the way for future HotStuff implementations by describing non-trivial challenges that were encountered during development and giving solutions and practical optimisations. We synthesised information from the literature to give a full explanation of the algorithm and how it can be logically derived from additions to simpler consensus algorithms.
 
 \section*{Special Difficulties}
 

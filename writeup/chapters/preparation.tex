@@ -6,13 +6,13 @@
 
 % It is essential to declare the starting point. This states any existing codebase or materials that your project builds on. The text here can commonly be identical to the text in your proposal, but it may enlarge on it or report variations. For instance, the true starting point may have turned out to be different from that declared in the proposal and such discrepancies must be explained.
 
-\textit{In this chapter we disclose my knowledge and experience prior to beginning this project (Section \ref{start}), give a theoretical basis for understanding the HotStuff algorithm by building up from simpler consensus algorithms (Section \ref{hotstufftheory}), outline the tools, libraries (Section \ref{tools}), and professional methodology (Section \ref{softwareeng}) deployed in implementation, and highlight the requirements that the implementation should meet (Section \ref{requirements}).}
+In this chapter we disclose my knowledge and experience prior to beginning this project (Section \ref{start}), give a theoretical basis for understanding the HotStuff algorithm by building up from simpler consensus algorithms (Section \ref{hotstufftheory}), outline the tools, libraries (Section \ref{tools}), and professional methodology (Section \ref{softwareeng}) deployed in implementation, and highlight the requirements that the implementation should meet (Section \ref{requirements}).
 
 \section{Starting point} \label{start}
-I had some experience using OCaml from the IA Foundations of Computer Science course but had never used it in a project. The IB Distributed Systems course also provided some useful background knowledge, particularly as it briefly covered Raft \cite{ongaroSearchUnderstandableConsensus2014}, a non-byzantine consensus algorithm. I had some understanding of byzantine consensus from my own reading into Nakamoto consensus \cite{nakamotoBitcoinPeertoPeerElectronic2008} and from developing a wallet application for Ethereum \cite{ethereumWhite, ethereumYellow}; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
+Although, I had some experience using OCaml through the IA Foundations of Computer Science course, I had never utilized it in a project before. The IB Distributed Systems course provided some useful background knowledge, particularly as it briefly covered Raft \cite{ongaroSearchUnderstandableConsensus2014}, a non-byzantine consensus algorithm. Additionally, I had a basic understanding of byzantine consensus from my own reading into Nakamoto consensus \cite{nakamotoBitcoinPeertoPeerElectronic2008} and from developing a wallet application for Ethereum \cite{ethereumWhite, ethereumYellow}; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
 
 \section{HotStuff algorithm} \label{hotstufftheory}
-HotStuff is a byzantine consensus algorithm; it allows a group of nodes to reach consensus on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each \textit{view} a \textit{leader} node proposes some value by sending it the \textit{replicas} (another word for nodes). After several messages are exchanged the log may be committed, meaning that there is consensus on the committed part of the log, and it is now immutable.
+HotStuff is a byzantine consensus algorithm; it allows a group of nodes to reach consensus on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each view a leader node proposes some value by sending it the replicas (another word for nodes). After several messages are exchanged some prefix of the log may be committed, meaning there is consensus on that part of the log and it is immutable.
 
 The system model describes the adverse conditions under which HotStuff can operate:
 \begin{assumption}[Partially Synchronous] \label{partialsyncassumption}
@@ -24,7 +24,7 @@ The system model describes the adverse conditions under which HotStuff can opera
 \end{assumption}
 
 \begin{assumption}[Byzantine] \label{byzassumption}
-	A maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes
+	A maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes.
 \end{assumption}
 
 Assumptions \ref{partialsyncassumption} and \ref{byzassumption} are the weakest possible assumptions under which it is possible to reach consensus \cite{peaseReachingAgreementPresence1980,fischerEasyImpossibilityProofs1986}. Assumption \ref{authassumption} is also needed, but byzantine consensus is possible without cryptographic signatures; there is an algorithm called Information Theoretic HotStuff, which does not use signatures, and is secure against a computationally unbounded adversary\footnote{An authenticated channel can be obtained without signatures by using one time pads or quantum cryptography \cite{bennettExperimentalQuantumCryptography1992}.} \cite{abrahamInformationTheoreticHotStuff2020}.
@@ -36,7 +36,7 @@ HotStuff has the following properties:
 \end{property}
 
 \begin{property}[Liveness] \label{livenessproperty}
-	Assuming there is a functioning \textit{pacemaker}, the system is guaranteed to make progress within some bounded amount of time once GST has been reached and a non-faulty leader is chosen. The pacemaker ensures that all honest replicas will remain in some view with an honest leader for long enough to make progress (Section \ref{pacemaker}).
+	Assuming there is a functioning pacemaker, the system is guaranteed to make progress within some bounded amount of time once GST has been reached and a non-faulty leader is chosen. The pacemaker ensures that all honest replicas will remain in some view with an honest leader for long enough to make progress (Section \ref{pacemaker}).
 \end{property}
 
 \begin{property}[Optimistic Responsiveness] \label{optresponsiveproperty}
@@ -48,9 +48,9 @@ Basic HotStuff is a responsive byzantine consensus algorithm (Section \ref{optre
 \subsection{Non-byzantine consensus} \label{nonbyzconsensus}
 We will start by describing a generic algorithm to solve the simpler problem of reaching consensus with the stronger assumption of a crash-stop model instead of a byzantine one; this means that we assume nodes cannot be malicious but they can still crash and never come back online. Examples of similar algorithms include Raft \cite{ongaroSearchUnderstandableConsensus2014} and MultiPaxos \cite{lamportParttimeParliament1998, lamportPaxosMadeSimple2001}.
 
-Each view is composed of several \textit{phases}. In each phase, the leader broadcasts to the replicas, that respond with an acknowledgement (\textit{ack}). The leader waits until it receives a \textit{quorum} of acks before proceeding to the next phase; for this algorithm, a quorum consists of $\frac{n}{2}$ acks.
+Each view is composed of several phases. In each phase, the leader broadcasts to the replicas, that respond with an acknowledgement (ack). The leader waits until it receives a quorum of acks before proceeding to the next phase; for this algorithm, a quorum consists of $\frac{n}{2}$ acks.
 
-The final phase of a consensus algorithm is \textit{decide}, it commences once the log is committed. This phase assumes that consensus is being used in the context of state machine replication \cite{lamportTimeClocksOrdering1978,schneiderImplementingFaulttolerantServices1990}: a \textit{client} sends commands to the nodes, the nodes reach consensus on a log of commands, and then execute them in order, ensuring that all nodes will be in the same state. In the \textit{decide} phase, the nodes can execute the new commands and respond to the client that the command was successfully committed.
+The final phase of a consensus algorithm is \textit{decide}, it commences once the log is committed. This phase assumes that consensus is being used in the context of state machine replication \cite{lamportTimeClocksOrdering1978,schneiderImplementingFaulttolerantServices1990}: a client sends commands to the nodes, the nodes reach consensus on a log of commands, and then execute them in order, ensuring that all nodes will be in the same state. In the \textit{decide} phase, the nodes can execute the new commands and respond to the client that the command was successfully committed.
 
 In this generic algorithm, each view consists of three phases:
 
@@ -63,17 +63,17 @@ In this generic algorithm, each view consists of three phases:
 Crucially, this algorithm is safe (Property \ref{safetyproperty}). Since the leader waits to receive a quorum of greater than $\frac{n}{2}$ \textit{new-view} messages, $\lambda$ is guaranteed to be the longest log that has previously been committed. This is because the quorum of \textit{new-view} messages must share at least one node with the past quorum of \textit{commit} acks for $\lambda$. The new proposal $\lambda'$ will never conflict with $\lambda$, hence the algorithm is safe.
 
 \subsection{Byzantine consensus} \label{byzconsensus}
-In this section, we extend our non-byzantine algorithm (Section \ref{nonbyzconsensus}) to achieve consensus under a byzantine system model (assumption \ref{byzassumption}). To do this we must first introduce the \textit{quorum certificate} (\textit{QC}), a cryptographic proof that a leader has received a quorum of acks. We then consider the threats posed by byzantine nodes, give an algorithm that solves these problems, and make an argument for safety. Examples of similar algorithms include Tendermint \cite{kwonTendermintConsensusMining2014} and Casper \cite{buterinCasperFriendlyFinality2019}.
+In this section, we extend our non-byzantine algorithm (Section \ref{nonbyzconsensus}) to achieve consensus under a byzantine system model (assumption \ref{byzassumption}). To do this we must first introduce the quorum certificate (QC), a cryptographic proof that a leader has received a quorum of acks. We then consider the threats posed by byzantine nodes, give an algorithm that solves these problems, and make an argument for safety. Examples of similar algorithms include Tendermint \cite{kwonTendermintConsensusMining2014} and Casper \cite{buterinCasperFriendlyFinality2019}.
 
 \subsubsection{Quorum certificates}
 
-A QC is a quorum of $n - f$ acks with a matching \textit{threshold signature}. A threshold signature combines several signatures of the same message into one \cite{shoupPracticalThresholdSignatures2000, cachinRandomOraclesConstantinople2005}; in this case, the signature from each ack is combined\footnote{Recall that our messages are signed to provide authenticated delivery (assumption \ref{authassumption}).}. QCs have a key property that our byzantine algorithm will rely on:
+A QC is a quorum of $n - f$ acks with a matching threshold signature. A threshold signature combines several signatures of the same message into one \cite{shoupPracticalThresholdSignatures2000, cachinRandomOraclesConstantinople2005}; in this case, the signature from each ack is combined\footnote{Recall that our messages are signed to provide authenticated delivery (assumption \ref{authassumption}).}. QCs have a key property that our byzantine algorithm will rely on:
 
 \begin{property} \label{qcproperty}
 There will always be at least one honest node in the intersection of any two QCs.
 \end{property}
 
-Recall that $n = 3f + 1$. The property holds since a QC contains a quorum of $n - f$ acks, at least $f + 1$ of which must be from honest nodes. To have two quorums that \textit{do not} share an honest node would require at least $2(f + 1) = 2f + 2$ honest nodes, but our system only has $2f + 1$.
+Recall that $n = 3f + 1$. The property holds since a QC contains a quorum of $n - f$ acks, at least $f + 1$ of which must be from honest nodes. To have two quorums that do not share an honest node would require at least $2(f + 1) = 2f + 2$ honest nodes, but our system only has $2f + 1$.
 
 \subsubsection{Threats introduced by byzantine nodes}
 Byzantine nodes introduce two threats that we will deal with in turn. We present ideas for solutions to these threats; it will become clear why these solutions are effective in our argument that the algorithm is safe.
@@ -81,11 +81,11 @@ Byzantine nodes introduce two threats that we will deal with in turn. We present
 \begin{description}
 \item \textit{Threat \#1 (Equivocation)} --- a faulty leader proposes one value to some replicas and a different value to others. For example, in the case of a cryptocurrency a malicious actor (Mallory) could carry out a double-spend attack by proposing ``Mallory transfers Alice £10" to some nodes and ``Mallory transfers Bob £10" to others, even if Mallory's account contains less than £20. \label{threat1}
 
-To solve this add a new stage \textit{prepare} which happens just before the \textit{commit} phase, where the leader pre-proposes a log before proposing it in the \textit{commit} phase.
+To solve this, add a new stage \textit{prepare} which happens just before the \textit{commit} phase, where the leader pre-proposes a log before proposing it in the \textit{commit} phase.
 
 \item \textit{Threat \#2} --- a faulty leader proposes a log that conflicts with one that has previously been committed. \label{threat2}
 
-To solve this make replicas \textit{lock} on a proposal once they receive a \textit{commit} message, and not accept a pre-proposal for a conflicting log.
+To solve this, make replicas \textit{lock} on a proposal once they receive a \textit{commit} message, and not accept a pre-proposal for a conflicting log.
 \end{description}
 
 \subsubsection{Byzantine fault-tolerant algorithm}
@@ -108,12 +108,12 @@ Inductive step --- no conflicting log can be proposed in view $v'$ where $v' > v
 From this, it follows that in no view from $v$ onwards will a log conflicting with $\lambda$ be committed, so the algorithm is safe.
 
 \subsection{Optimistic responsiveness} \label{optresponsive}
-In this section, we finally give the basic HotStuff algorithm by extending our generic byzantine consensus algorithm (section \ref{byzconsensus}) to make it optimistically responsive (Property \ref{optresponsiveproperty}). Optimistic responsiveness means that the system can make progress as fast as network conditions allow without waiting for a timeout, once GST has been reached \cite{passThunderellaBlockchainsOptimistic2018}.
+In this section, we finally give the basic HotStuff algorithm by extending our generic byzantine consensus algorithm (Section \ref{byzconsensus}) to make it optimistically responsive (Property \ref{optresponsiveproperty}). Optimistic responsiveness means that the system can make progress as fast as network conditions allow without waiting for a timeout, once GST has been reached \cite{passThunderellaBlockchainsOptimistic2018}.
 
 The byzantine consensus algorithm is not responsive as it has a timeout in the \textit{prepare} phase. We first describe the problem that means this timeout is needed, then present an algorithm that solves it and make an informal argument that it does not break liveness.
 
 \subsubsection{Why the timeout was necessary}
-For the system to have liveness (Property \ref{livenessproperty}), the leader must wait for $\Delta$ to elapse so that it receives a \textit{new-view} message from \textit{all} honest replicas before it pre-proposes a log, to ensure that the pre-proposal will be voted for by the replicas. Consider what would happen if the leader did not wait for this timeout, and did not receive a \textit{new-view} from some honest replica $x$. It is possible that $x$ is locked on a longer log than the other replicas, as in some past view it received the \textit{commit} message, but other replicas did not\footnote{N.B. this means that the value was never actually committed, as this would have required a quorum of \textit{commit} acks}. When the leader sends the \textit{prepare} message, $x$ will not vote the pre-proposal as it is locked on a longer log, so the leader will not acquire a quorum of acks to make progress; this breaks liveness.
+For the system to have liveness (Property \ref{livenessproperty}), the leader must wait for $\Delta$ to elapse so that it receives a \textit{new-view} message from all honest replicas before it pre-proposes a log, to ensure that the pre-proposal will be voted for by the replicas. Consider what would happen if the leader did not wait for this timeout, and did not receive a \textit{new-view} from some honest replica $x$. It is possible that $x$ is locked on a longer log than the other replicas, as in some past view it received the \textit{commit} message, but other replicas did not\footnote{N.B. this means that the value was never actually committed, as this would have required a quorum of \textit{commit} acks}. When the leader sends the \textit{prepare} message, $x$ will not vote the pre-proposal as it is locked on a longer log, so the leader will not acquire a quorum of acks to make progress; this breaks liveness.
 
 Solution idea --- add a \textit{pre-commit} phase directly before the \textit{commit} phase, where replicas store a \textit{key} for a proposal that they include in their \textit{new-view} message; this removes the need for a timeout, making the algorithm responsive.
 

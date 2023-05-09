@@ -1,7 +1,0 @@
-(library
- (name consensus)
- (inline_tests)
- (preprocess (pps ppx_expect))
- (libraries logs.fmt tezos-crypto)
- (instrumentation (backend bisect_ppx))
- )
