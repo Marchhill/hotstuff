@@ -40,7 +40,7 @@ This section presents benchmarks of the performance of the Cap'n Proto RPC frame
 \label{sizesendtime}
 \end{figure}
 
-I benchmarked the performance of Cap'n Proto \cite{capnp} for varying message sizes, measuring the maximum goodput at which messages could be sent (Figure~\ref{sizegoodput}), and the time taken to send (Figure~\ref{sizesendtime}). Figure~\ref{sizesendtime} is a box plot with whiskers plotted at the 5\%ile and 95\%ile with outliers excluded.
+I benchmarked the performance of Cap'n Proto~\cite{capnp} for varying message sizes, measuring the maximum goodput at which messages could be sent (Figure~\ref{sizegoodput}), and the time taken to send (Figure~\ref{sizesendtime}). Figure~\ref{sizesendtime} is a box plot with whiskers plotted at the 5\%ile and 95\%ile with outliers excluded.
 
 Cap'n Proto has an optimum message size of around 1000 bytes; at this point, data can be sent at the highest possible goodput (Figure~\ref{sizegoodput}). As the size of messages increases beyond this point, message serialisation costs cause the time taken to send messages to increase and the maximum goodput that can be reached to decrease; there is a rapid increase in send time as messages increase beyond 2000 bytes (Figures \ref{sizegoodput} and \ref{sizesendtime})
 
@@ -62,7 +62,7 @@ Cap'n Proto has an optimum message size of around 1000 bytes; at this point, dat
 	\label{tezostable}
 \end{table}
 
-I benchmarked key functions of the Tezos Cryptography library \cite{tezosCrypto} with Jane Street's Core\_bench module \cite{janestreetCoreBench2023}. Core\_bench is a micro-benchmarking library used to estimate the cost of operations in OCaml, it runs the operation many times and uses linear regression to try to reduce the effect of high variance between runs.
+I benchmarked key functions of the Tezos Cryptography library~\cite{tezosCrypto} with Core\_bench~\cite{janestreetCoreBench2023}. Core\_bench is a micro-benchmarking library used to estimate the cost of operations in OCaml, it runs the operation many times and uses linear regression to try to reduce the effect of high variance between runs.
 
 Cryptographic functions can take on the order of milliseconds to complete, with checking signatures demonstrated to be a particularly expensive operation (Table~\ref{tezostable}).
 
@@ -237,7 +237,7 @@ Disabling cryptography reduces latency, leading to increased maximum goodput tha
 \label{ecdfmininet}
 \end{figure}
 
-I benchmarked the performance of the system in a simulated Mininet network \cite{mininet,lantzNetworkLaptopRapid2010} with link latency of 100ms between each node. All experiments were run for 10s on a system with 4 nodes and a batch size of 300. Figure~\ref{goodputlatencymininet} omits results with latency of above 4s, to show the performance of the system as it becomes overloaded. Figure~\ref{ecdfstable} is a cumulative latency plot of an experiment with a throughput of 200req/s.
+I benchmarked the performance of the system in a simulated Mininet network~\cite{mininet,lantzNetworkLaptopRapid2010} with link latency of 100ms between each node. All experiments were run for 10s on a system with 4 nodes and a batch size of 300. Figure~\ref{goodputlatencymininet} omits results with latency of above 4s, to show the performance of the system as it becomes overloaded. Figure~\ref{ecdfstable} is a cumulative latency plot of an experiment with a throughput of 200req/s.
 
 The system has significantly higher latency in the simulator due to the five round trips that are required by the HotStuff protocol: this is an inherent bottleneck. We observe a median latency of around 1.3s (Figure~\ref{goodputlatencymininet}) until the system becomes overloaded when it reaches a maximum goodput of 200req/s (Figure~\ref{throughoutgoodputmininet}), and latency increases rapidly as commands queue on the nodes. One could predict a latency of around 1.1s in the simulated network, as a request takes 5 round trips to commit (1s total), and Figure~\ref{goodputlatencynodes} shows that the latency with negligible link latency was around 0.1s. The observed latency may be slightly greater (by 0.2s) as the nodes do not have synchronised clocks, so the increased link latency could cause delays in the view being advanced.
 
