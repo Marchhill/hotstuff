@@ -34,7 +34,7 @@
 	folder icons/.default={12pt},
 }
 % ---
-In this chapter, we describe the architecture of our implementation (Section \ref{architecture}), conclude our theoretical explanation of HotStuff by discussing the chained algorithm and the pacemaker (Section \ref{moretheory}), present a full specification for HotStuff with a proof of correctness and liveness (Section \ref{spec}), describe key optimisations implemented (Section \ref{performance}), present our load generator and experiment scripts which will be used in evaluation (Section \ref{benchcode}), and give an overview of the repository structure (Section \ref{repo}).
+This chapter describes the architecture of my implementation (Section \ref{architecture}), concludes my theoretical explanation of HotStuff by discussing the chained algorithm and the pacemaker (Section \ref{moretheory}), presents a full specification for HotStuff with a proof of correctness and liveness (Section \ref{spec}), describes key optimisations implemented (Section \ref{performance}), presents the load generator and experiment scripts which will be used in evaluation (Section \ref{benchcode}), and give an overview of the repository structure (Section \ref{repo}).
 
 \section{System Architecture} \label{architecture}
 
@@ -45,7 +45,7 @@ In this chapter, we describe the architecture of our implementation (Section \re
 \label{nodediagram}
 \end{figure}
 
-In this section we present the system architecture that surrounds the core \textit{consensus} module, passing it new messages and client requests, and allowing it to send messages and respond to the client. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{ocons}, which was developed by my project supervisor.
+This section presents the system architecture that surrounds the core \textit{consensus} module, passing it new messages and client requests, and allowing it to send messages and respond to the client. This architecture is inspired by the OCons project\footnote{At the time I began implementation the OCons project was still under development, so I was unable to use the code in my project.} \cite{ocons}, which was developed by my project supervisor.
 
 We will follow the path of an incoming request or message travelling through the system, as shown in Figure \ref{nodediagram}.
 
@@ -62,11 +62,11 @@ We will follow the path of an incoming request or message travelling through the
 \end{description}
 
 \section{More HotStuff theory} \label{moretheory}
-In this section, we conclude our theoretical explanation of HotStuff by discussing chaining, and the pacemaker. As the pacemaker was not sufficiently specified in the original paper, we will draw on other sources to give a full explanation.
+This section concludes my theoretical explanation of HotStuff by discussing chaining, and the pacemaker. As the pacemaker was not sufficiently specified in the original paper, I will draw on other sources to give a full explanation.
 
 \subsection{Chaining} \label{chaining}
 
-In this section, we describe the chained HotStuff algorithm, which is an optimised version of the basic algorithm described in Section \ref{hotstufftheory} where different phases are pipelined. This is a standard optimisation for consensus algorithms that is described in the original paper \cite{yinHotStuffBFTConsensus2019}.
+This section describes the chained HotStuff algorithm, which is an optimised version of the basic algorithm described in Section \ref{hotstufftheory} where different phases are pipelined. This is a standard optimisation for consensus algorithms that is described in the original paper \cite{yinHotStuffBFTConsensus2019}.
 
 Pipelining phases both simplifies and optimises the basic algorithm. The phases in the basic algorithm were all very similar; they involved collecting votes from replicas to form a QC that then serves in later phases. Each of the four phases\footnote{Excluding the \textit{new-view} phase which is unchanged.} can be carried out concurrently. In each view, a leader collects votes to form a QC which can serve in all of the concurrent phases, then sends this QC to the next leader in a \textit{new-view} message and broadcasts a proposal to the nodes. 
 
@@ -93,11 +93,11 @@ In each proposal, a chain of nodes (equivalent to the log) is extended, and diff
 
 \subsection{Pacemaker} \label{pacemaker}
 
-In this section, we discuss the pacemaker, which synchronises the views of honest replicas: a necessary condition for liveness (Property \ref{livenessproperty}). The original paper did not specify the pacemaker mechanism, so we have synthesised information from different sources (including our experimentation) to give a full specification of HotStuff with a pacemaker in Section \ref{spec}. Part of the pacemaker that we will explain in this section is the view-change protocol, which allows the view of a faulty leader to be skipped; ours is based on the pacemaker for LibraBFT \cite{baudetStateMachineReplication2019, ittai}. We will also discuss how the pacemaker can be integrated with the HotStuff algorithm; we did this through our modifications based on deadlocks encountered during implementation.
+This section discusses the pacemaker, which synchronises the views of honest replicas: a necessary condition for liveness (Property \ref{livenessproperty}). The original paper did not specify the pacemaker mechanism, so I have synthesised information from different sources (including experimentation) to give a full specification of HotStuff with a pacemaker in Section \ref{spec}. Part of the pacemaker that will be explained in this section is the view-change protocol, which allows the view of a faulty leader to be skipped; ours is based on the pacemaker for LibraBFT \cite{baudetStateMachineReplication2019, ittai}. The discussion will also cover the integration of the pacemaker with the HotStuff algorithm, which was achieved through modifications aimed at resolving deadlocks encountered during implementation.
 
 % The model of collecting a quorum of COMPLAIN messages to transition to the next view is based on the pacemaker for LibraBFT \cite{baudet_state_nodate}, and is described in section \ref{viewchange}. The rest of the pacemaker is designed to advance to the next view as soon as the system allows, and is based on ad-hoc fixes to deadlocks that were encountered during implementation.
 
-There are two properties that a pacemaker must possess to provide the conditions needed for liveness \cite{naorCogsworthByzantineView2021}; we will later prove that our pacemaker has these properties (Section \ref{proof}). The first property, \textit{view synchronisation} (Theorem \ref{viewsync}), ensures that there are an infinite number of views with an honest leader that the non-faulty nodes stay in long enough to make progress. The second property, \textit{synchronisation validity} (Theorem \ref{syncvalid}), ensures that the pacemaker will only advance to the next view if some honest replica wishes it to happen.
+There are two properties that a pacemaker must possess to provide the conditions needed for liveness \cite{naorCogsworthByzantineView2021}; it will later be proven that my pacemaker has these properties (Section \ref{proof}). The first property, \textit{view synchronisation} (Theorem \ref{viewsync}), ensures that there are an infinite number of views with an honest leader that the non-faulty nodes stay in long enough to make progress. The second property, \textit{synchronisation validity} (Theorem \ref{syncvalid}), ensures that the pacemaker will only advance to the next view if some honest replica wishes it to happen.
 
 Pacemakers are related to failure detectors: mechanisms that facilitate the detection of failed nodes \cite{chandraWeakestFailureDetector1996,chandraUnreliableFailureDetectors1996}. A pacemaker extends this idea, allowing it to be used in a multi-shot setting.
 
@@ -111,17 +111,17 @@ Crucially this protocol maintains the linear view change property that HotStuff 
 
 \subsubsection{Integrating the pacemaker with HotStuff}
 
-Our approach to integrating the pacemaker is to advance a node to the next view as soon as possible once it has finished proposing or voting, or when it receives evidence that there is a quorum of nodes in a higher view. This means that the system does not require synchronised clocks; the nodes advance asynchronously as fast as the network allows.
+My approach to integrating the pacemaker is to advance a node to the next view as soon as possible once it has finished proposing or voting, or when it receives evidence that there is a quorum of nodes in a higher view. This means that the system does not require synchronised clocks; the nodes advance asynchronously as fast as the network allows.
 
-During development, we experimented with a prototype for a pacemaker that advanced views at a steady rate, but analysis of timing data indicated that this approach had inferior performance to our chosen design.
+During development, I experimented with a prototype for a pacemaker that advanced views at a steady rate, but analysis of timing data indicated that this approach had inferior performance to my chosen design.
 
 \section{Specification} \label{spec}
 
-In this section, we give a full specification of HotStuff based on the basic HotStuff algorithm (Section \ref{hotstufftheory}), integrating chaining (Section \ref{chaining}), and a pacemaker (Section \ref{pacemaker}). We informally justify some of the changes made from the original algorithm, then give a proof of liveness for our modified algorithm.
+In this section, a full specification of HotStuff based on the basic HotStuff algorithm (Section \ref{hotstufftheory}), integrating chaining (Section \ref{chaining}), and a pacemaker (Section \ref{pacemaker}) is given. The changes made from the original algorithm are informally justified, and a proof of correctness for the modified algorithm is presented.
 
-This specification implements the consensus module as described in our discussion of the system architecture (Section \ref{architecture}). This module receives messages and requests from the main loop, outputs actions (sending a message, responding to a client request, or resetting the view timer), and updates its own state.
+The consensus module is implemented according to the system architecture described in Section \ref{architecture}. Messages and requests are received from the main loop, and actions (sending a message, responding to a client request, or resetting the view timer) are outputted while the module updates its own state.
 
-We present the pseudocode with our additions coloured in green and modifications in pink. We have only shown the main changes and not the other features and performance improvements we have made (such as batching), which are presented in Section \ref{performance}. We have followed the format of the event-driven pseudocode from the original paper to allow for easier comparison and ease of implementation.
+The pseudocode is presented with additions coloured in green and modifications in pink. Only the main changes are shown, excluding other features and performance improvements made (such as batching), which are presented in Section \ref{performance}. The format of the event-driven pseudocode from the original paper is followed to allow for easier comparison and ease of implementation.
 
 % \begin{algorithm}[h!]
 % 	\caption{Modified HotStuff} \label{hotstuffalgorithm}
@@ -309,22 +309,22 @@ We present the pseudocode with our additions coloured in green and modifications
 \end{algorithm}
 
 \subsection{Changes to the original algorithm}
-We now informally justify some of the key changes made to the original algorithm, with a specific focus on the changes we made to integrate the pacemaker with HotStuff (Section \ref{pacemaker}). Many of these changes were made to fix deadlocks encountered during implementation.
+This section informally justifies some of the key changes made to the original algorithm, with a specific focus on the changes I made to integrate the pacemaker with HotStuff (Section \ref{pacemaker}). Many of these changes were made to fix deadlocks encountered during implementation.
 
 \begin{description}
 	\item \textit{Algorithm \ref{hotstuffalgorithm}, line \ref{code_proposaltransition}} --- if a replica is the next leader, it waits to receive votes before transitioning to the next view. This prevents a deadlock where the leader transitions to the next view too early and ignores vote messages from an earlier view.
 	\item \textit{Algorithm \ref{hotstuffalgorithm}, line \ref{code_checkleader}} --- a node collects vote messages from future views so that if it has fallen behind, it can receive a quorum of votes and catch up to the current view. This prevents an honest node from falling behind and not being able to make progress in the view where it is the leader. Votes from different future views are stored in separate sets ($V\textcolor{Magenta}{\textsubscript{m.view}}$), to prevent votes from different views being used to form a QC.
 	\item \textit{Algorithm \ref{hotstuffalgorithm}, line \ref{code_onpropose}} --- proposals now include a QC, allowing replicas to catch up if they are in a lower view.
-	\item \textit{Algorithm \ref{pacemakeralgorithm}, line \ref{code_getleader}} --- we have chosen to use a round-robin system to assign leaders to views.
+	\item \textit{Algorithm \ref{pacemakeralgorithm}, line \ref{code_getleader}} --- I have chosen to use a round-robin system to assign leaders to views.
 	\item \textit{Algorithm \ref{pacemakeralgorithm}, line \ref{code_onnextsyncview}} --- as soon as a node transitions into a view where it is leader, ON{\large B}EAT is invoked, causing it to propose a new value.
 	\item \textit{Algorithm \ref{pacemakeralgorithm}, line \ref{code_onreceiveany}} --- if a node receives any QC from a future view $v$, it can safely transition to view $v + 1$
 \end{description}
 
 \subsection{Proofs} \label{proof}
 
-In this section, we prove the correctness of our specification. The safety (Property \ref{safetyproperty}) of the specification holds trivially, as we have not made changes that invalidate our argument for the safety of our generic byzantine algorithm (Section \ref{safetyargument}). Likewise, liveness (Property \ref{livenessproperty}) still holds from our previous argument (Section \ref{livenessargument}). The only thing that remains to be proven is that our pacemaker has the properties that are needed to provide the conditions for liveness, as discussed in Section \ref{pacemaker}. These properties ensure that all honest replicas will remain in some view with an honest leader for long enough to make progress
+In this section, the correctness of the specification is proven. The safety (Property \ref{safetyproperty}) of the specification holds trivially, as the changes that have been made do not invalidate the argument for the safety of the generic Byzantine algorithm (Section \ref{safetyargument}). Similarly, liveness (Property \ref{livenessproperty}) still holds from the previous argument (Section \ref{livenessargument}). The only thing that remains to be proven is that the pacemaker has the properties that are needed to provide the conditions for liveness, as discussed in Section \ref{pacemaker}. These properties ensure that all honest replicas will remain in some view with an honest leader for long enough to make progress.
 
-For this proof, we consider the consensus machine (algorithm \ref{hotstuffalgorithm}) and the pacemaker (algorithm \ref{pacemakeralgorithm}), to be separate entities. Furthermore, we assume that GST has been reached and messages have a bounded latency of $\Delta$ (assumption \ref{partialsyncassumption}).
+For this proof, the consensus machine (algorithm \ref{hotstuffalgorithm}) and the pacemaker (algorithm \ref{pacemakeralgorithm}) are considered to be separate entities. Furthermore, the assumption is made that GST has been reached and messages have a bounded latency of $\Delta$ (assumption \ref{partialsyncassumption}).
 
 \begin{theorem}[View synchronisation] \label{viewsync}
 	There exists infinite views $v_k$ and time intervals $\mathcal{I}_k$ such that the following holds:
@@ -347,7 +347,7 @@ For this proof, we consider the consensus machine (algorithm \ref{hotstuffalgori
 \end{figure}
 
 \begin{proof}
-	We use a round-robin system to allocate leaders to views. If we attempt to alternate honest and byzantine leaders, there will always be $f + 1$ consecutive honest leaders left over (Figure \ref{lemma1diagram}). Hence there will always be at least 2 consecutive honest leaders (the lemma holds trivially for $f = 0$).
+	A round-robin system allocates leaders to views. If we attempt to alternate honest and byzantine leaders, there will always be $f + 1$ consecutive honest leaders left over (Figure \ref{lemma1diagram}). Hence there will always be at least 2 consecutive honest leaders (the lemma holds trivially for $f = 0$).
 \end{proof}
 
 \begin{lemma} \label{progressionlemma}
@@ -380,19 +380,19 @@ For this proof, we consider the consensus machine (algorithm \ref{hotstuffalgori
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Practical challenges and optimisations} \label{performance}
 
-In this section, we give solutions to some of the practical challenges of implementing HotStuff, and describe optimisations we made to improve performance. We will focus on how we implemented batching that was effective in increasing goodput, and the difficulties of designing a type for node chains and doing so efficiently. The debugging and experimentation that led to these solutions was non-trivial; they involved extensive analysis of the program trace and timing data, and the development of different prototypes to compare performance.
+This section presents solutions to some of the practical challenges of implementing HotStuff, and describe optimisations I made to improve performance. This will cover how I implemented batching that was effective in increasing goodput, and the difficulties of designing a type for node chains and doing so efficiently. The debugging and experimentation that led to these solutions was non-trivial; they involved extensive analysis of the program trace and timing data, and the development of different prototypes to compare performance.
 
-One main practical consideration was designing the types and structure of the core consensus module (Section \ref{architecture}), to implement the algorithm given in our specification (Section \ref{spec}). Recall that this module takes as input messages and client requests (\textit{events}), and returns actions (such as sending a message) and an updated consensus state. We used \textit{variants} to tag the different types of events, with attached \textit{records} to store the body of the event (such as the node and QC of a proposal). The core algorithm is expressed as a \textit{match} statement to handle each type of event. The output from this is a list of actions (also implemented as variants) and a new state.
+One main practical consideration was designing the types and structure of the core consensus module (Section \ref{architecture}), to implement the algorithm given in the specification (Section \ref{spec}). Recall that this module takes as input messages and client requests (\textit{events}), and returns actions (such as sending a message) and an updated consensus state. I used \textit{variants} to tag the different types of events, with attached \textit{records} to store the body of the event (such as the node and QC of a proposal). The core algorithm is expressed as a \textit{match} statement to handle each type of event. The output from this is a list of actions (also implemented as variants) and a new state.
 
 \subsection{Batching} \label{batching}
-In this section, we discuss the practical challenges of implementing effective \textit{batching}.Batching is a standard technique to improve the goodput of a consensus algorithm by making each node contain many commands instead of just one. This allows a single view to result in many commands being committed rather than just one.
+This section discusses the practical challenges of implementing effective \textit{batching}. Batching is a standard technique to improve the goodput of a consensus algorithm by making each node contain many commands instead of just one. This allows a single view to result in many commands being committed rather than just one.
 
 A naive implementation of batching is simple to implement; instead of taking a single command from the queue to propose (algorithm \ref{pacemakeralgorithm}, line \ref{code_takecmd}), the whole queue can be batched into a single proposal. Analysis of the timing data for the naive implementation showed that it dramatically increased latency.
 
-The rest of this section describes further optimisations we made to make batching effective.
+The rest of this section describes further optimisations I made to make batching effective.
 
 \subsubsection{Filtering commands from batches} \label{filtering}
-One optimisation that we implemented to make batching effective is filtering incoming commands to prevent them from being proposed by multiple nodes. This is achieved by nodes maintaining a set of commands that they have seen in the proposals of other nodes, and filtering these commands from their proposal. This optimisation increased the effectiveness of batching; we demonstrate this in our ablation study (Section \ref{ablation}).
+One optimisation that I implemented to make batching effective is filtering incoming commands to prevent them from being proposed by multiple nodes. This is achieved by nodes maintaining a set of commands that they have seen in the proposals of other nodes, and filtering these commands from their proposal. This optimisation increased the effectiveness of batching, which will be demonstrated in an ablation study (Section \ref{ablation}).
 
 \begin{algorithm}[h!]
 	\caption{Filtering implementation} \label{dedup}
@@ -415,25 +415,25 @@ One optimisation that we implemented to make batching effective is filtering inc
 	\end{algorithmic}
 \end{algorithm}
 
-We give pseudocode for an implementation of filtering in algorithm \ref{dedup}. We use a set to store both the commands that are waiting to be proposed, and commands that have been seen, so that the difference can be efficiently computed. Also note the small optimisation on line \ref{smalloptimisation}: the seen set can safely be emptied as the commands have already been filtered, reducing the amount of computation required to calculate the set difference next time.
+Pseudocode for an implementation of filtering is given in algorithm \ref{dedup}. A set is used to store both the commands that are waiting to be proposed, and commands that have been seen, so that the difference can be efficiently computed. Also note the small optimisation on line \ref{smalloptimisation}: the seen set can safely be emptied as the commands have already been filtered, reducing the amount of computation required to calculate the set difference next time.
 
-This optimisation is effective as our load generator is send-to-all (Section \ref{loadgenerator}), so a new command is added to the queue of all nodes, and may be included in the proposals of different nodes. Filtering out commands so that they are not proposed multiple times follows the general design principle:
+This optimisation is effective as the load generator is send-to-all (Section \ref{loadgenerator}), so a new command is added to the queue of all nodes, and may be included in the proposals of different nodes. Filtering out commands so that they are not proposed multiple times follows the general design principle:
 
 \textbf{Design principle: } Attempt to minimise the amount of redundant work that the system carries out by screening incoming work to check that it needs to be done.
 
 An alternative implementation of filtering that was prototyped was maintaining a set of commands that had been committed rather than seen, but this filtered out far fewer commands and did not significantly improve performance. This is likely because it takes several views for a command to be committed, and in this time multiple nodes may propose the same command and it will not be filtered.
 
 \subsubsection{Batch sizes} \label{batchsizes}
-We further improved the effectiveness of batching by limiting the size of each batch. We demonstrate that this approach improves performance in our study of the system with different batch size limits (Section \ref{batchsizeseval}).
+I further improved the effectiveness of batching by limiting the size of each batch. I demonstrate that this approach improves performance in a study of the system with different batch size limits (Section \ref{batchsizeseval}).
 
-Implementing this feature requires minimal changes to algorithm \ref{dedup}, one simply has to take a subset of \textit{cmds} to propose instead of the whole set. It is important to take the oldest commands from \textit{cmds} to include in the proposal, so that older commands are not starved by newer ones, resulting in high latency. This can be accomplished by using an ordered set (such as a tree set) and ordering by command identifiers, which are ascending integers in our implementation.
+Implementing this feature requires minimal changes to algorithm \ref{dedup}, one simply has to take a subset of \textit{cmds} to propose instead of the whole set. It is important to take the oldest commands from \textit{cmds} to include in the proposal, so that older commands are not starved by newer ones, resulting in high latency. This can be accomplished by using an ordered set (such as a tree set) and ordering by command identifiers, which are ascending integers in my implementation.
 
 The optimisation is effective because at higher message sizes the latency of Cap'n Proto serialisation increases (Section \ref{capnpbenchmark}), so smaller batches can lead to better performance. There is an inherent trade-off between increasing batch size to commit more commands, and messages becoming slower due to increased serialisation latency.
 
 \subsection{Node chains}
-This section concerns the challenges of designing a suitable type for node chains (nodes\footnote{Node is another word for log in this context, not to be confused with a node in the system.}) that can be efficiently serialised by Cap'n Proto and sent over the network. We will discuss the challenges of designing the node type that must be overcome to allow the system to operate, then describe further optimisations that can be made. Recall from our discussion of the system architecture (Section \ref{architecture}) that the internal node type must be converted into a Cap'n Proto type in order to be serialised.
+This section concerns the challenges of designing a suitable type for node chains (nodes\footnote{Node is another word for log in this context, not to be confused with a node in the system.}) that can be efficiently serialised by Cap'n Proto and sent over the network. I will discuss the challenges of designing the node type that must be overcome to allow the system to operate, then describe further optimisations that can be made. Recall from the discussion of the system architecture (Section \ref{architecture}) that the internal node type must be converted into a Cap'n Proto type in order to be serialised.
 
-Our initial naive implementation of the node type was an OCaml record that contained the fields \textit{parent}, \textit{cmds}, \textit{height}, and \textit{justify}. The \textit{justify} field contained a QC that contains another node inside it.
+My initial naive implementation of the node type was an OCaml record that contained the fields \textit{parent}, \textit{cmds}, \textit{height}, and \textit{justify}. The \textit{justify} field contained a QC that contains another node inside it.
 
 \subsubsection{The problem with recursive types}
 One problem encountered in converting internal types to Cap'n Proto types was that some nodes are recursive; the node stored inside the \textit{justify} field points to themselves. This is the case in the chained HotStuff algorithm (Section \ref{chaining}); it has a recursive genesis node \textit{b\textsubscript{0}} that starts the chain of nodes. The genesis node \textit{b\textsubscript{0}} contains a hardcoded link to itself, so $ b_0.\textit{justify}.\textit{node} = b_0$.
@@ -453,15 +453,15 @@ A solution to this problem is to store an integer offset to a node inside the \t
 One optimisation of the node type that was implemented is storing a \textit{digest} field in the node that is a hash over all of the other fields\footnote{Notably the hash can be computed over the \textit{digest} field of the parent node rather than recursing through the whole chain.}, enabling efficient equality checking of nodes. This means that two nodes can be compared by their digests without having to recurse through the entire chain; the digests being equal cryptographically guarantees that the whole chains are equal. The need for this optimisation was discovered by profiling the memory usage of the node equality function using Memtrace.
 
 \subsubsection{Optimising by truncating nodes} \label{truncation}
-In order to optimise the sending of nodes we implemented node truncation; this reduces the size of nodes being sent over the network by cutting off older parts of the chain that the receiver already knows about. This is effective because the size of messages being sent is a bottleneck for our implementation (Section \ref{capnpbenchmark}). The effectiveness of this optimisation is demonstrated in our ablation study (Section \ref{ablation}).
+In order to optimise the sending of nodes I implemented node truncation; this reduces the size of nodes being sent over the network by cutting off older parts of the chain that the receiver already knows about. This is effective because the size of messages being sent is a bottleneck in my implementation (Section \ref{capnpbenchmark}). The effectiveness of this optimisation is demonstrated in an ablation study (Section \ref{ablation}).
 
-In order to truncate the node, our implementation recurses into the node's \textit{parent} field, then deletes the field at some chosen depth. The entire node can then be reconstructed at the receiver, by `splicing' it back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. Splicing together the nodes is done by recursing into the truncated node until it is equal to \textit{b\textsubscript{exec}}, then setting the deleted parent field to \textit{b\textsubscript{exec}}. The node equality function will still work on truncated nodes because of our optimisation to use digests (Section \ref{equality}); a node will still have the same digest once it is truncated.
+In order to truncate the node, my implementation recurses into the node's \textit{parent} field, then deletes the field at some chosen depth. The entire node can then be reconstructed at the receiver, by `splicing' it back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. Splicing together the nodes is done by recursing into the truncated node until it is equal to \textit{b\textsubscript{exec}}, then setting the deleted parent field to \textit{b\textsubscript{exec}}. The node equality function will still work on truncated nodes because of my optimisation to use digests (Section \ref{equality}); a node will still have the same digest once it is truncated.
 
 One practical challenge of this approach is choosing a suitable depth such that there is enough information at the receiver to reconstruct the whole chain. If there is a gap between the truncated node and \textit{b\textsubscript{exec}} at the receiver, this will lead to commands being missed out and not executed. This is a problem in the event that some node becomes isolated from the rest; it must be able to catch up to the others once the network partition is healed.
 
-To overcome this problem we use a TCP-style approach. We include a field containing the height of the \textit{b\textsubscript{exec}} node to the \textit{propose}, \textit{new-view}, and \textit{complain} messages. Each node maintains a list of the \textit{b\textsubscript{exec}} height of every other node. When making a proposal, the leader takes the minimum height from this list and truncates the node up to that depth. This ensures that every node that receives the proposal has enough information to reconstruct the entire log.
+To overcome this problem I used a TCP-style approach. I included a field containing the height of the \textit{b\textsubscript{exec}} node to the \textit{propose}, \textit{new-view}, and \textit{complain} messages. Each node maintains a list of the \textit{b\textsubscript{exec}} height of every other node. When making a proposal, the leader takes the minimum height from this list and truncates the node up to that depth. This ensures that every node that receives the proposal has enough information to reconstruct the entire log.
 
-There are some cases when the leader does not receive the latest \textit{b\textsubscript{exec}} of every other node before it makes a proposal. This means that the leader will not truncate the node as much as it could have. We optimised this by having a node send the entire list of all stored \textit{b\textsubscript{exec}} heights rather than just its own, allowing the heights to propagate around the system more quickly.
+There are some cases when the leader does not receive the latest \textit{b\textsubscript{exec}} of every other node before it makes a proposal. This means that the leader will not truncate the node as much as it could have. I optimised this by having a node send the entire list of all stored \textit{b\textsubscript{exec}} heights rather than just its own, allowing the heights to propagate around the system more quickly.
 
 % \subsection{Connections}
 % talk about capabilities?
@@ -474,7 +474,7 @@ There are some cases when the leader does not receive the latest \textit{b\texts
 % avoid coordinated ommision by using open loop clients
 % section 3: https://dl.acm.org/doi/pdf/10.1145/3447851.3458739
 
-In this section we describe the infrastructure that will be used to evaluate our system in Chapter \ref{evaluation}, including the scripting developed to automate running experiments.
+This section describes the infrastructure that will be used to evaluate system performance in Chapter \ref{evaluation}, including the scripting developed to automate running experiments.
 
 \subsection{Load generator} \label{loadgenerator}
 
@@ -500,11 +500,11 @@ The load generator is responsible for sending client requests to the nodes of th
 	\item \textit{Latency} --- the amount of time it takes between sending a request and receiving a response. The load generator reports the mean and standard deviation of latencies.
 \end{description}
 
-The load generator is open-loop (Figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (Figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful for our experiments as it allows us to overload the system and test its limits, whereas a closed-loop load generator waits for responses from the system, so cannot overload it.
+The load generator is open-loop (Figure \ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (Figure \ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful as it allows us to overload the system and test its limits, whereas a closed-loop load generator waits for responses from the system, so cannot overload it.
 
-Our load generator is send-to-all, meaning that a command is sent to all nodes. An alternative is send-to-one, where a command is sent to a single node which is chosen at random. Send-to-all reduces latency as the next leader will have been sent the command, and may choose to propose it. In send-to-one it may take several views until the node that the request was sent to becomes the leader.
+The load generator is send-to-all, meaning that a command is sent to all nodes. An alternative is send-to-one, where a command is sent to a single node which is chosen at random. Send-to-all reduces latency as the next leader will have been sent the command, and may choose to propose it. In send-to-one it may take several views until the node that the request was sent to becomes the leader.
 
-The load generator uses Lwt to asynchronously dispatch requests and stores a promise that will be fulfilled with their response. In the case of send-to-all the promises waiting on a response from each node are combined using \texttt{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before we start the experiment, reducing start-up effects.
+The load generator uses Lwt to asynchronously dispatch requests and stores a promise that will be fulfilled with their response. In the case of send-to-all the promises waiting on a response from each node are combined using \texttt{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before the experiment begins, reducing start-up effects.
 
 \subsection{Experiment scripts} \label{experimentscripts}
 Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
@@ -512,9 +512,9 @@ Python scripts are used to automate the running of experiments. These scripts st
 Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes every permutation. Each experiment is repeated several times to reduce variance. Experiments are run in a random order so that if there is interference for some part of the test, this is not correlated with the parameters of the experiment, making anomalies easier to spot.
 
 \subsection{Logging framework}
-We developed a logging framework that stores the time taken for important parts of the program to execute and outputs key statistics such as the mean and standard deviation at the end of the test. This was essential for analysing the performance of the system to develop the optimisations described in Section \ref{performance}.
+I developed a logging framework that stores the time taken for important parts of the program to execute and outputs key statistics such as the mean and standard deviation at the end of the test. This was essential for analysing the performance of the system to develop the optimisations described in Section \ref{performance}.
 
-The logging framework helped to reduce the effect of probing effects, where the behaviour of a system is altered by the act of measuring it. Our previous approach printed the time taken throughout the execution of the program; since printing is CPU-heavy this resulted in probing effects. Notably, the print statements were not in-between the statements that measured the time taken, but they caused delays to happen in other parts of the program (presumably when the buffers were being flushed).
+The logging framework helped to reduce the effect of probing effects, where the behaviour of a system is altered by the act of measuring it. My previous approach printed the time taken throughout the execution of the program; since printing is CPU-heavy this resulted in probing effects. Notably, the print statements were not in-between the statements that measured the time taken, but they caused delays to happen in other parts of the program (presumably when the buffers were being flushed).
 
 \textbf{Design principle: } Minimise probing effects by carrying out the minimum possible amount of work in critical areas of the program by storing data and moving work (such as outputting statistics) to less critical areas of the program.
 

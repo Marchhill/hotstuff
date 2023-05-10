@@ -14,7 +14,7 @@ Building practical, well-performing implementations of consensus algorithms is n
 
 The main contributions of this dissertation are:
 \begin{itemize}
-	\item Giving a complete specification and proof of HotStuff (Section \ref{spec}), that adapts the pacemaker mechanism which was not specified in the original paper. This specification synthesises the chained algorithm described in the paper (Section \ref{chaining}), a view-change protocol based on other talks and papers (Section \ref{viewchange}), and our changes to integrate the pacemaker with HotStuff without the need for synchronised clocks.
+	\item Giving a complete specification and proof of HotStuff (Section \ref{spec}), that adapts the pacemaker mechanism which was not specified in the original paper. This specification synthesises the chained algorithm described in the paper (Section \ref{chaining}), a view-change protocol based on other talks and papers (Section \ref{viewchange}), and my changes to integrate the pacemaker with HotStuff without the need for synchronised clocks.
 	\item Providing a reference implementation of HotStuff in OCaml based on a paper by Yin et. ~al~ \cite{yinHotStuffBFTConsensus2019}.
 	\item Giving solutions to key practical challenges of implementation and optimisations that can be made (Section \ref{performance}), as well as showing their effectiveness (Section \ref{ablation})
 	\item Synthesising information from different sources to provide a complete explanation of the HotStuff algorithm, and how it can be arrived at through modifications to simpler consensus algorithms (basic algorithm Section \ref{hotstufftheory}, chained algorithm Section \ref{chaining}, pacemaker Section \ref{pacemaker}).
