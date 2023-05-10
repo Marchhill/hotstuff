@@ -7,13 +7,13 @@
 \contentsline {subsubsection}{Quorum certificates}{11}{subsubsection*.4}%
 \contentsline {subsubsection}{Threats introduced by byzantine nodes}{12}{subsubsection*.5}%
 \contentsline {subsubsection}{Byzantine fault-tolerant algorithm}{12}{subsubsection*.6}%
-\contentsline {subsubsection}{Argument for safety}{13}{subsubsection*.7}%
+\contentsline {subsubsection}{Argument for safety}{12}{subsubsection*.7}%
 \contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{13}{subsection.2.2.3}%
 \contentsline {subsubsection}{Why the timeout was necessary}{13}{subsubsection*.8}%
 \contentsline {subsubsection}{Basic HotStuff algorithm}{14}{subsubsection*.9}%
 \contentsline {subsubsection}{Argument for liveness}{14}{subsubsection*.10}%
 \contentsline {section}{\numberline {2.3}Tools \& libraries}{14}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}OCaml}{15}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.1}OCaml}{14}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Lwt}{15}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{15}{subsection.2.3.3}%
 \contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{15}{subsection.2.3.4}%
@@ -30,22 +30,22 @@
 \contentsline {subsection}{\numberline {3.2.2}Pacemaker}{20}{subsection.3.2.2}%
 \contentsline {subsubsection}{View-change protocol}{21}{subsubsection*.11}%
 \contentsline {subsubsection}{Integrating the pacemaker with HotStuff}{21}{subsubsection*.12}%
-\contentsline {section}{\numberline {3.3}Specification}{22}{section.3.3}%
+\contentsline {section}{\numberline {3.3}Specification}{21}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Changes to the original algorithm}{22}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Proofs}{24}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.2}Proofs}{22}{subsection.3.3.2}%
 \contentsline {section}{\numberline {3.4}Practical challenges and optimisations}{26}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Batching}{26}{subsection.3.4.1}%
-\contentsline {subsubsection}{Filtering commands from batches}{27}{subsubsection*.13}%
-\contentsline {subsubsection}{Batch sizes}{28}{subsubsection*.14}%
+\contentsline {subsubsection}{Filtering commands from batches}{26}{subsubsection*.13}%
+\contentsline {subsubsection}{Batch sizes}{27}{subsubsection*.14}%
 \contentsline {subsection}{\numberline {3.4.2}Node chains}{28}{subsection.3.4.2}%
 \contentsline {subsubsection}{The problem with recursive types}{28}{subsubsection*.15}%
-\contentsline {subsubsection}{Replacing the justify.node field with an offset}{29}{subsubsection*.16}%
+\contentsline {subsubsection}{Replacing the justify.node field with an offset}{28}{subsubsection*.16}%
 \contentsline {subsubsection}{Optimising the node equality function}{29}{subsubsection*.17}%
-\contentsline {subsubsection}{Optimising by truncating nodes}{30}{subsubsection*.18}%
+\contentsline {subsubsection}{Optimising by truncating nodes}{29}{subsubsection*.18}%
 \contentsline {section}{\numberline {3.5}Implementing for evaluation}{30}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Load generator}{30}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{32}{subsection.3.5.2}%
-\contentsline {subsection}{\numberline {3.5.3}Logging framework}{32}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{31}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Logging framework}{31}{subsection.3.5.3}%
 \contentsline {section}{\numberline {3.6}Repository Overview}{33}{section.3.6}%
 \contentsline {chapter}{\numberline {4}Evaluation}{35}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Testing methodology}{35}{section.4.1}%

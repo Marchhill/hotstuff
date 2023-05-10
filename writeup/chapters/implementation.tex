@@ -56,19 +56,19 @@ We will follow the path of an incoming request or message travelling through the
 	\item \textit{Main loop} --- takes messages and requests from their respective streams, and delivers them to the \textit{consensus} module. This main loop ensures that the \textit{consensus} module is never run in parallel, which could lead to race conditions.
 	\item \textit{Consensus module} --- takes incoming messages and requests, outputs \textit{actions} such as sending messages, and updates its own state. The module contains an implementation of the basic HotStuff algorithm (Section~\ref{hotstufftheory}), and the chained algorithm (chaining is discussed in Section~\ref{chaining}, and a full specification is given in Section~\ref{spec}); both share the same signature, so can be interchanged. The module uses the Tezos cryptography library (Section~\ref{tezos}) for signing messages, aggregating signatures, and checking quorum certificates.
 	\item \textit{Action handler} --- takes the actions output by the \textit{consensus} module, and passes them to the appropriate handler. The three types of actions are: sending a message, responding to the client, and resetting the view timer.
-	\item \textit{Message sender} --- asynchronously dispatches an RPC in a new thread. To do this it must convert internal types into Cap'n Proto types, and construct an RPC that matches the schema. The message sender maintains TCP connections with all other nodes, and in the event of the connection breaking repeatedly attempts to reconnect with binary exponential back-off times.
 	\item \textit{Client request hashtable} --- allows client requests to be responded to. The hashtable maps each command's unique identifier to a promise, that will be awoken to respond to the original client request RPC once the command is committed.
+	\item \textit{Message sender} --- asynchronously dispatches an RPC in a new thread. To do this it must convert internal types into Cap'n Proto types, and construct an RPC that matches the schema. The message sender maintains TCP connections with all other nodes, and in the event of the connection breaking repeatedly attempts to reconnect with binary exponential back-off times.
 	\item \textit{View timer} --- waits for a timeout to elapse then adds a view timeout message to the \textit{message stream} so that it will be delivered to the \textit{consensus} module. The \textit{reset} action allows the timer to be reset for a new view.
 \end{description}
 
 \section{More HotStuff theory} \label{moretheory}
-This section concludes my theoretical explanation of HotStuff by discussing chaining, and the pacemaker. As the pacemaker was not sufficiently specified in the original paper, I will draw on other sources to give a full explanation.
+This section concludes my explanation of HotStuff by discussing chaining, and the pacemaker. As the pacemaker was not sufficiently specified in the original paper, I draw on other sources to give a full explanation.
 
 \subsection{Chaining} \label{chaining}
 
 This section describes the chained HotStuff algorithm, which is an optimised version of the basic algorithm described in Section~\ref{hotstufftheory} where different phases are pipelined. This is a standard optimisation for consensus algorithms that is described in the original paper~\cite{yinHotStuffBFTConsensus2019}.
 
-Pipelined phases both simplify and optimise the basic algorithm. The phases in the basic algorithm were all very similar; they involved collecting votes from replicas to form a QC that then serves in later phases. Each of the four phases\footnote{Excluding the \textit{new-view} phase which is unchanged.} can be carried out concurrently. In each view, a leader collects votes to form a QC which can serve in all of the concurrent phases, then sends this QC to the next leader in a \textit{new-view} message and broadcasts a proposal to the nodes. 
+Pipelined phases both simplify and optimise the basic algorithm. The phases in the basic algorithm are similar; they involve collecting votes from replicas to form a QC. Each of the four phases\footnote{Excluding the \textit{new-view} phase which is unchanged.} can be carried out concurrently. In each view, a leader collects votes to form a QC which can serve in all of the concurrent phases, then sends this QC to the next leader in a \textit{new-view} message and broadcasts a proposal to the nodes. 
 
 %Instead of having different phases as before, we can have a single \textit{generic} phase that collects votes, creates a \textit{generic QC}, and sends it to the next leader; now each view is the length of a single phase and a QC can serve in multiple phases concurrently. The only exception to this is the \textit{new-view} phase which is the same as in the basic algorithm.
 
@@ -87,19 +87,17 @@ This section discusses the pacemaker, which synchronises the views of honest rep
 
 There are two properties that a pacemaker must possess to provide the conditions needed for liveness~\cite{naorCogsworthByzantineView2021}; it will later be proven that my pacemaker has these properties (Section~\ref{proof}). The first property, \textit{view synchronisation} (Theorem \ref{viewsync}), ensures that there are an infinite number of views with an honest leader that the non-faulty nodes stay in long enough to make progress. The second property, \textit{synchronisation validity} (Theorem \ref{syncvalid}), ensures that the pacemaker will only advance to the next view if some honest replica wishes it to happen.
 
-Pacemakers are related to failure detectors: mechanisms that facilitate the detection of failed nodes~\cite{chandraWeakestFailureDetector1996,chandraUnreliableFailureDetectors1996}. A pacemaker extends this idea, allowing it to be used in a multi-shot setting.
+Pacemakers are related to failure detectors: mechanisms that facilitate the detection of failed nodes~\cite{chandraWeakestFailureDetector1996,chandraUnreliableFailureDetectors1996}. A pacemaker extends this idea, allowing it to be used with rotating leaders.
 
 \subsubsection{View-change protocol} \label{viewchange}
 
-Once the view times out, nodes send a \textit{complain} message to the next leader and start a new timeout for the next view. Once the next leader achieves a quorum of \textit{complain} messages it collects them into a QC known as a \textit{view-change proof}. This leader can then send a \textit{view-change} message containing the \textit{view-change proof} to all replicas, who will respond by transitioning to the next view and sending a \textit{new-view} message to the new leader. The inclusion of the \textit{view-change proof} prevents liveness attacks by byzantine nodes that could otherwise attack the system by constantly causing view-changes to take place and preventing non-faulty leaders from making progress.
+Once the timeout for a view elapses, nodes send a \textit{complain} message to the next leader and start a new timeout for the next view. Once the next leader achieves a quorum of \textit{complain} messages it collects them into a QC known as a \textit{view-change proof}. This leader can then send a \textit{view-change} message containing the \textit{view-change proof} to all replicas, who respond by transitioning to the next view and sending a \textit{new-view} message to the new leader. The inclusion of the \textit{view-change proof} prevents liveness attacks by byzantine nodes that could otherwise attack the system by constantly causing view-changes to take place and preventing non-faulty leaders from making progress.
 
 Crucially this protocol maintains the linear view change property that HotStuff has $O(n)$ authenticator complexity. Authenticator complexity measures the total number of threshold signatures and partial signatures in a view. This protocol requires $n - f$ partial signatures for the \textit{complain} messages, and a single threshold signature for the \textit{view-change} message, resulting in $O(n)$ authenticators overall.
 
 \subsubsection{Integrating the pacemaker with HotStuff}
 
 My approach to integrating the pacemaker is to advance a node to the next view as soon as possible once it has finished proposing or voting, or when it receives evidence that there is a quorum of nodes in a higher view. This means that the system does not require synchronised clocks; the nodes advance asynchronously as fast as the network allows.
-
-During development, I experimented with a prototype for a pacemaker that advanced views at a steady rate, but analysis of timing data indicated that this approach had inferior performance to my chosen design.
 
 \section{Specification} \label{spec}
 
@@ -256,7 +254,7 @@ This section informally justifies some of the key changes made to the original a
 
 In this section, the correctness of the specification is proven. The safety (Property~\ref{safetyproperty}) of the specification holds trivially, as the changes that have been made do not invalidate the argument for the safety of the generic Byzantine algorithm (Section~\ref{safetyargument}). Similarly, liveness (Property \ref{livenessproperty}) still holds from the previous argument (Section~\ref{livenessargument}). The only thing that remains to be proven is that the pacemaker has the properties that are needed to provide the conditions for liveness, as discussed in Section~\ref{pacemaker}. These properties ensure that all honest replicas will remain in some view with an honest leader for long enough to make progress.
 
-For this proof, the consensus machine (algorithm \ref{hotstuffalgorithm}) and the pacemaker (algorithm \ref{pacemakeralgorithm}) are considered to be separate entities. Furthermore, the assumption is made that GST has been reached and messages have a bounded latency of $\Delta$ (assumption \ref{partialsyncassumption}).
+For this proof, the consensus machine (algorithm \ref{hotstuffalgorithm}) and the pacemaker (algorithm \ref{pacemakeralgorithm}) are considered to be separate entities that are scheduled fairly. Furthermore, the assumption is made that GST has been reached and messages have a bounded latency of $\Delta$ (assumption \ref{partialsyncassumption}).
 
 \begin{theorem}[View synchronisation] \label{viewsync}
 	There exist infinite views $v_k$ and time intervals $\mathcal{I}_k$ such that the following holds:
@@ -279,7 +277,7 @@ For this proof, the consensus machine (algorithm \ref{hotstuffalgorithm}) and th
 \end{figure}
 
 \begin{proof}
-	A round-robin system allocates leaders to views. If we attempt to alternate honest and byzantine leaders, there will always be $f + 1$ consecutive honest leaders left over (Figure~\ref{lemma1diagram}). Hence there will always be at least 2 consecutive honest leaders (the lemma holds trivially for $f = 0$).
+	A round-robin system allocates leaders to views. We proceed by contradiction; assume that the view of every honest leader is followed by a byzantine one (Figure~\ref{lemma1diagram}). There are $2f + 1$ honest nodes, so there must be $2f + 1$ byzantine ones. However, there are only $f$ byzantine nodes - a contradiction.
 \end{proof}
 
 \begin{lemma} \label{progressionlemma}
@@ -287,14 +285,14 @@ For this proof, the consensus machine (algorithm \ref{hotstuffalgorithm}) and th
 \end{lemma}
 
 \begin{proof}
-	If a byzantine leader tries to prevent honest nodes from transitioning to a higher view, the honest nodes will eventually timeout and send a COMPLAIN message to the next leader (algorithm \ref{pacemakeralgorithm}, line \ref{code_timeout}). This may repeat if the next leader is also byzantine. Eventually, the COMPLAINs will be sent to an honest leader, that will send a NEXT{\large V}IEW message and transition all replicas into a new view (algorithm \ref{pacemakeralgorithm}, line \ref{code_nextviewmsg}). Since $x$ will always progress to a higher view, it will eventually reach a view where it is the leader.
+	If a byzantine leader tries to prevent honest nodes from transitioning to a higher view, the honest nodes will eventually timeout and send a COMPLAIN message to the next leader (algorithm \ref{pacemakeralgorithm}, line \ref{code_timeout}). This may repeat if the next leader is also byzantine. By Lemma \ref{viewslemma}, the COMPLAINs will eventually be sent to an honest leader, that will send a NEXT{\large V}IEW message and transition all replicas into a new view (algorithm \ref{pacemakeralgorithm}, line \ref{code_nextviewmsg}). Since $x$ will always progress to a higher view, it will eventually reach a view where it is the leader.
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{viewsync}]
 	From lemma \ref{viewslemma} we have that we can always find future views $v_1$ and $v_2$ with honest leaders $l_1$ and $l_2$, and from lemma \ref{progressionlemma} we have that $l_1$ will eventually enter $v_1$. We argue that all honest replicas will simultaneously be in either $v_1$ or $v_2$. Consider the cases of how $l_1$ could have entered $v_1$:
 	\begin{enumerate}
 		\item $l_1$ received a quorum of votes (algorithm \ref{hotstuffalgorithm}, line \ref{code_gotvotes}) --- $l_1$ will broadcast a QC of votes that will be received by all honest replicas within $\Delta$. These replicas will transition to $v_2$, and send a vote to $l_2$ which will also transition once it receives a quorum of votes. Hence all honest replicas will simultaneously be in $v_2$.
-		\item $l_1$ receives QC of COMPLAINS from itself (algorithm \ref{hotstuffalgorithm}, line \ref{code_gotqc}) --- $l_1$ must have broadcast the NEXT{\large V}IEW message to all honest replicas; they will receive it within $\Delta$ and all enter $v_1$ simultaneously.
+		\item $l_1$ receives a QC of COMPLAINS in a NEXT{\large V}IEW message (algorithm \ref{hotstuffalgorithm}, line \ref{code_gotqc}) --- since $l_1$ is the leader, it must have been the node broadcast that the NEXT{\large V}IEW message to all honest replicas; they will receive it within $\Delta$ and all enter $v_1$ simultaneously.
 	\end{enumerate}
 	From this, we have that there is some time interval $\mathcal{I}_k$ throughout which all honest replicas are in view $v_k$, which has an honest leader. Once the replicas have entered $v_k$ they will only transition to the next view once they have made progress, or once they timeout, which will not happen assuming the timeout is sufficiently long. Hence $\mathcal{I}_k$ is long enough for the replicas to make progress.
 \end{proof}
@@ -312,12 +310,12 @@ For this proof, the consensus machine (algorithm \ref{hotstuffalgorithm}) and th
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Practical challenges and optimisations} \label{performance}
 
-This section presents solutions to some of the practical challenges of implementing HotStuff, and describes optimisations I made to improve performance. This will cover how I implemented batching that was effective in increasing goodput, and the difficulties of designing a type for node chains and doing so efficiently. Developing these solutions was non-trivial; it involved extensive analysis of the program trace and timing data, and comparing the performance of different prototypes.
+This section presents solutions to some of the practical challenges of implementing HotStuff and describes optimisations I made to improve performance. Developing these solutions was non-trivial; it involved extensive analysis of the program trace and timing data, and comparing the performance of different prototypes.
 
 One main practical consideration was designing the types and structure of the core consensus module (Section~\ref{architecture}), to implement the algorithm given in the specification (Section~\ref{spec}). Recall that this module takes as input messages and client requests (\textit{events}), and returns actions (such as sending a message) and an updated consensus state. I used \textit{variants} to tag the different types of events, with attached \textit{records} to store the body of the event (such as the node and QC of a proposal). The core algorithm is expressed as a \textit{match} statement to handle each type of event. The output from this is a list of actions (also implemented as variants) and a new state.
 
 \subsection{Batching} \label{batching}
-This section discusses the practical challenges of implementing effective \textit{batching}. Batching is a standard technique to improve the goodput (requests processed per second) of a consensus algorithm by making each node contain many commands instead of just one. This allows a single view to result in many commands being committed rather than just one.
+This section discusses the practical challenges of implementing effective \textit{batching}. Batching is a standard technique to improve the goodput (requests processed per second) of a consensus algorithm by making each node contain multiple commands instead of just one. This allows a single view to commit multiple commands.
 
 A naive implementation of batching is simple to implement; instead of taking a single command from the queue to propose (algorithm \ref{pacemakeralgorithm}, line \ref{code_takecmd}), the whole queue can be batched into a single proposal. Analysis of the timing data for the naive implementation showed that it dramatically increased latency.
 
@@ -360,7 +358,7 @@ I further improved the effectiveness of batching by limiting the size of each ba
 
 Implementing this feature requires minimal changes to algorithm \ref{dedup}, one simply has to take a subset of \textit{cmds} to propose instead of the whole set. It is important to take the oldest commands from \textit{cmds} to include in the proposal, so that older commands are not starved by newer ones, resulting in high latency. This can be accomplished by using an ordered set (such as a tree set) and ordering by command identifiers, which are ascending integers in my implementation.
 
-The optimisation is effective because at higher message sizes the latency of Cap'n Proto serialisation increases (Section~\ref{capnpbenchmark}), so smaller batches can lead to better performance. There is an inherent trade-off between increasing batch size to commit more commands, and messages becoming slower due to increased serialisation latency.
+The optimisation is effective because at higher message sizes the overheads of Cap'n Proto increase (Section~\ref{capnpbenchmark}), so smaller batches can lead to better performance. There is an inherent trade-off between increasing batch size to commit more commands, and messages becoming slower due to increased overheads.
 
 \subsection{Node chains}
 This section concerns the challenges of designing a suitable type for node chains (nodes\footnote{Node is another word for log in this context, not to be confused with a node in the system.}) that can be efficiently serialised by Cap'n Proto and sent over the network. I will discuss the challenges of designing the node type that must be overcome to allow the system to operate, then describe further optimisations that can be made. Recall from the discussion of the system architecture (Section~\ref{architecture}) that the internal node type must be converted into a Cap'n Proto type in order to be serialised.
@@ -436,7 +434,7 @@ The load generator is open-loop (Figure~\ref{openloop}), which means that it dis
 
 The load generator is send-to-all, meaning that a command is sent to all nodes. An alternative is send-to-one, where a command is sent to a single node which is chosen at random. Send-to-all reduces latency as the next leader will have been sent the command, and may choose to propose it. In send-to-one it may take several views until the node that the request was sent to becomes the leader.
 
-The load generator uses Lwt to asynchronously dispatch requests and stores a promise that will be fulfilled with their response. In the case of send-to-all the promises waiting on a response from each node are combined using \texttt{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before the experiment begins, reducing start-up effects.
+The load generator uses Lwt to asynchronously dispatch requests and stores a promise that will be fulfilled with their response. In the case of send-to-all there are promises waiting for a response from each node that are combined using \texttt{Lwt.pick}, meaning that the first node to respond will fulfil the promise and other responses will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before the experiment begins, reducing start-up effects.
 
 \subsection{Experiment scripts} \label{experimentscripts}
 Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, and then start the next experiment.
@@ -495,12 +493,4 @@ The logging framework helped to reduce the effect of probing effects, where the 
 \end{forest}
 \end{small}
 
-The \textit{lib} directory contains files implementing the main components described in the system architecture (Section~\ref{architecture}). It also contains the schema for RPCs (\textit{hs\_api.capnp}) and code to convert between internal types and Cap'n Proto types (\textit{api\_wrapper.ml}).
-
-Inside the \textit{consensus} folder is a module with implementations of the basic and chained HotStuff algorithms, sharing a common signature (\textit{consensus.mli}). It also contains testing files to run expect tests (Section~\ref{testing}) that have been omitted for conciseness.
-
-The \textit{bin} folder contains the executables for running a node, and for running the load generator.
-
-The \textit{experiments} folder is where the data from running experiments is output to. It also contains scripts for running experiments and plotting graphs.
-
-To run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \texttt{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time.
+To run an experiment, follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \texttt{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time.

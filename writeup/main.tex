@@ -23,7 +23,6 @@
 \usepackage{pifont}% http://ctan.org/pkg/pifont
 \usepackage[]{appendix}
 \usepackage{subfiles}
-\usepackage[]{float}
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
 \usepackage[noend]{algpseudocode}
@@ -104,7 +103,7 @@
 
     \noindent\includegraphics[scale=0.1]{university.png}
 
-    \tikz[remember picture,overlay] \node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{featured_image.jpeg}};
+    % \tikz[remember picture,overlay] \node[opacity=0.3,inner sep=0pt] at (current page.center){\includegraphics[width=\paperwidth,height=\paperheight]{featured_image.jpeg}};
 \end{titlepage}
 
 \setlength{\parskip}{\baselineskip}
@@ -115,7 +114,7 @@ I, Marc Harvey-Hill of Gonville and Caius College, being a candidate for Part II
 
 \noindent Signed: Marc Harvey-Hill
 
-\noindent Date: 9\textsuperscript{th} May 2023
+\noindent Date: 11\textsuperscript{th} May 2023
 
 \chapter*{Proforma}
 
@@ -125,7 +124,7 @@ Candidate Number:   & \bf 2409B \\
 College:            & \bf Gonville \& Caius College                    \\
 Project Title:      & \bf Implementing the HotStuff consensus algorithm \\
 Examination:        & \bf Computer Science Tripos -- Part II, 2023  \\
-Word Count:         & \bf 11,612\footnotemark[1] \\
+Word Count:         & \bf 11,818\footnotemark[1] \\
 Code line Count:    & \bf 4,190\footnotemark[2] \\
 Project Originator: & Christopher Jensen and 2409B \\
 Supervisor:         & Christopher Jensen \\ 
@@ -142,7 +141,7 @@ HotStuff is a byzantine-fault tolerant consensus algorithm that allows a group o
 
 \section*{Work Completed}
 
-This project includes a full specification of the HotStuff algorithm, filling in the gaps from the original paper with other protocols from the literature, and my changes. I have developed a correct implementation of the algorithm with several optimisations, which are shown to be effective in an evaluation. This project paves the way for future HotStuff implementations by describing non-trivial challenges that were encountered during development and giving solutions and practical optimisations. I synthesised information from the literature to give a full explanation of the algorithm and how it can be logically derived from additions to simpler consensus algorithms.
+This project includes a full specification of the HotStuff algorithm, filling in the gaps from the original paper with other protocols from the literature, and my changes. My implementation of the algorithm is correct and includes several optimisations, which are shown to be effective in an evaluation. I synthesised information from the literature to give a full explanation of the algorithm and how it can be logically derived from additions to simpler consensus algorithms. This project paves the way for future HotStuff implementations by describing non-trivial challenges that were encountered during development and giving solutions and practical optimisations.
 
 \section*{Special Difficulties}
 

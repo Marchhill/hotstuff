@@ -982,7 +982,6 @@ INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/import.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/import.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/import.sty
-INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/float/float.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
@@ -1254,11 +1253,6 @@ INPUT ./images//university.png
 INPUT images//university.png
 INPUT ./images//university.png
 INPUT ./images//university.png
-INPUT ./images//featured_image.jpeg
-INPUT ./images//featured_image.jpeg
-INPUT images//featured_image.jpeg
-INPUT ./images//featured_image.jpeg
-INPUT ./images//featured_image.jpeg
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx2488.tfm
@@ -1426,10 +1420,10 @@ INPUT ./images/mininet/goodputlatency_mininet.pgf
 INPUT images/mininet/goodputlatency_mininet.pgf
 INPUT ./images/mininet/goodputlatency_mininet.pgf
 INPUT images/mininet/goodputlatency_mininet.pgf
-INPUT ./images/mininet/t1r200_cumlatency.pgf
-INPUT images/mininet/t1r200_cumlatency.pgf
-INPUT ./images/mininet/t1r200_cumlatency.pgf
-INPUT images/mininet/t1r200_cumlatency.pgf
+INPUT ./images/mininet/t1r50_cumlatency.pgf
+INPUT images/mininet/t1r50_cumlatency.pgf
+INPUT ./images/mininet/t1r50_cumlatency.pgf
+INPUT images/mininet/t1r50_cumlatency.pgf
 INPUT ./images/viewchange/08xviewchange_0_100_7_300_timelatencyheatmap.pgf
 INPUT images/viewchange/08xviewchange_0_100_7_300_timelatencyheatmap.pgf
 INPUT ./images/viewchange/08xviewchange_0_100_7_300_timelatencyheatmap.pgf

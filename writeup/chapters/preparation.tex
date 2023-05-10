@@ -6,13 +6,13 @@
 
 % It is essential to declare the starting point. This states any existing codebase or materials that your project builds on. The text here can commonly be identical to the text in your proposal, but it may enlarge on it or report variations. For instance, the true starting point may have turned out to be different from that declared in the proposal and such discrepancies must be explained.
 
-In this chapter, I disclose my knowledge and experience before beginning this project (Section~\ref{start}), give a theoretical basis for understanding the HotStuff algorithm by building up from simpler consensus algorithms (Section~\ref{hotstufftheory}), outline the tools, libraries (Section~\ref{tools}) that were used, highlight the requirements that the implementation should meet (Section~\ref{requirements}), and describe the professional methodology (Section~\ref{softwareeng}) that was employed during implementation.
+In this chapter, I disclose my experience before beginning this project (Section~\ref{start}), explain the HotStuff algorithm by building up from simpler consensus algorithms (Section~\ref{hotstufftheory}), outline the tools and libraries (Section~\ref{tools}) that were used, highlight requirements that the implementation should meet (Section~\ref{requirements}), and describe the professional methodology (Section~\ref{softwareeng}) that was employed during implementation.
 
 \section{Starting point} \label{start}
 Although I had some experience using OCaml through the IA Foundations of Computer Science course, I had never utilized it in a project before. The IB Distributed Systems course provided some useful background knowledge, particularly as it briefly covered Raft~\cite{ongaroSearchUnderstandableConsensus2014}, a non-byzantine consensus algorithm. Additionally, I had a basic understanding of byzantine consensus from my reading into Nakamoto consensus~\cite{nakamotoBitcoinPeertoPeerElectronic2008} and from developing a wallet application for Ethereum~\cite{ethereumWhite, ethereumYellow}; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
 
 \section{HotStuff algorithm} \label{hotstufftheory}
-HotStuff is a byzantine consensus algorithm; it allows a group of nodes to reach consensus on a log of values under adverse conditions, such as messages being lost, or some nodes being byzantine. In each view, a leader node proposes some value by sending it to the replicas (another word for nodes). After several messages are exchanged some prefix of the log may be committed, meaning there is consensus on that part of the log and it is immutable.
+HotStuff~\cite{yinHotStuffBFTConsensus2019} is a byzantine consensus algorithm; it allows a group of nodes to reach consensus on a log of values under adverse conditions, such as messages being lost, or some nodes acting maliciously (byzantine). In each view, a leader node proposes some value by sending it to the replicas (another word for nodes). After several messages are exchanged a prefix of the log may be committed, meaning there is consensus on that part of the log and it is immutable.
 
 The system model describes the adverse conditions under which HotStuff can operate:
 \begin{assumption}[Partially Synchronous] \label{partialsyncassumption}
@@ -24,7 +24,7 @@ The system model describes the adverse conditions under which HotStuff can opera
 \end{assumption}
 
 \begin{assumption}[Byzantine] \label{byzassumption}
-	A maximum of $f$ faulty nodes may be controlled by an adversary that is actively trying to prevent the nodes from reaching consensus, where $n = 3f + 1$ and $n$ is the total number of nodes.
+	A maximum of $f$ faulty nodes may be controlled by an adversary, where $n = 3f + 1$ and $n$ is the total number of nodes.
 \end{assumption}
 
 Assumptions \ref{partialsyncassumption} and \ref{byzassumption} are the weakest possible assumptions under which it is possible to reach consensus~\cite{peaseReachingAgreementPresence1980,fischerEasyImpossibilityProofs1986}. Assumption \ref{authassumption} is also needed, but byzantine consensus is possible without cryptographic signatures; there is an algorithm called Information Theoretic HotStuff, that does not use signatures and is secure against a computationally unbounded adversary\footnote{An authenticated channel can be obtained without signatures by using one time pads or quantum cryptography~\cite{bennettExperimentalQuantumCryptography1992}.}~\cite{abrahamInformationTheoreticHotStuff2020}.
@@ -36,7 +36,7 @@ HotStuff has the following properties:
 \end{property}
 
 \begin{property}[Liveness] \label{livenessproperty}
-	Assuming there is a functioning pacemaker, the system is guaranteed to make progress within some bounded amount of time once GST has been reached and a non-faulty leader is chosen. The pacemaker ensures that all honest replicas will remain in some view with an honest leader for long enough to make progress (Section~\ref{pacemaker}).
+	Assuming there is a functioning pacemaker, the system is guaranteed to make progress within some bounded amount of time once GST has been reached and a non-faulty leader is chosen. The pacemaker ensures that the honest replicas will be in views with an honest leader for long enough to make progress (Section~\ref{pacemaker}).
 \end{property}
 
 \begin{property}[Optimistic Responsiveness] \label{optresponsiveproperty}
@@ -48,19 +48,19 @@ Basic HotStuff is a responsive byzantine consensus algorithm (Section~\ref{optre
 \subsection{Non-byzantine consensus} \label{nonbyzconsensus}
 In this section, a generic algorithm is described to solve the problem of reaching consensus with a crash-stop model, which assumes that nodes cannot be malicious but can crash and never come back online. Examples of similar algorithms include Raft~\cite{ongaroSearchUnderstandableConsensus2014} and \mbox{MultiPaxos~\cite{lamportParttimeParliament1998, lamportPaxosMadeSimple2001}}.
 
-Each view is composed of several phases. In each phase, the leader broadcasts to the replicas, that respond with an acknowledgement (ack). The leader waits until it receives a quorum of acks before proceeding to the next phase; for this algorithm, a quorum consists of $\frac{n}{2}$ acks.
+Each view is composed of several phases. In each phase, the leader broadcasts to the replicas, that respond with an acknowledgement (ack). The leader waits until it receives a quorum of acks before proceeding to the next phase; for this algorithm, a quorum consists of $\lceil\frac{n}{2}\rceil$ acks.
 
-The final phase of a consensus algorithm is \textit{decide}, it commences once the log is committed. This phase assumes that consensus is being used in the context of state machine \mbox{replication~\cite{lamportTimeClocksOrdering1978,schneiderImplementingFaulttolerantServices1990}}: a client sends commands to the nodes, the nodes reach consensus on a log of commands and then execute them in order, ensuring that all nodes will be in the same state. In the \textit{decide} phase, the nodes can execute the new commands and respond to the client that the command was successfully committed.
+Consensus can be used in state machine replication~\cite{lamportTimeClocksOrdering1978,schneiderImplementingFaulttolerantServices1990}. In this setting, the nodes reach consensus on a log of commands that have been sent by a client. Once a prefix of the log is committed the client can be responded to and the committed commands are executed in order, ensuring that all nodes will be in the same state.
 
 In this generic algorithm, each view consists of three phases:
 
 \begin{description}
-	\item \textit{new-view} --- the leader learns about previously committed logs. All replicas send a \textit{new-view} message to the leader, containing their longest previously committed log.
-	\item \textit{commit} --- the leader waits until it receives a quorum of greater than $\frac{n}{2}$ \textit{new-view} messages, and then picks the longest log it received ($\lambda$) to propose. It then broadcasts a \textit{commit} message to the replicas, proposing $\lambda'$ to the nodes, where $\lambda'$ is $\lambda$ optionally extended with the leader's new value.
-	\item \textit{decide} --- once the leader receives a quorum of acks, the log has been successfully committed. The leader can broadcast ``decide'' to the replicas, who can execute the new commands and respond to the client.
+	\item \textit{new-view} --- all replicas send a \textit{new-view} message to the leader, containing their longest previously committed log.
+	\item \textit{commit} --- once the leader receives a quorum of $\lceil\frac{n}{2}\rceil$ \textit{new-view} messages, it picks the longest log ($\lambda$) to propose. It then broadcasts a \textit{commit} message to the replicas, proposing $\lambda'$ to the nodes, where $\lambda'$ is $\lambda$ optionally extended with the leader's new value. The replicas send a \textit{commit} ack.
+	\item \textit{decide} --- once the leader receives a quorum of acks, the log has been successfully committed. The leader can broadcast ``decide'' to the replicas, who can execute the new commands and respond to the client. The replicas send a \textit{new-view}, beginning the next view.
 \end{description}
 
-Crucially, this algorithm is safe (Property \ref{safetyproperty}). Since the leader waits to receive a quorum of greater than $\frac{n}{2}$ \textit{new-view} messages, $\lambda$ is guaranteed to be the longest log that has previously been committed. This is because the quorum of \textit{new-view} messages must share at least one node with the past quorum of \textit{commit} acks for $\lambda$. The new proposal $\lambda'$ will never conflict with $\lambda$, hence the algorithm is safe.
+Crucially, this algorithm is safe (Property \ref{safetyproperty}). Since the leader waits to receive a quorum of greater than $\lceil\frac{n}{2}\rceil$ \textit{new-view} messages, $\lambda$ is guaranteed to be the longest log that has previously been committed. This is because the quorum of \textit{new-view} messages must share at least one node with the past quorum of \textit{commit} acks for $\lambda$. The new proposal $\lambda'$ will never conflict with $\lambda$, hence the algorithm is safe.
 
 \subsection{Byzantine consensus} \label{byzconsensus}
 In this section, consensus under a byzantine system model (Assumption \ref{byzassumption}) is achieved by extending the non-byzantine algorithm introduced in Section~\ref{nonbyzconsensus}. This is accomplished by first introducing the quorum certificate (QC), a cryptographic proof that a leader has received a quorum of acks. Next, the threats posed by byzantine nodes are considered, and a generic algorithm that solves these problems is presented, along with an argument for safety. Examples of similar algorithms include Tendermint~\cite{kwonTendermintConsensusMining2014} and Casper~\cite{buterinCasperFriendlyFinality2019}.
@@ -73,22 +73,22 @@ A QC is a quorum of $n - f$ acks with a matching threshold signature. A threshol
 There will always be at least one honest node in the intersection of any two QCs.
 \end{property}
 
-Recall that $n = 3f + 1$. The property holds since a QC contains a quorum of $n - f$ acks, at least $f + 1$ of which must be from honest nodes. To have two quorums that do not share an honest node would require at least $2(f + 1) = 2f + 2$ honest nodes, but the system only has $2f + 1$.
+Recall that $n = 3f + 1$. The property holds since a QC contains a quorum of $n - f = 2f + 1$ acks, of which at least $f + 1$ must be from honest nodes. To have two quorums that do not share an honest node would require at least $2(f + 1) = 2f + 2$ honest nodes, but the system only has $2f + 1$.
 
 \subsubsection{Threats introduced by byzantine nodes}
 Two threats are introduced by Byzantine nodes, which will be dealt with in turn. Solutions to these threats are presented; their effectiveness will become clear in the argument for the safety of the algorithm.
 
 \begin{threat}[Equivocation] \label{threat1}
-A faulty leader proposes one value to some replicas and a different value to others. For example, in the case of a cryptocurrency a malicious actor (Mallory) could carry out a double-spend attack by proposing ``Mallory transfers Alice £10'' to some nodes and ``Mallory transfers Bob £1'' to others, even if Mallory's account contains less than £20.
+A faulty leader proposes one value to some replicas and a different value to others. For example, in the case of a cryptocurrency a malicious actor (Mallory) could carry out a double-spend attack by proposing ``Mallory transfers Alice £10'' to some nodes and ``Mallory transfers Bob £10'' to others, even if Mallory's account contains less than £20.
 \end{threat}
+
+Solution --- add a new stage \textit{prepare} which happens just before the \textit{commit} phase, where the leader pre-proposes a log before proposing it in the \textit{commit} phase.\\
 
 \begin{threat} \label{threat2}
 A faulty leader proposes a log that conflicts with one that has previously been committed.
 \end{threat}
 
-To solve Threat \ref{threat1}, add a new stage \textit{prepare} which happens just before the \textit{commit} phase, where the leader pre-proposes a log before proposing it in the \textit{commit} phase.
-
-To solve Threat \ref{threat2}, make replicas \textit{lock} on a proposal once they receive a \textit{commit} message, and not accept a pre-proposal for a conflicting log.
+Solution --- make replicas \textit{lock} on a proposal once they receive a \textit{commit} message, and not accept a pre-proposal for a conflicting log.
 
 \subsubsection{Byzantine fault-tolerant algorithm}
 Modifying the non-byzantine algorithm (Section~\ref{nonbyzconsensus}) to include solutions to Threat \ref{threat1} and \ref{threat2} results in the following:
@@ -103,7 +103,7 @@ Modifying the non-byzantine algorithm (Section~\ref{nonbyzconsensus}) to include
 \subsubsection{Argument for safety} \label{safetyargument}
 An informal inductive argument is presented to show that the algorithm is safe (Property~\ref{safetyproperty}) based on it solving Threat \ref{threat1} and \ref{threat2}. Safety requires that if some log $\lambda$ is committed in view $v$, at no point in future will a conflicting log be committed.
 
-Base case --- in view $v$, no log that conflicts with $\lambda$ may be committed; in other words, equivocation (Threat \ref{threat1}) is not possible. For a view to commit a value, there must have been a QC of \textit{prepare} acks and a QC of \textit{commit} acks. By Property \ref{qcproperty}, there must be at least one honest replica in the intersection of these QCs that would not have acknowledged conflicting proposals in the same view.
+Base case --- in view $v$, no log that conflicts with $\lambda$ may be committed; in other words, equivocation (Threat \ref{threat1}) is not possible. For two logs to have been committed in the same view, there must have been two QCs of \textit{prepare} acks. By Property \ref{qcproperty}, there must be at least one honest replica in the intersection of these QCs that would not have acknowledged conflicting proposals in the same view.
 
 Inductive step --- no conflicting log can be proposed in view $v'$ where $v' > v$ (Threat \ref{threat2}). This holds because any log pre-proposed in view $v'$ must receive a QC of \textit{prepare} acks; by Property \ref{qcproperty}, there must be at least one honest node in the intersection between this QC, and the QC of \textit{commit} acks $\lambda$ in view $v$. This honest replica is locked on $\lambda$, so would not accept a proposal that conflicts with it.
 
@@ -115,7 +115,7 @@ This section presents the basic HotStuff algorithm by extending the generic byza
 The byzantine consensus algorithm is not responsive as a timeout is needed in the \textit{prepare} phase. The problem that necessitates this timeout is first described, followed by the presentation of an algorithm that solves it. An informal argument is made that liveness is not broken by this algorithm.
 
 \subsubsection{Why the timeout was necessary}
-For the system to have liveness (Property \ref{livenessproperty}), the leader must wait for $\Delta$ to elapse so that it receives a \textit{new-view} message from all honest replicas before it pre-proposes a log, to ensure that the pre-proposal will be voted for by the replicas. Consider what would happen if the leader did not wait for this timeout, and did not receive a \textit{new-view} from some honest replica $x$. $x$ may be locked on a longer log than the other replicas, as in some past view it received the \textit{commit} message, but other replicas did not\footnote{N.B. this means that the value was never actually committed, as this would have required a quorum of \textit{commit} acks}. When the leader sends the \textit{prepare} message, $x$ will not vote the pre-proposal as it is locked on a longer log, so the leader will not acquire a quorum of acks to make progress; this breaks liveness.
+For the system to have liveness (Property \ref{livenessproperty}), the leader must wait for $\Delta$ to elapse so that it receives a \textit{new-view} message from all honest replicas before it pre-proposes a log. Consider what would happen if the leader did not wait for this timeout, and did not receive a \textit{new-view} from some honest replica $x$. $x$ may be locked on a longer log than the other replicas, as in some past view it received the \textit{commit} message, but other replicas did not\footnote{N.B. this means that the value was never actually committed, as this would have required a quorum of \textit{commit} acks}. When the leader sends the \textit{prepare} message, $x$ will not vote the pre-proposal as it is locked on a longer log, so the leader will not acquire a quorum of acks to make progress; this breaks liveness.
 
 Solution idea --- add a \textit{pre-commit} phase directly before the \textit{commit} phase, where replicas store a \textit{key} for a proposal that they include in their \textit{new-view} message; this removes the need for a timeout, making the algorithm responsive.
 
@@ -132,7 +132,7 @@ Modifying the byzantine algorithm (Section~\ref{byzconsensus}) to include the so
 \end{description}
 
 \subsubsection{Argument for liveness} \label{livenessargument}
-An informal argument for the liveness (Property \ref{livenessproperty}) of the algorithm is presented. It is argued that the longest log will be proposed by the non-faulty leader and that the proposal will be voted for by the honest replicas, resulting in progress being made.
+I informally argue for the liveness (Property \ref{livenessproperty}) of the basic HotStuff algorithm.
 
 The non-faulty leader is guaranteed to receive a \textit{key} for the longest log ($\lambda^*$) that some honest replica is locked on. This is because for some replica to become locked on $\lambda^*$ there must be at least $f + 1$ honest nodes that have a \textit{key} for $\lambda^*$. The leader must hear about $\lambda^*$ from one of these honest nodes when it receives a quorum of \textit{new-view} messages and then propose it to the replicas.
 
@@ -164,7 +164,7 @@ The only difference from the threshold signatures needed by HotStuff is that eac
 To be successful the implementation should conform to the following requirements:
 \begin{itemize}
 	\item Correctness --- the consensus algorithm should be implemented as it is described in the paper~\cite{yinHotStuffBFTConsensus2019}. This can be established by testing the program trace for compliance with the algorithm specification.
-	\item Evaluation --- analysis of system throughput and latency should be carried out by testing the program locally, analysing the trace, and testing in a simulated network.
+	\item Evaluation --- analysis of system throughput and latency should be carried out by testing the program locally, analysing the trace, and testing in a simulated network\footnote{The proposal (Appendix~\ref{proposal}) stated that the system should be evaluated on a simulated network of 32 nodes, but reaching this level of performance was not possible due to limitations of Cap'n Proto (Section~\ref{capnpbenchmark}).}.
 	\item Optimisation --- implement features to improve transaction throughput and reduce latency over the naive implementation.%This can be achieved through architectural decisions, tuning the scheduler, and ensuring cryptographic libraries are being used efficiently.
 \end{itemize}
 
@@ -178,7 +178,7 @@ For this project, I used an iterative waterfall development methodology. Objecti
 
 \subsection{Testing \& debugging methodology} \label{testing}
 
-Unit testing was carried out using `expect tests', which compare a program trace to the correct output. A testing suite of expect tests verifies that the program behaves as specified in the HotStuff paper. This suite has 100\% code coverage of the consensus state machine code.%, the coverage report is at \textit{\_coverage/index.html}.
+Unit testing was carried out using `expect tests', which compare a program trace to the correct output. A testing suite of expect tests verifies that the program behaves as specified in the HotStuff paper. This suite has 100\% code coverage\footnote{The coverage report in \textit{\_coverage/index.html}, reports 98.13\% coverage, but the only code not covered is the expect tests themselves.} of the consensus state machine code.%, the coverage report is at \textit{\_coverage/index.html}.
 
 Memtrace~\cite{memtrace} was used to profile the memory usage of the program. %One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
 

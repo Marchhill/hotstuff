@@ -14,7 +14,7 @@ sudo apt-get install opam libev-dev capnproto libcapnp-dev libgmp-dev
 opam init
 eval $(opam env)
 
-# setup latest ocaml version (change version number)
+# set ocaml version
 opam switch create 4.14.1
 
 # update & upgrade opam
@@ -22,7 +22,7 @@ opam update
 opam upgrade
 
 # installing dependencies
-opam install dune ppx_expect conf-libev lwt capnp-rpc-unix tezos-crypto
+opam install dune ppx_expect bisect_ppx conf-libev lwt capnp-rpc-unix tezos-crypto
 
 # install python dependencies for plotting
 pip3 install pandas matplotlib seaborn

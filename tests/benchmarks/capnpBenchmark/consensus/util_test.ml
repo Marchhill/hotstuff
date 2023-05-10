@@ -6,11 +6,15 @@ let%expect_test "node justify to string of None." =
 	[%expect {||}]
 
 let%expect_test "get event type." =
+	let m = {id = 0; view = 99; tcp_lens = []; msg_type = NewView; node = None; justify = None; partial_signature = None} in
 	Fmt.pr "%s@." (get_event_type (ClientCmd {data = ""; callback_id = 0}));
 	Fmt.pr "%s@." (get_event_type (Timeout {view = 10}));
-	[%expect {|
-  client_cmd
-  timeout |}]
+	Fmt.pr "%s@." (get_event_type (Prepare m));
+	Fmt.pr "%s@." (get_event_type (PreCommit m));
+	Fmt.pr "%s@." (get_event_type (Decide m));
+	Fmt.pr "%s@." (get_event_type (NextView m));
+	Fmt.pr "%s@." (get_event_type (Generic m));
+	[%expect {||}]
 
 let%expect_test "print action" =
 	print_action (SendClient {id = 0; callback_id = 0; success = true});

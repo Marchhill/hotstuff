@@ -17,7 +17,6 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\pgfsyspdfmark {pgfid1}{4102289}{4102289}
 \citation{yinHotStuffBFTConsensus2019}
 \citation{nakamotoBitcoinPeertoPeerElectronic2008}
 \citation{perniceCryptocurrency2021}
@@ -33,6 +32,7 @@
 \@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction}{7}{chapter.1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
+\citation{yinHotStuffBFTConsensus2019}
 \citation{baudetStateMachineReplication2019}
 \citation{castroPracticalByzantineFault1999}
 \citation{golanguetaSBFTScalableDecentralized2019}
@@ -40,11 +40,11 @@
 \citation{kwonTendermintConsensusMining2014}
 \citation{buterinCasperFriendlyFinality2019}
 \citation{chandraPaxosMadeLive2007}
-\citation{yinHotStuffBFTConsensus2019}
 \citation{ongaroSearchUnderstandableConsensus2014}
 \citation{nakamotoBitcoinPeertoPeerElectronic2008}
 \citation{ethereumWhite}
 \citation{ethereumYellow}
+\citation{yinHotStuffBFTConsensus2019}
 \citation{dworkConsensusPresencePartial1988}
 \@writefile{toc}{\contentsline {chapter}{\numberline {2}Preparation}{9}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -56,7 +56,6 @@
 \newlabel{hotstufftheory}{{2.2}{9}{HotStuff algorithm}{section.2.2}{}}
 \newlabel{partialsyncassumption}{{2.2.1}{9}{Partially Synchronous}{assumption.2.2.1}{}}
 \newlabel{authassumption}{{2.2.2}{9}{Authenticated}{assumption.2.2.2}{}}
-\newlabel{byzassumption}{{2.2.3}{9}{Byzantine}{assumption.2.2.3}{}}
 \citation{peaseReachingAgreementPresence1980}
 \citation{fischerEasyImpossibilityProofs1986}
 \citation{bennettExperimentalQuantumCryptography1992}
@@ -67,6 +66,7 @@
 \citation{lamportPaxosMadeSimple2001}
 \citation{lamportTimeClocksOrdering1978}
 \citation{schneiderImplementingFaulttolerantServices1990}
+\newlabel{byzassumption}{{2.2.3}{10}{Byzantine}{assumption.2.2.3}{}}
 \newlabel{safetyproperty}{{2.2.1}{10}{Safety}{property.2.2.1}{}}
 \newlabel{livenessproperty}{{2.2.2}{10}{Liveness}{property.2.2.2}{}}
 \newlabel{optresponsiveproperty}{{2.2.3}{10}{Optimistic Responsiveness}{property.2.2.3}{}}
@@ -84,9 +84,9 @@
 \newlabel{threat1}{{2.2.1}{12}{Equivocation}{threat.2.2.1}{}}
 \newlabel{threat2}{{2.2.2}{12}{}{threat.2.2.2}{}}
 \@writefile{toc}{\contentsline {subsubsection}{Byzantine fault-tolerant algorithm}{12}{subsubsection*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Argument for safety}{12}{subsubsection*.7}\protected@file@percent }
+\newlabel{safetyargument}{{2.2.2}{12}{Argument for safety}{subsubsection*.7}{}}
 \citation{passThunderellaBlockchainsOptimistic2018}
-\@writefile{toc}{\contentsline {subsubsection}{Argument for safety}{13}{subsubsection*.7}\protected@file@percent }
-\newlabel{safetyargument}{{2.2.2}{13}{Argument for safety}{subsubsection*.7}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Optimistic responsiveness}{13}{subsection.2.2.3}\protected@file@percent }
 \newlabel{optresponsive}{{2.2.3}{13}{Optimistic responsiveness}{subsection.2.2.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{Why the timeout was necessary}{13}{subsubsection*.8}\protected@file@percent }
@@ -96,12 +96,12 @@
 \newlabel{livenessargument}{{2.2.3}{14}{Argument for liveness}{subsubsection*.10}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Tools \& libraries}{14}{section.2.3}\protected@file@percent }
 \newlabel{tools}{{2.3}{14}{Tools \& libraries}{section.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}OCaml}{14}{subsection.2.3.1}\protected@file@percent }
 \citation{lwt}
 \citation{async}
 \citation{eio}
 \citation{capnp}
 \citation{tezosCrypto}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}OCaml}{15}{subsection.2.3.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Lwt}{15}{subsection.2.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{15}{subsection.2.3.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{15}{subsection.2.3.4}\protected@file@percent }
@@ -132,6 +132,7 @@
 \citation{yinHotStuffBFTConsensus2019}
 \citation{baudetStateMachineReplication2019}
 \citation{ittai}
+\citation{naorCogsworthByzantineView2021}
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}More HotStuff theory}{20}{section.3.2}\protected@file@percent }
 \newlabel{moretheory}{{3.2}{20}{More HotStuff theory}{section.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Chaining}{20}{subsection.3.2.1}\protected@file@percent }
@@ -140,15 +141,16 @@
 \newlabel{nchain}{{3.2}{20}{Sequence of nodes forming a 2-chain}{figure.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Pacemaker}{20}{subsection.3.2.2}\protected@file@percent }
 \newlabel{pacemaker}{{3.2.2}{20}{Pacemaker}{subsection.3.2.2}{}}
-\citation{naorCogsworthByzantineView2021}
 \citation{chandraWeakestFailureDetector1996}
 \citation{chandraUnreliableFailureDetectors1996}
 \@writefile{toc}{\contentsline {subsubsection}{View-change protocol}{21}{subsubsection*.11}\protected@file@percent }
 \newlabel{viewchange}{{3.2.2}{21}{View-change protocol}{subsubsection*.11}{}}
 \@writefile{toc}{\contentsline {subsubsection}{Integrating the pacemaker with HotStuff}{21}{subsubsection*.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Specification}{22}{section.3.3}\protected@file@percent }
-\newlabel{spec}{{3.3}{22}{Specification}{section.3.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Specification}{21}{section.3.3}\protected@file@percent }
+\newlabel{spec}{{3.3}{21}{Specification}{section.3.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Changes to the original algorithm}{22}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Proofs}{22}{subsection.3.3.2}\protected@file@percent }
+\newlabel{proof}{{3.3.2}{22}{Proofs}{subsection.3.3.2}{}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Modified HotStuff}}{23}{algorithm.1}\protected@file@percent }
 \newlabel{hotstuffalgorithm}{{1}{23}{Specification}{algorithm.1}{}}
 \newlabel{code_createleaf}{{1}{23}{Specification}{algorithm.1}{}}
@@ -172,45 +174,44 @@
 \newlabel{code_nextviewmsg}{{29}{24}{Specification}{algorithm.2}{}}
 \newlabel{code_onreceiveany}{{30}{24}{Specification}{algorithm.2}{}}
 \newlabel{code_gotqc}{{32}{24}{Specification}{algorithm.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Proofs}{24}{subsection.3.3.2}\protected@file@percent }
-\newlabel{proof}{{3.3.2}{24}{Proofs}{subsection.3.3.2}{}}
-\newlabel{viewsync}{{3.3.1}{25}{View synchronisation}{theorem.3.3.1}{}}
-\newlabel{viewslemma}{{3.3.2}{25}{}{theorem.3.3.2}{}}
+\newlabel{viewsync}{{3.3.1}{24}{View synchronisation}{theorem.3.3.1}{}}
+\newlabel{viewslemma}{{3.3.2}{24}{}{theorem.3.3.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Example of round-robin leader allocation for $f = 3$. Red rectangles denote byzantine leaders.}}{25}{figure.3.3}\protected@file@percent }
 \newlabel{lemma1diagram}{{3.3}{25}{Example of round-robin leader allocation for $f = 3$. Red rectangles denote byzantine leaders}{figure.3.3}{}}
 \newlabel{progressionlemma}{{3.3.3}{25}{}{theorem.3.3.3}{}}
-\newlabel{syncvalid}{{3.3.4}{26}{Synchronisation validity}{theorem.3.3.4}{}}
+\newlabel{syncvalid}{{3.3.4}{25}{Synchronisation validity}{theorem.3.3.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Practical challenges and optimisations}{26}{section.3.4}\protected@file@percent }
 \newlabel{performance}{{3.4}{26}{Practical challenges and optimisations}{section.3.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Batching}{26}{subsection.3.4.1}\protected@file@percent }
 \newlabel{batching}{{3.4.1}{26}{Batching}{subsection.3.4.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Filtering commands from batches}{27}{subsubsection*.13}\protected@file@percent }
-\newlabel{filtering}{{3.4.1}{27}{Filtering commands from batches}{subsubsection*.13}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Filtering commands from batches}{26}{subsubsection*.13}\protected@file@percent }
+\newlabel{filtering}{{3.4.1}{26}{Filtering commands from batches}{subsubsection*.13}{}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Filtering implementation}}{27}{algorithm.3}\protected@file@percent }
 \newlabel{dedup}{{3}{27}{Filtering commands from batches}{algorithm.3}{}}
 \newlabel{smalloptimisation}{{8}{27}{Filtering commands from batches}{algorithm.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Batch sizes}{28}{subsubsection*.14}\protected@file@percent }
-\newlabel{batchsizes}{{3.4.1}{28}{Batch sizes}{subsubsection*.14}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Batch sizes}{27}{subsubsection*.14}\protected@file@percent }
+\newlabel{batchsizes}{{3.4.1}{27}{Batch sizes}{subsubsection*.14}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Node chains}{28}{subsection.3.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{The problem with recursive types}{28}{subsubsection*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{Replacing the justify.node field with an offset}{29}{subsubsection*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Replacing the justify.node field with an offset}{28}{subsubsection*.16}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{Optimising the node equality function}{29}{subsubsection*.17}\protected@file@percent }
 \newlabel{equality}{{3.4.2}{29}{Optimising the node equality function}{subsubsection*.17}{}}
-\@writefile{toc}{\contentsline {subsubsection}{Optimising by truncating nodes}{30}{subsubsection*.18}\protected@file@percent }
-\newlabel{truncation}{{3.4.2}{30}{Optimising by truncating nodes}{subsubsection*.18}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Optimising by truncating nodes}{29}{subsubsection*.18}\protected@file@percent }
+\newlabel{truncation}{{3.4.2}{29}{Optimising by truncating nodes}{subsubsection*.18}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.5}Implementing for evaluation}{30}{section.3.5}\protected@file@percent }
 \newlabel{benchcode}{{3.5}{30}{Implementing for evaluation}{section.3.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Load generator}{30}{subsection.3.5.1}\protected@file@percent }
 \newlabel{loadgenerator}{{3.5.1}{30}{Load generator}{subsection.3.5.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Open-loop load generator.}}{31}{figure.3.4}\protected@file@percent }
-\newlabel{openloop}{{3.4}{31}{Open-loop load generator}{figure.3.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Closed-loop load generator.}}{31}{figure.3.5}\protected@file@percent }
-\newlabel{closedloop}{{3.5}{31}{Closed-loop load generator}{figure.3.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{32}{subsection.3.5.2}\protected@file@percent }
-\newlabel{experimentscripts}{{3.5.2}{32}{Experiment scripts}{subsection.3.5.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Logging framework}{32}{subsection.3.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Open-loop load generator.}}{30}{figure.3.4}\protected@file@percent }
+\newlabel{openloop}{{3.4}{30}{Open-loop load generator}{figure.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Closed-loop load generator.}}{30}{figure.3.5}\protected@file@percent }
+\newlabel{closedloop}{{3.5}{30}{Closed-loop load generator}{figure.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Experiment scripts}{31}{subsection.3.5.2}\protected@file@percent }
+\newlabel{experimentscripts}{{3.5.2}{31}{Experiment scripts}{subsection.3.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Logging framework}{31}{subsection.3.5.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3.6}Repository Overview}{33}{section.3.6}\protected@file@percent }
 \newlabel{repo}{{3.6}{33}{Repository Overview}{section.3.6}{}}
+\citation{capnp}
 \@writefile{toc}{\contentsline {chapter}{\numberline {4}Evaluation}{35}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
@@ -219,23 +220,22 @@
 \newlabel{testingmethods}{{4.1}{35}{Testing methodology}{section.4.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.2}Library benchmarks}{35}{section.4.2}\protected@file@percent }
 \newlabel{librarybenchmarks}{{4.2}{35}{Library benchmarks}{section.4.2}{}}
-\citation{capnp}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{36}{subsection.4.2.1}\protected@file@percent }
-\newlabel{capnpbenchmark}{{4.2.1}{36}{Cap'n Proto}{subsection.4.2.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Benchmarking of Cap'n Proto server maximum send goodput for varying message sizes.}}{36}{figure.4.1}\protected@file@percent }
 \newlabel{sizegoodput}{{4.1}{36}{Benchmarking of Cap'n Proto server maximum send goodput for varying message sizes}{figure.4.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Benchmarking of Cap'n Proto send time for varying message sizes.}}{36}{figure.4.2}\protected@file@percent }
 \newlabel{sizesendtime}{{4.2}{36}{Benchmarking of Cap'n Proto send time for varying message sizes}{figure.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Cap'n Proto}{36}{subsection.4.2.1}\protected@file@percent }
+\newlabel{capnpbenchmark}{{4.2.1}{36}{Cap'n Proto}{subsection.4.2.1}{}}
 \citation{tezosCrypto}
 \citation{janestreetCoreBench2023}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Tezos Cryptography}{37}{subsection.4.2.2}\protected@file@percent }
 \newlabel{tezosbenchmark}{{4.2.2}{37}{Tezos Cryptography}{subsection.4.2.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Benchmarking of key functions of the Tezos Cryptography library}}{37}{table.4.1}\protected@file@percent }
-\newlabel{tezostable}{{4.1}{37}{Benchmarking of key functions of the Tezos Cryptography library}{table.4.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces Benchmarking functions of the Tezos Cryptography library}}{37}{table.4.1}\protected@file@percent }
+\newlabel{tezostable}{{4.1}{37}{Benchmarking functions of the Tezos Cryptography library}{table.4.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.3}HotStuff implementation benchmarks}{37}{section.4.3}\protected@file@percent }
 \newlabel{hotstuffbenchmarks}{{4.3}{37}{HotStuff implementation benchmarks}{section.4.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Heatmaps showing the behaviour of the system under varying conditions.}}{37}{figure.4.3}\protected@file@percent }
-\newlabel{heatmaps}{{4.3}{37}{Heatmaps showing the behaviour of the system under varying conditions}{figure.4.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Heatmaps showing the behaviour of the system when it can goodput matches throughput (a), when it is overloaded (b), and when it is overloaded and has a large batch size (c).}}{37}{figure.4.3}\protected@file@percent }
+\newlabel{heatmaps}{{4.3}{37}{Heatmaps showing the behaviour of the system when it can goodput matches throughput (a), when it is overloaded (b), and when it is overloaded and has a large batch size (c)}{figure.4.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Cumulative latency plot for the system when exhibiting stable latency.}}{38}{figure.4.4}\protected@file@percent }
 \newlabel{ecdfstable}{{4.4}{38}{Cumulative latency plot for the system when exhibiting stable latency}{figure.4.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Batch sizes}{39}{subsection.4.3.1}\protected@file@percent }
