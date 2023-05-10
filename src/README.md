@@ -2,6 +2,9 @@
 
 ## About
 Implementation of the [HotStuff consensus algorithm](https://arxiv.org/abs/1803.05069).
+
+Supports Linux and MacOS.
+
 ## Dependencies
 ```
 # install opam, libev and capnproto system deps

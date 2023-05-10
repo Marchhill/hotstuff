@@ -16,11 +16,11 @@
 \contentsline {subsection}{\numberline {2.3.1}OCaml}{15}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Lwt}{15}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Cap'n Proto}{15}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{16}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.4}Tezos cryptography}{15}{subsection.2.3.4}%
 \contentsline {section}{\numberline {2.4}Requirements analysis}{16}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Software engineering practices}{16}{section.2.5}%
 \contentsline {subsection}{\numberline {2.5.1}Development methodology}{16}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{17}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.2}Testing \& debugging methodology}{16}{subsection.2.5.2}%
 \contentsline {subsection}{\numberline {2.5.3}Source code management}{17}{subsection.2.5.3}%
 \contentsline {subsection}{\numberline {2.5.4}Ethical statement}{17}{subsection.2.5.4}%
 \contentsline {chapter}{\numberline {3}Implementation}{18}{chapter.3}%

@@ -80,28 +80,14 @@ Pipelined phases both simplify and optimise the basic algorithm. The phases in t
 \end{figure}
 
 In each proposal, a chain of nodes (equivalent to the log) is extended, and different phases are carried out on suffixes of the chain depending on their length. For example, Figure~\ref{nchain} shows a 2-chain, which means a proposal has already been through 2 phases; this is the equivalent of being in the \textit{commit} phase in the basic algorithm.
-% Figure~\ref{nchain} shows a chain of nodes connected by `parent' links; every time we propose a value we extend the chain with a new node. Some node \textit{b} also contains a link to another node within \textit{b.justify.node}, which is the previous generic QC in the chain. In the event of a view-change a dummy node will be inserted in the chain which will cause a `gap' where some \textit{b.justify.node} pointer jumps over a dummy node. If some node \textit{b} has a QC that points to its direct parent with no `gap' in-between, then we say that it forms a \textit{one-chain}. In general, if we have $n$ such direct links without `gaps' we refer to this as an \textit{n-chain}, as shown above.
-
-% To reproduce the behaviour of the unchained algorithm, on receiving a proposal for node \textit{b\textsuperscript{*}} a replica must look at \textit{b\textsuperscript{*}.justify.node} to see if it points to an \textit{n-chain}. It must take different actions depending on the length of the chain:
-% [replace this with pseudocode describing implementation]
-% \begin{itemize}
-% \item zero-chain: this is equivalent to the \textit{prepare} phase from the unchained version, so the replica votes for the proposal only if it does not conflict with their \textit{lock}
-% \item one-chain: this is equivalent to the \textit{pre-commit} phase from the unchained version, so the replica should store a \textit{key}
-% \item two-chain: this is equivalent to the \textit{commit} phase, so the replica should \textit{lock} on the value proposed at the start of the two-chain
-% \item three-chain: this is equivalent to the \textit{decide} phase, so the replica can execute the commands from the node at the start of the three-chain
-% \end{itemize}
 
 \subsection{Pacemaker} \label{pacemaker}
 
 This section discusses the pacemaker, which synchronises the views of honest replicas: a necessary condition for liveness (Property \ref{livenessproperty}). The original paper did not specify the pacemaker mechanism, so I have synthesised information from different sources (including experimentation) to give a full specification of HotStuff with a pacemaker in Section~\ref{spec}. Part of the pacemaker that will be explained in this section is the view-change protocol, which allows the view of a faulty leader to be skipped; ours is based on the pacemaker for LibraBFT \cite{baudetStateMachineReplication2019, ittai}. The discussion will also cover the integration of the pacemaker with the HotStuff algorithm, which was achieved through modifications aimed at resolving deadlocks encountered during implementation.
 
-% The model of collecting a quorum of COMPLAIN messages to transition to the next view is based on the pacemaker for LibraBFT \cite{baudet_state_nodate}, and is described in Section~\ref{viewchange}. The rest of the pacemaker is designed to advance to the next view as soon as the system allows, and is based on ad-hoc fixes to deadlocks that were encountered during implementation.
-
 There are two properties that a pacemaker must possess to provide the conditions needed for liveness \cite{naorCogsworthByzantineView2021}; it will later be proven that my pacemaker has these properties (Section~\ref{proof}). The first property, \textit{view synchronisation} (Theorem \ref{viewsync}), ensures that there are an infinite number of views with an honest leader that the non-faulty nodes stay in long enough to make progress. The second property, \textit{synchronisation validity} (Theorem \ref{syncvalid}), ensures that the pacemaker will only advance to the next view if some honest replica wishes it to happen.
 
 Pacemakers are related to failure detectors: mechanisms that facilitate the detection of failed nodes \cite{chandraWeakestFailureDetector1996,chandraUnreliableFailureDetectors1996}. A pacemaker extends this idea, allowing it to be used in a multi-shot setting.
-
-% We now present a reasonably formal proof that the modified pacemaker possesses qualities that ensure the liveness of the system. The first property (theorem \ref{viewsync}) ensures that there will always be opportunities for the system to make progress, and the second that the pacemaker cannot be controlled by a byzantine node (theorem \ref{syncvalid}). These properties are based on those described by Naor et. ~al~ in their paper presenting the Cogsworth byzantine view synchronisation protocol \cite{naor_cogsworth_2020}; their paper formalised the notion of a pacemaker and what qualities it should possess. [justify why we didn't implement cogsworth, it does not overlap with our ad-hoc fixes, these were original!!!]
 
 \subsubsection{View-change protocol} \label{viewchange}
 
@@ -122,60 +108,6 @@ In this section, a full specification of HotStuff based on the basic HotStuff al
 The consensus module is implemented according to the system architecture described in Section~\ref{architecture}. Messages and requests are received from the main loop, and actions (sending a message, responding to a client request, or resetting the view timer) are outputted while the module updates its own state.
 
 The pseudocode is presented with additions coloured in green and modifications in pink. Only the main changes are shown, excluding other features and performance improvements made (such as batching), which are presented in Section~\ref{performance}. The format of the event-driven pseudocode from the original paper is followed to allow for easier comparison and ease of implementation.
-
-% \begin{algorithm}[h!]
-% 	\caption{Modified HotStuff} \label{hotstuffalgorithm}
-% 	\begin{algorithmic}[1]
-% 	\Match{\textit{event}}
-% 		\Case{\text{GENERIC} \textit{msg}}
-% 			\color{Green}
-% 			\If {$ msg.src = \text{GET{\large L}EADER}(\textit{msg.view}) \land \textit{msg.view} = curView$} \label{code_checkview}
-% 				\color{black}
-% 				\State $\textit{b\textsubscript{new}} \gets \textit{m.node}$
-% 				\State $\textit{n} \gets \textit{b\textsubscript{new}.justify.node}$
-% 				\If{$\textit{b\textsubscript{new}.height} > \textit{vheight} \land (\textit{b\textsubscript{new}}\ \text{extends}\ \textit{b\textsubscript{lock}} \lor \textit{n.height} > \textit{b\textsubscript{lock}.height})$}
-% 					\State $\textit{vheight} \gets \textit{b\textsubscript{new}.height}$
-% 					\State $ \text{SEND}(\text{GET{\large N}EXT{\large L}EADER}(), \text{VOTE{\large M}SG}\textsubscript{\textit{u}}(\text{GENERIC{\large A}CK}, \textit{b\textsubscript{new}}, \bot))$
-% 				\EndIf
-% 				\State $\textit{b''} \gets \textit{b\textsubscript{new}.justify.node}$
-% 				\State $\textit{b'} \gets \textit{b''.justify.node}$
-% 				\State $\textit{b} \gets \textit{b'.justify.node}$
-% 				\State $\text{UPDATE{\large Q}C{\large H}IGH}(\textit{b\textsuperscript{*}.justify})$
-% 				\If{$\textit{b'.height} > \textit{b\textsubscript{lock}.height}$}
-% 					\State $\textit{b\textsubscript{lock}} \gets \textit{b'}$
-% 				\EndIf
-% 				\If{$(\textit{b''.parent} = \textit{b'}) \land (\textit{b'.parent} = \textit{b})$}
-% 					\State $\text{ON{\large C}OMMIT}(\textit{b})$
-% 					\State $\textit{b\textsubscript{exec}} \gets \textit{b}$
-% 				\EndIf
-% 				\color{Green}
-% 				\If{$ \text{not}\ \text{IS{\large N}EXT{\large L}EADER}() $} \label{code_proposaltransition}
-% 					\State $\text{ON{\large N}EXT{\large S}YNC{\large V}IEW}(\textit{curview} + 1)$
-% 				\EndIf
-% 			\EndIf
-% 			\color{black}
-% 		\EndCase
-% 		\Case{\text{GENERIC{\large A}CK} \textit{msg}}
-% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
-% 		\EndCase
-% 		\Case{\text{NEW{\large V}IEW} \textit{msg}}
-% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
-% 		\EndCase
-% 		\Case{\text{CLIENT{\large R}EQ} \textit{req}}
-% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
-% 		\EndCase
-% 		\Case{\text{TIMEOUT} \textit{view}}
-% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
-% 		\EndCase
-% 		\Case{\text{COMPLAIN} \textit{msg}}
-% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
-% 		\EndCase
-% 		\Case{\text{\_} \textit{msg}}
-% 			\State $\textit{b.parent} \gets \text{branch extending with dummy nodes from}\ \textit{parent}\ \text{to height}\ \textit{curView}$
-% 		\EndCase
-% 	\EndMatch
-% 	\end{algorithmic}
-% \end{algorithm}
 
 \begin{algorithm}[h!]
 	\caption{Modified HotStuff}\label{hotstuffalgorithm}
@@ -355,7 +287,7 @@ For this proof, the consensus machine (algorithm \ref{hotstuffalgorithm}) and th
 \end{lemma}
 
 \begin{proof}
-	In the event that a byzantine leader tries to prevent honest nodes from transitioning to a higher view, the honest nodes will eventually timeout and send a COMPLAIN message to the next leader (algorithm \ref{pacemakeralgorithm}, line \ref{code_timeout}). This may repeat if the next leader is also byzantine. Eventually, the COMPLAINs will be sent to an honest leader, that will send a NEXT{\large V}IEW message and transition all replicas into a new view (algorithm \ref{pacemakeralgorithm}, line \ref{code_nextviewmsg}). Since $x$ will always progress to a higher view, it will eventually reach a view where it is the leader.
+	If a byzantine leader tries to prevent honest nodes from transitioning to a higher view, the honest nodes will eventually timeout and send a COMPLAIN message to the next leader (algorithm \ref{pacemakeralgorithm}, line \ref{code_timeout}). This may repeat if the next leader is also byzantine. Eventually, the COMPLAINs will be sent to an honest leader, that will send a NEXT{\large V}IEW message and transition all replicas into a new view (algorithm \ref{pacemakeralgorithm}, line \ref{code_nextviewmsg}). Since $x$ will always progress to a higher view, it will eventually reach a view where it is the leader.
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{viewsync}]
@@ -380,7 +312,7 @@ For this proof, the consensus machine (algorithm \ref{hotstuffalgorithm}) and th
 % https://decentralizedthoughts.github.io/2021-09-30-distributed-consensus-made-simple-for-real-this-time/
 \section{Practical challenges and optimisations} \label{performance}
 
-This section presents solutions to some of the practical challenges of implementing HotStuff, and describe optimisations I made to improve performance. This will cover how I implemented batching that was effective in increasing goodput, and the difficulties of designing a type for node chains and doing so efficiently. The debugging and experimentation that led to these solutions was non-trivial; they involved extensive analysis of the program trace and timing data, and the development of different prototypes to compare performance.
+This section presents solutions to some of the practical challenges of implementing HotStuff, and describes optimisations I made to improve performance. This will cover how I implemented batching that was effective in increasing goodput, and the difficulties of designing a type for node chains and doing so efficiently. Developing these solutions was non-trivial; it involved extensive analysis of the program trace and timing data, and comparing the performance of different prototypes.
 
 One main practical consideration was designing the types and structure of the core consensus module (Section~\ref{architecture}), to implement the algorithm given in the specification (Section~\ref{spec}). Recall that this module takes as input messages and client requests (\textit{events}), and returns actions (such as sending a message) and an updated consensus state. I used \textit{variants} to tag the different types of events, with attached \textit{records} to store the body of the event (such as the node and QC of a proposal). The core algorithm is expressed as a \textit{match} statement to handle each type of event. The output from this is a list of actions (also implemented as variants) and a new state.
 
@@ -415,7 +347,7 @@ One optimisation that I implemented to make batching effective is filtering inco
 	\end{algorithmic}
 \end{algorithm}
 
-Pseudocode for an implementation of filtering is given in algorithm \ref{dedup}. A set is used to store both the commands that are waiting to be proposed, and commands that have been seen, so that the difference can be efficiently computed. Also note the small optimisation on line \ref{smalloptimisation}: the seen set can safely be emptied as the commands have already been filtered, reducing the amount of computation required to calculate the set difference next time.
+Pseudocode for an implementation of filtering is given in algorithm \ref{dedup}. Sets are used to store both the commands that are waiting to be proposed and those that have been seen so that the difference can be efficiently computed. Also note the small optimisation on line \ref{smalloptimisation}: the seen set can safely be emptied as the commands have already been filtered, reducing the amount of computation required to calculate the set difference next time.
 
 This optimisation is effective as the load generator is send-to-all (Section~\ref{loadgenerator}), so a new command is added to the queue of all nodes, and may be included in the proposals of different nodes. Filtering out commands so that they are not proposed multiple times follows the general design principle:
 
@@ -443,7 +375,7 @@ This recursion poses a problem when carrying out the conversion between Cap'n Pr
 A simple solution to this problem is to add a flag to the Cap'n Proto schema \textit{is\_b\textsubscript{0}}; when this flag is enabled then the node is assumed to be equal to \textit{b\textsubscript{0}}. This prevents \textit{b\textsubscript{0}} from ever having to be converted into a Cap'n Proto type or being sent over the network, it can instead be reconstructed as a recursive type in the consensus state machine of the receiver.
 
 \subsubsection{Replacing the justify.node field with an offset}
-One problem of the naive node type implementation was that it caused the system to crash due to rapidly increasing memory usage; this can be prevented by replacing the \textit{node} record inside the \textit{node.justify.node} field with an integer offset into the chain. This dramatically decreased the memory usage of the function to convert from internal types to Cap'n Proto types. The inefficiency of this function was revealed through profiling the memory usage of the program using Memtrace  (Section~\ref{testing}).
+One problem of the naive node type implementation was that it caused the system to crash due to rapidly increasing memory usage; this can be prevented by replacing the \textit{node} record inside the \textit{node.justify.node} field with an integer offset into the chain. This dramatically decreased the memory usage of the function to convert from internal types to Cap'n Proto types. The inefficiency of this function was revealed by profiling the memory usage of the program using Memtrace  (Section~\ref{testing}).
 
 The source of this problem was the inefficient design of the \textit{node.justify} field, which contained a whole node inside it. As shown in Figure~\ref{nchain}, each node has two links to previous nodes in the chain through the \textit{parent} field and the \textit{node.justify.node} field. By having each of these fields contain a whole \textit{node} record, much of the chain had multiple redundant copies, resulting in a very bloated \textit{node} object that was very expensive to convert.
 
@@ -453,15 +385,15 @@ A solution to this problem is to store an integer offset to a node inside the \t
 One optimisation of the node type that was implemented is storing a \textit{digest} field in the node that is a hash over all of the other fields\footnote{Notably the hash can be computed over the \textit{digest} field of the parent node rather than recursing through the whole chain.}, enabling efficient equality checking of nodes. This means that two nodes can be compared by their digests without having to recurse through the entire chain; the digests being equal cryptographically guarantees that the whole chains are equal. The need for this optimisation was discovered by profiling the memory usage of the node equality function using Memtrace.
 
 \subsubsection{Optimising by truncating nodes} \label{truncation}
-In order to optimise the sending of nodes I implemented node truncation; this reduces the size of nodes being sent over the network by cutting off older parts of the chain that the receiver already knows about. This is effective because the size of messages being sent is a bottleneck in my implementation (Section~\ref{capnpbenchmark}). The effectiveness of this optimisation is demonstrated in an ablation study (Section~\ref{ablation}).
+To optimise the sending of nodes I implemented node truncation; this reduces the size of nodes being sent over the network by cutting off older parts of the chain that the receiver already knows about. This is effective because the size of messages being sent is a bottleneck in my implementation (Section~\ref{capnpbenchmark}). The effectiveness of this optimisation is demonstrated in an ablation study (Section~\ref{ablation}).
 
-In order to truncate the node, my implementation recurses into the node's \textit{parent} field, then deletes the field at some chosen depth. The entire node can then be reconstructed at the receiver, by `splicing' it back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. Splicing together the nodes is done by recursing into the truncated node until it is equal to \textit{b\textsubscript{exec}}, then setting the deleted parent field to \textit{b\textsubscript{exec}}. The node equality function will still work on truncated nodes because of my optimisation to use digests (Section~\ref{equality}); a node will still have the same digest once it is truncated.
+To truncate the node, my implementation recurses into the node's \textit{parent} field, then deletes the field at some chosen depth. The entire node can then be reconstructed at the receiver, by `splicing' it back together with \textit{b\textsubscript{exec}}, which contains the node up to the point that has been executed. Splicing together the nodes is done by recursing into the truncated node until it is equal to \textit{b\textsubscript{exec}}, then setting the deleted parent field to \textit{b\textsubscript{exec}}. The node equality function will still work on truncated nodes because of my optimisation to use digests (Section~\ref{equality}); a node will still have the same digest once it is truncated.
 
-One practical challenge of this approach is choosing a suitable depth such that there is enough information at the receiver to reconstruct the whole chain. If there is a gap between the truncated node and \textit{b\textsubscript{exec}} at the receiver, this will lead to commands being missed out and not executed. This is a problem in the event that some node becomes isolated from the rest; it must be able to catch up to the others once the network partition is healed.
+One practical challenge of this approach is choosing a suitable depth such that there is enough information at the receiver to reconstruct the whole chain. If there is a gap between the truncated node and \textit{b\textsubscript{exec}} at the receiver, this will lead to commands being missed out and not executed. This is a problem if a node becomes isolated from the rest; it must be able to catch up to the others once the network partition is healed.
 
 To overcome this problem I used a TCP-style approach. I included a field containing the height of the \textit{b\textsubscript{exec}} node to the \textit{propose}, \textit{new-view}, and \textit{complain} messages. Each node maintains a list of the \textit{b\textsubscript{exec}} height of every other node. When making a proposal, the leader takes the minimum height from this list and truncates the node up to that depth. This ensures that every node that receives the proposal has enough information to reconstruct the entire log.
 
-There are some cases when the leader does not receive the latest \textit{b\textsubscript{exec}} of every other node before it makes a proposal. This means that the leader will not truncate the node as much as it could have. I optimised this by having a node send the entire list of all stored \textit{b\textsubscript{exec}} heights rather than just its own, allowing the heights to propagate around the system more quickly.
+There are some cases when the leader does not receive the latest \textit{b\textsubscript{exec}} of every other node before it proposes. This means that the leader will not truncate the node as much as it could have. I optimised this by having a node send the entire list of all stored \textit{b\textsubscript{exec}} heights rather than just its own, allowing the heights to propagate around the system more quickly.
 
 % \subsection{Connections}
 % talk about capabilities?
@@ -492,7 +424,7 @@ This section describes the infrastructure that will be used to evaluate system p
 \label{closedloop}
 \end{figure}
 
-The load generator is responsible for sending client requests to the nodes of the system. One is able to vary the throughput that the load generator drives the system at, and the duration that it runs for before it sends \textit{kill} messages to the nodes, ending the test. It is also responsible for timing and calculating statistics.
+The load generator is responsible for sending client requests to the nodes of the system. One can vary the throughput that the load generator drives the system at, and the duration that it runs for before it sends \textit{kill} messages to the nodes, ending the test. It is also responsible for timing and calculating statistics.
 
 \begin{description}
 	\item \textit{Throughput} --- the number of requests sent by the load generator each second.
@@ -500,14 +432,14 @@ The load generator is responsible for sending client requests to the nodes of th
 	\item \textit{Latency} --- the amount of time it takes between sending a request and receiving a response. The load generator reports the mean and standard deviation of latencies.
 \end{description}
 
-The load generator is open-loop (Figure~\ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (Figure~\ref{closedloop}), which must wait until it receives a response in order to send the next request. An open-loop load generator is more useful as it allows us to overload the system and test its limits, whereas a closed-loop load generator waits for responses from the system, so cannot overload it.
+The load generator is open-loop (Figure~\ref{openloop}), which means that it dispatches a request every $\delta$ seconds for the duration of the experiment, where $\delta = \frac{1}{\textit{throughput}}$. This is in contrast to a closed-loop generator (Figure~\ref{closedloop}), which must wait until it receives a response before sending the next request. An open-loop load generator is more useful as it allows us to overload the system and test its limits, whereas a closed-loop load generator waits for responses from the system, so cannot overload it.
 
 The load generator is send-to-all, meaning that a command is sent to all nodes. An alternative is send-to-one, where a command is sent to a single node which is chosen at random. Send-to-all reduces latency as the next leader will have been sent the command, and may choose to propose it. In send-to-one it may take several views until the node that the request was sent to becomes the leader.
 
 The load generator uses Lwt to asynchronously dispatch requests and stores a promise that will be fulfilled with their response. In the case of send-to-all the promises waiting on a response from each node are combined using \texttt{Lwt.pick}, meaning that the first node to respond will fulfil the promise and the rest will be ignored. Before beginning the experiment the load-generator sends `dummy' requests to each node until all of them have sent a response; this ensures that all nodes are properly up and running before the experiment begins, reducing start-up effects.
 
 \subsection{Experiment scripts} \label{experimentscripts}
-Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, then start the next experiment.
+Python scripts are used to automate the running of experiments. These scripts start the nodes and the load generator, wait for the experiment to run, kill the processes, run a script to plot graphs, and then start the next experiment.
 
 Different experiments may vary input variables such as throughput, batch size, and number of nodes. The script takes every permutation. Each experiment is repeated several times to reduce variance. Experiments are run in a random order so that if there is interference for some part of the test, this is not correlated with the parameters of the experiment, making anomalies easier to spot.
 
@@ -571,4 +503,4 @@ The \textit{bin} folder contains the executables for running a node, and for run
 
 The \textit{experiments} folder is where the data from running experiments is output to. It also contains scripts for running experiments and plotting graphs.
 
-In order to run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \texttt{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time. These scripts will run on Linux and MacOS, but will have to be modified to work on Windows.
+To run an experiment, first follow the instructions in \textit{README.md} to set up your environment. You can then run experiments by executing \texttt{python3 runExperiments.py}, and modify this script to vary the input parameters such as throughput and experiment time.

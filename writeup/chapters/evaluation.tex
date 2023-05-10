@@ -42,7 +42,7 @@ This section presents benchmarks of the performance of the Cap'n Proto RPC frame
 
 I benchmarked the performance of Cap'n Proto \cite{capnp} for varying message sizes, measuring the maximum goodput at which messages could be sent (Figure~\ref{sizegoodput}), and the time taken to send (Figure~\ref{sizesendtime}). Figure~\ref{sizesendtime} is a box plot with whiskers plotted at the 5\%ile and 95\%ile with outliers excluded.
 
-Cap'n Proto has an optimum message size of around 1000 bytes, at this point, data can be sent at the highest possible goodput (Figure~\ref{sizegoodput}). As the size of messages increases beyond this point, message serialisation costs cause the time taken to send messages to increase and the maximum goodput that can be reached to decrease; there is a rapid increase in send time as messages increase beyond 2000 bytes (Figures \ref{sizegoodput} and \ref{sizesendtime})
+Cap'n Proto has an optimum message size of around 1000 bytes; at this point, data can be sent at the highest possible goodput (Figure~\ref{sizegoodput}). As the size of messages increases beyond this point, message serialisation costs cause the time taken to send messages to increase and the maximum goodput that can be reached to decrease; there is a rapid increase in send time as messages increase beyond 2000 bytes (Figures \ref{sizegoodput} and \ref{sizesendtime})
 
 \subsection{Tezos Cryptography} \label{tezosbenchmark}
 
@@ -206,7 +206,7 @@ This study compares the performance of the system with different optimisations e
 
 The goodput and latency follow similar trends to Section~\ref{batchsizeseval} and Section~\ref{nodecountseval}.
 
-The chained implementation is able to reach higher goodputs with slightly higher latency than the basic implementation. The higher goodput is a result of pipelining, more requests are able to transition through phases concurrently. However, pipelining also leads to the size of messages being increased, as each message contains batches of requests from each concurrent phase; this leads to increased latency due to the time taken to serialise larger messages (Section~\ref{capnpbenchmark}).
+The chained implementation can reach higher goodputs with slightly higher latency than the basic implementation. The higher goodput is a result of pipelining; more requests are processed concurrently. However, pipelining also leads to the size of messages being increased, as each message contains batches of requests from each concurrent phase; this leads to increased latency due to the time taken to serialise larger messages (Section~\ref{capnpbenchmark}).
 
 Filtering significantly increases goodput, and slightly reduces latency. Goodput is increased as there are fewer redundant commands in each batch, so more useful commands can be processed. Latency is slightly reduced as messages are smaller on average due to some requests being filtered, so there is less latency due to serialisation costs.
 
