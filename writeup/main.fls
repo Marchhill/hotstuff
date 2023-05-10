@@ -982,6 +982,7 @@ INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/import.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/import.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/import/import.sty
+INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/float/float.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 INPUT /opt/homebrew/Cellar/texlive/20220321_3/share/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty

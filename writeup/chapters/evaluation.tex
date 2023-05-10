@@ -10,17 +10,16 @@
 % discuss the implications of the graph
 %base on evaluation chapter of papers!
 
-This section highlights the methods and hardware used in evaluation (Section \ref{testingmethods}), benchmarks the performance of Cap'n Proto and the Tezos cryptography library (Section \ref{librarybenchmarks}), and finally evaluates the performance of my HotStuff implementation (Section \ref{hotstuffbenchmarks}).
+This section highlights the methods and hardware used in evaluation (Section~\ref{testingmethods}), benchmarks the performance of Cap'n Proto and the Tezos cryptography library (Section~\ref{librarybenchmarks}), and finally evaluates the performance of my HotStuff implementation (Section~\ref{hotstuffbenchmarks}).
 
 \section{Testing methodology} \label{testingmethods}
-% describe sofia server
-The evaluation was carried out on the computer laboratory's Sofia server (2x Xeon Gold 6230R chips, 768GB RAM). Carrying out experiments on the server helped to minimise interference from other processes on the system.
+The evaluation was carried out on the computer laboratory's Sofia server (2x Xeon Gold 6230R chips, 768GB RAM). Carrying out experiments on the server rather than my laptop helped to minimise interference from other processes on the system.
 
-Experiments were driven by an open-loop load generator (Section \ref{loadgenerator}) and automated using Python scripts (Section \ref{experimentscripts}). The load generator was run for varying amounts of time in the different experiments, with a further 15 seconds after this without the load generator running to wait for any slow responses.
+Experiments were driven by an open-loop load generator (Section~\ref{loadgenerator}) and automated using Python scripts (Section~\ref{experimentscripts}). The load generator was run for varying amounts of time in the different experiments, with a further 15 seconds after this without the load generator running to wait for any slow responses.
 
 To reduce the effect of interference, experiments were repeated three times, and the order of experiments was randomly permuted. Where a confidence interval is shown, this shows the range of results over the three repeats.
 
-In experiments where throughput (in req/s) is varied, it starts at 1, increases exponentially (in multiples of 2) from 25 to 200 to benchmark performance at lower throughputs, and then increases linearly (by increments of 200) up to its maximum value (which varies between experiments).
+In experiments where throughput (in req/s) is varied, it starts at 1, increases exponentially (in multiples of 2) from 25 to 200 to benchmark performance at lower throughputs, and then increases linearly (by increments of 200) up to its maximum value (which varies between experiments). Message sizes are also varied in this way.
 
 \section{Library benchmarks} \label{librarybenchmarks}
 This section presents benchmarks of the performance of the Cap'n Proto RPC framework, and the Tezos cryptography library.
@@ -41,16 +40,13 @@ This section presents benchmarks of the performance of the Cap'n Proto RPC frame
 \label{sizesendtime}
 \end{figure}
 
-I benchmarked the performance of Cap'n Proto \cite{capnp} for varying message sizes, measuring the maximum goodput at which messages could be sent (Figure \ref{sizegoodput}), and the time taken to send (Figure \ref{sizesendtime}). Message sizes (in bytes) were chosen to start at 1, increase exponentially (in multiples of 2) from 25 to 200 to benchmark performance for smaller message sizes, and then increase linearly (by increments of 200) up to 6000. Figure \ref{sizesendtime} is a box plot with whiskers plotted at the 5\%ile and 95\%ile with outliers excluded.
+I benchmarked the performance of Cap'n Proto \cite{capnp} for varying message sizes, measuring the maximum goodput at which messages could be sent (Figure~\ref{sizegoodput}), and the time taken to send (Figure~\ref{sizesendtime}). Figure~\ref{sizesendtime} is a box plot with whiskers plotted at the 5\%ile and 95\%ile with outliers excluded.
 
-Cap'n Proto has an optimum message size of around 1000 bytes, at this point, data can be sent at the highest possible goodput (Figure \ref{sizegoodput}). As the size of messages increases beyond this point, message serialisation costs cause the time taken to send messages to increase and the maximum goodput that can be reached to decrease; there is a rapid increase in send time as messages increase beyond 2000 bytes (Figures \ref{sizegoodput} and \ref{sizesendtime})
+Cap'n Proto has an optimum message size of around 1000 bytes, at this point, data can be sent at the highest possible goodput (Figure~\ref{sizegoodput}). As the size of messages increases beyond this point, message serialisation costs cause the time taken to send messages to increase and the maximum goodput that can be reached to decrease; there is a rapid increase in send time as messages increase beyond 2000 bytes (Figures \ref{sizegoodput} and \ref{sizesendtime})
 
 \subsection{Tezos Cryptography} \label{tezosbenchmark}
-I benchmarked key functions of the Tezos Cryptography library \cite{tezosCrypto} with Jane Street's Core\_bench module \cite{janestreetCoreBench2023}. Core\_bench is a micro-benchmarking library used to estimate the cost of operations in OCaml, it runs the operation many times and uses linear regression to try to reduce the effect of high variance between runs.
 
-Cryptographic functions can take on the order of milliseconds to complete, with checking signatures demonstrated to be a particularly expensive operation (Table \ref{tezostable}).
-
-\begin{table}[!h]
+\begin{table}[h]
 	\centering
 	\begin{tabular}{|l|r|}
 	\hline
@@ -65,6 +61,11 @@ Cryptographic functions can take on the order of milliseconds to complete, with 
 	\caption{Benchmarking of key functions of the Tezos Cryptography library}
 	\label{tezostable}
 \end{table}
+
+I benchmarked key functions of the Tezos Cryptography library \cite{tezosCrypto} with Jane Street's Core\_bench module \cite{janestreetCoreBench2023}. Core\_bench is a micro-benchmarking library used to estimate the cost of operations in OCaml, it runs the operation many times and uses linear regression to try to reduce the effect of high variance between runs.
+
+Cryptographic functions can take on the order of milliseconds to complete, with checking signatures demonstrated to be a particularly expensive operation (Table~\ref{tezostable}).
+
 % ┌─────────────┬────────────┬─────────┬──────────┬──────────┬────────────┐
 % │ Name        │   Time/Run │ mWd/Run │ mjWd/Run │ Prom/Run │ Percentage │
 % ├─────────────┼────────────┼─────────┼──────────┼──────────┼────────────┤
@@ -78,35 +79,35 @@ Cryptographic functions can take on the order of milliseconds to complete, with 
 
 \section{HotStuff implementation benchmarks} \label{hotstuffbenchmarks}
 
-\begin{figure}[h!]
+\begin{figure}[h]
 \centering
 \resizebox{.8\textwidth}{!}{\input{images/heatmaps/timelatencyheatmap.pgf}}
 \caption{Heatmaps showing the behaviour of the system under varying conditions.}
 \label{heatmaps}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[h]
 \centering
 \resizebox{.6\textwidth}{!}{\input{images/heatmaps/cumlatency.pgf}}
 \caption{Cumulative latency plot for the system when exhibiting stable latency.}
 \label{ecdfstable}
 \end{figure}
 
-I now analyse the performance and behaviour of the system with different parameters and under different conditions. I argue that the optimisations described in Section \ref{performance} were effective in improving system performance, but there are fundamental limitations caused by the latency costs of Cap'n Proto serialisation (Section \ref{capnpbenchmark}) and (to a lesser extent) cryptography (Section \ref{tezosbenchmark}).
+I now analyse the performance and behaviour of the system with different parameters and under different conditions. I argue that the optimisations described in Section~\ref{performance} were effective in improving system performance, but there are fundamental limitations caused by the latency costs of Cap'n Proto serialisation (Section~\ref{capnpbenchmark}) and (to a lesser extent) cryptography (Section~\ref{tezosbenchmark}).
 
-To illustrate the performance of the system under different conditions, several heatmaps (Figure \ref{heatmaps}) and a cumulative latency plot (Figure \ref{ecdfstable}) are presented for tests run for 20s with 4 nodes.. Figure \ref{heatmaps}a and Figure \ref{ecdfstable} show an experiment with a throughput of 200req/s and a batch size of 300. Figure \ref{heatmaps}b shows an experiment with a throughout of 2000req/s and a batch size of 300. Figure \ref{heatmaps}c shows an experiment with a throughout of 2000req/s and unlimited batch sizes.
+To illustrate the performance of the system under different conditions, several heatmaps (Figure~\ref{heatmaps}) and a cumulative latency plot (Figure~\ref{ecdfstable}) are presented for tests run for 20s with 4 nodes. Figure~\ref{heatmaps}(a) and Figure~\ref{ecdfstable} show an experiment with a throughput of 200req/s and a batch size of 300. Figure~\ref{heatmaps}(b) shows an experiment with a throughout of 2000req/s and a batch size of 300. Figure~\ref{heatmaps}(c) shows an experiment with a throughout of 2000req/s and unlimited batch sizes.
 
-In most cases, the system exhibits stable latency throughout an experiment while goodput is equal to throughput, meaning that the system is not overloaded (Figure \ref{heatmaps}a, Figure \ref{ecdfstable}). When the throughput exceeds the amount the system can keep up with, there is rapid growth in latency as commands queue on the nodes (Figure \ref{heatmaps}b). Since HotStuff is a partially synchronous protocol (Section \ref{hotstufftheory}), an increase in latency means that view times increase, decreasing goodput. Once the system is overloaded, the goodput levels off at around its maximum value as throughput is increased.
+In most cases, the system exhibits stable latency throughout an experiment while goodput is equal to throughput, meaning that the system is not overloaded (Figure~\ref{heatmaps}(a), Figure~\ref{ecdfstable}). When the throughput exceeds the amount the system can keep up with, there is rapid growth in latency as commands queue on the nodes (Figure~\ref{heatmaps}(b)). Since HotStuff is a partially synchronous protocol (Section~\ref{hotstufftheory}), an increase in latency means that view times increase, decreasing goodput. Once the system is overloaded, the goodput levels off at around its maximum value as throughput is increased.
 
-The comparison of batch sizes in Section \ref{batchsizeseval} indicates that the batching implementation described in Section \ref{batching} is effective, as the system can achieve much greater goodput with batch sizes greater than 1 (equivalent to no batching). This section also provides evidence that serialisation latency is a bottleneck, as view times begin to increase exponentially as batch sizes increase (Figure \ref{heatmaps}c), due to messages being larger and taking longer to serialise.
+The comparison of batch sizes in Section~\ref{batchsizeseval} indicates that the batching implementation described in Section~\ref{batching} is effective, as the system can achieve much greater goodput with batch sizes greater than 1 (equivalent to no batching). This section also provides evidence that serialisation latency is a bottleneck, as view times begin to increase exponentially as batch sizes increase (Figure~\ref{heatmaps}(c)), due to messages being larger and taking longer to serialise.
 
-The study of node counts (Section \ref{nodecountseval}) gives further evidence that message serialisation is a bottleneck; higher node counts mean more internal messages being sent, causing a decline in performance due to serialisation costs. This also supports the conclusion that cryptography is a bottleneck, as more nodes mean more messages must be signed and aggregated.
+The study of node counts (Section~\ref{nodecountseval}) gives further evidence that message serialisation is a bottleneck; higher node counts mean more internal messages being sent, causing a decline in performance due to serialisation costs. This also supports the conclusion that cryptography is a bottleneck, as more nodes mean more messages must be signed and aggregated.
 
-The ablation study (Section \ref{ablation}) compares the performance of the system with different optimizations enabled, demonstrating their effectiveness in increasing goodput and lowering latency. It is also demonstrated that cryptography is a bottleneck, as there is an increase in latency with cryptography disabled.
+The ablation study (Section~\ref{ablation}) compares the performance of the system with different optimizations enabled, demonstrating their effectiveness in increasing goodput and lowering latency. It is also demonstrated that cryptography is a bottleneck, as there is an increase in latency with cryptography disabled.
 
-In the wide area network (WAN) simulation study (Section \ref{minineteval}), the performance of the system is evaluated in a simulated network (Section \ref{testing}) with link latency similar to what may be observed in a wide area network.
+In the wide area network (WAN) simulation study (Section~\ref{minineteval}), the performance of the system is evaluated in a simulated network (Section~\ref{testing}) with link latency similar to what may be observed in a wide area network.
 
-In the view-change study (Section \ref{viewchange}), it is shown that the view-change protocol (Section \ref{viewchange}) effectively ensures the system progresses once a node has died, albeit with a significant performance penalty.
+In the view-change study (Section~\ref{viewchange}), it is shown that the view-change protocol (Section~\ref{viewchange}) effectively ensures the system progresses once a node has died, albeit with a significant performance penalty.
 
 \subsection{Batch sizes} \label{batchsizeseval}
 
@@ -124,19 +125,19 @@ In the view-change study (Section \ref{viewchange}), it is shown that the view-c
 \label{goodputlatencybatch}
 \end{figure}
 
-This study compares the performance of the system for varying limits on batch sizes (Section \ref{batchsizes}). Experiments were run for 20 seconds on a network of 4 nodes. The experiment was run for longer to reduce the higher variance observed in tests where the system is overloaded. Figure \ref{goodputlatencybatch} omits results with latency of above 1s, to show the performance of the system as it begins to be overloaded.
+This study compares the performance of the system for varying limits on batch sizes (Section~\ref{batchsizes}). Experiments were run for 20 seconds on a network of 4 nodes. The experiment was run for longer to reduce the higher variance observed in tests where the system is overloaded. Figure~\ref{goodputlatencybatch} omits results with latency of above 1s, to show the performance of the system as it begins to be overloaded.
 
-At lower throughputs the system is not overloaded; throughput grows linearly with goodput (Figure \ref{throughputgoodputbatch}), as the system can respond to all incoming requests with roughly constant latency throughout an experiment (Figure \ref{heatmaps}a). During this period batches are not filled, so larger throughputs result in larger messages and a slow increase in latency due to increasing serialisation latency (Figure \ref{goodputlatencybatch}). The system can reach a higher goodput before being overloaded if it has a larger batch size, as each view results in more commands being committed; this supports the conclusion that batching is an effective optimisation.
+At lower throughputs the system is not overloaded; throughput grows linearly with goodput (Figure~\ref{throughputgoodputbatch}), as the system can respond to all incoming requests with roughly constant latency throughout an experiment (Figure~\ref{heatmaps}(a)). During this period batches are not filled, so larger throughputs result in larger messages and a slow increase in latency due to increasing serialisation latency (Figure~\ref{goodputlatencybatch}). The system can reach a higher goodput before being overloaded if it has a larger batch size, as each view results in more commands being committed; this supports the conclusion that batching is an effective optimisation.
 
-Once throughput is increased enough, batches begin to be filled up and the system is overloaded. This results in the goodput flattening out (Figure \ref{throughputgoodputbatch}), as the system cannot handle the volume of requests; commands begin to queue on the nodes and latency rapidly increases throughout an experiment (Figure \ref{heatmaps}b, Figure \ref{goodputlatencybatch}). There is a slight decrease from the peak goodput due to the overheads of queueing.
+Once throughput is increased enough, batches begin to be filled up and the system is overloaded. This results in the goodput flattening out (Figure~\ref{throughputgoodputbatch}), as the system cannot handle the volume of requests; commands begin to queue on the nodes and latency rapidly increases throughout an experiment (Figure~\ref{heatmaps}(b), Figure~\ref{goodputlatencybatch}). There is a slight decrease from the peak goodput due to the overheads of queueing.
 
-For higher batch size limits (especially unlimited), the goodput declines more significantly once the system is overloaded. This is because the benefits of larger batches are offset by messages becoming larger, causing increased serialisation latency, which increases view times and lower goodput. For large batch sizes, view times increase exponentially, as shown by the growing vertical gaps between commands being committed in Figure \ref{heatmaps}c.
+For higher batch size limits (especially unlimited), the goodput declines more significantly once the system is overloaded. This is because the benefits of larger batches are offset by messages becoming larger, causing increased serialisation latency, which increases view times and lower goodput. For large batch sizes, view times increase exponentially, as shown by the growing vertical gaps between commands being committed in Figure~\ref{heatmaps}(c).
 
-There is a clear trade-off between larger batch sizes that result in more commands being committed, and batches becoming too large and incurring exponential serialisation latency. The optimum for the system appears to be a batch size of around 600 commands, with a maximum goodput of around 900req/s (Figure \ref{throughputgoodputbatch}).
+There is a clear trade-off between larger batch sizes that result in more commands being committed, and batches becoming too large and incurring exponential serialisation latency. The optimum for the system appears to be a batch size of around 600 commands, with a maximum goodput of around 900req/s (Figure~\ref{throughputgoodputbatch}).
 
-% There is a trade-off between having larger batches to process more commands, and messages becoming too large and increasing serialisation latency, which is apparent from Figure \ref{throughputgoodputbatch}. With small batch sizes each view only commits a small number of commands, leading to low goodputs; an extreme example of this is a batch size of 1 (equivalent to no batching). As batch sizes increase the goodput reached also increases, with goodput peaking at around 700req/s with a batch size of 300 commands. At this point increasing batch size further causes goodput to decrease due to the increased latency of serialising large messages; each view takes longer so less nodes are committed per second (even though each node contains more commands). When the batch size is unlimited messages grow very large as throughput increases, and increased serialisation latency causes goodput to decline.
+% There is a trade-off between having larger batches to process more commands, and messages becoming too large and increasing serialisation latency, which is apparent from Figure~\ref{throughputgoodputbatch}. With small batch sizes each view only commits a small number of commands, leading to low goodputs; an extreme example of this is a batch size of 1 (equivalent to no batching). As batch sizes increase the goodput reached also increases, with goodput peaking at around 700req/s with a batch size of 300 commands. At this point increasing batch size further causes goodput to decrease due to the increased latency of serialising large messages; each view takes longer so less nodes are committed per second (even though each node contains more commands). When the batch size is unlimited messages grow very large as throughput increases, and increased serialisation latency causes goodput to decline.
 
-% Figure \ref{throughputlatencybatch} shows that latency scales linearly with throughput while the system is not overloaded, that is, when the goodput is within 5\% of the target throughput. This is because larger throughputs result in larger message sizes, and increased latency due to serialisation time. 
+% Figure~\ref{throughputlatencybatch} shows that latency scales linearly with throughput while the system is not overloaded, that is, when the goodput is within 5\% of the target throughput. This is because larger throughputs result in larger message sizes, and increased latency due to serialisation time. 
 
 \subsection{Node counts} \label{nodecountseval}
 
@@ -161,13 +162,13 @@ There is a clear trade-off between larger batch sizes that result in more comman
 % \label{goodput95latencynodes}
 % \end{figure}
 
-This study compares the performance of the system for varying node counts. Node counts were chosen such that $n = 3f + 1$ for some $f$, as choosing another value would decrease performance without any benefit of increased fault-tolerance\footnote{A node count of 2 was also tested as it is the smallest node count where internal messages are exchanged.}. All experiments were run for 10s with a batch size of 300. Figure \ref{goodputlatencynodes} omits results with latency of above 1s, to show the performance of the system as it begins to be overloaded.
+This study compares the performance of the system for varying node counts. Node counts were chosen such that $n = 3f + 1$ for some $f$, as choosing another value would decrease performance without any benefit of increased fault-tolerance\footnote{A node count of 2 was also tested as it is the smallest node count where internal messages are exchanged.}. All experiments were run for 10s with a batch size of 300. Figure~\ref{goodputlatencynodes} omits results with latency of above 1s, to show the performance of the system as it begins to be overloaded.
 
-As node count increases the latency increases (Figure \ref{goodputlatencynodes}). This is because larger node counts mean that each view requires more internal messages to be sent to progress. Sending internal messages is expensive due to the latency of serialisation and cryptography, so this results in increased overall latency. Additionally, increasing the node count increases the number of messages that must be signed, and makes aggregating signatures slower (Section \ref{tezosbenchmark}).
+As node count increases the latency increases (Figure~\ref{goodputlatencynodes}). This is because larger node counts mean that each view requires more internal messages to be sent to progress. Sending internal messages is expensive due to the latency of serialisation and cryptography, so this results in increased overall latency. Additionally, increasing the node count increases the number of messages that must be signed, and makes aggregating signatures slower (Section~\ref{tezosbenchmark}).
 
-Latency increases slowly with throughput while the system is not overloaded, then begins to rapidly increase once the system is overloaded and requests start to queue (Figure \ref{goodputlatencynodes}). Notably, the latency for a system of 1 node increases slowly, as there are no internal messages, just client requests and responses.
+Latency increases slowly with throughput while the system is not overloaded, then begins to rapidly increase once the system is overloaded and requests start to queue (Figure~\ref{goodputlatencynodes}). Notably, the latency for a system of 1 node increases slowly, as there are no internal messages, just client requests and responses.
 
-The larger the node count, the lower the maximum goodput that can be reached (Figure \ref{throughputgoodputnodes}). This is again due to larger node counts resulting in more internal messages, causing more latency since this is a bottleneck. Increased latency causes each view to take longer, reducing the number of requests that can be responded to each second.
+The larger the node count, the lower the maximum goodput that can be reached (Figure~\ref{throughputgoodputnodes}). This is again due to larger node counts resulting in more internal messages, causing more latency since this is a bottleneck. Increased latency causes each view to take longer, reducing the number of requests that can be responded to each second.
 
 \subsection{Ablation study} \label{ablation}
 
@@ -201,11 +202,11 @@ NOCRY & \cmark & \cmark & \cmark & \xmark \\ \hline
 \label{goodputlatencablation}
 \end{figure}
 
-This study compares the performance of the system with different optimisations enabled. The optimisations explored are chaining (Section \ref{chaining}), node truncation (Section \ref{truncation}), and command filtering (Section \ref{filtering}). Performance is also compared with, and without cryptography enabled. The mapping from version codes to which optimisations are enabled is given in table \ref{versiontable}. The experiments displayed in Figure \ref{throughputgoodputablation} and Figure \ref{goodputlatencablation} were run for 10s with a network of 4 nodes, and a batch size of 300. Figure \ref{goodputlatencablation} omits results with latency of above 1s, to show the performance of the system before it becomes overloaded.
+This study compares the performance of the system with different optimisations enabled. The optimisations explored are chaining (Section~\ref{chaining}), node truncation (Section~\ref{truncation}), and command filtering (Section~\ref{filtering}). Performance is also compared with, and without cryptography enabled. The mapping from version codes to which optimisations are enabled is given in Table~\ref{versiontable}. The experiments displayed in Figure~\ref{throughputgoodputablation} and Figure~\ref{goodputlatencablation} were run for 10s with a network of 4 nodes, and a batch size of 300. Figure~\ref{goodputlatencablation} omits results with latency of above 1s, to show the performance of the system before it becomes overloaded.
 
-The goodput and latency follow similar trends to Section \ref{batchsizeseval} and Section \ref{nodecountseval}.
+The goodput and latency follow similar trends to Section~\ref{batchsizeseval} and Section~\ref{nodecountseval}.
 
-The chained implementation is able to reach higher goodputs with slightly higher latency than the basic implementation. The higher goodput is a result of pipelining, more requests are able to transition through phases concurrently. However, pipelining also leads to the size of messages being increased, as each message contains batches of requests from each concurrent phase; this leads to increased latency due to the time taken to serialise larger messages (Section \ref{capnpbenchmark}).
+The chained implementation is able to reach higher goodputs with slightly higher latency than the basic implementation. The higher goodput is a result of pipelining, more requests are able to transition through phases concurrently. However, pipelining also leads to the size of messages being increased, as each message contains batches of requests from each concurrent phase; this leads to increased latency due to the time taken to serialise larger messages (Section~\ref{capnpbenchmark}).
 
 Filtering significantly increases goodput, and slightly reduces latency. Goodput is increased as there are fewer redundant commands in each batch, so more useful commands can be processed. Latency is slightly reduced as messages are smaller on average due to some requests being filtered, so there is less latency due to serialisation costs.
 
@@ -236,9 +237,9 @@ Disabling cryptography reduces latency, leading to increased maximum goodput tha
 \label{ecdfmininet}
 \end{figure}
 
-I benchmarked the performance of the system in a simulated Mininet network \cite{mininet,lantzNetworkLaptopRapid2010} with link latency of 100ms between each node. All experiments were run for 10s on a system with 4 nodes and a batch size of 300. Figure \ref{goodputlatencymininet} omits results with latency of above 4s, to show the performance of the system as it becomes overloaded. Figure \ref{ecdfstable} is a cumulative latency plot of an experiment with a throughput of 200req/s.
+I benchmarked the performance of the system in a simulated Mininet network \cite{mininet,lantzNetworkLaptopRapid2010} with link latency of 100ms between each node. All experiments were run for 10s on a system with 4 nodes and a batch size of 300. Figure~\ref{goodputlatencymininet} omits results with latency of above 4s, to show the performance of the system as it becomes overloaded. Figure~\ref{ecdfstable} is a cumulative latency plot of an experiment with a throughput of 200req/s.
 
-The system has significantly higher latency in the simulator due to the five round trips which are required by the HotStuff protocol: this is an inherent bottleneck. We observe a median latency of around 1.3s (Figure \ref{goodputlatencymininet}) until the system becomes overloaded when it reaches a maximum goodput of 200req/s (Figure \ref{throughoutgoodputmininet}), and latency increases rapidly as commands queue on the nodes. One could predict a latency of around 1.1s in the simulated network, as a request takes 5 round trips to commit (1s total), and Figure \ref{goodputlatencynodes} shows that the latency with negligible link latency was around 0.1s. The observed latency may be slightly greater (by 0.2s) as the nodes do not have synchronised clocks, so the increased link latency could cause delays in the view being advanced.
+The system has significantly higher latency in the simulator due to the five round trips that are required by the HotStuff protocol: this is an inherent bottleneck. We observe a median latency of around 1.3s (Figure~\ref{goodputlatencymininet}) until the system becomes overloaded when it reaches a maximum goodput of 200req/s (Figure~\ref{throughoutgoodputmininet}), and latency increases rapidly as commands queue on the nodes. One could predict a latency of around 1.1s in the simulated network, as a request takes 5 round trips to commit (1s total), and Figure~\ref{goodputlatencynodes} shows that the latency with negligible link latency was around 0.1s. The observed latency may be slightly greater (by 0.2s) as the nodes do not have synchronised clocks, so the increased link latency could cause delays in the view being advanced.
 
 \subsection{View-changes} \label{viewchangeeval}
 
@@ -249,9 +250,9 @@ The system has significantly higher latency in the simulator due to the five rou
 \label{viewchangeheatmap}
 \end{figure}
 
-This study explores the behaviour of the system in the event of a node failing, where the view-change protocol (Section \ref{viewchange}) is needed to skip the faulty leader's view and make progress.
+This study explores the behaviour of the system in the event of a node failing, where the view-change protocol (Section~\ref{viewchange}) is needed to skip the faulty leader's view and make progress.
 
-Figure \ref{viewchangeheatmap} shows an experiment that was run for 10s on a network of 7 nodes with a batch size of 300. A node was killed 5s into the experiment. The view timeout was set to 0.5s.
+Figure~\ref{viewchangeheatmap} shows an experiment that was run for 10s on a network of 7 nodes with a batch size of 300. A node was killed 5s into the experiment. The view timeout was set to 0.5s.
 
 There is a clear jump in latency every time the killed node is the leader of the view, and the nodes must wait for the 0.5s timeout to elapse before the next view begins. The latency jump of roughly 0.7s is about what one would expect; 0.5s timeout and 0.2s of latency (the same as before the node was killed). Latency gradually increases after this point as requests begin to queue on the nodes, incurring some overhead.
 
