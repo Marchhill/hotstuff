@@ -6,7 +6,7 @@
 
 % It is essential to declare the starting point. This states any existing codebase or materials that your project builds on. The text here can commonly be identical to the text in your proposal, but it may enlarge on it or report variations. For instance, the true starting point may have turned out to be different from that declared in the proposal and such discrepancies must be explained.
 
-In this chapter, I disclose my experience before beginning this project (Section~\ref{start}), explain the HotStuff algorithm by building up from simpler consensus algorithms (Section~\ref{hotstufftheory}), outline the tools and libraries (Section~\ref{tools}) that were used, highlight requirements that the implementation should meet (Section~\ref{requirements}), and describe the professional methodology (Section~\ref{softwareeng}) that was employed during implementation.
+In this chapter, I disclose my experience before beginning this project (Section~\ref{start}), explain the HotStuff algorithm by building up from simpler consensus algorithms (Section~\ref{hotstufftheory}), outline the tools and libraries that were used (Section~\ref{tools}), highlight requirements that the implementation should meet (Section~\ref{requirements}), and describe the professional methodology (Section~\ref{softwareeng}) that was employed during implementation.
 
 \section{Starting point} \label{start}
 Although I had some experience using OCaml through the IA Foundations of Computer Science course, I had never utilized it in a project before. The IB Distributed Systems course provided some useful background knowledge, particularly as it briefly covered Raft~\cite{ongaroSearchUnderstandableConsensus2014}, a non-byzantine consensus algorithm. Additionally, I had a basic understanding of byzantine consensus from my reading into Nakamoto consensus~\cite{nakamotoBitcoinPeertoPeerElectronic2008} and from developing a wallet application for Ethereum~\cite{ethereumWhite, ethereumYellow}; neither of these was directly useful to implementing HotStuff, but they gave me some wider context of the field.
@@ -43,12 +43,12 @@ HotStuff has the following properties:
 	Once GST has been reached and a non-faulty leader is chosen, the system can make progress as fast as network conditions allow; it does not have to wait for some timeout to elapse~\cite{passThunderellaBlockchainsOptimistic2018}.
 \end{property}
 
-Basic HotStuff is a responsive byzantine consensus algorithm (Section~\ref{optresponsive}). A simpler consensus algorithm that is neither responsive nor byzantine is described in Section~\ref{nonbyzconsensus}. This algorithm is then extended in Section~\ref{byzconsensus} to handle byzantine threats. Finally, Section~\ref{optresponsive} explains how the algorithm is made responsive by removing the need for a timeout to progress, arriving at the basic HotStuff algorithm.
+Basic HotStuff is an optimistically responsive byzantine consensus algorithm (Section~\ref{optresponsive}). A simpler consensus algorithm that is neither optimistically responsive nor byzantine is described in Section~\ref{nonbyzconsensus}. This algorithm is then extended in Section~\ref{byzconsensus} to handle byzantine threats. Finally, Section~\ref{optresponsive} explains how the algorithm is made optimistically responsive by removing the need for a timeout to progress, arriving at the basic HotStuff algorithm.
 
 \subsection{Non-byzantine consensus} \label{nonbyzconsensus}
 In this section, a generic algorithm is described to solve the problem of reaching consensus with a crash-stop model, which assumes that nodes cannot be malicious but can crash and never come back online. Examples of similar algorithms include Raft~\cite{ongaroSearchUnderstandableConsensus2014} and \mbox{MultiPaxos~\cite{lamportParttimeParliament1998, lamportPaxosMadeSimple2001}}.
 
-Each view is composed of several phases. In each phase, the leader broadcasts to the replicas, that respond with an acknowledgement (ack). The leader waits until it receives a quorum of acks before proceeding to the next phase; for this algorithm, a quorum consists of $\lceil\frac{n}{2}\rceil$ acks.
+Each view is composed of several phases. In each phase, the leader broadcasts to the replicas, that respond with an acknowledgement (ack). The leader waits until it receives a quorum of acks before proceeding to the next phase; for this algorithm, a quorum consists of $\lfloor\frac{n}{2}\rfloor + 1$ acks.
 
 Consensus can be used in state machine replication~\cite{lamportTimeClocksOrdering1978,schneiderImplementingFaulttolerantServices1990}. In this setting, the nodes reach consensus on a log of commands that have been sent by a client. Once a prefix of the log is committed the client can be responded to and the committed commands are executed in order, ensuring that all nodes will be in the same state.
 
@@ -56,11 +56,11 @@ In this generic algorithm, each view consists of three phases:
 
 \begin{description}
 	\item \textit{new-view} --- all replicas send a \textit{new-view} message to the leader, containing their longest previously committed log.
-	\item \textit{commit} --- once the leader receives a quorum of $\lceil\frac{n}{2}\rceil$ \textit{new-view} messages, it picks the longest log ($\lambda$) to propose. It then broadcasts a \textit{commit} message to the replicas, proposing $\lambda'$ to the nodes, where $\lambda'$ is $\lambda$ optionally extended with the leader's new value. The replicas send a \textit{commit} ack.
+	\item \textit{commit} --- once the leader receives a quorum of \textit{new-view} messages, it picks the longest log ($\lambda$) to propose. It then broadcasts a \textit{commit} message to the replicas, proposing $\lambda'$ to the nodes, where $\lambda'$ is $\lambda$ optionally extended with the leader's new value. The replicas send a \textit{commit} ack.
 	\item \textit{decide} --- once the leader receives a quorum of acks, the log has been successfully committed. The leader can broadcast ``decide'' to the replicas, who can execute the new commands and respond to the client. The replicas send a \textit{new-view}, beginning the next view.
 \end{description}
 
-Crucially, this algorithm is safe (Property \ref{safetyproperty}). Since the leader waits to receive a quorum of greater than $\lceil\frac{n}{2}\rceil$ \textit{new-view} messages, $\lambda$ is guaranteed to be the longest log that has previously been committed. This is because the quorum of \textit{new-view} messages must share at least one node with the past quorum of \textit{commit} acks for $\lambda$. The new proposal $\lambda'$ will never conflict with $\lambda$, hence the algorithm is safe.
+Crucially, this algorithm is safe (Property \ref{safetyproperty}). Since the leader waits to receive a quorum of $\lfloor\frac{n}{2}\rfloor + 1$ \textit{new-view} messages, $\lambda$ is guaranteed to be the longest log that has previously been committed. This is because the quorum of \textit{new-view} messages must share at least one node with the past quorum of \textit{commit} acks for $\lambda$. The new proposal $\lambda'$ will never conflict with $\lambda$, hence the algorithm is safe.
 
 \subsection{Byzantine consensus} \label{byzconsensus}
 In this section, consensus under a byzantine system model (Assumption \ref{byzassumption}) is achieved by extending the non-byzantine algorithm introduced in Section~\ref{nonbyzconsensus}. This is accomplished by first introducing the quorum certificate (QC), a cryptographic proof that a leader has received a quorum of acks. Next, the threats posed by byzantine nodes are considered, and a generic algorithm that solves these problems is presented, along with an argument for safety. Examples of similar algorithms include Tendermint~\cite{kwonTendermintConsensusMining2014} and Casper~\cite{buterinCasperFriendlyFinality2019}.
@@ -112,7 +112,7 @@ From this, it follows that in no view from $v$ onwards will a log conflicting wi
 \subsection{Optimistic responsiveness} \label{optresponsive}
 This section presents the basic HotStuff algorithm by extending the generic byzantine consensus algorithm (Section~\ref{byzconsensus}) to make it optimistically responsive (Property \ref{optresponsiveproperty}). Optimistic responsiveness means that the system can make progress as fast as network conditions allow without waiting for a timeout, once GST has been reached~\cite{passThunderellaBlockchainsOptimistic2018}.
 
-The byzantine consensus algorithm is not responsive as a timeout is needed in the \textit{prepare} phase. The problem that necessitates this timeout is first described, followed by the presentation of an algorithm that solves it. An informal argument is made that liveness is not broken by this algorithm.
+The byzantine consensus algorithm is not responsive as a timeout is needed in the \textit{prepare} phase. The problem that necessitates this timeout is first described, followed by the presentation of an algorithm that solves it. An informal argument is made for the liveness of this algorithm.
 
 \subsubsection{Why the timeout was necessary}
 For the system to have liveness (Property \ref{livenessproperty}), the leader must wait for $\Delta$ to elapse so that it receives a \textit{new-view} message from all honest replicas before it pre-proposes a log. Consider what would happen if the leader did not wait for this timeout, and did not receive a \textit{new-view} from some honest replica $x$. $x$ may be locked on a longer log than the other replicas, as in some past view it received the \textit{commit} message, but other replicas did not\footnote{N.B. this means that the value was never actually committed, as this would have required a quorum of \textit{commit} acks}. When the leader sends the \textit{prepare} message, $x$ will not vote the pre-proposal as it is locked on a longer log, so the leader will not acquire a quorum of acks to make progress; this breaks liveness.
@@ -152,7 +152,7 @@ Lwt is useful to this project as promises provide a way to asynchronously dispat
 Alternative concurrency libraries may have had better performance, namely Async~\cite{async} and EIO~\cite{eio}. I chose Lwt over these libraries due to superior documentation and stability.
 
 \subsection{Cap'n Proto}
-Cap'n Proto~\cite{capnp} is an RPC framework that includes a library for sending and receiving RPCs, serialising messages, and a schema language for designing the format of RPCs that can be sent. Benchmarks for the library are presented in Section~\ref{capnpbenchmark}.
+Cap'n Proto~\cite{capnp} is an RPC framework that includes a library for sending and receiving RPCs, serialising messages, and a schema language for designing the format of RPCs that can be sent. It is the best supported RPC library for Lwt. Benchmarks for the library are presented in Section~\ref{capnpbenchmark}.
 
 \subsection{Tezos cryptography} \label{tezos}
 The Tezos cryptography library~\cite{tezosCrypto} provides functions to sign some data using a private key, aggregate several signatures into a single one, and check whether an aggregate signature is valid. Benchmarks for the library are presented in Section~\ref{tezosbenchmark}.
@@ -178,7 +178,7 @@ For this project, I used an iterative waterfall development methodology. Objecti
 
 \subsection{Testing \& debugging methodology} \label{testing}
 
-Unit testing was carried out using `expect tests', which compare a program trace to the correct output. A testing suite of expect tests verifies that the program behaves as specified in the HotStuff paper. This suite has 100\% code coverage\footnote{The coverage report in \textit{\_coverage/index.html}, reports 98.13\% coverage, but the only code not covered is the expect tests themselves.} of the consensus state machine code.%, the coverage report is at \textit{\_coverage/index.html}.
+Unit testing was carried out using `expect tests', which compare a program trace to the correct output. A testing suite of expect tests verifies that the program behaves as specified in the HotStuff paper. This suite has 100\% code coverage\footnote{The coverage report in \textit{\_coverage/index.html} reports 98.13\% coverage, but the only code not covered is the expect tests themselves.} of the consensus state machine code.%, the coverage report is at \textit{\_coverage/index.html}.
 
 Memtrace~\cite{memtrace} was used to profile the memory usage of the program. %One can generate a flame graph of memory allocations to see which parts of the program are using the most memory.
 

@@ -42,7 +42,7 @@ This section presents benchmarks of the performance of the Cap'n Proto RPC frame
 
 I benchmarked the performance of Cap'n Proto~\cite{capnp} for varying message sizes, measuring the maximum goodput at which messages could be sent (Figure~\ref{sizegoodput}), and the time taken to send (Figure~\ref{sizesendtime}). Figure~\ref{sizesendtime} is a box plot with whiskers plotted at the 5\%ile and 95\%ile with outliers excluded.
 
-Cap'n Proto has an optimum message size of around 1000 bytes; at this point, data can be sent at the highest possible goodput (Figure~\ref{sizegoodput}). As the size of messages increases beyond this point, the time taken to send messages increases and the maximum goodput that can be reached decreases. There is a rapid increase in send time as message sizes increase beyond 2000 bytes (Figures \ref{sizegoodput} and \ref{sizesendtime}). This behaviour was unexpected and may be a bug in Cap'n Proto; it was outside of the scope of this project to fix this.
+Cap'n Proto has an optimum message size of around 1000 bytes; at this point, data can be sent at the highest possible goodput (Figure~\ref{sizegoodput}). As the size of messages increases beyond this point, the time taken to send messages increases and the maximum goodput that can be reached decreases. There is a rapid increase in send time and decrease in maximum goodput as message sizes increase beyond 2000 bytes (Figures \ref{sizegoodput} and \ref{sizesendtime}). This behaviour was unexpected and may be a bug in Cap'n Proto; it was outside of the scope of this project to fix this.
 
 \subsection{Tezos Cryptography} \label{tezosbenchmark}
 
@@ -95,7 +95,7 @@ Cryptographic functions can take on the order of milliseconds to complete, with 
 
 I now analyse the performance and behaviour of the system with different parameters and under different conditions. I argue that the optimisations described in Section~\ref{performance} were effective in improving system performance, but there are fundamental limitations caused by the latency costs of Cap'n Proto (Section~\ref{capnpbenchmark}) and (to a lesser extent) cryptography (Section~\ref{tezosbenchmark}).
 
-To illustrate the performance of the system under different conditions, several heatmaps (Figure~\ref{heatmaps}) and a cumulative latency plot (Figure~\ref{ecdfstable}) are presented for tests run for 20s with 4 nodes. Figure~\ref{heatmaps}(a) and Figure~\ref{ecdfstable} show an experiment with a throughput of 200req/s and a batch size of 300. Figure~\ref{heatmaps}(b) shows an experiment with a throughout of 2000req/s and a batch size of 300. Figure~\ref{heatmaps}(c) shows an experiment with a throughout of 2000req/s and unlimited batch sizes.
+To illustrate the performance of the system under different conditions, several heatmaps (Figure~\ref{heatmaps}) and a cumulative latency plot (Figure~\ref{ecdfstable}) are presented for tests run for 20s with 4 nodes. Figure~\ref{heatmaps}(a) and Figure~\ref{ecdfstable} show an experiment with a throughput of 200req/s and a batch size of 300. Figure~\ref{heatmaps}(b) shows an experiment with a throughout of 2000req/s and a batch size of 300. Figure~\ref{heatmaps}(c) shows an experiment with a throughout of 2000req/s and an unlimited batch size.
 
 In most cases, the system exhibits stable latency throughout an experiment while goodput is equal to throughput, meaning that the system is not overloaded (Figure~\ref{heatmaps}(a), Figure~\ref{ecdfstable}). When the throughput exceeds the amount the system can keep up with, there is rapid growth in latency as commands queue on the nodes (Figure~\ref{heatmaps}(b)). Since HotStuff is a partially synchronous protocol (Section~\ref{hotstufftheory}), an increase in latency means that view times increase, decreasing goodput. Once the system is overloaded, the goodput levels off at around its maximum value as throughput is increased.
 
@@ -125,7 +125,7 @@ In the view-change study (Section~\ref{viewchange}), it is shown that the view-c
 \label{goodputlatencybatch}
 \end{figure}
 
-This study compares the performance of the system for varying limits on batch sizes (Section~\ref{batchsizes}). Experiments were run for 20 seconds on a network of 4 nodes. The experiment was run for longer to reduce the higher variance observed in tests where the system is overloaded. Figure~\ref{goodputlatencybatch} omits results with latency of above 1s, to show the performance of the system as it begins to be overloaded.
+This study compares the performance of the system for varying limits on batch sizes (Section~\ref{batchsizes}). Experiments were run for 20 seconds on a network of 4 nodes. The experiment was run for longer to reduce the higher variance observed in tests where the system is overloaded. Figure~\ref{goodputlatencybatch} omits results with latency of above 1s, to show the performance of the system as it begins to be overloaded. N.B. a batch size of one is not visible in this figure, as the goodput it reaches is too low.
 
 At lower throughputs the system is not overloaded; throughput grows linearly with goodput (Figure~\ref{throughputgoodputbatch}), as the system can respond to all incoming requests with roughly constant latency throughout an experiment (Figure~\ref{heatmaps}(a)). During this period batches are not filled, so larger throughputs result in larger messages and a slow increase in latency due to increasing Cap'n Proto overheads (Figure~\ref{goodputlatencybatch}). The system can reach a higher goodput before being overloaded if it has a larger batch size, as each view results in more commands being committed; this supports the conclusion that batching is an effective optimisation.
 
@@ -210,7 +210,7 @@ The chained implementation can reach higher goodputs with slightly higher latenc
 
 Filtering significantly increases goodput, and slightly reduces latency. Goodput is increased as there are fewer redundant commands in each batch, so more useful commands can be processed. Latency is slightly reduced as messages are smaller on average due to some requests being filtered, so there is less latency due to overheads.
 
-Truncation dramatically reduces latency which leads to a large increase in goodput. This is because it significantly reduces the size of internal messages, reducing the latency incurred by overheads.
+Truncation dramatically reduces latency which leads to a large increase in goodput. This is because it reduces the size of internal messages, reducing the latency incurred by overheads.
 
 Disabling cryptography reduces latency, leading to increased maximum goodput that can be reached. The reduction in latency is not that significant, implying that Cap'n Proto overheads are more of a bottleneck than cryptography.
 
